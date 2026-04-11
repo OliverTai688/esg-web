@@ -59,7 +59,7 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
        ═══════════════════════════════════════════════════════════════ */}
       <Section background="primary" padding="lg" withPattern={true} bigText="ESG">
         <Container className="relative z-10">
-          <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
+          <div className="flex flex-col items-center text-center max-w-5xl mx-auto">
             <Badge className="mb-8 bg-white/15 text-primary-foreground border-white/20 backdrop-blur-sm text-sm px-4 py-1.5">
               {s.hero.badge}
             </Badge>
@@ -86,7 +86,7 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
               <Button
                 size="lg"
                 variant="outline"
-                className="rounded-full text-base px-8 border-primary-foreground/30 text-primary-foreground hover:bg-white/10 hover:text-primary-foreground"
+                className="rounded-full text-base px-8 border-white/30 text-white bg-transparent hover:bg-white/10 hover:text-white transition-all duration-300"
                 asChild
               >
                 <Link href="#methodology">
@@ -409,7 +409,7 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
               <Button
                 size="lg"
                 variant="outline"
-                className="rounded-full text-base px-8 border-primary-foreground/30 text-primary-foreground hover:bg-white/10 hover:text-primary-foreground"
+                className="rounded-full text-base px-8 border-white/30 text-white bg-transparent hover:bg-white/10 hover:text-white transition-all duration-300"
                 asChild
               >
                 <Link href={`/${locale}`}>

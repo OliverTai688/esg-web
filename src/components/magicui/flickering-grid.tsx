@@ -26,14 +26,18 @@ const FlickeringGrid: React.FC<FlickeringGridProps> = ({
   const [isInView, setIsInView] = useState(false)
   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 })
 
-  const memoizedColor = useMemo(() => {
+  const [memoizedColor, setMemoizedColor] = useState("0, 0, 0")
+
+  useEffect(() => {
+    if (typeof document === "undefined") return
     const tempElement = document.createElement("div")
     tempElement.style.color = color
     document.body.appendChild(tempElement)
-    const computedColor = getComputedStyle(tempElement).color
+    const computedColor = window.getComputedStyle(tempElement).color
     document.body.removeChild(tempElement)
     const match = computedColor.match(/\d+/g)
-    return match ? `${match[0]}, ${match[1]}, ${match[2]}` : "0, 0, 0"
+    const colorString = match ? `${match[0]}, ${match[1]}, ${match[2]}` : "0, 0, 0"
+    setMemoizedColor(colorString)
   }, [color])
 
   const setupCanvas = useCallback(

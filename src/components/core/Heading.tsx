@@ -55,7 +55,7 @@ const Heading = React.forwardRef<HTMLDivElement, HeadingProps>(
             {label}
           </span>
         )}
-        <TitleTag className={cn(titleStyles, "max-w-[900px]")}>
+        <TitleTag className={cn(titleStyles, "max-w-[1024px]")}>
           {title}
         </TitleTag>
         {subTitle && (
