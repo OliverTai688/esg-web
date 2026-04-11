@@ -1,26 +1,397 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
-@theme inline {
+/* ═══════════════════════════════════════════════════════════════════════
+   CO-ESG Design System
+   ─────────────────────────────────────────────────────────────────────
+   Color Architecture (60-30-10 rule):
+     60% — Neutral warm grays + white (backgrounds, body text)
+     30% — ESG Green (primary brand, headings emphasis, CTA areas)
+     10% — Flame Orange + Yellow (decorative accents, highlights)
+
+   Brand DNA:
+     Primary  → Forest Green from logo bracket [ CO-ESG ]
+     Accent   → Bright Orange from logo flame 🔥
+     Warm     → Golden Yellow from flame gradient tip
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@theme {
+  /* ── Semantic Color Tokens ── */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* ── ESG Green Scale (50–900) — Primary brand from logo bracket ── */
+  --color-esg-50: oklch(97% 0.012 150);
+  --color-esg-100: oklch(93% 0.035 150);
+  --color-esg-200: oklch(87% 0.07 149);
+  --color-esg-300: oklch(78% 0.10 148);
+  --color-esg-400: oklch(66% 0.13 148);
+  --color-esg-500: oklch(52% 0.14 148);
+  --color-esg-600: oklch(46% 0.12 148);
+  --color-esg-700: oklch(39% 0.10 148);
+  --color-esg-800: oklch(32% 0.08 148);
+  --color-esg-900: oklch(25% 0.06 148);
+
+  /* ── Flame Orange Scale (50–900) — Decorative accent from logo flame ── */
+  --color-flame-50: oklch(97% 0.015 60);
+  --color-flame-100: oklch(93% 0.045 58);
+  --color-flame-200: oklch(87% 0.09 57);
+  --color-flame-300: oklch(81% 0.14 56);
+  --color-flame-400: oklch(75% 0.17 55);
+  --color-flame-500: oklch(70% 0.18 55);
+  --color-flame-600: oklch(62% 0.17 53);
+  --color-flame-700: oklch(53% 0.15 50);
+  --color-flame-800: oklch(44% 0.12 47);
+  --color-flame-900: oklch(35% 0.09 44);
+
+  /* ── Warm Yellow Scale (50–900) — Decorative from flame gradient ── */
+  --color-sun-50: oklch(98% 0.02 95);
+  --color-sun-100: oklch(95% 0.05 92);
+  --color-sun-200: oklch(91% 0.09 88);
+  --color-sun-300: oklch(86% 0.13 82);
+  --color-sun-400: oklch(82% 0.15 78);
+  --color-sun-500: oklch(78% 0.16 75);
+  --color-sun-600: oklch(70% 0.14 72);
+  --color-sun-700: oklch(60% 0.12 68);
+  --color-sun-800: oklch(50% 0.10 64);
+  --color-sun-900: oklch(40% 0.08 60);
+
+  /* ── Warm Gray Scale (50–900) — High purity neutrals ── */
+  --color-warm-gray-50: oklch(99.5% 0.002 165);
+  --color-warm-gray-100: oklch(97% 0.003 165);
+  --color-warm-gray-200: oklch(94% 0.004 165);
+  --color-warm-gray-300: oklch(89% 0.004 160);
+  --color-warm-gray-400: oklch(75% 0.005 160);
+  --color-warm-gray-500: oklch(58% 0.005 160);
+  --color-warm-gray-600: oklch(48% 0.005 160);
+  --color-warm-gray-700: oklch(38% 0.005 160);
+  --color-warm-gray-800: oklch(28% 0.005 160);
+  --color-warm-gray-900: oklch(20% 0.005 160);
+
+  /* ── Status Colors ── */
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+
+  /* ── Radius (soft, modern — 0.625rem base) ── */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* ── Fonts ── */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
+  --font-heading: var(--font-heading-family);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  /* ── Animations ── */
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-100% - var(--gap))); }
+  }
+  @keyframes marquee-vertical {
+    from { transform: translateY(0); }
+    to { transform: translateY(calc(-100% - var(--gap))); }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ═══════════════════════════════════════════════════════════════════════
+   Light Mode — CO-ESG Green & Warm Palette
+   ═══════════════════════════════════════════════════════════════════════ */
+:root {
+  /* Background: Pristine Mist White — clean, modern, high expansiveness */
+  --background: oklch(99.5% 0.002 165);
+  --foreground: oklch(20% 0.005 160);
+
+  --card: oklch(100% 0 0);
+  --card-foreground: oklch(20% 0.005 160);
+
+  --popover: oklch(100% 0 0);
+  --popover-foreground: oklch(20% 0.005 160);
+
+  /* Primary: Premium Deep Emerald — professional, stable, authoritative */
+  --primary: oklch(38% 0.1 160);
+  --primary-foreground: oklch(99% 0.005 160);
+
+  /* Secondary: Soft Mint surface — high clarity */
+  --secondary: oklch(97.5% 0.012 165);
+  --secondary-foreground: oklch(30% 0.06 160);
+
+  /* Accent: Radiant Radiant Gold — glowing, energetic, premium highlight */
+  --accent: oklch(84% 0.21 82);
+  --accent-foreground: oklch(18% 0.06 82);
+
+  /* Muted: Clean light gray-emerald */
+  --muted: oklch(98% 0.006 165);
+  --muted-foreground: oklch(45% 0.02 160);
+
+  /* Destructive (Crisper red) */
+  --destructive: oklch(60% 0.25 28);
+  --destructive-foreground: #ffffff;
+
+  /* Status */
+  --success: oklch(60% 0.18 150);
+  --success-foreground: oklch(99% 0 0);
+  --warning: oklch(84% 0.21 82);
+  --warning-foreground: oklch(20% 0.06 82);
+  --info: oklch(65% 0.18 255);
+  --info-foreground: oklch(99% 0 0);
+
+  /* Borders & Inputs — subtle, high contrast with white */
+  --border: oklch(94% 0.004 165);
+  --input: oklch(94% 0.004 165);
+  --ring: oklch(38% 0.1 160);
+
+  --radius: 0.625rem;
+
+  /* Chart Colors — green dominant, orange accent */
+  --chart-1: oklch(42% 0.12 148);
+  --chart-2: oklch(80% 0.16 85);
+  --chart-3: oklch(78% 0.16 75);
+  --chart-4: oklch(60% 0.15 250);
+  --chart-5: oklch(55% 0.14 0);
+
+  /* Sidebar */
+  --sidebar: oklch(98.5% 0.004 155);
+  --sidebar-foreground: oklch(22% 0.005 40);
+  --sidebar-primary: oklch(42% 0.12 148);
+  --sidebar-primary-foreground: oklch(99% 0.005 150);
+  --sidebar-accent: oklch(96.5% 0.012 155);
+  --sidebar-accent-foreground: oklch(30% 0.06 148);
+  --sidebar-border: oklch(92% 0.006 155);
+  --sidebar-ring: oklch(42% 0.12 148);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Dark Mode
+   ═══════════════════════════════════════════════════════════════════════ */
+.dark {
+  --background: oklch(14.5% 0.005 160);
+  --foreground: oklch(98% 0 0);
+
+  --card: oklch(18% 0.008 160);
+  --card-foreground: oklch(98% 0 0);
+
+  --popover: oklch(18% 0.008 160);
+  --popover-foreground: oklch(98% 0 0);
+
+  --primary: oklch(68% 0.14 160);
+  --primary-foreground: oklch(15% 0.04 160);
+
+  --secondary: oklch(24% 0.008 160);
+  --secondary-foreground: oklch(98% 0 0);
+
+  --accent: oklch(86% 0.18 82);
+  --accent-foreground: oklch(15% 0.06 82);
+
+  --muted: oklch(24% 0.008 160);
+  --muted-foreground: oklch(70% 0 0);
+
+  --destructive: oklch(65% 0.2 25);
+  --destructive-foreground: #ffffff;
+
+  --success: oklch(65% 0.14 150);
+  --success-foreground: oklch(12% 0.04 150);
+  --warning: oklch(86% 0.18 82);
+  --warning-foreground: oklch(20% 0.06 82);
+  --info: oklch(70% 0.14 255);
+  --info-foreground: oklch(15% 0.04 255);
+
+  --border: oklch(100% 0 0 / 12%);
+  --input: oklch(100% 0 0 / 18%);
+  --ring: oklch(68% 0.14 160);
+
+  /* Sidebar */
+  --sidebar: oklch(18% 0.008 160);
+  --sidebar-foreground: oklch(98% 0 0);
+  --sidebar-primary: oklch(68% 0.14 160);
+  --sidebar-primary-foreground: oklch(98% 0 0);
+  --sidebar-accent: oklch(24% 0.008 160);
+  --sidebar-accent-foreground: oklch(98% 0 0);
+  --sidebar-border: oklch(100% 0 0 / 12%);
+  --sidebar-ring: oklch(68% 0.14 160);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Base Layer
+   ═══════════════════════════════════════════════════════════════════════ */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+  html {
+    @apply font-sans scroll-smooth;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Utility Layer — Textures & Animations
+   ═══════════════════════════════════════════════════════════════════════ */
+@layer utilities {
+  .bg-grain {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    mix-blend-mode: soft-light;
+  }
+
+  @keyframes blob {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+  }
+
+  .animate-blob {
+    animation: blob 10s infinite alternate cubic-bezier(0.45, 0, 0.55, 1);
+  }
+
+  .delay-stagger-1 { animation-delay: 100ms; }
+  .delay-stagger-2 { animation-delay: 200ms; }
+  .delay-stagger-3 { animation-delay: 300ms; }
+
+  @keyframes grid {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(var(--cell-size)); }
+  }
+  .animate-grid {
+    animation: grid 15s linear infinite;
+  }
+
+  .bg-topo {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Cpath d='M0 50 C 50 20, 150 20, 200 50 S 350 80, 400 50' stroke='%232B6E50' stroke-width='0.5' fill='none' opacity='0.05'/%3E%3Cpath d='M0 100 C 50 70, 150 70, 200 100 S 350 130, 400 100' stroke='%232B6E50' stroke-width='0.5' fill='none' opacity='0.05'/%3E%3Cpath d='M0 150 C 50 120, 150 120, 200 150 S 350 180, 400 150' stroke='%232B6E50' stroke-width='0.5' fill='none' opacity='0.05'/%3E%3Cpath d='M0 200 C 50 170, 150 170, 200 200 S 350 230, 400 200' stroke='%232B6E50' stroke-width='0.5' fill='none' opacity='0.05'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+  }
+
+  .text-outline-faint {
+    -webkit-text-stroke: 1px currentColor;
+    color: transparent;
+    opacity: 0.03;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Prose — Editorial Typography (articles, reports, insights)
+   Optimized for long-form reading: max 72ch, 1.8 line-height
+   ═══════════════════════════════════════════════════════════════════════ */
+.prose {
+  @apply text-foreground leading-relaxed;
+  max-width: 72ch;
+}
+.prose h1 { @apply text-3xl font-bold tracking-tight mt-12 mb-4; }
+.prose h2 { @apply text-2xl font-bold tracking-tight mt-10 mb-3 pb-2 border-b border-border; }
+.prose h3 { @apply text-xl font-semibold mt-8 mb-2; }
+.prose p  { @apply mb-5 text-base leading-[1.8]; }
+.prose ul { @apply mb-5 pl-6 list-disc space-y-1.5; }
+.prose ol { @apply mb-5 pl-6 list-decimal space-y-1.5; }
+.prose li { @apply text-base leading-[1.75]; }
+.prose strong { @apply font-semibold text-foreground; }
+.prose blockquote {
+  @apply my-6 pl-5 border-l-4 border-primary/30 italic text-muted-foreground;
+}
+.prose a { @apply text-primary underline underline-offset-2 hover:text-primary/80 transition-colors; }
+.prose img { @apply rounded-lg my-8; }
+.prose hr { @apply my-10 border-border; }
+.prose code { @apply text-sm bg-muted px-1.5 py-0.5 rounded font-mono; }
+.prose pre { @apply my-6 p-4 bg-muted rounded-lg overflow-x-auto; }
+.prose pre code { @apply bg-transparent p-0; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Typography System
+   ─────────────────────────────────────────────────────────────────────
+   Headings: Dark foreground for professional readability (B2B/consulting)
+   Green reserved for section labels, subtitles, emphasis
+   Orange reserved for decorative highlights, badges, CTAs
+   ═══════════════════════════════════════════════════════════════════════ */
+@utility text-heading-1 {
+  @apply text-3xl font-black tracking-tight md:text-4xl lg:text-6xl text-foreground leading-[1.15];
+}
+
+@utility text-heading-2 {
+  @apply text-2xl font-black tracking-tight md:text-4xl lg:text-5xl text-foreground leading-[1.15];
+}
+
+@utility text-heading-3 {
+  @apply text-2xl font-bold tracking-tight md:text-3xl lg:text-4xl text-foreground/90;
+}
+
+@utility text-body {
+  @apply text-base leading-relaxed text-muted-foreground;
+}
+
+@utility text-caption {
+  @apply text-xs font-medium uppercase tracking-wider text-primary/80;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Theme Inline — shadcn/ui integration
+   ═══════════════════════════════════════════════════════════════════════ */
+@theme inline {
+  --font-heading: var(--font-heading-family);
+  --font-sans: var(--font-geist-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
