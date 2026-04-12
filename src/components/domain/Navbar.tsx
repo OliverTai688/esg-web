@@ -217,7 +217,11 @@ function MegaMenuItem({
         className="group/card flex items-start gap-3.5 rounded-xl p-3.5 transition-all duration-200 hover:bg-primary/[0.04] hover:shadow-[0_0_0_1px_rgba(0,0,0,0.04)] active:scale-[0.99]"
       >
         <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/[0.06] text-primary/70 transition-all duration-200 group-hover/card:bg-primary/[0.1] group-hover/card:text-primary group-hover/card:scale-105">
-          <Icon size={18} strokeWidth={1.8} />
+          {Icon ? (
+            <Icon size={18} strokeWidth={1.8} />
+          ) : (
+            <div className="h-1.5 w-1.5 rounded-full bg-primary/40" />
+          )}
         </div>
         <div className="min-w-0">
           <p className="text-[13.5px] font-semibold leading-tight text-foreground/90 transition-colors group-hover/card:text-primary">
