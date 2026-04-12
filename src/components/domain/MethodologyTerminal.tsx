@@ -19,7 +19,7 @@ export const MethodologyTerminal = ({ principles, className }: MethodologyTermin
     <div className={cn("max-w-3xl mx-auto w-full", className)}>
       <Terminal title="共好永續方法論" variant="light" className="min-h-[400px]">
         <TypingAnimation delay={0} duration={60} className="text-accent font-bold">
-          {">"} 啟動 共好永續方法論 核心運算...
+          {`> 啟動 共好永續方法論 核心運算...`}
         </TypingAnimation>
 
         <AnimatedSpan delay={1000} className="text-muted-foreground mt-2">
@@ -48,7 +48,7 @@ export const MethodologyTerminal = ({ principles, className }: MethodologyTermin
         })}
 
         <AnimatedSpan delay={10000} className="mt-8 pt-4 border-t border-border text-accent font-bold">
-          {">"} 恭喜：共好永續生態系 (CO-ESG Ecosystem) 佈署完成。
+          {`> 恭喜：共好永續生態系 (CO-ESG Ecosystem) 佈署完成。`}
         </AnimatedSpan>
         
         <AnimatedSpan delay={11000} className="text-muted-foreground/40 text-[10px] mt-2 italic">
