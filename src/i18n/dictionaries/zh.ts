@@ -1,3 +1,4 @@
+/** Build Stamp: 2026-04-12T10:49:00 */
 const zh = {
   nav: {
     sustainability: {
