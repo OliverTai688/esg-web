@@ -8,10 +8,11 @@ import { Button } from "@/components/ui/button"
 import { Heart, ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible"
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 
 interface StorySectionProps {
   label: string
@@ -76,45 +77,57 @@ const StorySection = ({
           </div>
 
           {/* Narrative Side */}
-          <div className="lg:col-span-7 pt-4">
-            <Heading
-              level={2}
-              label={label}
-              title={title}
-              subTitle={headline}
-              description={summary}
-              spacing="sm"
-            />
+          <div className="lg:col-span-7 pt-4 relative group/narrative">
+            {/* Modern yellow decorative circle — 'Sun/Energy' vibe (#12) */}
+            <div className="absolute -top-20 -right-20 size-96 bg-accent/20 blur-[100px] rounded-full pointer-events-none group-hover/narrative:scale-110 transition-transform duration-700" />
+            <div className="absolute top-10 -right-10 size-40 bg-accent/15 blur-[60px] rounded-full pointer-events-none animate-pulse" />
+            
+            <div className="relative z-10">
+              <Heading
+                level={2}
+                label={label}
+                title={title}
+                subTitle={headline}
+                description={summary}
+                spacing="sm"
+              />
 
-            {/* Scannable bullets — orange dots for warmth (#12) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
-              {bullets.map((bullet, i) => (
-                <div key={i} className="flex items-start gap-3 p-5 bg-white rounded-2xl border border-border shadow-sm hover:shadow-md hover:border-accent/20 transition-all duration-300 group/bullet">
-                  <div className="size-2.5 rounded-full bg-accent mt-1.5 shrink-0 group-hover/bullet:scale-125 transition-transform" />
-                  <p className="text-sm font-medium text-foreground/90 leading-snug">{bullet}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Progressive Disclosure */}
-            <div className="mt-10 pt-10 border-t border-border">
-              <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-                <CollapsibleTrigger asChild>
-                  <Button variant="ghost" className="p-0 h-auto hover:bg-transparent text-primary font-bold text-xs gap-2">
-                    {isOpen ? "收起" : "閱讀完整故事"}
-                    <ChevronDown className={cn("size-3 transition-transform duration-300", isOpen && "rotate-180")} />
-                  </Button>
-                </CollapsibleTrigger>
-                <CollapsibleContent className="animate-in fade-in slide-in-from-top-2 duration-500">
-                  <div className="space-y-6 mt-8">
-                    {fullStory.map((p, i) => (
-                      <p key={i} className="text-base text-muted-foreground/80 leading-[1.8]">
-                        {p}
-                      </p>
-                    ))}
+              {/* Scannable bullets — orange dots for warmth (#12) */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+                {bullets.map((bullet, i) => (
+                  <div key={i} className="flex items-start gap-3 p-5 bg-white rounded-2xl border border-border shadow-sm hover:shadow-md hover:border-accent/20 transition-all duration-300 group/bullet">
+                    <div className="size-2.5 rounded-full bg-accent mt-1.5 shrink-0 group-hover/bullet:scale-125 transition-transform" />
+                    <p className="text-sm font-medium text-foreground/90 leading-snug">{bullet}</p>
                   </div>
-                </CollapsibleContent>
-              </Collapsible>
+                ))}
+              </div>
+
+              {/* Progressive Disclosure (Modal) */}
+              <div className="mt-10 pt-10 border-t border-border">
+                <Button 
+                  variant="ghost" 
+                  onClick={() => setIsOpen(true)}
+                  className="p-0 h-auto hover:bg-transparent text-primary font-bold text-xs gap-2"
+                >
+                  閱讀完整故事
+                  <ChevronDown className="size-3" />
+                </Button>
+
+                <Dialog open={isOpen} onOpenChange={setIsOpen}>
+                  <DialogHeader>
+                    <DialogTitle>{title}</DialogTitle>
+                  </DialogHeader>
+                  <DialogContent>
+                    <div className="space-y-6">
+                      {fullStory.map((p, i) => (
+                        <p key={i} className="text-base text-foreground/80 leading-[1.8]">
+                          {p}
+                        </p>
+                      ))}
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </div>
             </div>
           </div>
         </div>

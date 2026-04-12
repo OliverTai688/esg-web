@@ -295,6 +295,53 @@
     color: transparent;
     opacity: 0.03;
   }
+
+  /* ── Aurora gradient blob animations ──
+     Four distinct paths at different speeds for organic, layered movement.
+     All use GPU-accelerated transform (translate + scale) only. */
+
+  @keyframes aurora-1 {
+    0%   { transform: translate(0, 0) scale(1); }
+    25%  { transform: translate(8%, 12%) scale(1.08); }
+    50%  { transform: translate(-5%, 8%) scale(0.95); }
+    75%  { transform: translate(10%, -5%) scale(1.05); }
+    100% { transform: translate(0, 0) scale(1); }
+  }
+
+  @keyframes aurora-2 {
+    0%   { transform: translate(0, 0) scale(1); }
+    30%  { transform: translate(-10%, -8%) scale(1.1); }
+    60%  { transform: translate(6%, 10%) scale(0.92); }
+    100% { transform: translate(0, 0) scale(1); }
+  }
+
+  @keyframes aurora-3 {
+    0%   { transform: translate(0, 0) scale(1); }
+    20%  { transform: translate(12%, -10%) scale(1.06); }
+    50%  { transform: translate(-8%, -15%) scale(1.12); }
+    80%  { transform: translate(5%, 5%) scale(0.94); }
+    100% { transform: translate(0, 0) scale(1); }
+  }
+
+  @keyframes aurora-4 {
+    0%   { transform: translate(0, 0) scale(1); }
+    40%  { transform: translate(-6%, 8%) scale(1.08); }
+    70%  { transform: translate(8%, -4%) scale(0.96); }
+    100% { transform: translate(0, 0) scale(1); }
+  }
+
+  .animate-aurora-1 {
+    animation: aurora-1 30s ease-in-out infinite;
+  }
+  .animate-aurora-2 {
+    animation: aurora-2 25s ease-in-out infinite;
+  }
+  .animate-aurora-3 {
+    animation: aurora-3 20s ease-in-out infinite;
+  }
+  .animate-aurora-4 {
+    animation: aurora-4 35s ease-in-out infinite;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════

@@ -32,10 +32,13 @@ interface SectionProps
   withPattern?: boolean
   withTopo?: boolean
   bigText?: string
+  /** Render a background layer (e.g. AnimatedGradientBackground) at the section root,
+   *  outside SectionEntrance so it fills the full section including padding. */
+  backgroundSlot?: React.ReactNode
 }
 
 const Section = React.forwardRef<HTMLElement, SectionProps>(
-  ({ className, padding, background, withPattern, withTopo, bigText, as: Component = "section", children, ...props }, ref) => {
+  ({ className, padding, background, withPattern, withTopo, bigText, backgroundSlot, as: Component = "section", children, ...props }, ref) => {
     return (
       <Component
         ref={ref}
@@ -53,7 +56,9 @@ const Section = React.forwardRef<HTMLElement, SectionProps>(
         {bigText && (
           <BigText text={bigText} className="opacity-70" />
         )}
-        
+
+        {backgroundSlot}
+
         <SectionEntrance>
           {children}
         </SectionEntrance>

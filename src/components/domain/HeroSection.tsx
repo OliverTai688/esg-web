@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ArrowRight } from "lucide-react"
 import { Backlight } from "@/components/ui/backlight"
+import { AnimatedGradientBackground } from "@/components/core/AnimatedGradientBackground"
 
 interface TrustIndicator {
   metric: string
@@ -35,7 +36,7 @@ const HeroSection = ({
   trustIndicators,
 }: HeroSectionProps) => {
   return (
-    <Section padding="lg" background="default" className="min-h-[100vh] flex items-center justify-center pt-32 pb-20 overflow-hidden relative">
+    <Section padding="lg" background="default" className="min-h-[100vh] flex items-center justify-center pt-32 pb-20 overflow-hidden relative" backgroundSlot={<AnimatedGradientBackground variant="light" interactive intensity={0.9} />}>
       {/* Warm gradient overlay — adds orange brand warmth (#12) */}
       <div className="absolute inset-0 bg-gradient-to-br from-accent/[0.04] via-transparent to-primary/[0.03] pointer-events-none z-[1]" />
       <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-transparent to-background/80 pointer-events-none z-10" />
