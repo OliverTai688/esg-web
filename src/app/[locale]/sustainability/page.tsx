@@ -159,7 +159,7 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
           4. SERVICES — Productized cards (SaaS style)
           Light bg, 4 cards with tags and highlights
        ═══════════════════════════════════════════════════════════════ */}
-      <Section bigText="SERVICE">
+      <Section id="services" bigText="SERVICE">
         <Container>
           <Heading
             level={2}
@@ -210,7 +210,7 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
           5. PROOF — Metrics + case study
           Dark primary bg for high contrast metrics
        ═══════════════════════════════════════════════════════════════ */}
-      <Section background="primary" withPattern={true} bigText="IMPACT">
+      <Section id="impact" background="primary" withPattern={true} bigText="IMPACT">
         <Container>
           <div className="flex flex-col items-center text-center mb-12 md:mb-16">
             <span className="text-accent text-[11px] md:text-xs font-bold uppercase tracking-[0.25em] mb-4">
@@ -299,7 +299,7 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
           7. ECOSYSTEM — Network visualization
           Muted bg, hub-and-spoke layout
        ═══════════════════════════════════════════════════════════════ */}
-      <Section background="muted" withPattern={true} bigText="NETWORK">
+      <Section id="ecosystem" background="muted" withPattern={true} bigText="NETWORK">
         <Container>
           <Heading
             level={2}

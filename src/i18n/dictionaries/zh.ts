@@ -1,9 +1,55 @@
 const zh = {
   nav: {
-    sustainability: "共好永續力",
-    events: "永續足跡",
-    learning: "共好學習",
-    consulting: "合作洽詢",
+    sustainability: {
+      label: "共好永續力",
+      vision: "願景與使命",
+      visionDesc: "了解我們的核心理念與方法論",
+      services: "服務項目",
+      servicesDesc: "顧問輔導、白皮書、共學坊一站式方案",
+      practices: "共好實踐",
+      practicesDesc: "可量化的實際影響力與合作成果",
+      ecosystem: "共好生態圈",
+      ecosystemDesc: "串連顧問、講師、企業的永續共同體",
+    },
+    events: {
+      label: "永續足跡",
+      list: "活動列表",
+      listDesc: "查看近期所有活動與報名資訊",
+      workshops: "永續工作坊",
+      workshopsDesc: "跨產業交流與實務學習工作坊",
+      history: "過往回顧",
+      historyDesc: "精彩活動回顧與成果紀錄",
+      caseStudies: "案例研究",
+      caseStudiesDesc: "深度剖析合作案例與實踐經驗",
+    },
+    learning: {
+      label: "共好學習",
+      collaboration: "合作模式",
+      collaborationDesc: "了解多元的產業合作形式",
+      communication: "溝通與換位思考",
+      communicationDesc: "培養跨界對話的溝通能力",
+      innovation: "創新策略",
+      innovationDesc: "探索永續轉型的創新方法",
+      market: "市場競爭力",
+      marketDesc: "提升品牌在市場中的能見度",
+      responsibility: "永續責任",
+      responsibilityDesc: "深入了解企業社會責任實踐",
+      interviews: "人物專訪",
+      interviewsDesc: "永續實踐者的第一手故事",
+    },
+    consulting: {
+      label: "合作洽詢",
+      solutions: "ESG 解決方案",
+      solutionsDesc: "量身打造的永續轉型路徑",
+      ngo: "非營利合作",
+      ngoDesc: "與非營利組織的策略合作方案",
+      membership: "會員機制",
+      membershipDesc: "加入共好夥伴享專屬資源",
+      faq: "常見問答",
+      faqDesc: "關於服務與合作的常見問題",
+      contact: "聯絡表單",
+      contactDesc: "預約 Coffee Chat 或直接聯繫我們",
+    },
     join: "加入我們",
     cta: "預約諮詢",
   },
@@ -357,15 +403,140 @@ const zh = {
   },
   eventsPage: {
     label: "永續足跡",
-    title: "工作坊與活動",
-    description: "從共學坊的跨產業媒合到國際論壇，每一步都是永續行動的真實足跡。",
-    back: "返回活動列表",
+    title: "每一步，都是永續行動的真實足跡",
+    description: "從共學坊的跨產業媒合到國際論壇，共好玟化持續舉辦高品質的永續活動，串連理念相符的夥伴。",
+    back: "返回首頁",
+    hero: {
+      badge: "2026 活動季",
+      primaryCta: "立即報名",
+      secondaryCta: "瀏覽所有活動",
+      stats: [
+        { value: "50+", label: "場活動舉辦" },
+        { value: "500+", label: "累計參與者" },
+        { value: "30+", label: "合作品牌" },
+      ],
+    },
+    upcoming: {
+      label: "即將舉辦",
+      title: "即將舉辦的活動",
+      description: "目前正在招生中的課程與工作坊，把握每一次學習與交流的機會。",
+      viewDetails: "查看詳情",
+      enrollNow: "立即報名",
+      spotsLeft: "名額有限",
+    },
+    workshopsSection: {
+      label: "活動分類",
+      title: "選擇你的學習路徑",
+      description: "從系統化培訓到快速實戰工作坊，找到最適合你的永續學習體驗。",
+      training: {
+        title: "培訓課程",
+        subtitle: "系統化學習",
+        description: "完整的永續商創師培訓體系，從初階到進階，建立紮實的 ESG 專業能力與商業思維。",
+        features: ["18+ 小時深度培訓", "結業認證", "實作演練"],
+      },
+      workshop: {
+        title: "實戰工作坊",
+        subtitle: "快速上手",
+        description: "2 小時互動式學習，快速掌握永續品牌的核心觀念與實務技巧，立即可用。",
+        features: ["2 小時精華", "互動教學", "即學即用"],
+      },
+    },
+    servicesSection: {
+      label: "持續服務",
+      title: "顧問諮詢與訂閱方案",
+      description: "不只是一次性活動——我們提供持續性的專業支援，陪伴你的永續旅程。",
+      consulting: "顧問服務",
+      subscription: "訂閱方案",
+      viewMore: "了解更多",
+    },
+    historySection: {
+      label: "回顧",
+      title: "永續足跡時間軸",
+      description: "回顧共好玟化的每一步成長，見證永續行動的累積力量。",
+      timeline: [
+        {
+          year: "2024",
+          title: "問卷設計實作工作坊",
+          description: "運用 4W 框架和薩提爾冰山理論，帶領學員設計有效的永續調查問卷。",
+        },
+        {
+          year: "2025",
+          title: "永續商創師培訓啟動",
+          description: "推出系統化的永續商創師培訓課程，結合 AI 工具應用與品牌案例分析。",
+        },
+        {
+          year: "2026",
+          title: "國際論壇與跨界合作",
+          description: "協助 8+ 家企業登上國際論壇舞台，促成 5+ 件跨產業永續合作案例。",
+        },
+      ],
+    },
+    casesSection: {
+      label: "成功案例",
+      title: "真實的合作成果",
+      description: "每一個案例背後，都是理念的碰撞與價值的實現。",
+      cases: [
+        {
+          title: "海廢手錶品牌登上國際論壇",
+          description: "透過永續白皮書的撰寫與品牌定位輔導，協助一家以海洋廢棄物製作手錶的品牌，成功站上國際青年論壇舞台。",
+          tag: "國際曝光",
+          metric: "8+",
+          metricLabel: "國際論壇",
+        },
+        {
+          title: "品牌設計公司獲千萬資源挹注",
+          description: "協助品牌設計公司撰寫永續白皮書，一年內成功取得政府補助、天使投資與銀行貸款。",
+          tag: "資源媒合",
+          metric: "~1000萬",
+          metricLabel: "經濟挹注",
+        },
+        {
+          title: "休閒農場學會跨界合作",
+          description: "與台灣休閒農場學會合作，將農業永續價值轉譯為企業可理解的 ESG 語言，促成長期合作。",
+          tag: "產業合作",
+          metric: "5+",
+          metricLabel: "合作案例",
+        },
+      ],
+    },
+    cta: {
+      title: "準備好開始你的永續旅程了嗎？",
+      description: "無論你是初次接觸 ESG 的品牌主，還是想深化永續策略的企業夥伴，我們都有適合你的活動。",
+      primaryLabel: "預約免費諮詢",
+      secondaryLabel: "瀏覽所有活動",
+    },
   },
   learningPage: {
     label: "共好學習",
     title: "永續知識與實踐案例",
     description: "從企業合作模式到創新策略，從人物專訪到共學坊公告，持續學習永續的各種面向。",
     back: "返回學習專區",
+    sections: {
+      innovation: {
+        title: "創新策略",
+        description: "探索永續轉型的創新方法，從商業模式到產品設計，重新定義品牌的永續競爭力。",
+      },
+      market: {
+        title: "市場競爭力",
+        description: "提升品牌在永續市場中的能見度，掌握消費者趨勢與企業採購標準。",
+      },
+      responsibility: {
+        title: "永續責任",
+        description: "深入了解企業社會責任的實踐方式，從 ESG 報告到利害關係人溝通。",
+      },
+      collaboration: {
+        title: "合作模式",
+        description: "了解多元的產業合作形式，從供應鏈整合到跨界聯名，找到最適合的合作路徑。",
+      },
+      communication: {
+        title: "溝通與換位思考",
+        description: "培養跨界對話的溝通能力，學習如何用不同產業的語言傳達永續價值。",
+      },
+      interviews: {
+        title: "人物專訪",
+        description: "永續實踐者的第一手故事，聆聽不同領域的先驅者如何將理念化為行動。",
+      },
+    },
   },
   consultingPage: {
     label: "合作洽詢",
@@ -373,14 +544,112 @@ const zh = {
     description: "讓我們聊聊如何點亮你的專業價值。無論你是品牌主、供應鏈夥伴、還是永續產業的參與者，我們都期待與你對話。",
     bookBtn: "預約諮詢時段",
     back: "返回首頁",
+    membershipSection: {
+      label: "會員機制",
+      title: "加入共好夥伴，享專屬資源",
+      description: "成為共好玟化的會員夥伴，獲得永續資源、優先活動通知與專屬諮詢優惠。",
+      tiers: [
+        {
+          title: "基礎夥伴",
+          price: "免費",
+          features: ["LINE 社群加入", "永續趨勢速報", "活動資訊通知"],
+        },
+        {
+          title: "進階夥伴",
+          price: "NT$300/月",
+          features: ["共學坊課程回放", "講師投影片下載", "交流社群", "課程優惠折扣"],
+        },
+        {
+          title: "策略夥伴",
+          price: "專案報價",
+          features: ["一對一顧問諮詢", "白皮書撰寫服務", "國際論壇推薦", "供應鏈媒合優先"],
+        },
+      ],
+    },
   },
   joinPage: {
     label: "加入我們",
-    title: "成為共好夥伴",
-    description: "加入共好玟化 LINE 官方帳號，第一手掌握永續趨勢、活動資訊與跨產業合作機會。",
-    lineBtn: "加入 LINE 官方帳號",
-    lineInstructions: "加入 LINE 官方帳號獲取第一手消息",
-    qrCodeLabel: "官方 LINE QR Code",
+    title: "成為改變的一份子",
+    description: "加入共好玟化的永續社群，與來自不同領域的實踐者一起，讓好的事被看見、被理解、被連結。",
+    // Hero
+    hero: {
+      badge: "LINE 官方社群",
+      subtitle: "一個為永續實踐者打造的資訊與合作平台",
+    },
+    // Benefits
+    benefits: {
+      label: "加入好處",
+      title: "加入共好夥伴能獲得什麼？",
+      description: "不只是資訊推播，更是一個持續學習、合作與成長的永續社群。",
+      items: [
+        {
+          title: "永續趨勢速報",
+          description: "國內外 ESG 政策更新、產業動態與市場趨勢，每週精選推送，讓你的永續知識始終保持前沿。",
+        },
+        {
+          title: "活動優先通知",
+          description: "共學坊工作坊、國際論壇、企業參訪等活動搶先報名，把握每一次學習與交流的機會。",
+        },
+        {
+          title: "跨產業合作機會",
+          description: "與農業、設計、科技、社會企業等不同領域的永續實踐者交流，創造跨界合作的無限可能。",
+        },
+        {
+          title: "專屬資源與優惠",
+          description: "會員專屬的白皮書摘要、顧問諮詢優惠、以及永續商城合作夥伴的獨家折扣。",
+        },
+      ],
+    },
+    // Community
+    community: {
+      label: "社群力量",
+      title: "一起成長的永續社群",
+      description: "每一個數字背後，都是真實的連結與改變。",
+      metrics: [
+        { value: "500+", label: "社群夥伴" },
+        { value: "30+", label: "合作品牌" },
+        { value: "50+", label: "場活動舉辦" },
+        { value: "8+", label: "國際論壇曝光" },
+      ],
+    },
+    // Steps
+    steps: {
+      label: "如何加入",
+      title: "三步驟，成為共好夥伴",
+      description: "從加入到參與，只需要一分鐘。",
+      items: [
+        {
+          number: "01",
+          title: "掃碼加入",
+          description: "掃描 QR Code 或點擊按鈕，加入共好玟化 LINE 官方帳號。",
+        },
+        {
+          number: "02",
+          title: "接收資訊",
+          description: "開始接收永續趨勢、活動通知與合作機會等第一手訊息。",
+        },
+        {
+          number: "03",
+          title: "參與互動",
+          description: "報名活動、回覆訊息、加入討論，成為永續生態圈的一份子。",
+        },
+      ],
+    },
+    // LINE CTA
+    line: {
+      title: "立即加入 LINE 官方帳號",
+      description: "掃描下方 QR Code 或點擊按鈕，開始你的共好旅程。",
+      lineId: "LINE ID",
+      qrCodeLabel: "官方 LINE QR Code",
+      lineBtn: "加入 LINE 官方帳號",
+    },
+    // CTA
+    cta: {
+      title: "準備好加入永續行動了嗎？",
+      description: "與我們一起，讓每一個好的行動都被看見。加入共好玟化，成為永續生態圈的重要夥伴。",
+      primaryLabel: "加入 LINE 官方帳號",
+      secondaryLabel: "返回首頁",
+    },
     back: "返回首頁",
   },
   insightsPage: {

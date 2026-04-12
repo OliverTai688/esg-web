@@ -53,6 +53,22 @@ export const EcosystemNetwork = ({ roles, centerLabel, className }: EcosystemNet
   
   const icons = [UserCheck, Users, Building2, Globe]
 
+  // Initialize or update the center hub coordinates
+  React.useEffect(() => {
+    const updateCenterHub = () => {
+      if (!containerRef.current) return
+      const rect = containerRef.current.getBoundingClientRect()
+      // Only set to center if nothing is hovered, or handle it in the rendering logic
+      if (hoveredIndex === null) {
+        setHubCoords({ x: rect.width / 2, y: rect.height / 2 })
+      }
+    }
+
+    updateCenterHub()
+    window.addEventListener("resize", updateCenterHub)
+    return () => window.removeEventListener("resize", updateCenterHub)
+  }, [hoveredIndex])
+
   const handleMouseEnter = (index: number, e: React.MouseEvent) => {
     setHoveredIndex(index)
     updateHubCoords(e.currentTarget)
@@ -60,7 +76,7 @@ export const EcosystemNetwork = ({ roles, centerLabel, className }: EcosystemNet
 
   const handleMouseLeave = () => {
     setHoveredIndex(null)
-    setHubCoords(null)
+    // Default back to center hub is handled by the useEffect above
   }
 
   const updateHubCoords = (element: Element) => {
@@ -78,7 +94,7 @@ export const EcosystemNetwork = ({ roles, centerLabel, className }: EcosystemNet
     <div 
       ref={containerRef}
       className={cn(
-        "relative w-full py-20 px-4 overflow-hidden rounded-3xl border border-border/40",
+        "relative w-full py-24 px-4 overflow-hidden rounded-3xl border border-border/40",
         className
       )}
     >
@@ -89,13 +105,34 @@ export const EcosystemNetwork = ({ roles, centerLabel, className }: EcosystemNet
       <ParticleNetwork 
         className="absolute inset-0 z-0" 
         hoveredHub={hubCoords}
+        particleCount={50}
       />
 
       {/* Layer 3: Foreground Content */}
       <div className="relative z-10 max-w-6xl mx-auto">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2 lg:max-w-4xl lg:mx-auto">
+        {/* Central Logo Hub */}
+        <div className="hidden lg:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="flex flex-col items-center"
+          >
+            <div className="relative group">
+              <div className="absolute inset-0 bg-primary/25 blur-3xl rounded-full scale-150" />
+              <div className="relative px-8 py-4 rounded-2xl bg-white/40 backdrop-blur-xl border border-white/40 shadow-2xl flex flex-col items-center gap-1">
+                <span className="text-xs font-black tracking-[0.4em] text-primary/60 uppercase">Ecosystem</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-3xl font-black tracking-tighter text-primary">CO</span>
+                  <div className="w-1.5 h-6 bg-accent rounded-full rotate-12" />
+                  <span className="text-3xl font-black tracking-tighter text-foreground">ESG</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-2 lg:max-w-4xl lg:mx-auto">
           {roles.map((role, i) => {
-            const Icon = icons[i] ?? Users
             const isHovered = hoveredIndex === i
 
             return (
@@ -107,7 +144,12 @@ export const EcosystemNetwork = ({ roles, centerLabel, className }: EcosystemNet
                 transition={{ delay: i * 0.1 }}
                 onMouseEnter={(e) => handleMouseEnter(i, e)}
                 onMouseLeave={handleMouseLeave}
-                className="relative group h-full"
+                className={cn(
+                  "relative group h-full",
+                  // Add margin to make space for the central logo on desktop
+                  i % 2 === 0 ? "lg:mr-12" : "lg:ml-12",
+                  i < 2 ? "lg:mb-12" : "lg:mt-12"
+                )}
               >
                 <div 
                   className={cn(
@@ -157,22 +199,19 @@ export const EcosystemNetwork = ({ roles, centerLabel, className }: EcosystemNet
           })}
         </div>
         
-        {/* Central Hub Footer */}
+        {/* Mobile Logo Hub — visible when not on desktop */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
-          className="mt-16 flex justify-center"
+          className="mt-16 flex justify-center lg:hidden"
         >
-          <div className="group relative">
-            <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-full scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-            <div className="relative px-10 py-4 rounded-full bg-primary text-primary-foreground text-sm font-black tracking-[0.25em] shadow-xl shadow-primary/25 flex items-center gap-4 border border-white/10">
-              <div className="size-2.5 rounded-full bg-accent animate-pulse shadow-[0_0_10px_rgba(252,211,77,0.8)]" />
-              {centerLabel}
-              <div className="size-2.5 rounded-full bg-accent animate-pulse shadow-[0_0_10px_rgba(252,211,77,0.8)]" />
+           <div className="relative px-8 py-3 rounded-full bg-white/40 backdrop-blur-xl border border-white/40 shadow-xl flex items-center gap-3">
+              <span className="text-lg font-black tracking-tight text-primary">CO</span>
+              <div className="w-1 h-4 bg-accent rounded-full rotate-12" />
+              <span className="text-lg font-black tracking-tight text-foreground">ESG</span>
             </div>
-          </div>
         </motion.div>
       </div>
     </div>

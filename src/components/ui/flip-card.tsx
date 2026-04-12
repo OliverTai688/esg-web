@@ -44,7 +44,7 @@ export const FlipCard = ({
           )}
           style={{ WebkitBackfaceVisibility: "hidden" }}
         >
-          <div className="size-16 rounded-2xl bg-destructive/10 flex items-center justify-center text-destructive/70 mb-6 transition-transform duration-300 group-hover:scale-110">
+          <div className="size-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary/70 mb-6 transition-transform duration-300 group-hover:scale-110">
             {icon}
           </div>
           <h3 className="text-xl font-bold text-center leading-tight">{title}</h3>

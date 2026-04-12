@@ -2,11 +2,11 @@ import { Container } from "@/components/core/Container"
 import { Section } from "@/components/core/Section"
 import { Heading } from "@/components/core/Heading"
 import { Button } from "@/components/ui/button"
-import { Card, CardTitle, CardDescription } from "@/components/ui/card"
+import { Card, CardTitle, CardDescription, CardHeader, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
-import { Coffee, BookOpen, FileText, GraduationCap, Users, Handshake, Mail, Clock, ArrowRight, ChevronDown, MessageCircle } from "lucide-react"
+import { Coffee, BookOpen, FileText, GraduationCap, Users, Handshake, Mail, Clock, ArrowRight, ChevronDown, MessageCircle, Crown, Check } from "lucide-react"
 import type { Metadata } from "next"
 import { getDictionary } from "@/i18n/getDictionary"
 import type { Locale } from "@/i18n/config"
@@ -137,7 +137,7 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
       </Section>
 
       {/* 企業 ESG 解決方案 */}
-      <Section background="muted" withTopo>
+      <Section id="solutions" background="muted" withTopo>
         <Container>
           {/* TODO: move title/description to dictionary */}
           <Heading
@@ -180,7 +180,7 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
       </Section>
 
       {/* 非營利組織合作模式 */}
-      <Section>
+      <Section id="ngo">
         <Container>
           <div className="mx-auto max-w-4xl">
             <Heading
@@ -248,8 +248,49 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
         </Container>
       </Section>
 
+      {/* 會員機制 */}
+      <Section id="membership" withPattern>
+        <Container>
+          <Heading
+            level={2}
+            label={t.consultingPage.membershipSection.label}
+            title={t.consultingPage.membershipSection.title}
+            description={t.consultingPage.membershipSection.description}
+            align="center"
+          />
+          <div className="grid gap-6 md:grid-cols-3 max-w-5xl mx-auto">
+            {t.consultingPage.membershipSection.tiers.map((tier, idx) => (
+              <Card key={idx} className={`relative flex flex-col text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${idx === 1 ? "border-primary/30 shadow-md" : "border-transparent"}`}>
+                {idx === 1 && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                    <Badge variant="accent" className="text-[10px] px-3 py-0.5 shadow-sm">
+                      <Crown size={12} className="mr-1" />
+                      {locale === "zh" ? "推薦" : "Recommended"}
+                    </Badge>
+                  </div>
+                )}
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-xl">{tier.title}</CardTitle>
+                  <p className="text-2xl font-black text-primary mt-2">{tier.price}</p>
+                </CardHeader>
+                <CardContent className="flex-1">
+                  <ul className="space-y-3 text-sm text-left">
+                    {tier.features.map((feature, fi) => (
+                      <li key={fi} className="flex items-start gap-2.5">
+                        <Check size={16} className="mt-0.5 shrink-0 text-primary" />
+                        <span className="text-muted-foreground">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
       {/* 常見問題 FAQ */}
-      <Section background="muted">
+      <Section id="faq" background="muted">
         <Container>
           <div className="mx-auto max-w-3xl">
             {/* TODO: move title to dictionary */}
@@ -284,7 +325,7 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
       </Section>
 
       {/* 聯絡表單區 */}
-      <Section withPattern>
+      <Section id="contact" withPattern>
         <Container>
           <div className="mx-auto max-w-2xl">
             <Heading

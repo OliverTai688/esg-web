@@ -6,10 +6,10 @@ interface FooterProps {
   locale: Locale
   dict: {
     nav: {
-      sustainability: string
-      events: string
-      learning: string
-      consulting: string
+      sustainability: { label: string }
+      events: { label: string }
+      learning: { label: string }
+      consulting: { label: string }
     }
     footer: {
       brand: string
@@ -35,10 +35,10 @@ export function Footer({ locale, dict }: FooterProps) {
           </span>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-xs font-semibold text-muted-foreground">
-          <Link href={`/${locale}/sustainability`} className="hover:text-primary transition-colors">{nav.sustainability}</Link>
-          <Link href={`/${locale}/events`} className="hover:text-primary transition-colors">{nav.events}</Link>
-          <Link href={`/${locale}/learning`} className="hover:text-primary transition-colors">{nav.learning}</Link>
-          <Link href={`/${locale}/consulting`} className="hover:text-primary transition-colors">{nav.consulting}</Link>
+          <Link href={`/${locale}/sustainability`} className="hover:text-primary transition-colors">{nav.sustainability.label}</Link>
+          <Link href={`/${locale}/events`} className="hover:text-primary transition-colors">{nav.events.label}</Link>
+          <Link href={`/${locale}/learning`} className="hover:text-primary transition-colors">{nav.learning.label}</Link>
+          <Link href={`/${locale}/consulting`} className="hover:text-primary transition-colors">{nav.consulting.label}</Link>
         </div>
         <div className="text-xs text-muted-foreground font-medium">
           {footer.copyright}
