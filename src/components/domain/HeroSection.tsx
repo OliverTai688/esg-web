@@ -84,10 +84,10 @@ const HeroSection = ({
 
           {/* Trust indicators — foreground color to reduce green overload (#2) */}
           {trustIndicators && trustIndicators.length > 0 && (
-            <div className="mt-20 pt-10 border-t border-border w-full grid grid-cols-2 md:grid-cols-4 gap-10">
+            <div className="mt-20 pt-10 border-t border-border w-full grid grid-cols-3 gap-4 md:gap-10">
               {trustIndicators.map((indicator, idx) => (
                 <div key={idx} className="flex flex-col gap-2 animate-in fade-in duration-1000" style={{ animationDelay: `${600 + idx * 100}ms` }}>
-                  <span className="text-3xl font-black text-foreground tracking-tight">{indicator.metric}</span>
+                  <span className="text-2xl md:text-3xl font-black text-foreground tracking-tight">{indicator.metric}</span>
                   <span className="text-[11px] text-muted-foreground uppercase tracking-[0.2em] font-semibold">{indicator.label}</span>
                 </div>
               ))}

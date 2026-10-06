@@ -26,6 +26,7 @@ import Link from "next/link"
 import type { Metadata } from "next"
 import type { Locale } from "@/i18n/config"
 import { getDictionary } from "@/i18n/getDictionary"
+import { formatImpactMetric } from "@/lib/utils"
 
 export async function generateMetadata({
   params,
@@ -52,6 +53,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const typedLocale = locale as Locale
   const dict = await getDictionary(typedLocale)
   const t = dict
+  const evidenceIcons = [TrendingUp, Handshake, Globe]
 
   return (
     <main className="flex min-h-screen flex-col">
@@ -63,7 +65,10 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         description={t.hero.description}
         primaryCta={{ label: t.hero.primaryCta, href: `/${locale}/consulting` }}
         secondaryCta={{ label: t.hero.secondaryCta, href: `/${locale}/sustainability` }}
-        trustIndicators={t.hero.indicators}
+        trustIndicators={t.impact.metrics.map((metric) => ({
+          metric: formatImpactMetric(metric),
+          label: metric.label,
+        }))}
       />
 
       {/* ─── Section 2: Brand Story — bg-muted/30 ─── */}
@@ -116,30 +121,23 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <EvidenceCard
-              tag={t.evidence.cards[0].tag}
-              title={t.evidence.cards[0].title}
-              metric={t.evidence.cards[0].metric}
-              unit={t.evidence.cards[0].unit}
-              description={t.evidence.cards[0].description}
-              icon={TrendingUp}
-            />
-            <EvidenceCard
-              tag={t.evidence.cards[1].tag}
-              title={t.evidence.cards[1].title}
-              metric={t.evidence.cards[1].metric}
-              unit={t.evidence.cards[1].unit}
-              description={t.evidence.cards[1].description}
-              icon={Globe}
-            />
-            <EvidenceCard
-              tag={t.evidence.cards[2].tag}
-              title={t.evidence.cards[2].title}
-              metric={t.evidence.cards[2].metric}
-              unit={t.evidence.cards[2].unit}
-              description={t.evidence.cards[2].description}
-              icon={Handshake}
-            />
+            {/* Cards pair by index with t.impact.metrics: resources → partnerships → forums */}
+            {t.evidence.cards.map((card, idx) => {
+              const metric = t.impact.metrics[idx]
+              return (
+                <EvidenceCard
+                  key={card.title}
+                  tag={card.tag}
+                  title={card.title}
+                  value={metric.value}
+                  prefix={metric.prefix}
+                  suffix={metric.suffix}
+                  unit={metric.label}
+                  description={card.description}
+                  icon={evidenceIcons[idx]}
+                />
+              )
+            })}
           </div>
         </Container>
       </Section>

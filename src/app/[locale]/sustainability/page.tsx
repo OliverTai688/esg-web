@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import type { Metadata } from "next"
 import { getDictionary } from "@/i18n/getDictionary"
+import { formatImpactMetric } from "@/lib/utils"
 import type { Locale } from "@/i18n/config"
 import {
   ArrowRight,
@@ -24,13 +25,13 @@ import {
   Quote,
   UserCheck,
   Globe,
-  Zap,
   Eye,
   Target,
   ChevronRight,
   Leaf,
   Heart,
   Briefcase,
+  Handshake,
 } from "lucide-react"
 
 import { MethodologyTerminal } from "@/components/domain/MethodologyTerminal"
@@ -54,7 +55,7 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
 
   const problemIcons = [MessageSquareX, FileX2, Unplug]
   const serviceIcons = [Building2, BookOpen, Users, Link2]
-  const metricIcons = [TrendingUp, Globe, Users, Zap]
+  const metricIcons = [TrendingUp, Handshake, Globe]
 
   return (
     <main className="flex min-h-screen flex-col">
@@ -223,9 +224,9 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
           </div>
 
           {/* Metrics grid */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-            {s.proof.metrics.map(
-              (metric: { value: string; label: string; suffix: string }, i: number) => {
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-16">
+            {t.impact.metrics.map(
+              (metric, i) => {
                 const Icon = metricIcons[i] ?? TrendingUp
                 return (
                   <div key={i} className="flex flex-col items-center text-center">
@@ -233,7 +234,7 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
                       <Icon size={26} />
                     </div>
                     <span className="text-4xl md:text-5xl font-black text-primary-foreground tracking-tight mb-2">
-                       {metric.value}
+                      {formatImpactMetric(metric)}
                     </span>
                     <span className="text-sm text-primary-foreground/70 font-medium uppercase tracking-wider">
                       {metric.label}

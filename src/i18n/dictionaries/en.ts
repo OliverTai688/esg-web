@@ -55,6 +55,13 @@ const en: Dictionary = {
     join: "Join Us",
     cta: "Book a Chat",
   },
+  impact: {
+    metrics: [
+      { value: 10, prefix: "NT$", suffix: "M", label: "Resources Mobilized" },
+      { value: 130, prefix: "", suffix: "+", label: "Cross-Industry Partnerships" },
+      { value: 8, prefix: "", suffix: "+", label: "International Forums" },
+    ],
+  },
   hero: {
     label: "Professional Bridge for Sustainable Brands",
     title: "Many are doing meaningful work — but struggle to be seen by the market",
@@ -63,12 +70,6 @@ const en: Dictionary = {
       "Many brands and non-profits practice solid sustainability but struggle to articulate their value to the corporate world. CO-ESG serves as the bridge, ensuring your sustainability narrative is visible, understood, and effectively connected with the right partners.",
     primaryCta: "Book a 15-min Coffee Chat",
     secondaryCta: "Learn More",
-    indicators: [
-      { metric: "~NT$10M", label: "Economic Resources Generated" },
-      { metric: "8+", label: "Companies on Int'l Forums" },
-      { metric: "30+", label: "Global Youth Reached" },
-      { metric: "5+", label: "Cross-Industry Partnerships" },
-    ],
   },
   story: {
     label: "Our Story",
@@ -127,28 +128,21 @@ const en: Dictionary = {
     cards: [
       {
         tag: "Revenue Impact",
-        title: "Economic Resources via Whitepapers",
-        metric: "~NT$10M",
-        unit: "Economic Injection",
+        title: "Economic Resources via Sustainability Whitepapers",
         description:
           "A brand design company secured government grants, angel investment, and bank loans totaling nearly NT$10M within one year — all through a sustainability whitepaper crafted with CO-ESG.",
-        trend: "Articulate clearly, be seen",
-      },
-      {
-        tag: "Advisory Track",
-        title: "On the International Stage",
-        metric: "8+",
-        unit: "Companies on Int'l Forums",
-        description:
-          "A single whitepaper helped a brand that makes watches from ocean waste reach an international youth forum stage. To date, 8+ companies have been elevated to international forums, reaching 30+ global youth delegates.",
       },
       {
         tag: "Partnership Cases",
         title: "Cross-Industry Sustainability",
-        metric: "5+",
-        unit: "Partnerships Formed",
         description:
-          "From international forums to corporate procurement lists, from transnational sustainability conferences to co-branded product launches — CO-ESG's co-learning platform continues to catalyze cross-industry collaboration.",
+          "From international forums to corporate procurement lists, from transnational sustainability conferences to co-branded product launches — the ESG Co-Learning instructor platform continues to catalyze cross-industry collaboration.",
+      },
+      {
+        tag: "Advisory Track",
+        title: "On the International Stage",
+        description:
+          "A single sustainability whitepaper helped a brand that makes watches from ocean waste reach an international youth forum stage. To date, 8+ companies have been elevated to international forums, bringing Taiwan's sustainability practitioners to a global audience.",
       },
     ],
   },
@@ -342,12 +336,6 @@ const en: Dictionary = {
       label: "Results",
       title: "The numbers speak",
       description: "Behind every number is a real partnership and real change.",
-      metrics: [
-        { value: "~NT$10M", label: "Economic Resources Generated", suffix: "" },
-        { value: "8+", label: "Companies on Int'l Forums", suffix: "" },
-        { value: "30+", label: "Global Youth Delegates", suffix: "" },
-        { value: "5+", label: "Cross-Industry Partnerships", suffix: "" },
-      ],
       caseTitle: "Case Study",
       caseQuote: "A single sustainability whitepaper helped a brand making watches from ocean waste reach the international youth forum stage.",
       caseAuthor: "CO-ESG Partner Brand",
@@ -461,7 +449,7 @@ const en: Dictionary = {
         {
           year: "2026",
           title: "International Forums & Cross-Industry",
-          description: "Helped 8+ companies reach international forum stages and facilitated 5+ cross-industry sustainability partnerships.",
+          description: "Helped 8+ companies reach international forum stages and continued to facilitate cross-industry sustainability partnerships.",
         },
       ],
     },
@@ -488,8 +476,8 @@ const en: Dictionary = {
           title: "Leisure Farm Association Cross-Industry Collaboration",
           description: "Partnered with the Taiwan Leisure Farm Association to translate agricultural sustainability value into ESG language, enabling long-term partnerships.",
           tag: "Industry Partnership",
-          metric: "5+",
-          metricLabel: "Partnerships",
+          metric: "130+",
+          metricLabel: "Cross-Industry Partnerships",
         },
       ],
     },

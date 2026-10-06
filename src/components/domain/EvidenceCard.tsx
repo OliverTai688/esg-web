@@ -7,31 +7,27 @@ import NumberTicker from "@/components/magicui/NumberTicker"
 
 interface EvidenceCardProps {
   title: string
-  metric: string
+  value: number
+  prefix?: string
+  suffix?: string
   description: string
   unit?: string
   icon?: LucideIcon
-  trend?: {
-    value: string
-    positive?: boolean
-  }
   tag?: string
   className?: string
 }
 
 const EvidenceCard = ({
   title,
-  metric,
+  value,
+  prefix,
+  suffix,
   description,
   unit,
   icon: Icon,
   tag,
   className,
 }: EvidenceCardProps) => {
-  const numericMatch = metric.match(/(\d+)/)
-  const numericValue = numericMatch ? parseInt(numericMatch[0], 10) : 0
-  const suffix = metric.replace(numericMatch ? numericMatch[0] : "", "")
-
   return (
     <Card className={cn("group h-full border border-border bg-white shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-500", className)}>
       <CardHeader className="pb-2">
@@ -53,14 +49,9 @@ const EvidenceCard = ({
         <div className="flex items-baseline gap-1 mb-3">
           {/* Metric in foreground instead of primary to reduce green (#2) */}
           <CardTitle className="text-4xl font-black text-foreground tracking-tighter">
-            {numericMatch ? (
-              <>
-                <NumberTicker value={numericValue} />
-                <span className="text-2xl font-bold ml-1">{suffix}</span>
-              </>
-            ) : (
-              metric
-            )}
+            {prefix && <span className="text-2xl font-bold mr-1">{prefix}</span>}
+            <NumberTicker value={value} />
+            {suffix && <span className="text-2xl font-bold ml-1">{suffix}</span>}
           </CardTitle>
           {unit && <span className="text-muted-foreground text-xs font-semibold ml-1">{unit}</span>}
         </div>

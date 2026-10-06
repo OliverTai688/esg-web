@@ -54,6 +54,15 @@ const zh = {
     join: "加入我們",
     cta: "預約諮詢",
   },
+  // Headline impact numbers — the only place these figures live.
+  // Rendered by the home hero, home evidence cards and /sustainability#impact.
+  impact: {
+    metrics: [
+      { value: 1000, prefix: "", suffix: "萬", label: "資源挹注" },
+      { value: 130, prefix: "", suffix: "+", label: "跨產業合作" },
+      { value: 8, prefix: "", suffix: "+", label: "國際論壇" },
+    ],
+  },
   hero: {
     label: "永續品牌的專業橋樑",
     title: "很多人正在做有意義的事，卻不知道怎麼讓市場看見",
@@ -62,12 +71,6 @@ const zh = {
       "許多品牌、農業、社會企業、非營利組織，已具備扎實的永續理念並正在執行，但面對企業端，經常說不清楚自己能提供什麼。永續，就是與企業對話的共同語言。共好玟化想要成為那座橋樑，確保理念相符的夥伴能精準對接。",
     primaryCta: "預約 15 分鐘 Coffee Chat",
     secondaryCta: "了解服務",
-    indicators: [
-      { metric: "~1000萬", label: "經濟資源挹注" },
-      { metric: "8+", label: "企業登國際論壇" },
-      { metric: "30+", label: "國際青年代表認識" },
-      { metric: "5+", label: "跨產業合作案例" },
-    ],
   },
   story: {
     label: "品牌故事",
@@ -127,27 +130,20 @@ const zh = {
       {
         tag: "營業額助益",
         title: "永續白皮書帶來的經濟資源",
-        metric: "1000萬",
-        unit: "經濟挹注",
         description:
           "透過共好玟化協助撰寫永續白皮書，讓一家品牌設計公司在一年內獲得政府補助、天使投資與銀行貸款，累計近 1000 萬的經濟資源挹注。",
-        trend: "說清楚，才能被看見",
-      },
-      {
-        tag: "顧問導向",
-        title: "站上國際舞台",
-        metric: "8+",
-        unit: "企業登國際論壇",
-        description:
-          "一份永續白皮書，讓用海廢做錶的品牌站上國際青年論壇的舞台。迄今已協助 8 個企業登上國際論壇，讓超過 30 位國際青年代表認識台灣的永續實踐者。",
       },
       {
         tag: "合作案例",
         title: "跨產業永續合作",
-        metric: "5+",
-        unit: "促成案例",
         description:
           "從國際論壇到企業採購清單、從跨國永續會議到聯名商品合作，共好玟化持續透過ESG共學坊講師平台促成跨產業合作。",
+      },
+      {
+        tag: "顧問導向",
+        title: "站上國際舞台",
+        description:
+          "一份永續白皮書，讓用海廢做錶的品牌站上國際青年論壇的舞台。迄今已協助 8 個企業登上國際論壇，讓國際看見台灣的永續實踐者。",
       },
     ],
   },
@@ -347,12 +343,6 @@ const zh = {
       label: "實際成果",
       title: "用數據說話",
       description: "每一個數字背後，都是真實的合作與改變。",
-      metrics: [
-        { value: "~1,000萬", label: "經濟資源挹注", suffix: "" },
-        { value: "8+", label: "企業登國際論壇", suffix: "家" },
-        { value: "30+", label: "國際青年代表", suffix: "位" },
-        { value: "5+", label: "跨產業合作案例", suffix: "件" },
-      ],
       caseTitle: "客戶案例",
       caseQuote: "一份永續白皮書，讓用海廢做錶的品牌站上國際青年論壇舞台。",
       caseAuthor: "共好玟化合作品牌",
@@ -469,7 +459,7 @@ const zh = {
         {
           year: "2026",
           title: "國際論壇與跨界合作",
-          description: "協助 8+ 家企業登上國際論壇舞台，促成 5+ 件跨產業永續合作案例。",
+          description: "協助 8+ 家企業登上國際論壇舞台，並持續促成跨產業永續合作。",
         },
       ],
     },
@@ -496,8 +486,8 @@ const zh = {
           title: "休閒農場學會跨界合作",
           description: "與台灣休閒農場學會合作，將農業永續價值轉譯為企業可理解的 ESG 語言，促成長期合作。",
           tag: "產業合作",
-          metric: "5+",
-          metricLabel: "合作案例",
+          metric: "130+",
+          metricLabel: "跨產業合作",
         },
       ],
     },
