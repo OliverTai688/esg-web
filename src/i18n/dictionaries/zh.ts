@@ -10,7 +10,7 @@ const zh = {
       practices: "共好實踐",
       practicesDesc: "可量化的實際影響力與合作成果",
       ecosystem: "共好生態圈",
-      ecosystemDesc: "串連顧問、講師、企業的永續共同體",
+      ecosystemDesc: "串連顧問、供應鏈、企業的永續共同體",
     },
     events: {
       label: "永續足跡",
@@ -396,14 +396,13 @@ const zh = {
     ecosystem: {
       label: "生態圈",
       title: "共好生態圈",
-      description: "串連顧問、講師、企業與國際網絡，形成互相賦能的永續共同體。",
+      description: "串連顧問、供應鏈、企業與國際網絡，形成互相賦能的永續共同體。",
       roles: [
         { title: "永續顧問團隊", description: "資深 ESG 顧問與品牌策略師，提供一對一專業輔導。" },
-        { title: "ESG共學坊講師群", description: "來自各領域的永續實踐者，分享第一手產業經驗。" },
+        { title: "供應鏈對接", description: "擁有優質供應商，並可精準對接。" },
         { title: "企業合作夥伴", description: "跨產業品牌與企業，共同打造永續商業模式。" },
         { title: "國際連結網絡", description: "與全球永續組織接軌，引進國際最新趨勢與資源。" },
       ],
-      centerLabel: "CO-ESG",
     },
     // 8. CTA
     cta: {

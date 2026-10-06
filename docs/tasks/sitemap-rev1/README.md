@@ -24,8 +24,8 @@
 |---|---|---|---|---|---|
 | [G01](G01-terminology.md) | 用語統一：永續白皮書／ESG共學坊／溝通（**已完成**） | 文案掃除 | M | 1 | — |
 | [G02](G02-brand-theme-and-logo.md) | 品牌色改用共好玟化 CIS、置入正式 logo | 設計 + 主題 | L | 0／2／3 | CIS 文件、logo 檔 |
-| [G03](G03-navbar-single-column.md) | Navbar 下拉單欄化、依頁面順序 | 重構 | M | 1、2 | — |
-| [G04](G04-footer-line-company-info.md) | Footer 加 LINE 按鈕與公司資料 | TSX | S | 1 | — |
+| [G03](G03-navbar-single-column.md) | Navbar 下拉單欄化、依頁面順序（**第一階段已完成**） | 重構 | M | 1、2 | — |
+| [G04](G04-footer-line-company-info.md) | Footer 加 LINE 按鈕與公司資料（**已完成**） | TSX | S | 1 | — |
 | [G05](G05-mobile-rwd.md) | 手機版 RWD 優化 | 樣式 | M–L | 5 | 內容與視覺定案 |
 | [G06](G06-impact-numbers-single-source.md) | 成果數字統一（1000萬→130+→8+）（**已完成**） | 資料 | S–M | 1 | — |
 | [G07](G07-asset-intake.md) | 素材匯入與圖片管線 | 素材 | M | 0 | Drive 權限、授權 |
@@ -48,7 +48,7 @@
 | [S03](S03-dual-benefit-theory.md) | 雙效益理論取代終端機區塊 | 新區塊 | M | 2 | — |
 | [S04](S04-services-restructure.md) | 服務卡重整（**已完成**） | 文案 | S | 1 | — |
 | [S05](S05-impact-quant-qual.md) | 成果分量化與質化 | 結構 | S–M | 2 | 質化內容 |
-| [S06](S06-ecosystem-diagram.md) | 生態圈：註冊 logo、供應鏈對接、7 位顧問 | 文案 + 素材 | M | 1（文字）／3（圖） | logo、照片 |
+| [S06](S06-ecosystem-diagram.md) | 生態圈：註冊 logo、供應鏈對接、7 位顧問（**文字部分已完成**） | 文案 + 素材 | M | 1（文字）／3（圖） | logo、照片 |
 
 ### 永續足跡 `/events`
 

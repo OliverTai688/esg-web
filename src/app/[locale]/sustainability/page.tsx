@@ -310,7 +310,7 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
             align="center"
           />
 
-          <EcosystemNetwork roles={s.ecosystem.roles} centerLabel={s.ecosystem.centerLabel} />
+          <EcosystemNetwork roles={s.ecosystem.roles} />
         </Container>
       </Section>
 

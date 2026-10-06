@@ -11,7 +11,7 @@ const en: Dictionary = {
       practices: "Impact",
       practicesDesc: "Measurable outcomes and partnership results",
       ecosystem: "Ecosystem",
-      ecosystemDesc: "A network of consultants, instructors, and enterprises",
+      ecosystemDesc: "A network of consultants, supply chains, and enterprises",
     },
     events: {
       label: "Events",
@@ -387,14 +387,13 @@ const en: Dictionary = {
     ecosystem: {
       label: "Ecosystem",
       title: "The CO-ESG Network",
-      description: "Connecting consultants, instructors, enterprises, and international networks into a mutually empowering sustainability community.",
+      description: "Connecting consultants, supply chains, enterprises, and international networks into a mutually empowering sustainability community.",
       roles: [
         { title: "Sustainability Consultants", description: "Senior ESG advisors and brand strategists providing one-on-one professional guidance." },
-        { title: "ESG Co-Learning Instructors", description: "Sustainability practitioners from diverse fields sharing first-hand industry experience." },
+        { title: "Supply Chain Connection", description: "Quality suppliers, connected with precision." },
         { title: "Enterprise Partners", description: "Cross-industry brands and enterprises co-creating sustainable business models." },
         { title: "International Networks", description: "Connected with global sustainability organizations, bringing the latest trends and resources." },
       ],
-      centerLabel: "CO-ESG",
     },
     cta: {
       title: "Ready to be seen by the market?",

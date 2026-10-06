@@ -3,10 +3,9 @@
 import * as React from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
-import { UserCheck, Users, Building2, Globe, ArrowUpRight } from "lucide-react"
+import { UserCheck, Link2, Building2, Globe, ArrowUpRight } from "lucide-react"
 import { ParticleNetwork } from "./ParticleNetwork"
 import { AnimatedGradientBackground } from "@/components/core/AnimatedGradientBackground"
-import { AvatarCircles } from "@/components/magicui/avatar-circles"
 
 interface EcosystemRole {
   title: string
@@ -15,43 +14,17 @@ interface EcosystemRole {
 
 interface EcosystemNetworkProps {
   roles: readonly EcosystemRole[]
-  centerLabel: string
   className?: string
 }
 
-const AVATAR_DATA = [
-  // Consultants
-  [
-    { imageUrl: "https://avatars.githubusercontent.com/u/16860528", profileUrl: "https://github.com/dillionverma" },
-    { imageUrl: "https://avatars.githubusercontent.com/u/20110627", profileUrl: "https://github.com/tomonarifeehan" },
-    { imageUrl: "https://avatars.githubusercontent.com/u/106103625", profileUrl: "https://github.com/BankkRoll" },
-  ],
-  // Instructors
-  [
-    { imageUrl: "https://avatars.githubusercontent.com/u/59228569", profileUrl: "https://github.com/safethecode" },
-    { imageUrl: "https://avatars.githubusercontent.com/u/59442788", profileUrl: "https://github.com/sanjay-mali" },
-    { imageUrl: "https://avatars.githubusercontent.com/u/89768406", profileUrl: "https://github.com/itsarghyadas" },
-  ],
-  // Companies
-  [
-    { imageUrl: "https://avatars.githubusercontent.com/u/124599", profileUrl: "https://github.com/google" },
-    { imageUrl: "https://avatars.githubusercontent.com/u/6154722", profileUrl: "https://github.com/microsoft" },
-    { imageUrl: "https://avatars.githubusercontent.com/u/10639145", profileUrl: "https://github.com/apple" },
-  ],
-  // Global Network
-  [
-    { imageUrl: "https://avatars.githubusercontent.com/u/7104764", profileUrl: "https://github.com/unicef" },
-    { imageUrl: "https://avatars.githubusercontent.com/u/1024025", profileUrl: "https://github.com/un" },
-    { imageUrl: "https://avatars.githubusercontent.com/u/14985020", profileUrl: "https://github.com/worldbank" },
-  ],
-]
+// One icon per role, index-aligned with `roles`. Real team photos and partner
+// logos replace these once the client assets are prepared (task S06-B).
+const ROLE_ICONS = [UserCheck, Link2, Building2, Globe]
 
-export const EcosystemNetwork = ({ roles, centerLabel, className }: EcosystemNetworkProps) => {
+export const EcosystemNetwork = ({ roles, className }: EcosystemNetworkProps) => {
   const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null)
   const [hubCoords, setHubCoords] = React.useState<{ x: number; y: number } | null>(null)
   const containerRef = React.useRef<HTMLDivElement>(null)
-  
-  const icons = [UserCheck, Users, Building2, Globe]
 
   // Initialize or update the center hub coordinates
   React.useEffect(() => {
@@ -134,6 +107,7 @@ export const EcosystemNetwork = ({ roles, centerLabel, className }: EcosystemNet
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-2 lg:max-w-4xl lg:mx-auto">
           {roles.map((role, i) => {
             const isHovered = hoveredIndex === i
+            const RoleIcon = ROLE_ICONS[i] ?? Globe
 
             return (
               <motion.div
@@ -160,11 +134,9 @@ export const EcosystemNetwork = ({ roles, centerLabel, className }: EcosystemNet
                   )}
                 >
                   <div className="flex justify-between items-end">
-                    <AvatarCircles 
-                      avatarUrls={AVATAR_DATA[i] || []} 
-                      numPeople={i === 0 ? 12 : i === 1 ? 25 : i === 2 ? 40 : 15}
-                      className="mb-2"
-                    />
+                    <div className="mb-2 flex size-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                      <RoleIcon size={24} />
+                    </div>
                     
                     <motion.div
                       animate={{ opacity: isHovered ? 1 : 0, scale: isHovered ? 1 : 0.8 }}

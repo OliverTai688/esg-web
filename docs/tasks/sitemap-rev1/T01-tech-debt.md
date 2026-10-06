@@ -37,8 +37,8 @@
 
 **5. 死碼與無效設定**
 
-- `src/components/domain/EcosystemBeam.tsx`（無引用；S06 會刪）。
-- `src/components/ui/navigation-menu.tsx`、`Navbar.tsx` 的 `MegaMenuItem`（G03 會刪）。
+- ~~`src/components/domain/EcosystemBeam.tsx`~~（已在 S06 刪除）。
+- ~~`src/components/ui/navigation-menu.tsx`、`Navbar.tsx` 的 `MegaMenuItem`~~（已在 G03 刪除）。
 - `src/components/ui/collapsible.tsx`（無引用）。
 - `tailwind.config.ts`：Tailwind v4 下沒有被載入，裡面的自訂鍵全站沒用到（G02 會刪）。
 - 辭典中沒被使用的鍵：`trust.filters`、`sustainabilityPage.proof.caseTitle`、`metrics[].suffix`、`evidence.cards[].trend`、`sustainabilityPage.title`、`contactForm.success`（B01 會用到）。
