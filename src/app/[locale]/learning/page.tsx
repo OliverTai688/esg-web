@@ -17,6 +17,16 @@ import {
   Mic2,
 } from "lucide-react"
 import { FilterablePosts } from "@/components/domain/FilterablePosts"
+import { learningSections, type LearningSectionId } from "@/lib/learning-sections"
+
+const sectionIcons: Record<LearningSectionId, typeof Lightbulb> = {
+  innovation: Lightbulb,
+  market: TrendingUp,
+  responsibility: Shield,
+  collaboration: Handshake,
+  communication: MessageCircle,
+  interviews: Mic2,
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
@@ -35,16 +45,6 @@ export default async function LearningPage({ params }: { params: Promise<{ local
   const cats = getCategories(posts)
 
   const [featured, ...rest] = posts
-
-  // Topic sections mapping: sectionId → categorySlug → icon
-  const topicSections = [
-    { id: "innovation", slug: "innovation-strategy", icon: Lightbulb },
-    { id: "market", slug: "data-market-competition", icon: TrendingUp },
-    { id: "responsibility", slug: "sustainability-esg", icon: Shield },
-    { id: "collaboration", slug: "corporate-nonprofit-collaboration", icon: Handshake },
-    { id: "communication", slug: "communication-empathy", icon: MessageCircle },
-    { id: "interviews", slug: "interviews", icon: Mic2 },
-  ] as const
 
   return (
     <main className="flex min-h-screen flex-col">
@@ -75,10 +75,10 @@ export default async function LearningPage({ params }: { params: Promise<{ local
       </Section>
 
       {/* ── Topic Sections ── */}
-      {topicSections.map((topic, idx) => {
+      {learningSections.map((topic, idx) => {
         const sectionData = t.learningPage.sections[topic.id]
         const topicPosts = getPostsByCategory(posts, topic.slug)
-        const Icon = topic.icon
+        const Icon = sectionIcons[topic.id]
         return (
           <Section
             key={topic.id}

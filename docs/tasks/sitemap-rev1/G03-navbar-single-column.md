@@ -43,7 +43,7 @@
 3. 順序改為頁面順序。共好永續力暫時為：服務項目 → 共好實踐 → 願景與使命 → 共好生態圈（S02 完成後會再調整）。
 4. 永續足跡新增「顧問諮詢與訂閱方案」→ `/events#services`；新增辭典鍵 `nav.events.services`／`servicesDesc`（zh／en），並補上 `Navbar.tsx:74-84` 的型別。「活動列表」的連結改為 `/events#upcoming`。
 5. 可及性：頂層項目可用點擊與鍵盤（Enter／空白鍵開啟、Esc 關閉、方向鍵或 Tab 移動），並保留 hover。頂層文字本身可連到該頁。
-6. 錨點偏移：在 `globals.css` 對有 id 的區塊統一設定 `scroll-margin-top`（約 80px）。
+6. （已在 L01 完成：`html { scroll-padding-top: 60px }`）錨點偏移：在 `globals.css` 對有 id 的區塊統一設定 `scroll-margin-top`（約 80px）。
 7. labels 型別改為直接引用 `Dictionary["nav"]`，不要手動重複定義。
 8. 刪除死碼：`MegaMenuItem`、`xOffset`、`ui/navigation-menu.tsx`（確認無引用）。
 

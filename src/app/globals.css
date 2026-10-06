@@ -249,6 +249,8 @@
   }
   html {
     @apply font-sans scroll-smooth;
+    /* Keep #anchor targets clear of the 60px sticky header */
+    scroll-padding-top: 60px;
   }
 }
 

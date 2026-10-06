@@ -7,6 +7,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import Link from "next/link"
 import type { Metadata } from "next"
 import { getDictionary } from "@/i18n/getDictionary"
+import { learningBackHref } from "@/lib/learning-sections"
 import type { Locale } from "@/i18n/config"
 import { i18n } from "@/i18n/config"
 import { getAllPosts, getCategories, getPostsByCategory } from "@/lib/posts"
@@ -54,7 +55,7 @@ export default async function LearningCategoryPage({ params }: LearningCategoryP
         <Container>
           <div className="mb-6">
             <Button variant="outline" size="sm" className="rounded-full" asChild>
-              <Link href={`/${locale}/learning`}>{t.learningPage.back}</Link>
+              <Link href={learningBackHref(locale, category)}>{t.learningPage.back}</Link>
             </Button>
           </div>
           <Heading
@@ -111,7 +112,7 @@ export default async function LearningCategoryPage({ params }: LearningCategoryP
 
           <div className="text-center mt-12">
             <Button variant="outline" size="lg" className="rounded-full" asChild>
-              <Link href={`/${locale}/learning`}>{t.learningPage.back}</Link>
+              <Link href={learningBackHref(locale, category)}>{t.learningPage.back}</Link>
             </Button>
           </div>
         </Container>

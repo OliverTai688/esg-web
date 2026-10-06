@@ -6,6 +6,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import { getDictionary } from "@/i18n/getDictionary"
+import { learningBackHref } from "@/lib/learning-sections"
 import type { Locale } from "@/i18n/config"
 import { i18n } from "@/i18n/config"
 import { getAllSlugs, getPostBySlug } from "@/lib/posts"
@@ -51,7 +52,7 @@ export default async function LearningArticlePage({ params }: LearningArticlePag
         <Container className="max-w-3xl">
           <div className="mb-6">
             <Button variant="outline" size="sm" className="rounded-full" asChild>
-              <Link href={`/${locale}/learning`}>{t.learningPage.back}</Link>
+              <Link href={learningBackHref(locale, post.categorySlug)}>{t.learningPage.back}</Link>
             </Button>
           </div>
 
