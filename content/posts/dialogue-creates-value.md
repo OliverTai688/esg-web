@@ -5,7 +5,7 @@ excerpt: "對話是建立關係與培養信任的關鍵。從客戶、合作夥�
 category: "溝通與換位思考"
 categorySlug: "communication-empathy"
 tags: ["對話", "溝通", "企業合作"]
-author: "ESG 共學坊"
+author: "ESG共學坊"
 published: true
 ---
 

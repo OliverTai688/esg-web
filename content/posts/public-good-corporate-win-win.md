@@ -5,7 +5,7 @@ excerpt: "將公益團體重新定位為企業夥伴，從單方面施與受轉�
 category: "企業與非營利組織合作"
 categorySlug: "corporate-nonprofit-collaboration"
 tags: ["公益合作", "企業社會責任", "雙贏策略"]
-author: "ESG 共學坊"
+author: "ESG共學坊"
 published: true
 ---
 

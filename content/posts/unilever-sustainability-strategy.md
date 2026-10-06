@@ -5,7 +5,7 @@ excerpt: "探討如何透過尋找可複製模式與號召更多人參與，擴�
 category: "擴大影響力與創新策略"
 categorySlug: "innovation-strategy"
 tags: ["聯合利華", "影響力", "永續策略"]
-author: "ESG 共學坊"
+author: "ESG共學坊"
 published: true
 ---
 

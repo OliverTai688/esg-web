@@ -99,7 +99,7 @@ export const services: Course[] = [
   },
   {
     slug: 'impact-whitepaper',
-    title: '永續影響力白皮書精華版',
+    title: '永續白皮書精華版',
     type: 'consulting',
     description:
       '協助企業與組織透過精準的文字和視覺化圖表，整合ESG行動與成效，轉化為可對外溝通的簡報式影響力報告。',

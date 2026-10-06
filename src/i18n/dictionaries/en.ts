@@ -7,7 +7,7 @@ const en: Dictionary = {
       vision: "Vision & Mission",
       visionDesc: "Our core philosophy and methodology",
       services: "Services",
-      servicesDesc: "Consulting, whitepapers, and co-learning workshops",
+      servicesDesc: "Consulting, sustainability whitepapers, and ESG Co-Learning workshops",
       practices: "Impact",
       practicesDesc: "Measurable outcomes and partnership results",
       ecosystem: "Ecosystem",
@@ -111,17 +111,18 @@ const en: Dictionary = {
         label: "For the Ecosystem",
         title: "No effective bridge between large and small enterprises",
         description:
-          "There's no effective bridge between large and small enterprises. CO-ESG plays the role of knowledge translator and matchmaker, enabling both sides to dialogue on equal footing and build value-driven long-term partnerships.",
+          "There's no effective bridge between large and small enterprises. CO-ESG plays the role of knowledge translator and communicator, enabling both sides to dialogue on equal footing and build value-driven long-term partnerships.",
       },
     ],
     solutionTitle: "Becoming the Professional Bridge for the Sustainability Ecosystem",
     solutionDescription:
-      "Through consulting, whitepaper services, co-learning workshops, and our matchmaking platform, CO-ESG makes sustainability value visible, understood, and connected. Articulate clearly, and you will be seen.",
+      "Through consulting, sustainability whitepaper services, ESG Co-Learning, and our communication platform, CO-ESG makes sustainability value visible, understood, and connected. Articulate clearly, and you will be seen.",
+    solutionPillars: ["Consulting", "Sustainability Whitepapers", "Communication Platform"],
   },
   evidence: {
     label: "Impact Evidence",
     title: "Measurable Impact, Real Results",
-    description: "Through whitepaper consulting, co-learning instructor platform, and advisory services, CO-ESG drives measurable sustainability outcomes.",
+    description: "Through sustainability whitepaper consulting, the ESG Co-Learning instructor platform, and advisory services, CO-ESG drives measurable sustainability outcomes.",
     badge: "Data continuously updated",
     cards: [
       {
@@ -167,16 +168,16 @@ const en: Dictionary = {
           "Beyond compliance-ready suppliers, enterprises need partners that truly embody brand spirit and align with ESG metrics. We've built a partner network platform with proven sustainability practice.",
       },
       {
-        title: "Co-Learning Instructor Platform",
+        title: "ESG Co-Learning Instructor Platform",
         description:
-          "Through co-learning workshops, we connect sustainability practitioners across sectors — enabling instructors, brands, and enterprises to exchange ideas and spark new collaborations.",
+          "Through ESG Co-Learning, we connect sustainability practitioners across sectors — enabling instructors, brands, and enterprises to exchange ideas and spark new collaborations.",
       },
     ],
     timeline: [
       {
         year: "Current Phase",
-        title: "Advisory & Co-Learning Workshops",
-        description: "Through case-by-case advisory and co-learning events, we help brand owners build sustainability narratives and catalyze cross-industry partnerships.",
+        title: "Advisory & ESG Co-Learning",
+        description: "Through case-by-case advisory and ESG Co-Learning events, we help brand owners build sustainability narratives and catalyze cross-industry partnerships.",
       },
       {
         year: "Ongoing",
@@ -185,9 +186,9 @@ const en: Dictionary = {
       },
       {
         year: "3-Year Vision",
-        title: "Complete Supply Chain Matchmaking Platform",
+        title: "Complete Supply Chain Communication Platform",
         description:
-          "Evolving into a comprehensive upstream-downstream supply chain matchmaking platform — with case studies and service metrics ensuring every match is evidence-based, outcome-driven, and built for deepening relationships.",
+          "Evolving into a comprehensive upstream-downstream supply chain communication platform — with case studies and service metrics ensuring every connection is evidence-based, outcome-driven, and built for deepening relationships.",
       },
     ],
   },
@@ -261,7 +262,7 @@ const en: Dictionary = {
       badge: "ESG Strategy Consulting",
       title: "Don't let great sustainability work go unheard",
       subtitle: "We help enterprises and brands translate sustainability value into market-ready language.",
-      description: "CO-ESG is the most trusted professional bridge in the sustainability ecosystem — from brand positioning and whitepaper creation to supply chain matchmaking, we help you be seen, understood, and chosen.",
+      description: "CO-ESG is the most trusted professional bridge in the sustainability ecosystem — from brand positioning and sustainability whitepaper creation to supply chain connection, we help you be seen, understood, and chosen.",
       primaryCta: "Book a Free Consultation",
       secondaryCta: "See Our Methodology",
     },
@@ -280,7 +281,7 @@ const en: Dictionary = {
         },
         {
           title: "Supply chain disconnect",
-          description: "No effective bridge between large and small enterprises. Sustainability supply chain data is opaque, making matchmaking difficult.",
+          description: "No effective bridge between large and small enterprises. Sustainability supply chain data is opaque, making it hard to find the right partners.",
         },
       ],
     },
@@ -302,7 +303,7 @@ const en: Dictionary = {
         {
           number: "03",
           title: "Connect to Market",
-          description: "Through our co-learning platform and supply chain matchmaking, precisely connect you with aligned enterprise partners.",
+          description: "Through our ESG Co-Learning platform and supply chain communication, precisely connect you with aligned enterprise partners.",
         },
       ],
     },
@@ -319,7 +320,7 @@ const en: Dictionary = {
         },
         {
           tag: "Reports",
-          title: "Impact Whitepaper",
+          title: "Sustainability Whitepaper",
           description: "Deep research and data analysis to produce credible sustainability reports, building a quantifiable ESG narrative.",
           highlight: "",
         },
@@ -331,7 +332,7 @@ const en: Dictionary = {
         },
         {
           tag: "Matching",
-          title: "Sustainable Supply Chain Matchmaking",
+          title: "Sustainable Supply Chain Connection",
           description: "Connecting upstream and downstream sustainability partners, building trust-based supply chain ecosystems.",
           highlight: "Coming Soon",
         },
@@ -348,7 +349,7 @@ const en: Dictionary = {
         { value: "5+", label: "Cross-Industry Partnerships", suffix: "" },
       ],
       caseTitle: "Case Study",
-      caseQuote: "A single whitepaper helped a brand making watches from ocean waste reach the international youth forum stage.",
+      caseQuote: "A single sustainability whitepaper helped a brand making watches from ocean waste reach the international youth forum stage.",
       caseAuthor: "CO-ESG Partner Brand",
     },
     methodology: {
@@ -380,7 +381,7 @@ const en: Dictionary = {
       description: "Connecting consultants, instructors, enterprises, and international networks into a mutually empowering sustainability community.",
       roles: [
         { title: "Sustainability Consultants", description: "Senior ESG advisors and brand strategists providing one-on-one professional guidance." },
-        { title: "Co-Learning Instructors", description: "Sustainability practitioners from diverse fields sharing first-hand industry experience." },
+        { title: "ESG Co-Learning Instructors", description: "Sustainability practitioners from diverse fields sharing first-hand industry experience." },
         { title: "Enterprise Partners", description: "Cross-industry brands and enterprises co-creating sustainable business models." },
         { title: "International Networks", description: "Connected with global sustainability organizations, bringing the latest trends and resources." },
       ],
@@ -397,7 +398,7 @@ const en: Dictionary = {
   eventsPage: {
     label: "Sustainability Footprint",
     title: "Every step is a real footprint of sustainability action",
-    description: "From cross-industry matchmaking to international forums, CO-ESG hosts high-quality sustainability events connecting like-minded partners.",
+    description: "From cross-industry connections at ESG Co-Learning to international forums, CO-ESG hosts high-quality sustainability events connecting like-minded partners.",
     back: "Back to Home",
     hero: {
       badge: "2026 Event Season",
@@ -479,7 +480,7 @@ const en: Dictionary = {
         {
           title: "Design Company Secures NT$10M in Resources",
           description: "Helped a brand design company craft a sustainability whitepaper, securing government grants, angel investment, and bank loans within one year.",
-          tag: "Resource Matching",
+          tag: "Resource Connection",
           metric: "~NT$10M",
           metricLabel: "Economic Injection",
         },
@@ -502,7 +503,7 @@ const en: Dictionary = {
   learningPage: {
     label: "Co-Learning",
     title: "Sustainability Knowledge & Case Studies",
-    description: "From corporate partnership models to innovation strategies, from interviews to workshop updates — explore every facet of sustainability.",
+    description: "From corporate partnership models to innovation strategies, from interviews to ESG Co-Learning announcements — explore every facet of sustainability.",
     back: "Back to Learning",
     sections: {
       innovation: {
@@ -550,12 +551,12 @@ const en: Dictionary = {
         {
           title: "Advanced Partner",
           price: "NT$300/mo",
-          features: ["Workshop replays", "Instructor slides", "Community access", "Course discounts"],
+          features: ["ESG Co-Learning replays", "Instructor slides", "Community access", "Course discounts"],
         },
         {
           title: "Strategic Partner",
           price: "Custom Quote",
-          features: ["1-on-1 consulting", "Whitepaper services", "Forum recommendations", "Priority supply chain matching"],
+          features: ["1-on-1 consulting", "Sustainability whitepaper services", "Forum recommendations", "Priority supply chain connection"],
         },
       ],
     },
@@ -579,7 +580,7 @@ const en: Dictionary = {
         },
         {
           title: "Priority Event Access",
-          description: "Be the first to register for workshops, international forums, and corporate visits — seize every learning and networking opportunity.",
+          description: "Be the first to register for ESG Co-Learning workshops, international forums, and corporate visits — seize every learning and networking opportunity.",
         },
         {
           title: "Cross-Industry Partnerships",
@@ -587,7 +588,7 @@ const en: Dictionary = {
         },
         {
           title: "Exclusive Resources & Perks",
-          description: "Member-only white paper summaries, consulting discounts, and exclusive offers from sustainability marketplace partners.",
+          description: "Member-only sustainability whitepaper summaries, consulting discounts, and exclusive offers from sustainability marketplace partners.",
         },
       ],
     },

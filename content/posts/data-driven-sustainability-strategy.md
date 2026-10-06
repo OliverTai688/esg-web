@@ -5,7 +5,7 @@ excerpt: "企業如何透過問卷調查與數據量化分析，為永續策略�
 category: "數據與市場競爭力"
 categorySlug: "data-market-competition"
 tags: ["數據分析", "永續策略", "市場競爭力"]
-author: "ESG 共學坊"
+author: "ESG共學坊"
 published: true
 ---
 

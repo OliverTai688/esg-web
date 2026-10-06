@@ -5,7 +5,7 @@ excerpt: "運用商業模式九宮格框架，提供結構化思考方式，幫�
 category: "擴大影響力與創新策略"
 categorySlug: "innovation-strategy"
 tags: ["商業模式", "九宮格", "創新策略"]
-author: "ESG 共學坊"
+author: "ESG共學坊"
 published: true
 ---
 

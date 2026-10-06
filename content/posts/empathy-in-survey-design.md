@@ -5,7 +5,7 @@ excerpt: "透過換位思考改善問卷設計，減少受訪者心理壓力，�
 category: "溝通與換位思考"
 categorySlug: "communication-empathy"
 tags: ["問卷設計", "換位思考", "薩提爾"]
-author: "ESG 共學坊"
+author: "ESG共學坊"
 published: true
 ---
 

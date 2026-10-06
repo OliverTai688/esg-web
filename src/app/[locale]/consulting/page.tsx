@@ -33,7 +33,7 @@ const services = [
   },
   {
     icon: FileText,
-    title: "永續影響力白皮書精華版",
+    title: "永續白皮書精華版",
     price: "NT$100,000",
     description:
       "為品牌量身打造的永續白皮書，整合 ESG 數據與故事，成為對外溝通、爭取資源的有力文件。",
@@ -70,7 +70,7 @@ const faqs = [
       "我們的客戶涵蓋農業品牌、設計公司、社會企業、非營利組織，以及想尋找永續供應鏈的大型企業。只要你正在做有意義的事，希望被更多人看見，我們都歡迎你來聊聊。",
   },
   {
-    question: "白皮書需要多長時間完成？",
+    question: "永續白皮書需要多長時間完成？",
     answer:
       "依品牌規模與資料完整度，通常需要 4 至 8 週。過程中我們會進行深度訪談、資料整理與內容撰寫，確保白皮書真實反映品牌的永續實踐。",
   },
@@ -80,9 +80,9 @@ const faqs = [
       "最簡單的方式是預約一場 Coffee Chat，讓我們了解你的需求。之後我們會提供客製化的合作建議與報價，確認後即可啟動專案。",
   },
   {
-    question: "共學坊訂閱包含什麼？",
+    question: "ESG共學坊訂閱包含什麼？",
     answer:
-      "共學坊是跨產業的永續學習與交流平台，訂閱會員可參加定期舉辦的工作坊、講座與媒合活動，並獲得會員專屬的永續資源與人脈網絡。",
+      "ESG共學坊是跨產業的永續學習與交流平台，訂閱會員可參加定期舉辦的工作坊、講座與產業交流活動，並獲得會員專屬的永續資源與人脈網絡。",
   },
 ]
 
@@ -144,7 +144,7 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
             level={2}
             label="服務項目"
             title="企業 ESG 解決方案"
-            description="從一對一顧問到白皮書撰寫，從培訓課程到工作坊，選擇最適合你的永續起步方式。"
+            description="從一對一顧問到永續白皮書撰寫，從培訓課程到工作坊，選擇最適合你的永續起步方式。"
             align="center"
           />
           <div className="grid gap-6 sm:grid-cols-2">
@@ -187,7 +187,7 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
               level={2}
               label="NPO 合作"
               title="非營利組織合作模式"
-              description="共好玟化與非營利組織攜手，透過專業顧問輔導與資源媒合，讓社會影響力被更多企業看見。"
+              description="共好玟化與非營利組織攜手，透過專業顧問輔導與資源連結，讓社會影響力被更多企業看見。"
               align="center"
               spacing="sm"
             />
@@ -222,15 +222,15 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
                 <div className="size-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6 transition-colors group-hover:bg-primary/15">
                   <Users size={28} />
                 </div>
-                <h3 className="text-xl font-bold mb-3">跨界媒合</h3>
+                <h3 className="text-xl font-bold mb-3">跨界溝通</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  透過共學坊平台與產業網絡，將非營利組織的社會價值轉譯為企業端可理解的永續語言，促成長期合作關係。
+                  透過ESG共學坊平台與產業網絡，將非營利組織的社會價值轉譯為企業端可理解的永續語言，促成長期合作關係。
                 </p>
                 <div className="mt-6 pt-6 border-t border-border/50">
                   <ul className="space-y-2 text-sm text-muted-foreground">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 size-1.5 rounded-full bg-primary shrink-0" />
-                      共學坊平台資源
+                      ESG共學坊平台資源
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 size-1.5 rounded-full bg-primary shrink-0" />

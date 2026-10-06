@@ -5,7 +5,7 @@ excerpt: "以台灣血液基金會為例，探討如何透過內外並行的策�
 category: "溝通與換位思考"
 categorySlug: "communication-empathy"
 tags: ["永續溝通", "內部落實", "品牌傳播"]
-author: "ESG 共學坊"
+author: "ESG共學坊"
 published: true
 ---
 

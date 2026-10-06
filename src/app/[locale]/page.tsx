@@ -90,6 +90,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         ]}
         solutionTitle={t.problem.solutionTitle}
         solutionDescription={t.problem.solutionDescription}
+        solutionPillars={t.problem.solutionPillars}
         background="default"
         withPattern={true}
       />

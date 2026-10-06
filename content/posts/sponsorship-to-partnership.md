@@ -5,7 +5,7 @@ excerpt: "探討如何將企業與非營利組織的關係從傳統贊助轉變�
 category: "企業與非營利組織合作"
 categorySlug: "corporate-nonprofit-collaboration"
 tags: ["夥伴關係", "非營利組織", "企業合作"]
-author: "ESG 共學坊"
+author: "ESG共學坊"
 published: true
 ---
 

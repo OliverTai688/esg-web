@@ -5,7 +5,7 @@ excerpt: "永續發展目標為企業提供明確框架，從品牌價值、創�
 category: "永續發展與企業責任"
 categorySlug: "sustainability-esg"
 tags: ["SDGs", "永續競爭力", "企業策略"]
-author: "ESG 共學坊"
+author: "ESG共學坊"
 published: true
 ---
 

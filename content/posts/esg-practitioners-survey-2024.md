@@ -5,7 +5,7 @@ excerpt: "調查顯示 43.6% ESG 工作者經驗不足一年，面臨學習平�
 category: "永續發展與企業責任"
 categorySlug: "sustainability-esg"
 tags: ["ESG", "調查報告", "實務工作者"]
-author: "ESG 共學坊"
+author: "ESG共學坊"
 published: true
 ---
 

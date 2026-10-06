@@ -17,6 +17,7 @@ interface ProblemSolutionSectionProps {
   painPoints: readonly PainPoint[]
   solutionTitle: string
   solutionDescription: string
+  solutionPillars: readonly string[]
   withPattern?: boolean
   withTopo?: boolean
   background?: "default" | "muted" | "primary" | "secondary"
@@ -30,6 +31,7 @@ const ProblemSolutionSection = ({
   painPoints,
   solutionTitle,
   solutionDescription,
+  solutionPillars,
   withPattern,
   withTopo,
   background = "muted",
@@ -93,18 +95,12 @@ const ProblemSolutionSection = ({
             </p>
 
             <div className="mt-12 flex flex-wrap gap-6 pt-12 border-t border-white/10">
-              <div className="flex items-center gap-3">
-                <div className="size-2.5 rounded-full bg-accent" />
-                <span className="text-xs font-semibold text-white/90">Consulting</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="size-2.5 rounded-full bg-accent" />
-                <span className="text-xs font-semibold text-white/90">Whitepapers</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="size-2.5 rounded-full bg-accent" />
-                <span className="text-xs font-semibold text-white/90">Matchmaking</span>
-              </div>
+              {solutionPillars.map((pillar) => (
+                <div key={pillar} className="flex items-center gap-3">
+                  <div className="size-2.5 rounded-full bg-accent" />
+                  <span className="text-xs font-semibold text-white/90">{pillar}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>

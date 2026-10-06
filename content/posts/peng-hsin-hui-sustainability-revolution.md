@@ -5,7 +5,7 @@ excerpt: "彭欣惠接掌家族塑膠建材事業，將父親的技術創新轉�
 category: "人物專訪"
 categorySlug: "interviews"
 tags: ["人物專訪", "綠色建材", "塑膠再生", "ESG"]
-author: "ESG 共學坊"
+author: "ESG共學坊"
 published: true
 ---
 

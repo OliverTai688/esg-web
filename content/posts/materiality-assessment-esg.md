@@ -5,7 +5,7 @@ excerpt: "企業資源有限，透過重大性議題評估，精準選擇最具�
 category: "永續發展與企業責任"
 categorySlug: "sustainability-esg"
 tags: ["重大性議題", "ESG", "資源配置"]
-author: "ESG 共學坊"
+author: "ESG共學坊"
 published: true
 ---
 

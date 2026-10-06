@@ -5,7 +5,7 @@ excerpt: "了解如何閱讀永續報告書，從企業的遠程目標中洞察�
 category: "永續發展與企業責任"
 categorySlug: "sustainability-esg"
 tags: ["永續報告書", "企業責任", "ESG"]
-author: "ESG 共學坊"
+author: "ESG共學坊"
 published: true
 ---
 

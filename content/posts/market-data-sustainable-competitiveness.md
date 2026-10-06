@@ -5,7 +5,7 @@ excerpt: "以展場鋼架製造商為例，探討如何運用數據策略來強�
 category: "數據與市場競爭力"
 categorySlug: "data-market-competition"
 tags: ["市場數據", "永續產品", "競爭策略"]
-author: "ESG 共學坊"
+author: "ESG共學坊"
 published: true
 ---
 
