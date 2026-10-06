@@ -42,3 +42,6 @@ next-env.d.ts
 
 # raw client assets downloaded from Drive (not for version control)
 /assets-raw/
+
+# Office lock files
+.~*
