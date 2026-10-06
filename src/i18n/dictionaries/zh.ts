@@ -18,6 +18,8 @@ const zh = {
       listDesc: "查看近期所有活動與報名資訊",
       workshops: "永續工作坊",
       workshopsDesc: "跨產業交流與實務學習工作坊",
+      services: "顧問諮詢與訂閱方案",
+      servicesDesc: "持續性的專業支援，陪伴你的永續旅程",
       history: "過往回顧",
       historyDesc: "精彩活動回顧與成果紀錄",
       caseStudies: "案例研究",

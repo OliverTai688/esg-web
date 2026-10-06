@@ -7,119 +7,22 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Container } from "@/components/core/Container"
 import { Button } from "@/components/ui/button"
 import { LocaleSwitcher } from "@/components/domain/LocaleSwitcher"
-import {
-  Menu,
-  X,
-  ChevronDown,
-  Compass,
-  Briefcase,
-  BarChart3,
-  Globe2,
-  CalendarDays,
-  GraduationCap,
-  History,
-  FileSearch,
-  Handshake,
-  MessageCircle,
-  Lightbulb,
-  TrendingUp,
-  Shield,
-  Mic2,
-  Sparkles,
-  Building2,
-  Users,
-  HelpCircle,
-  Mail,
-} from "lucide-react"
+import { Menu, X, ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { getNavGroups, type NavGroup } from "@/lib/nav"
 import type { Locale } from "@/i18n/config"
-import type { LucideIcon } from "lucide-react"
-
-/* ═══════════════════════════════════════════════════════════════════════
-   Types
-   ═══════════════════════════════════════════════════════════════════════ */
-
-interface NavItem {
-  title: string
-  href: string
-  desc?: string
-  icon?: LucideIcon
-}
-
-interface NavColumn {
-  title: string
-  items: NavItem[]
-}
-
-interface NavGroup {
-  label: string
-  href: string
-  columns: NavColumn[]
-}
+import type { Dictionary } from "@/i18n/dictionaries/zh"
 
 interface NavbarProps {
   locale: Locale
-  labels: {
-    sustainability: {
-      label: string
-      vision: string
-      visionDesc: string
-      services: string
-      servicesDesc: string
-      practices: string
-      practicesDesc: string
-      ecosystem: string
-      ecosystemDesc: string
-    }
-    events: {
-      label: string
-      list: string
-      listDesc: string
-      workshops: string
-      workshopsDesc: string
-      history: string
-      historyDesc: string
-      caseStudies: string
-      caseStudiesDesc: string
-    }
-    learning: {
-      label: string
-      collaboration: string
-      collaborationDesc: string
-      communication: string
-      communicationDesc: string
-      innovation: string
-      innovationDesc: string
-      market: string
-      marketDesc: string
-      responsibility: string
-      responsibilityDesc: string
-      interviews: string
-      interviewsDesc: string
-    }
-    consulting: {
-      label: string
-      solutions: string
-      solutionsDesc: string
-      ngo: string
-      ngoDesc: string
-      membership: string
-      membershipDesc: string
-      faq: string
-      faqDesc: string
-      contact: string
-      contactDesc: string
-    }
-    join: string
-    cta: string
-  }
+  labels: Dictionary["nav"]
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
    Animation variants
    ═══════════════════════════════════════════════════════════════════════ */
 
-const megaMenuVariants = {
+const dropdownVariants = {
   hidden: {
     opacity: 0,
     y: 8,
@@ -132,8 +35,8 @@ const megaMenuVariants = {
     scale: 1,
     transition: {
       type: "spring" as const,
-      stiffness: 120,
-      damping: 20,
+      stiffness: 220,
+      damping: 24,
       staggerChildren: 0.03,
       delayChildren: 0.02,
     },
@@ -198,199 +101,154 @@ const mobileSubMenuVariants = {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   MegaMenuItem — individual card item in dropdown
+   DesktopNavGroup — top-level link + disclosure button + single-column menu
+   The label navigates to the page; the chevron (or hover) opens the menu.
    ═══════════════════════════════════════════════════════════════════════ */
 
-function MegaMenuItem({
-  item,
-  onNavigate,
-}: {
-  item: NavItem
-  onNavigate: () => void
-}) {
-  const Icon = item.icon
-  return (
-    <motion.div variants={itemVariants}>
-      <Link
-        href={item.href}
-        onClick={onNavigate}
-        className="group/card flex items-start gap-3.5 rounded-xl p-3.5 transition-all duration-200 hover:bg-primary/[0.04] hover:shadow-[0_0_0_1px_rgba(0,0,0,0.04)] active:scale-[0.99]"
-      >
-        <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/[0.06] text-primary/70 transition-all duration-200 group-hover/card:bg-primary/[0.1] group-hover/card:text-primary group-hover/card:scale-105">
-          {Icon ? (
-            <Icon size={18} strokeWidth={1.8} />
-          ) : (
-            <div className="h-1.5 w-1.5 rounded-full bg-primary/40" />
-          )}
-        </div>
-        <div className="min-w-0">
-          <p className="text-[13.5px] font-semibold leading-tight text-foreground/90 transition-colors group-hover/card:text-primary">
-            {item.title}
-          </p>
-          <p className="mt-1 text-xs leading-relaxed text-muted-foreground/80 line-clamp-2">
-            {item.desc}
-          </p>
-        </div>
-      </Link>
-    </motion.div>
-  )
-}
-
-/* ═══════════════════════════════════════════════════════════════════════
-   NavTrigger — top-level nav item that opens mega menu
-   ═══════════════════════════════════════════════════════════════════════ */
-
-const NavTrigger = React.forwardRef<
-  HTMLButtonElement,
-  {
-    label: string
-    isActive: boolean
-    isOpen: boolean
-  }
->(({ label, isActive, isOpen }, ref) => {
-  return (
-    <button
-      ref={ref}
-      className={cn(
-        "relative flex items-center gap-1 px-4 py-2 text-[13.5px] font-medium tracking-[-0.01em] transition-colors duration-200 rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-primary/30",
-        isActive
-          ? "text-primary"
-          : isOpen
-            ? "text-foreground"
-            : "text-muted-foreground hover:text-foreground"
-      )}
-    >
-      {label}
-      <ChevronDown
-        size={13}
-        strokeWidth={2}
-        className={cn(
-          "transition-transform duration-300 ease-out opacity-50",
-          isOpen && "rotate-180 opacity-70"
-        )}
-      />
-      {/* Active indicator dot */}
-      {isActive && (
-        <motion.div
-          layoutId="nav-active-dot"
-          className="absolute -bottom-1 left-1/2 h-[3px] w-[3px] -translate-x-1/2 rounded-full bg-primary"
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        />
-      )}
-    </button>
-  )
-})
-NavTrigger.displayName = "NavTrigger"
-
-/* ═══════════════════════════════════════════════════════════════════════
-   MegaMenu — the dropdown panel with shared viewport logic
-   ═══════════════════════════════════════════════════════════════════════ */
-
-function MegaMenu({
+function DesktopNavGroup({
   group,
-  onNavigate,
-  xOffset,
+  locale,
+  isActive,
+  isOpen,
+  onOpen,
+  onClose,
+  onScheduleClose,
 }: {
   group: NavGroup
-  onNavigate: () => void
-  xOffset: number
+  locale: Locale
+  isActive: boolean
+  isOpen: boolean
+  onOpen: () => void
+  onClose: () => void
+  onScheduleClose: () => void
 }) {
+  const menuId = `nav-menu-${group.key}`
+  const toggleRef = React.useRef<HTMLButtonElement>(null)
+  const listRef = React.useRef<HTMLUListElement>(null)
+
+  const focusFirstItem = () => {
+    requestAnimationFrame(() => listRef.current?.querySelector("a")?.focus())
+  }
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "Escape" && isOpen) {
+      event.stopPropagation()
+      onClose()
+      toggleRef.current?.focus()
+    }
+  }
+
+  // Close once keyboard focus leaves the whole group
+  const handleBlur = (event: React.FocusEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) onClose()
+  }
+
   return (
-    <motion.div
-      layout
-      variants={megaMenuVariants}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-      className="relative z-50 pt-2"
-      style={{ 
-        left: "50%",
-        x: "-50%" 
-      }}
-      transition={{
-        layout: { type: "spring", stiffness: 220, damping: 26 }
-      }}
+    <div
+      className="relative"
+      onMouseEnter={onOpen}
+      onMouseLeave={onScheduleClose}
+      onKeyDown={handleKeyDown}
+      onBlur={handleBlur}
     >
-      <div className="relative group/viewport">
-        <motion.div
-          layout
+      <div className="flex items-center">
+        <Link
+          href={group.href}
+          onClick={onClose}
           className={cn(
-            "relative flex overflow-hidden rounded-3xl border border-border/50 bg-white/95 backdrop-blur-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08),0_0_0_1px_rgba(0,0,0,0.03)]",
-            "w-[840px] h-[400px] opacity-100"
+            "relative py-2 pl-4 pr-1 text-[13.5px] font-medium tracking-[-0.01em] transition-colors duration-200 rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-primary/30",
+            isActive
+              ? "text-primary"
+              : isOpen
+                ? "text-foreground"
+                : "text-muted-foreground hover:text-foreground"
           )}
-          transition={{
-            layout: { type: "spring", stiffness: 220, damping: 26 }
-          }}
         >
-          {/* Subtle noise texture overlay */}
-          <div className="pointer-events-none absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iLjAyNSIvPjwvc3ZnPg==')] opacity-60" />
-
-          {/* Subtle gradient top edge */}
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
-
-          <div className="relative w-full h-full">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={group.label}
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -10 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
-                className="flex h-full divide-x divide-border/40"
-              >
-                {group.columns.map((column) => (
-                  <div
-                    key={column.title}
-                    className="w-[280px] shrink-0 p-7"
-                  >
-                    <h3 className="mb-6 text-[11px] font-bold uppercase tracking-widest text-muted-foreground/45">
-                      {column.title}
-                    </h3>
-                    <div className="flex flex-col gap-1">
-                      {column.items.map((item) => {
-                        const Icon = item.icon
-                        return (
-                          <Link
-                            key={item.title}
-                            href={item.href}
-                            onClick={onNavigate}
-                            className="group/nav-item -mx-3.5 flex items-start gap-3.5 rounded-2xl p-3.5 transition-all duration-200 hover:bg-primary/[0.04] active:scale-[0.98]"
-                          >
-                            <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/[0.06] text-primary/70 transition-colors group-hover/nav-item:bg-primary/[0.1] group-hover/nav-item:text-primary">
-                              {Icon ? (
-                                <Icon size={18} strokeWidth={1.8} />
-                              ) : (
-                                <div className="h-1.5 w-1.5 rounded-full bg-primary/40" />
-                              )}
-                            </div>
-                            <div className="min-w-0">
-                              <p className="text-[14px] font-semibold leading-tight text-foreground/90 transition-colors group-hover/nav-item:text-primary whitespace-nowrap truncate">
-                                {item.title}
-                              </p>
-                              {item.desc && (
-                                <p className="mt-1.5 text-[12.5px] leading-relaxed text-muted-foreground/75 whitespace-nowrap truncate">
-                                  {item.desc}
-                                </p>
-                              )}
-                            </div>
-                          </Link>
-                        )
-                      })}
-                    </div>
-                  </div>
-                ))}
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Bottom gradient accent */}
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/10 to-transparent" />
-        </motion.div>
+          {group.label}
+          {isActive && (
+            <motion.div
+              layoutId="nav-active-dot"
+              className="absolute -bottom-1 left-1/2 h-[3px] w-[3px] -translate-x-1/2 rounded-full bg-primary"
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            />
+          )}
+        </Link>
+        <button
+          ref={toggleRef}
+          type="button"
+          aria-expanded={isOpen}
+          aria-controls={menuId}
+          aria-label={locale === "zh" ? `${group.label}選單` : `${group.label} menu`}
+          onClick={() => (isOpen ? onClose() : onOpen())}
+          onKeyDown={(event) => {
+            if (event.key === "ArrowDown") {
+              event.preventDefault()
+              onOpen()
+              focusFirstItem()
+            }
+          }}
+          className={cn(
+            "flex h-8 w-6 items-center justify-center rounded-md outline-none transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-primary/30",
+            isActive ? "text-primary" : "text-muted-foreground hover:text-foreground"
+          )}
+        >
+          <ChevronDown
+            size={13}
+            strokeWidth={2}
+            className={cn(
+              "transition-transform duration-300 ease-out opacity-50",
+              isOpen && "rotate-180 opacity-70"
+            )}
+          />
+        </button>
       </div>
-    </motion.div>
+
+      <AnimatePresence>
+        {isOpen && (
+          <div id={menuId} className="absolute left-1/2 top-full z-50 w-[320px] -translate-x-1/2 pt-3">
+            <motion.div
+              variants={dropdownVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="relative rounded-2xl border border-border/50 bg-white p-2 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.18),0_0_0_1px_rgba(0,0,0,0.03)]"
+            >
+              {/* Arrow pointing at the trigger */}
+              <div className="absolute -top-[5px] left-1/2 h-2.5 w-2.5 -translate-x-1/2 rotate-45 rounded-[2px] border-l border-t border-border/60 bg-white" />
+
+              <ul ref={listRef} className="relative flex flex-col gap-0.5">
+                {group.items.map((item) => {
+                  const Icon = item.icon
+                  return (
+                    <motion.li key={item.href} variants={itemVariants}>
+                      <Link
+                        href={item.href}
+                        onClick={onClose}
+                        className="group/nav-item flex items-start gap-3.5 rounded-xl p-3 outline-none transition-colors duration-200 hover:bg-primary/[0.04] focus-visible:bg-primary/[0.06] active:scale-[0.98]"
+                      >
+                        <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/[0.06] text-primary/70 transition-colors group-hover/nav-item:bg-primary/[0.1] group-hover/nav-item:text-primary">
+                          <Icon size={18} strokeWidth={1.8} />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-[14px] font-semibold leading-tight text-foreground/90 transition-colors group-hover/nav-item:text-primary">
+                            {item.title}
+                          </p>
+                          <p className="mt-1 text-[12.5px] leading-snug text-muted-foreground/75">
+                            {item.desc}
+                          </p>
+                        </div>
+                      </Link>
+                    </motion.li>
+                  )
+                })}
+              </ul>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </div>
   )
 }
-
 
 /* ═══════════════════════════════════════════════════════════════════════
    Navbar — main component
@@ -403,27 +261,10 @@ const Navbar = ({ locale, labels }: NavbarProps) => {
   const [scrolled, setScrolled] = React.useState(false)
   const [scrollProgress, setScrollProgress] = React.useState(0)
   const [activeMenu, setActiveMenu] = React.useState<string | null>(null)
-  const [activeMenuPos, setActiveMenuPos] = React.useState<number>(0)
   const [expandedMobileGroup, setExpandedMobileGroup] = React.useState<string | null>(null)
-  
-  const navContainerRef = React.useRef<HTMLDivElement>(null)
-  const triggerRefs = React.useRef<Record<string, HTMLButtonElement | null>>({})
+
   const closeTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null)
   const pathname = usePathname()
-
-  // Update position whenever activeMenu changes
-  React.useEffect(() => {
-    if (activeMenu && triggerRefs.current[activeMenu] && navContainerRef.current) {
-      const trigger = triggerRefs.current[activeMenu]!
-      const container = navContainerRef.current!
-      const triggerRect = trigger.getBoundingClientRect()
-      const containerRect = container.getBoundingClientRect()
-      
-      // Calculate relative center
-      const center = triggerRect.left - containerRect.left + triggerRect.width / 2
-      setActiveMenuPos(center)
-    }
-  }, [activeMenu])
 
   // ── Scroll handler ──
   React.useEffect(() => {
@@ -443,21 +284,6 @@ const Navbar = ({ locale, labels }: NavbarProps) => {
   }, [mobileOpen])
 
   // ── Hover intent helpers (close delay) ──
-  const openMenu = React.useCallback((key: string) => {
-    if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current)
-      closeTimeoutRef.current = null
-    }
-    setActiveMenu(key)
-  }, [])
-
-  const scheduleClose = React.useCallback(() => {
-    closeTimeoutRef.current = setTimeout(() => {
-      setActiveMenu(null)
-      closeTimeoutRef.current = null
-    }, CLOSE_DELAY)
-  }, [])
-
   const cancelClose = React.useCallback(() => {
     if (closeTimeoutRef.current) {
       clearTimeout(closeTimeoutRef.current)
@@ -465,95 +291,28 @@ const Navbar = ({ locale, labels }: NavbarProps) => {
     }
   }, [])
 
+  const openMenu = React.useCallback((key: string) => {
+    cancelClose()
+    setActiveMenu(key)
+  }, [cancelClose])
+
+  const closeMenu = React.useCallback(() => {
+    cancelClose()
+    setActiveMenu(null)
+  }, [cancelClose])
+
+  const scheduleClose = React.useCallback(() => {
+    cancelClose()
+    closeTimeoutRef.current = setTimeout(() => {
+      setActiveMenu(null)
+      closeTimeoutRef.current = null
+    }, CLOSE_DELAY)
+  }, [cancelClose])
+
   // ── Route matching ──
   const isGroupActive = (href: string) => pathname?.startsWith(href) ?? false
 
-  // ── Navigation data with icons ──
-  const navGroups: NavGroup[] = React.useMemo(() => [
-    {
-      label: labels.sustainability.label,
-      href: `/${locale}/sustainability`,
-      columns: [
-        {
-          title: "品牌與方法論",
-          items: [
-            { title: labels.sustainability.vision, desc: labels.sustainability.visionDesc, href: `/${locale}/sustainability#methodology`, icon: Compass },
-            { title: labels.sustainability.ecosystem, desc: labels.sustainability.ecosystemDesc, href: `/${locale}/sustainability#ecosystem`, icon: Globe2 },
-          ]
-        },
-        {
-          title: "服務與實踐",
-          items: [
-            { title: labels.sustainability.services, desc: labels.sustainability.servicesDesc, href: `/${locale}/sustainability#services`, icon: Briefcase },
-            { title: labels.sustainability.practices, desc: labels.sustainability.practicesDesc, href: `/${locale}/sustainability#impact`, icon: BarChart3 },
-          ]
-        }
-      ]
-    },
-    {
-      label: labels.events.label,
-      href: `/${locale}/events`,
-      columns: [
-        {
-          title: "活動動態",
-          items: [
-            { title: labels.events.list, desc: labels.events.listDesc, href: `/${locale}/events`, icon: CalendarDays },
-            { title: labels.events.workshops, desc: labels.events.workshopsDesc, href: `/${locale}/events#workshops`, icon: GraduationCap },
-          ]
-        },
-        {
-          title: "回顧與案例",
-          items: [
-            { title: labels.events.history, desc: labels.events.historyDesc, href: `/${locale}/events#history`, icon: History },
-            { title: labels.events.caseStudies, desc: labels.events.caseStudiesDesc, href: `/${locale}/events#cases`, icon: FileSearch },
-          ]
-        }
-      ]
-    },
-    {
-      label: labels.learning.label,
-      href: `/${locale}/learning`,
-      columns: [
-        {
-          title: "轉型策略",
-          items: [
-            { title: labels.learning.innovation, desc: labels.learning.innovationDesc, href: `/${locale}/learning#innovation`, icon: Lightbulb },
-            { title: labels.learning.market, desc: labels.learning.marketDesc, href: `/${locale}/learning#market`, icon: TrendingUp },
-            { title: labels.learning.responsibility, desc: labels.learning.responsibilityDesc, href: `/${locale}/learning#responsibility`, icon: Shield },
-          ]
-        },
-        {
-          title: "溝通與協作",
-          items: [
-            { title: labels.learning.collaboration, desc: labels.learning.collaborationDesc, href: `/${locale}/learning#collaboration`, icon: Handshake },
-            { title: labels.learning.communication, desc: labels.learning.communicationDesc, href: `/${locale}/learning#communication`, icon: MessageCircle },
-            { title: labels.learning.interviews, desc: labels.learning.interviewsDesc, href: `/${locale}/learning#interviews`, icon: Mic2 },
-          ]
-        }
-      ]
-    },
-    {
-      label: labels.consulting.label,
-      href: `/${locale}/consulting`,
-      columns: [
-        {
-          title: "方案與機制",
-          items: [
-            { title: labels.consulting.solutions, desc: labels.consulting.solutionsDesc, href: `/${locale}/consulting#solutions`, icon: Sparkles },
-            { title: labels.consulting.ngo, desc: labels.consulting.ngoDesc, href: `/${locale}/consulting#ngo`, icon: Building2 },
-            { title: labels.consulting.membership, desc: labels.consulting.membershipDesc, href: `/${locale}/consulting#membership`, icon: Users },
-          ]
-        },
-        {
-          title: "聯絡資訊",
-          items: [
-            { title: labels.consulting.faq, desc: labels.consulting.faqDesc, href: `/${locale}/consulting#faq`, icon: HelpCircle },
-            { title: labels.consulting.contact, desc: labels.consulting.contactDesc, href: `/${locale}/consulting#contact`, icon: Mail },
-          ]
-        }
-      ]
-    },
-  ], [locale, labels])
+  const navGroups = React.useMemo(() => getNavGroups(locale, labels), [locale, labels])
 
   return (
     <header
@@ -588,47 +347,19 @@ const Navbar = ({ locale, labels }: NavbarProps) => {
            Desktop Navigation
            ══════════════════════════════════════════════════════════════ */}
         <nav className="hidden lg:flex flex-1 justify-center">
-          <div className="flex items-center gap-0.5 relative" ref={navContainerRef}>
+          <div className="flex items-center gap-1">
             {navGroups.map((group) => (
-              <div
-                key={group.label}
-                onMouseEnter={() => openMenu(group.label)}
-                onMouseLeave={scheduleClose}
-              >
-                <NavTrigger
-                  ref={(el) => { triggerRefs.current[group.label] = el }}
-                  label={group.label}
-                  isActive={isGroupActive(group.href)}
-                  isOpen={activeMenu === group.label}
-                />
-              </div>
+              <DesktopNavGroup
+                key={group.key}
+                group={group}
+                locale={locale}
+                isActive={isGroupActive(group.href)}
+                isOpen={activeMenu === group.key}
+                onOpen={() => openMenu(group.key)}
+                onClose={closeMenu}
+                onScheduleClose={scheduleClose}
+              />
             ))}
-
-            {/* Shared Viewport for MegaMenu */}
-            <AnimatePresence>
-              {activeMenu && (
-                <div
-                  className="absolute top-full left-0 w-full pt-1"
-                  onMouseEnter={cancelClose}
-                  onMouseLeave={scheduleClose}
-                >
-                  {/* Floating Arrow Indicator — positioned relative to the full-width viewport */}
-                  <motion.div 
-                    layoutId="nav-arrow"
-                    className="absolute top-1 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rotate-45 rounded-[2px] border-l border-t border-border/60 bg-white z-[60]" 
-                    style={{ left: activeMenuPos }}
-                    transition={{ type: "spring", stiffness: 220, damping: 26 }}
-                  />
-                  
-                  <MegaMenu
-                    key="shared-mega-menu"
-                    group={navGroups.find(g => g.label === activeMenu)!}
-                    xOffset={activeMenuPos}
-                    onNavigate={() => setActiveMenu(null)}
-                  />
-                </div>
-              )}
-            </AnimatePresence>
 
             {/* Join — simple link, no dropdown */}
             <Link
@@ -707,18 +438,19 @@ const Navbar = ({ locale, labels }: NavbarProps) => {
             exit="exit"
             className="lg:hidden overflow-hidden border-t border-border/30 bg-white/98 backdrop-blur-2xl"
           >
-            <Container className="py-5 max-h-[80vh] overflow-y-auto">
+            <Container className="py-5 max-h-[80dvh] overflow-y-auto">
               <nav className="flex flex-col gap-0.5">
                 {navGroups.map((group) => {
-                  const isExpanded = expandedMobileGroup === group.label
+                  const isExpanded = expandedMobileGroup === group.key
                   const isActive = isGroupActive(group.href)
 
                   return (
-                    <div key={group.label}>
+                    <div key={group.key}>
                       <button
                         onClick={() =>
-                          setExpandedMobileGroup(isExpanded ? null : group.label)
+                          setExpandedMobileGroup(isExpanded ? null : group.key)
                         }
+                        aria-expanded={isExpanded}
                         className={cn(
                           "w-full flex items-center justify-between px-3 py-3 rounded-xl text-[15px] font-semibold transition-colors duration-200",
                           isActive ? "text-primary" : "text-foreground",
@@ -751,27 +483,25 @@ const Navbar = ({ locale, labels }: NavbarProps) => {
                             className="overflow-hidden"
                           >
                             <div className="ml-4 pl-3.5 border-l-[1.5px] border-primary/10 pb-2 space-y-0.5">
-                              {group.columns.flatMap(c => c.items).map((item) => {
+                              {group.items.map((item) => {
                                 const Icon = item.icon
                                 return (
-                                  <motion.div key={item.title} variants={itemVariants}>
+                                  <motion.div key={item.href} variants={itemVariants}>
                                     <Link
                                       href={item.href}
                                       onClick={() => setMobileOpen(false)}
                                       className="flex items-start gap-3 rounded-xl px-3 py-2.5 transition-colors hover:bg-primary/[0.04] active:bg-primary/[0.06]"
                                     >
                                       <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-primary/[0.06] text-primary/60">
-                                        {Icon ? <Icon size={14} strokeWidth={1.8} /> : <div className="h-1.5 w-1.5 rounded-full bg-primary/40" />}
+                                        <Icon size={14} strokeWidth={1.8} />
                                       </div>
                                       <div>
                                         <p className="text-sm font-medium text-foreground/90">
                                           {item.title}
                                         </p>
-                                        {item.desc && (
-                                          <p className="text-xs text-muted-foreground/70 mt-0.5 leading-relaxed">
-                                            {item.desc}
-                                          </p>
-                                        )}
+                                        <p className="text-xs text-muted-foreground/70 mt-0.5 leading-relaxed">
+                                          {item.desc}
+                                        </p>
                                       </div>
                                     </Link>
                                   </motion.div>

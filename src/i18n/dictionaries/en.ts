@@ -19,6 +19,8 @@ const en: Dictionary = {
       listDesc: "Browse upcoming events and registration",
       workshops: "Workshops",
       workshopsDesc: "Cross-industry learning and hands-on workshops",
+      services: "Consulting & Subscriptions",
+      servicesDesc: "Ongoing professional support for your sustainability journey",
       history: "Past Events",
       historyDesc: "Highlights and takeaways from past events",
       caseStudies: "Case Studies",
