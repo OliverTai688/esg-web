@@ -26,6 +26,7 @@ import type { Metadata } from "next"
 import type { Locale } from "@/i18n/config"
 import { getDictionary } from "@/i18n/getDictionary"
 import { formatImpactMetric } from "@/lib/utils"
+import { site } from "@/lib/site"
 
 export async function generateMetadata({
   params,
@@ -195,9 +196,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         description={t.cta.description}
         primaryLabel={t.cta.primaryLabel}
         primaryHref={`/${locale}/consulting#contact`}
-        // No secondaryHref: the label reads 瀏覽永續商城 and there is no store page yet,
-        // so CTASection leaves the secondary button out.
         secondaryLabel={t.cta.secondaryLabel}
+        secondaryHref={site.storeUrl ?? `/${locale}`}
       />
     </main>
   )
