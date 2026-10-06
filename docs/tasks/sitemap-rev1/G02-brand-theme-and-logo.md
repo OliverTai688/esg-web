@@ -154,7 +154,8 @@ ESG共學坊 logo 有三個版本：CLASS（綠）、STORE（橘）、TALKS（�
 
 ## 待確認／風險
 
-- 素材已取得：規範 PDF 與 `.ai` 原檔在 `assets-raw/共好玟化logo/`、`assets-raw/ESG共學坊logo/`。尚需從 `.ai` 匯出網頁用 SVG（本機沒有 Illustrator 時，可請客戶或設計師匯出）。
+- 素材已取得：網頁用 logo SVG 已轉出並放在 `public/brand/`（見 `assets-status.md`）。
+- 三組候選色值已做成設計系統頁面供客戶比較：<https://claude.ai/artifact/2ZLVUx7k2fLMBcX6RBUhry>。該頁同時定義了推導色（`orange-strong`、`ink`、`surface-dark` 等）與用色規則，B 部分換色時以它為準。
 - 螢幕色值需客戶確認（規範沒有定義）。
 - 「商城、ESG共學坊主題頁面」指哪些頁面？網站目前**沒有商城頁**（只有文案提到「永續商城」）。需確認：`/learning` 是否算 ESG共學坊主題頁？商城是否為未來範圍？
 - 中文字型：CIS 若指定標準字，需確認網頁可用的對應字型與授權；載入中文網頁字型會影響載入速度。

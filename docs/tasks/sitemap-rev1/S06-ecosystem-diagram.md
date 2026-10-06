@@ -77,7 +77,7 @@
 
 ## 待確認／風險
 
-- 素材已取得：ESG共學坊 logo 原檔（`assets-raw/ESG共學坊logo/coESG_logo_final.ai`，需匯出 SVG）、7 位顧問的小頭像（見上表）。仍需確認 7 位顧問同意在新站露出，以及是否提供高解析原檔。
+- 素材已取得：ESG共學坊 logo（`public/brand/coesg-class.svg`，B 部分可以進行）、7 位顧問的小頭像（見上表）。仍需確認 7 位顧問同意在新站露出，以及是否提供高解析原檔。
 - 7 位名單已依 coesg.tw/plans/30day 頁面整理（見上表）。`docs/scraped/instructors/instructors.md` 有 7 筆舊資料（陳宜均、吳玟樺、楊佳璋、劉忠岳、郭開文、鑫判科技、ESG共學坊），其中兩筆是組織而不是人，**不能直接當成這 7 位**。
 - 首頁是否需要新增生態圈區塊？目前判斷不需要，請客戶確認。
 - 「企業合作夥伴」「國際連結網絡」節點原本的假 logo 拿掉後，是否改放真實夥伴 logo（可共用 H01 的 `clients.ts`）。

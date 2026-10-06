@@ -49,4 +49,22 @@
 - 確認各客戶 logo、人物照片的公開授權（G07 待確認事項）。
 - 標準色的螢幕色值已量測並寫入 G02；規範只定義印刷色，起稿值需客戶確認。
 - 7 位顧問的高解析原檔與露出同意（目前只有從合圖裁出的小頭像）。
-- 從 `.ai` 原檔匯出網頁用的 SVG logo。
+- ~~從 `.ai` 原檔匯出網頁用的 SVG logo。~~ 已完成，見下方「網頁用 logo」。
+
+## 網頁用 logo（2026-10-06 轉出）
+
+雲端資料夾與 `assets-raw/` 裡都沒有 SVG。以下檔案是從向量來源直接取出路徑轉成的，沒有重畫，放在 `public/brand/`（進版控）：
+
+| 檔案 | 來源 | 用途 |
+|---|---|---|
+| `gungho-horizontal.svg` | 品牌識別規範 PDF 第 4 頁 | 橫式彩色，導覽列與頁尾 |
+| `gungho-stacked.svg` | 同上 | 上下組合 |
+| `gungho-vertical.svg` | 同上 | 直式 |
+| `gungho-horizontal-white.svg` | 橫式改為全白 | 深色底 |
+| `gungho-mark.svg`、`gungho-mark-white.svg` | 橫式的火焰圖形 | 分頁圖示、社群頭像 |
+| `coesg-class.svg`、`coesg-store.svg`、`coesg-talks.svg` | `coESG_logo_final.ai` | ESG共學坊三個版本 |
+| `coesg-*-on-dark.svg` | 同上，深色字改白 | 深色底 |
+
+- 兩個共好玟化的 `.ai` 檔存檔時沒有附帶可讀的內容，打不開；所以共好玟化的 logo 取自規範 PDF（PDF 內是向量）。
+- 顏色是候選 A 的色值（橘 `#F25232`、黃 `#FAB40A`、灰 `#4D515B`）。客戶若選定另一組色值，要把檔案內的顏色一併替換。
+- 規範中「黃底配單橘色」的版本尚未製作。
