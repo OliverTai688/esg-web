@@ -268,7 +268,7 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
             <Card className="p-6 sm:p-8">
               <form
                 className="space-y-5"
-                action={`mailto:${site.contactFormRecipients.join(",")}?subject=${encodeURIComponent(t.consultingPage.contact.title)}`}
+                action={`mailto:${site.supportEmail}?subject=${encodeURIComponent(t.consultingPage.contact.title)}`}
                 method="post"
                 encType="text/plain"
               >

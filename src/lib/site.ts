@@ -24,8 +24,6 @@ export const site = {
     id: "@381iutjm",
     url: "https://line.me/R/ti/p/@381iutjm",
   },
-  // Interim recipients for the contact form's mail fallback, until the form backend (B01 part B) exists.
-  contactFormRecipients: ["evvon.wu@gmail.com", "taioliver688@gmail.com"],
   // Sustainability store. The client will supply the link; until then store buttons go to the home page.
   storeUrl: null as string | null,
 } as const
