@@ -194,6 +194,9 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         title={t.cta.title}
         description={t.cta.description}
         primaryLabel={t.cta.primaryLabel}
+        primaryHref={`/${locale}/consulting#contact`}
+        // No secondaryHref: the label reads 瀏覽永續商城 and there is no store page yet,
+        // so CTASection leaves the secondary button out.
         secondaryLabel={t.cta.secondaryLabel}
       />
     </main>

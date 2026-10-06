@@ -554,7 +554,9 @@ export default async function EventsPage({
         title={t.eventsPage.cta.title}
         description={t.eventsPage.cta.description}
         primaryLabel={t.eventsPage.cta.primaryLabel}
+        primaryHref={`/${locale}/consulting#contact`}
         secondaryLabel={t.eventsPage.cta.secondaryLabel}
+        secondaryHref={`/${locale}/events#upcoming`}
       />
     </main>
   )

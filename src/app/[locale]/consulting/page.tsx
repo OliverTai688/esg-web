@@ -10,6 +10,7 @@ import { Coffee, BookOpen, FileText, GraduationCap, Users, Handshake, Mail, Cloc
 import type { Metadata } from "next"
 import { getDictionary } from "@/i18n/getDictionary"
 import type { Locale } from "@/i18n/config"
+import { site } from "@/lib/site"
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
@@ -262,28 +263,34 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
               description={t.consultingPage.contact.description}
               align="center"
             />
-            {/* TODO: wire up form submission */}
+            {/* Interim: with no backend yet, submitting opens the visitor's mail app with the
+                fields filled in. Replace with a real submit handler in B01 part B. */}
             <Card className="p-6 sm:p-8">
-              <form className="space-y-5">
+              <form
+                className="space-y-5"
+                action={`mailto:${site.supportEmail}?subject=${encodeURIComponent(t.consultingPage.contact.title)}`}
+                method="post"
+                encType="text/plain"
+              >
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div className="space-y-2">
                     <label className="text-sm font-medium" htmlFor="name">
                       {t.contactForm.name}
                     </label>
-                    <Input id="name" placeholder={t.contactForm.namePlaceholder} required />
+                    <Input id="name" name="name" autoComplete="name" placeholder={t.contactForm.namePlaceholder} required />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium" htmlFor="email">
                       {t.contactForm.email}
                     </label>
-                    <Input id="email" type="email" placeholder={t.contactForm.emailPlaceholder} required />
+                    <Input id="email" name="email" type="email" autoComplete="email" placeholder={t.contactForm.emailPlaceholder} required />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium" htmlFor="org">
                     {t.contactForm.org}
                   </label>
-                  <Input id="org" placeholder={t.contactForm.orgPlaceholder} />
+                  <Input id="org" name="organization" autoComplete="organization" placeholder={t.contactForm.orgPlaceholder} />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium" htmlFor="message">
@@ -291,6 +298,7 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
                   </label>
                   <textarea
                     id="message"
+                    name="message"
                     rows={4}
                     placeholder={t.contactForm.messagePlaceholder}
                     className="flex w-full rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
@@ -308,7 +316,9 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
                 <div className="size-8 rounded-lg bg-muted flex items-center justify-center">
                   <Mail size={14} />
                 </div>
-                <span>90223501gungho@gmail.com</span>
+                <a href={`mailto:${site.supportEmail}`} className="underline-offset-4 hover:text-primary hover:underline">
+                  {site.supportEmail}
+                </a>
               </div>
               <div className="flex items-center gap-2">
                 <div className="size-8 rounded-lg bg-muted flex items-center justify-center">

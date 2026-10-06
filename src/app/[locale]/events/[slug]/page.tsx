@@ -14,6 +14,7 @@ import {
   User,
   CheckCircle,
 } from "lucide-react"
+import { site } from "@/lib/site"
 
 interface EventDetailPageProps {
   params: Promise<{ locale: string; slug: string }>
@@ -167,8 +168,10 @@ export default async function EventDetailPage({
                   {course.status}
                 </p>
               </div>
-              <Button size="lg" className="rounded-full px-10 text-base">
-                立即報名
+              <Button size="lg" className="rounded-full px-10 text-base" asChild>
+                <a href={site.line.url} target="_blank" rel="noopener noreferrer">
+                  立即報名
+                </a>
               </Button>
             </div>
           ) : (

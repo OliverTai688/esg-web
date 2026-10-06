@@ -230,7 +230,9 @@ export default async function JoinPage({ params }: { params: Promise<{ locale: s
         title={t.joinPage.cta.title}
         description={t.joinPage.cta.description}
         primaryLabel={t.joinPage.cta.primaryLabel}
+        primaryHref={LINE_URL}
         secondaryLabel={t.joinPage.cta.secondaryLabel}
+        secondaryHref={`/${locale}`}
       />
     </main>
   )

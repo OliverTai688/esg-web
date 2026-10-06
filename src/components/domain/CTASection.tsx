@@ -1,19 +1,35 @@
+import * as React from "react"
 import { Container } from "@/components/core/Container"
 import { Section } from "@/components/core/Section"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
 interface CTASectionProps {
   title: string
   description: string
   primaryLabel: string
+  primaryHref: string
   secondaryLabel?: string
+  secondaryHref?: string
 }
+
+// Internal paths use client-side navigation; absolute URLs open in a new tab.
+const CTALink = ({ href, children }: { href: string; children: React.ReactNode }) =>
+  /^https?:\/\//.test(href) ? (
+    <a href={href} target="_blank" rel="noopener noreferrer">
+      {children}
+    </a>
+  ) : (
+    <Link href={href}>{children}</Link>
+  )
 
 const CTASection = ({
   title,
   description,
   primaryLabel,
+  primaryHref,
   secondaryLabel,
+  secondaryHref,
 }: CTASectionProps) => {
   return (
     <Section padding="lg" background="primary" className="overflow-hidden py-24 md:py-32 relative">
@@ -42,17 +58,19 @@ const CTASection = ({
             <Button
               variant="accent"
               size="lg"
-              className="h-16 px-16 text-lg font-black rounded-full hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl shadow-accent/30"
+              className="h-16 px-10 sm:px-16 text-lg font-black rounded-full hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl shadow-accent/30"
+              asChild
             >
-              {primaryLabel}
+              <CTALink href={primaryHref}>{primaryLabel}</CTALink>
             </Button>
-            {secondaryLabel && (
+            {secondaryLabel && secondaryHref && (
               <Button
                 variant="ghost"
                 size="lg"
                 className="h-14 px-10 text-base font-medium text-white/70 hover:text-white hover:bg-white/10 rounded-full transition-all duration-300"
+                asChild
               >
-                {secondaryLabel}
+                <CTALink href={secondaryHref}>{secondaryLabel}</CTALink>
               </Button>
             )}
           </div>
