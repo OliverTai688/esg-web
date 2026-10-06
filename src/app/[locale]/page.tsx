@@ -76,8 +76,10 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         label={t.story.label}
         title={t.story.title}
         headline={t.story.headline}
+        nameMeaning={t.story.nameMeaning}
         summary={t.story.summary}
         bullets={[...t.story.bullets]}
+        readMore={t.story.readMore}
         fullStory={[...t.story.fullStory]}
         founderName={t.story.founderName}
         founderTitle={t.story.founderTitle}

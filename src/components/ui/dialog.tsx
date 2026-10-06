@@ -36,10 +36,15 @@ const DialogRoot = ({
   React.useEffect(() => {
     setMounted(true)
     document.body.style.overflow = "hidden"
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onOpenChange(false)
+    }
+    document.addEventListener("keydown", onKeyDown)
     return () => {
       document.body.style.overflow = "unset"
+      document.removeEventListener("keydown", onKeyDown)
     }
-  }, [])
+  }, [onOpenChange])
 
   if (!mounted) return null
 

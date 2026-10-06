@@ -14,12 +14,26 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 
+// Renders **phrase** as bold; everything else as plain text.
+const renderEmphasis = (text: string) =>
+  text.split(/\*\*(.+?)\*\*/g).map((part, i) =>
+    i % 2 === 1 ? (
+      <strong key={i} className="font-bold text-foreground">
+        {part}
+      </strong>
+    ) : (
+      part
+    )
+  )
+
 interface StorySectionProps {
   label: string
   title: string
   headline: string
+  nameMeaning: string
   summary: string
   bullets: readonly string[]
+  readMore: string
   fullStory: readonly string[]
   founderName?: string
   founderTitle?: string
@@ -31,8 +45,10 @@ const StorySection = ({
   founderName,
   founderTitle,
   headline,
+  nameMeaning,
   summary,
   bullets,
+  readMore,
   fullStory,
 }: StorySectionProps) => {
   const [isOpen, setIsOpen] = React.useState(false)
@@ -55,7 +71,7 @@ const StorySection = ({
                 <div className="space-y-4 relative z-10">
                   <div className="text-6xl font-black text-white/15 absolute -top-12 -left-12">&ldquo;</div>
                   <p className="text-xl font-bold italic text-white/90 leading-relaxed">
-                    Sayun means &quot;Bridge&quot;
+                    {nameMeaning}
                   </p>
                   <div className="text-6xl font-black text-white/15 translate-y-4 absolute -bottom-8 -right-12">&rdquo;</div>
 
@@ -109,7 +125,7 @@ const StorySection = ({
                   onClick={() => setIsOpen(true)}
                   className="p-0 h-auto hover:bg-transparent text-primary font-bold text-xs gap-2"
                 >
-                  閱讀完整故事
+                  {readMore}
                   <ChevronDown className="size-3" />
                 </Button>
 
@@ -121,7 +137,7 @@ const StorySection = ({
                     <div className="space-y-6">
                       {fullStory.map((p, i) => (
                         <p key={i} className="text-base text-foreground/80 leading-[1.8]">
-                          {p}
+                          {renderEmphasis(p)}
                         </p>
                       ))}
                     </div>
