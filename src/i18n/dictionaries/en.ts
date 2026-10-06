@@ -531,6 +531,68 @@ const en: Dictionary = {
     description: "Let's talk about how to illuminate your professional value. Whether you're a brand owner, supply chain partner, or sustainability practitioner — we look forward to the conversation.",
     bookBtn: "Book a Session",
     back: "Back to Home",
+    solutions: {
+      label: "Services",
+      title: "Enterprise ESG Solutions",
+      description: "From talks to training workshops, from one-on-one consulting to sustainability whitepaper writing — choose the starting point that fits you best.",
+      items: [
+        {
+          title: "Sustainability Brand Consulting",
+          price: "NT$6,000 / session",
+          description: "One-on-one consulting to clarify your sustainability positioning, structure your ESG narrative, and find your entry point for talking with enterprises.",
+          highlight: "Most Popular",
+        },
+        {
+          title: "Sustainability Whitepaper (Essentials)",
+          price: "NT$100,000",
+          description: "A sustainability whitepaper tailored to your brand, combining ESG data and stories into a document for external communication and securing resources.",
+          highlight: "",
+        },
+        {
+          title: "Sustainable Business Innovator Training",
+          price: "NT$22,000 - 25,000",
+          description: "A structured training programme, from sustainability concepts to business practice, developing professionals with an ESG mindset.",
+          highlight: "",
+        },
+        {
+          title: "Sustainable Brand Starter Workshop",
+          price: "NT$6,000",
+          description: "A half-day workshop that helps brand owners quickly grasp sustainability frameworks and find where their brand connects with ESG.",
+          highlight: "",
+        },
+      ],
+    },
+    faq: {
+      label: "FAQ",
+      title: "Frequently Asked Questions",
+      items: [
+        {
+          question: "What is a Coffee Chat?",
+          answer: "A free 15-minute online consultation — like chatting over a cup of coffee. We listen to where you are and help you find the best next step. Whether to take it is up to you.",
+        },
+        {
+          question: "Who is CO-ESG for?",
+          answer: "Our clients include agricultural brands, design firms, social enterprises, non-profits, and large companies looking for sustainable supply chains. If you are doing meaningful work and want more people to see it, we would love to talk.",
+        },
+        {
+          question: "How long does a sustainability whitepaper take?",
+          answer: "Usually 4 to 8 weeks, depending on the size of the brand and how complete the materials are. We run in-depth interviews, organise the data and write the content so the whitepaper truly reflects your sustainability practice.",
+        },
+        {
+          question: "How do we get started?",
+          answer: "The easiest way is to book a Coffee Chat so we can understand your needs. We then propose a tailored plan and quote, and the project starts once you confirm.",
+        },
+        {
+          question: "What does an ESG Co-Learning subscription include?",
+          answer: "ESG Co-Learning is a cross-industry platform for sustainability learning and exchange. Subscribers can join regular workshops, talks and industry networking events, and get member-only sustainability resources and connections.",
+        },
+      ],
+    },
+    contact: {
+      title: "Book a Consultation",
+      description: "Fill in the form below and we will get back to you shortly to arrange a Coffee Chat.",
+      hours: "Mon–Fri 09:00–18:00",
+    },
     membershipSection: {
       label: "Membership",
       title: "Join as a partner for exclusive resources",

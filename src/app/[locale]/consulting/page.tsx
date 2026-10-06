@@ -21,70 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   }
 }
 
-// TODO: move hardcoded strings to dictionary
-const services = [
-  {
-    icon: Users,
-    title: "永續品牌顧問輔導",
-    price: "NT$6,000 / 次",
-    description:
-      "一對一顧問服務，協助品牌釐清永續定位、整理 ESG 敘事架構，找到與企業對話的切入點。",
-    highlight: "最受歡迎",
-  },
-  {
-    icon: FileText,
-    title: "永續白皮書精華版",
-    price: "NT$100,000",
-    description:
-      "為品牌量身打造的永續白皮書，整合 ESG 數據與故事，成為對外溝通、爭取資源的有力文件。",
-    highlight: null,
-  },
-  {
-    icon: GraduationCap,
-    title: "永續商創師培訓",
-    price: "NT$22,000 - 25,000",
-    description:
-      "系統化培訓課程，從永續概念到商業實踐，培養具備 ESG 思維的永續商業人才。",
-    highlight: null,
-  },
-  {
-    icon: BookOpen,
-    title: "永續品牌初階工作坊",
-    price: "NT$6,000",
-    description:
-      "半日工作坊，帶領品牌主快速理解永續框架，找到自身品牌與 ESG 的連結點。",
-    highlight: null,
-  },
-]
-
-// TODO: move hardcoded strings to dictionary
-const faqs = [
-  {
-    question: "什麼是 Coffee Chat？",
-    answer:
-      "Coffee Chat 是共好玟化提供的 15 分鐘免費線上諮詢，讓我們快速了解你的需求與現況，並提供初步建議方向。沒有壓力、沒有推銷，就像喝杯咖啡聊聊天。",
-  },
-  {
-    question: "誰適合使用共好玟化的服務？",
-    answer:
-      "我們的客戶涵蓋農業品牌、設計公司、社會企業、非營利組織，以及想尋找永續供應鏈的大型企業。只要你正在做有意義的事，希望被更多人看見，我們都歡迎你來聊聊。",
-  },
-  {
-    question: "永續白皮書需要多長時間完成？",
-    answer:
-      "依品牌規模與資料完整度，通常需要 4 至 8 週。過程中我們會進行深度訪談、資料整理與內容撰寫，確保白皮書真實反映品牌的永續實踐。",
-  },
-  {
-    question: "如何開始合作？",
-    answer:
-      "最簡單的方式是預約一場 Coffee Chat，讓我們了解你的需求。之後我們會提供客製化的合作建議與報價，確認後即可啟動專案。",
-  },
-  {
-    question: "ESG共學坊訂閱包含什麼？",
-    answer:
-      "ESG共學坊是跨產業的永續學習與交流平台，訂閱會員可參加定期舉辦的工作坊、講座與產業交流活動，並獲得會員專屬的永續資源與人脈網絡。",
-  },
-]
+const serviceIcons = [Users, FileText, GraduationCap, BookOpen]
 
 export default async function ConsultingPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
@@ -109,28 +46,15 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
               spacing="sm"
             />
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
-              <Button variant="default" size="lg" className="rounded-full w-full sm:w-auto gap-2">
-                <MessageCircle size={18} />
-                {t.consultingPage.bookBtn}
+              <Button variant="default" size="lg" className="rounded-full w-full sm:w-auto gap-2" asChild>
+                <a href="#contact">
+                  <MessageCircle size={18} />
+                  {t.consultingPage.bookBtn}
+                </a>
               </Button>
               <Button variant="outline" size="lg" className="rounded-full w-full sm:w-auto" asChild>
                 <Link href={`/${locale}`}>{t.consultingPage.back}</Link>
               </Button>
-            </div>
-            {/* Trust indicators */}
-            <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-muted-foreground">
-              <span className="flex items-center gap-2">
-                <span className="size-1.5 rounded-full bg-primary" />
-                15 分鐘免費諮詢
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="size-1.5 rounded-full bg-primary" />
-                無壓力、無推銷
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="size-1.5 rounded-full bg-primary" />
-                線上即可進行
-              </span>
             </div>
           </div>
         </Container>
@@ -139,16 +63,17 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
       {/* 企業 ESG 解決方案 */}
       <Section id="solutions" background="muted" withTopo>
         <Container>
-          {/* TODO: move title/description to dictionary */}
           <Heading
             level={2}
-            label="服務項目"
-            title="企業 ESG 解決方案"
-            description="從一對一顧問到永續白皮書撰寫，從培訓課程到工作坊，選擇最適合你的永續起步方式。"
+            label={t.consultingPage.solutions.label}
+            title={t.consultingPage.solutions.title}
+            description={t.consultingPage.solutions.description}
             align="center"
           />
           <div className="grid gap-6 sm:grid-cols-2">
-            {services.map((service) => (
+            {t.consultingPage.solutions.items.map((service, idx) => {
+              const ServiceIcon = serviceIcons[idx] ?? Users
+              return (
               <Card key={service.title} className="relative flex flex-row overflow-hidden">
                 {service.highlight && (
                   <div className="absolute top-4 right-4">
@@ -157,7 +82,7 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
                 )}
                 <div className="flex shrink-0 items-center justify-center w-20 sm:w-24 bg-primary/5 border-r border-border/50">
                   <div className="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-                    <service.icon size={24} />
+                    <ServiceIcon size={24} />
                   </div>
                 </div>
                 <div className="flex flex-1 flex-col p-5 sm:p-6">
@@ -167,14 +92,17 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
                   </div>
                   <CardDescription className="text-sm leading-relaxed mb-4">{service.description}</CardDescription>
                   <div className="mt-auto">
-                    <Button variant="outline" size="sm" className="rounded-full gap-1.5 text-xs">
-                      {t.consultingPage.bookBtn}
-                      <ArrowRight size={14} />
+                    <Button variant="outline" size="sm" className="rounded-full gap-1.5 text-xs" asChild>
+                      <a href="#contact">
+                        {t.consultingPage.bookBtn}
+                        <ArrowRight size={14} />
+                      </a>
                     </Button>
                   </div>
                 </div>
               </Card>
-            ))}
+              )
+            })}
           </div>
         </Container>
       </Section>
@@ -293,15 +221,14 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
       <Section id="faq" background="muted">
         <Container>
           <div className="mx-auto max-w-3xl">
-            {/* TODO: move title to dictionary */}
             <Heading
               level={2}
-              label="FAQ"
-              title="常見問題"
+              label={t.consultingPage.faq.label}
+              title={t.consultingPage.faq.title}
               align="center"
             />
             <div className="space-y-3">
-              {faqs.map((faq) => (
+              {t.consultingPage.faq.items.map((faq) => (
                 <details
                   key={faq.question}
                   className="group rounded-xl border bg-card transition-all hover:shadow-md open:shadow-md open:border-primary/20"
@@ -331,8 +258,8 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
             <Heading
               level={2}
               label={t.consultingPage.label}
-              title="預約合作諮詢"
-              description="填寫以下表單，我們將盡快與您聯繫安排 Coffee Chat。"
+              title={t.consultingPage.contact.title}
+              description={t.consultingPage.contact.description}
               align="center"
             />
             {/* TODO: wire up form submission */}
@@ -387,8 +314,7 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
                 <div className="size-8 rounded-lg bg-muted flex items-center justify-center">
                   <Clock size={14} />
                 </div>
-                {/* TODO: move to dictionary */}
-                <span>週一至週五 09:00-18:00</span>
+                <span>{t.consultingPage.contact.hours}</span>
               </div>
             </div>
           </div>
