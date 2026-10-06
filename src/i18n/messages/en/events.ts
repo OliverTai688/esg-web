@@ -1,0 +1,207 @@
+// /events copy. Client text from docs/tasks/sitemap-rev1/E01–E04.
+// Terminology follows G01; "CO-ESG Academy" is the English name for ESG共學坊.
+const events = {
+  meta: {
+    title: "Our Journey",
+    description: "From community talks to an international stage bringing together 30 countries: Gung-Ho Culture's courses, learning map, milestones and roadmap.",
+  },
+  label: "Our Journey",
+  hero: {
+    kicker: "Our Journey",
+    title: "Every step is a real footprint of sustainability in action",
+    description: "From cross-sector connections at CO-ESG Academy to international forums, Gung-Ho Culture continues to host high-quality sustainability events that bring like-minded partners together.",
+    primaryCta: "Open the Sustainability Learning Map",
+    secondaryCta: "See our story so far",
+  },
+  upcoming: {
+    label: "Events",
+    title: "Upcoming Courses & Events",
+    description: "Our next cohort is being planned. Follow us on LINE to hear first when registration opens; for in-house corporate training or bespoke courses, get in touch directly.",
+    planning: "Next cohort in planning",
+    planningNote: "LINE followers will be notified first once dates are announced",
+    notifyCta: "Get early notice on LINE",
+    inquireCta: "Enquire about in-house training",
+    viewDetails: "View course details",
+    open: "Now booking",
+  },
+  learningMap: {
+    label: "Sustainability Learning Map",
+    title: "Find the right starting point for your sustainability journey",
+    levelsLine: "Explore → Apply → Integrate",
+    intro:
+      "Whether you are new to ESG or an experienced practitioner looking to deepen your expertise, you will find the right starting point here. Each thematic module is self-contained and can be taken on its own; complete the full programme to build systematic, practical sustainability capability.",
+    // Level-to-colour mapping is our inference from the client's colour dots (E02, pending confirmation).
+    levels: [
+      { key: "blue", name: "Alignment & Integration", description: "Starting point and synthesis" },
+      { key: "green", name: "Explore", description: "Understand sustainability and articulate impact" },
+      { key: "yellow", name: "Apply", description: "Brand strategy and business models" },
+      { key: "red", name: "Advanced", description: "Carbon management, certification and market access" },
+    ],
+    audienceLabel: "Ideal for",
+    modules: [
+      { level: "blue", theme: "Module 1", title: "Sustainability Alignment & Organisational Dialogue", subtitle: "Cross-departmental sustainability alignment workshop", description: "Sustainability transformation starts inside the organisation. This workshop helps colleagues across departments build a common language, so sustainability is no longer one team's job alone.", audience: "Organisations just getting started, managers driving cultural change, and teams that need cross-departmental collaboration" },
+      { level: "green", theme: "Module 2", title: "Understanding Sustainability and Key Trends", subtitle: "Sustainability literacy and ESG management fundamentals", description: "From climate change to regulatory trends, learn how ESG affects your industry and identify your own entry point and risk-response strategy.", audience: "Professionals in any sector, managers and business owners seeking a solid grounding in sustainability" },
+      { level: "green", theme: "Module 3", title: "Articulating Your Impact", subtitle: "Sustainability reporting and SROI measurement", description: "Learn to describe your organisation's impact in internationally recognised terms (GRI, SROI), so stakeholders see your value. Not just storytelling, but evidence-based communication.", audience: "Anyone preparing a sustainability report, impact report or proposal" },
+      { level: "yellow", theme: "Module 4", title: "Sustainable Brand Strategy", subtitle: "Brand positioning × SDGs × user-centred design", description: "Turn sustainability into a competitive brand advantage. From market positioning to service design, learn how to make your brand seen and chosen in the sustainability era.", audience: "Brand managers, marketers and business owners looking to sharpen their brand's differentiation" },
+      { level: "yellow", theme: "Module 5", title: "Business Model Innovation", subtitle: "Circular economy × servitisation × monetising sustainability", description: "Doing good should also be good business. This module helps you redesign your business model, from resource circularity to service innovation, to find a profitable path to sustainability.", audience: "Entrepreneurs, business owners upgrading their business models, and product developers" },
+      { level: "red", theme: "Module 6", title: "Carbon Management & Environmental Resilience", subtitle: "Carbon inventory × decarbonisation strategy × climate risk", description: "From inventory to action, build your organisation's carbon management capability while using nature-based solutions to strengthen resilience against climate impacts.", audience: "Organisations with decarbonisation targets or supply-chain pressure, and businesses planning a carbon footprint assessment" },
+      { level: "red", theme: "Module 7", title: "Certification & Market Access", subtitle: "Sustainability certification × green supply chains × corporate partnership proposals", description: "Understand the routes to different sustainability certifications, respond to corporate ESG procurement needs and design partnership proposals that bring your brand into the supply chain.", audience: "Businesses looking to expand B2B partnerships and enter green procurement markets" },
+      { level: "blue", theme: "Module 8", title: "Integrating & Showcasing Impact", subtitle: "Data collection × impact reporting × Sustainability White Paper", description: "Bring together what you have learned across the modules and, through survey design, data analysis and report writing, produce your organisation's own sustainability impact document.", audience: "Learners with a solid sustainability foundation who want to produce tangible results" },
+    ],
+    externalTitle: "Further Courses",
+    externalLinks: [
+      { label: "ESG Sustainable Thinking: Brand and Social Impact Strategy (pre-recorded course)", href: "https://shanyun.havppen.com/course/esg" },
+      { label: "ESG Sustainable Agri-Innovator Course", href: "https://www.accupass.com/event/2507150923051155509773" },
+    ],
+    inquire: "Want to design a module combination for your team?",
+    inquireCta: "Enquire about bespoke courses",
+  },
+  servicesSection: {
+    label: "Ongoing support",
+    title: "Advisory & Subscriptions",
+    description: "More than one-off events: we provide ongoing expert support throughout your sustainability journey.",
+    consulting: "Advisory services",
+    subscription: "Subscription plans",
+    viewMore: "Learn more",
+  },
+  history: {
+    label: "Our Story So Far",
+    title: "From community talks to an international stage of 30 countries",
+    intro: "From talk after talk in local communities to an international stage bringing together 30 countries: this is the path Gung-Ho Culture has built, step by step.",
+    showAll: "Show all milestones",
+    showLess: "Show less",
+    phases: [
+      {
+        name: "Exploration & Foundations",
+        period: "2022–2023",
+        tagline: "Into communities, sowing seeds",
+        intro: "Drawing on our founder's decade-plus of social work and non-profit management, we began by going into communities and sowing seeds, prioritising brand awareness and a community base while resources were limited.",
+        entries: [
+          { date: "2022.05", text: "Gung-Ho Culture is founded (registered capital NT$50,000) to drive social impact through sustainability and ESG knowledge." },
+          { date: "2023.05", text: "Launches civic-week sustainability talks at Sanying and Nangang Community Colleges." },
+          { date: "2023.10", text: "Completes its first Sustainability White Paper, partnering with Qihe Design to produce a white paper on eggshell-paper egg trays for Qinyi Eggs." },
+          { date: "2023.11", text: "Launches CO-ESG Academy as an in-person club at Wanhua Community College; the same month, completes its first capital increase (NT$50,000 → NT$1 million)." },
+        ],
+      },
+      {
+        name: "Growth & Expansion",
+        period: "2024–present",
+        tagline: "Beyond borders, onto the world stage",
+        intro: "CO-ESG Academy moved from in-person to an online platform, our services extended into agriculture and business, and our impact began to reach from Taiwan to the wider world.",
+        entries: [
+          { date: "2024.03", text: "The CO-ESG Academy platform launches, taking the in-person club online as a learning platform." },
+          { date: "2024.06", text: "Enters agricultural sustainability with courses at Lühe Farm, training more than 30 small-farm brands and generating over NT$500,000 in single-day market sales." },
+          { date: "2024.11", text: "Invited as Strategy Director by 13+ start-up programmes to lead sustainable brand development workshops; Sustainability White Paper services scale up in parallel." },
+          { date: "2025", text: "Surpasses 100 talks, 30+ workshops and 500+ participants trained, serving more than 10 cities and counties across Taiwan, including the country's three largest leisure farms." },
+          { date: "Spring–Summer 2025", text: "Partners with the Taiwan Leisure Farming Association to launch Taiwan's first ESG Sustainable Agri-Innovator certification course." },
+          { date: "2025.05", text: "Co-organises a talk on strengthening charitable impact, and exhibits as a sustainability advisor at Secutech Taipei." },
+          { date: "2025.07", text: "Completes a second, larger capital increase (NT$1 million → NT$4 million), the largest to date." },
+          { date: "2025.08", text: "Invited for the first time to an international SDGs forum (Global Youth Leadership Programme SDGs Forum, Taipei).", href: "https://www.youthsdgs.org/" },
+          { date: "2025.08–10", text: "Invited by the Taipei City Government to teach the Taipei Friendly Stores course series (beginner and advanced)." },
+          { date: "2026.04", text: "Joins the SDGs Impact Developers Conference in Penghu as a co-organising partner, alongside young changemakers from 30 countries, stepping onto the international stage as a co-host.", href: "https://www.youthsdgs.org/" },
+          { date: "2026.05–06", text: "Takes part as a co-organising partner in the UN-SDGs Impact Developers Conference in Bangkok (29 May–1 June), held at Southeast Asia University and the UN ESCAP Conference Centre. More than 140 youth leaders, business representatives and international experts from over 30 countries gathered, extending Gung-Ho Culture's international reach to the United Nations.", href: "https://www.youthsdgs.org/" },
+        ],
+      },
+    ],
+    linkLabel: "Forum website",
+  },
+  past: {
+    label: "Past Events",
+    title: "Highlights",
+    ended: "Ended",
+  },
+  roadmap: {
+    label: "Roadmap",
+    title: "Our Roadmap",
+    intro: "Sustainability is a long road. We hold ourselves to the same standards we ask of others, turning our commitments into milestones that can be reviewed.",
+    horizons: [
+      {
+        name: "Short term",
+        period: "2026",
+        title: "Strengthen the foundations",
+        items: [
+          "Develop a standardised Sustainability White Paper template and build a portfolio of 5–8 complete case studies.",
+          "Diversify our client base, from charities and agricultural brands to SMEs, and deepen strategic partnerships.",
+          "Refresh our website and brand identity to strengthen transparency and trust.",
+          "Roll out CO-ESG Academy and workshops, and pilot a sustainable marketplace ecosystem model.",
+        ],
+      },
+      {
+        name: "Medium term",
+        period: "2027–2028",
+        title: "Make the model replicable",
+        items: [
+          "Build a replicable sustainability disclosure process with standardised SOPs to serve SMEs at scale.",
+          "Deepen our sustainable agricultural supply-chain services, linking farms, brands and retail channels into an agricultural ESG solution.",
+          "Develop AI-assisted sustainability advisory tools that combine quantitative analysis and data technology to make strategy work more efficient.",
+          "Help companies align with international standards such as GRI, the SDGs and SASB, laying the documentary groundwork for external applications and awards.",
+          "Expand the sustainable marketplace ecosystem and build long-term strategic partnerships with listed companies.",
+        ],
+      },
+      {
+        name: "Long term",
+        period: "2029 onwards",
+        title: "Become a hub of the ecosystem",
+        items: [
+          "Become Taiwan's most influential sustainability advisory and ecosystem platform, widely recognised by industry for our model of co-learning, co-creation and coexistence.",
+          "Grow a cross-sector Gung-Ho Ecosystem connecting government, business, non-profits, agriculture, healthcare and more into a mutually nourishing sustainability network.",
+          "Take Gung-Ho Culture's Sustainability White Paper model and IOOI framework to Asia-Pacific and the Chinese-speaking world, helping more companies build sustainability competitiveness.",
+          "Become a key hub for social innovation education, making impact thinking part of the everyday language of businesses and organisations.",
+        ],
+      },
+    ],
+    // Marks the horizon that is in progress today
+    currentLabel: "In progress",
+  },
+  commitment: {
+    label: "Our Sustainability Commitment",
+    lead: "As advisors who guide companies through sustainability disclosure, we believe we must practise what we preach.",
+    body: "Gung-Ho Culture is committed to embedding sustainability in its own operations and, through co-learning and co-creation, working with every partner to make impact the key to shaping the future.",
+  },
+  cases: {
+    label: "Case Studies",
+    title: "Real partnership results",
+    description: "Behind every case lies a meeting of ideas and the realisation of shared value.",
+    partnersLabel: "Partners",
+    items: [
+      {
+        title: "Sustainable products on corporate procurement lists",
+        partners: "Star Sprout Social Enterprise × Sifan Natural Farm",
+        description: "Through the CO-ESG Academy speaker platform, Gung-Ho Culture connected Star Sprout Social Enterprise with Sifan Natural Farm, bringing high-quality sustainable products and gifts with genuine social value into corporate gift procurement.",
+      },
+      {
+        title: "A story of functional socks and prints",
+        partners: "RAFAC Functional Socks × Chuchu Print Studio",
+        description: "Two brands with shared values began a conversation: RAFAC's functional craftsmanship met Chuchu Print Studio's print aesthetics. Gung-Ho Culture brokered a co-branded product, showing that everyday items can carry the spirit of design, nature and sustainability.",
+      },
+      {
+        title: "One small island, one conversation across borders",
+        partners: "Chinese Youth Growth Foundation × Daqing Travel",
+        description: "Connected through the CO-ESG Academy speaker platform, the Chairman of the Chinese Youth Growth Foundation hosted, with Daqing Travel as co-organiser, the 2026 SDGs Impact Developers Conference – Penghu, turning connections made on the platform into action with international resonance.",
+      },
+    ],
+  },
+  cta: {
+    title: "Ready to begin your sustainability journey?",
+    description: "Whether you are a brand owner new to ESG or a corporate partner looking to deepen your sustainability strategy, we have courses and services to suit you.",
+    primaryLabel: "Book a 15-minute Coffee Chat",
+    secondaryLabel: "Follow us on LINE",
+  },
+  detail: {
+    back: "Back to Our Journey",
+    instructor: "Instructor",
+    duration: "Duration",
+    date: "Date",
+    location: "Location",
+    capacity: "Places",
+    price: "Fee",
+    highlights: "Course highlights",
+    status: "Status",
+    enroll: "Enquire or register via LINE",
+    consult: "Book a Coffee Chat",
+    dateTbd: "Next cohort in planning",
+    related: "Other courses",
+  },
+}
+
+export default events

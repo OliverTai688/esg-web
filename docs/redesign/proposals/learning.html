@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>共好學習 提案</title>
+<meta name="description" content="/learning 知識庫首頁與文章頁模板的三個設計提案">
+<link rel="stylesheet" href="_tokens.css">
+<style>
+:root { --line-strong: #00843A; --line-green: #06C755; }
+html { scroll-padding-top: calc(var(--ppbar, 0px) + 16px); }
+body { overflow-x: hidden; }
+[hidden] { display: none !important; }
+.ic { width: 1.15em; height: 1.15em; flex: none; vertical-align: -0.2em; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+:focus-visible { outline: 3px solid var(--orange-strong); outline-offset: 2px; }
+
+/* ---------- proposal chrome ---------- */
+.pp-intro { background: #fff; border-bottom: 1px solid var(--line); }
+.pp-intro .in { max-width: 1180px; margin: 0 auto; padding: 28px 16px 24px; }
+.pp-intro h1 { font-size: clamp(22px, 4.5vw, 32px); line-height: 1.3; margin: 10px 0 8px; }
+.pp-intro p { margin: 0 0 6px; color: var(--ink-2); max-width: 760px; }
+.pp-intro .pp-note { margin-top: 14px; max-width: 900px; }
+.proposal { padding: 36px 0 64px; border-bottom: 8px solid #111; }
+.pp-meta { max-width: 1180px; margin: 0 auto 8px; padding: 0 16px; }
+.pp-meta-card { background: #fff; border: 2px dashed #555; border-radius: 14px; padding: 20px; }
+.pp-meta-card h2 { margin: 12px 0 14px; font-size: clamp(20px, 3.6vw, 26px); line-height: 1.35; }
+.pp-meta-card dl { display: grid; gap: 14px 28px; margin: 0; }
+.pp-meta-card dt { font-weight: 700; font-size: 13px; color: var(--ink-2); letter-spacing: .08em; }
+.pp-meta-card dd { margin: 2px 0 0; font-size: 15px; }
+.pp-meta-card dd ul { margin: 0; padding-left: 1.2em; }
+@media (min-width: 820px) { .pp-meta-card dl { grid-template-columns: 1fr 1fr; } .pp-meta-card .full { grid-column: 1 / -1; } }
+.frame { max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+.frame-label { display: flex; align-items: center; gap: 8px; font: 700 12px/1.4 var(--font-display); color: var(--ink-2); margin: 28px 0 10px; letter-spacing: .1em; }
+.frame-label::before { content: ""; width: 18px; height: 2px; background: var(--ink-2); }
+.screen { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; box-shadow: 0 14px 40px rgba(31, 32, 34, .08); }
+.anno { font-size: 12px; line-height: 1.5; color: #6b5200; background: var(--yellow-soft); border: 1px dashed #d6a000; border-radius: 8px; padding: 6px 10px; display: inline-block; }
+
+/* ---------- site chrome (part of the design) ---------- */
+.sh { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 20px; background: #fff; border-bottom: 1px solid var(--line); }
+.sh img { height: 30px; width: auto; display: block; }
+.sh nav { display: none; gap: 22px; font-size: 14px; }
+.sh nav a { color: var(--ink); text-decoration: none; }
+.sh nav a[aria-current] { color: var(--orange-strong); font-weight: 700; box-shadow: inset 0 -2px 0 var(--orange-strong); }
+.sh .sh-cta { font-size: 14px; padding: 8px 16px; min-height: 40px; }
+@media (min-width: 960px) { .sh nav { display: flex; } }
+.sf { background: var(--surface-dark); color: #fff; font-size: 13px; padding: 18px 20px; display: flex; flex-wrap: wrap; gap: 6px 24px; justify-content: space-between; }
+.sf a { color: #fff; }
+
+/* ---------- shared atoms ---------- */
+.w { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+@media (max-width: 480px) { .w { padding: 0 16px; } }
+.eyebrow { font: 700 12px/1.3 var(--font-display); letter-spacing: .16em; color: var(--orange-strong); text-transform: uppercase; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 10px 22px; border-radius: 999px; font: 700 15px/1.3 var(--font-sans); text-decoration: none; background: var(--orange-strong); color: #fff; border: 2px solid var(--orange-strong); cursor: pointer; text-align: center; }
+.btn:hover { background: #B53513; border-color: #B53513; }
+.btn-line { background: var(--line-strong); border-color: var(--line-strong); }
+.btn-line:hover { background: #006E30; border-color: #006E30; }
+.btn-ghost { background: transparent; color: var(--orange-strong); }
+.btn-ghost:hover { background: var(--orange-soft); }
+.btn-dark { background: var(--ink); border-color: var(--ink); }
+.btn-light { background: #fff; color: var(--ink); border-color: #fff; }
+.btn-light:hover { background: var(--yellow-soft); border-color: var(--yellow-soft); }
+.btn-sm { min-height: 40px; padding: 7px 16px; font-size: 14px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; background: var(--orange-soft); color: #9A2E12; }
+.chip-grey { background: #EEECE8; color: var(--ink-2); }
+.chip-green { background: #E3F5E6; color: #17672A; }
+.meta { font-size: 13px; color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; }
+.meta span { display: inline-flex; align-items: center; gap: 5px; }
+.h-sec { font-size: clamp(22px, 4vw, 30px); line-height: 1.35; margin: 6px 0 10px; letter-spacing: .01em; }
+.lede { color: var(--ink-2); margin: 0; max-width: 680px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+a.cardlink { color: inherit; text-decoration: none; display: block; }
+a.cardlink:hover h3, a.cardlink:hover h4, a.cardlink:focus-visible h3 { color: var(--orange-strong); text-decoration: underline; text-underline-offset: 3px; }
+.clamp2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* ================= A · 主題書架 ================= */
+.la-hero { padding: 48px 0 32px; background: linear-gradient(180deg, #fff 0%, var(--paper) 100%); }
+.la-hero h1 { font-size: clamp(28px, 6vw, 44px); line-height: 1.25; margin: 8px 0 12px; }
+.la-search { margin-top: 22px; display: flex; align-items: center; gap: 10px; background: #fff; border: 2px solid var(--line); border-radius: 999px; padding: 6px 8px 6px 18px; max-width: 560px; }
+.la-search:focus-within { border-color: var(--orange-strong); }
+.la-search input { flex: 1; min-width: 0; border: 0; font: inherit; font-size: 16px; padding: 8px 0; background: transparent; outline: none; }
+.la-stats { margin-top: 14px; font-size: 13px; color: var(--ink-2); }
+.la-topics { display: grid; gap: 10px; grid-template-columns: 1fr; margin-top: 18px; }
+@media (min-width: 560px) { .la-topics { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 980px) { .la-topics { grid-template-columns: repeat(4, 1fr); } }
+.la-tile { display: grid; grid-template-columns: 44px 1fr auto; gap: 4px 12px; align-items: center; text-align: left; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 14px; font: inherit; color: inherit; cursor: pointer; transition: border-color .15s, box-shadow .15s; }
+.la-tile:hover { border-color: var(--orange); box-shadow: 0 6px 18px rgba(242, 82, 50, .12); }
+.la-tile[aria-pressed="true"] { border-color: var(--orange-strong); box-shadow: inset 0 0 0 1px var(--orange-strong); background: var(--orange-soft); }
+.la-tile .tic { grid-row: span 2; width: 44px; height: 44px; border-radius: 12px; background: var(--orange-soft); color: var(--orange-strong); display: grid; place-items: center; }
+.la-tile .tic .ic { width: 22px; height: 22px; }
+.la-tile[aria-pressed="true"] .tic { background: #fff; }
+.la-tile b { font-size: 16px; }
+.la-tile .n { font: 700 13px/1 var(--font-display); color: var(--ink-2); }
+.la-tile small { grid-column: 2 / 4; font-size: 12.5px; color: var(--ink-2); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.la-tile.is-class .tic { background: #E3F5E6; color: #17672A; }
+.la-sec { padding: 40px 0; }
+.la-feature { display: grid; gap: 0; overflow: hidden; }
+@media (min-width: 860px) { .la-feature { grid-template-columns: 5fr 6fr; } }
+.la-cover { background: var(--surface-dark); color: #fff; padding: 28px; display: flex; flex-direction: column; justify-content: space-between; min-height: 220px; position: relative; overflow: hidden; }
+.la-cover::after { content: ""; position: absolute; right: -60px; bottom: -60px; width: 220px; height: 220px; border-radius: 50%; border: 28px solid var(--orange); opacity: .9; }
+.la-cover .big { font: 800 clamp(56px, 12vw, 88px)/1 var(--font-display); color: var(--yellow); position: relative; z-index: 1; }
+.la-cover p { margin: 6px 0 0; max-width: 260px; position: relative; z-index: 1; }
+.la-feature .body { padding: 26px; display: flex; flex-direction: column; gap: 10px; }
+.la-feature h3 { font-size: clamp(20px, 3.4vw, 26px); line-height: 1.4; margin: 0; }
+.la-start { display: grid; gap: 12px; counter-reset: s; }
+@media (min-width: 860px) { .la-start { grid-template-columns: repeat(3, 1fr); } }
+.la-start a { padding: 18px 18px 18px 64px; position: relative; }
+.la-start a::before { counter-increment: s; content: counter(s); position: absolute; left: 18px; top: 18px; width: 32px; height: 32px; border-radius: 50%; background: var(--ink); color: #fff; font: 700 15px/32px var(--font-display); text-align: center; }
+.la-start h4 { margin: 0 0 4px; font-size: 16px; line-height: 1.45; }
+.la-chips { display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px 10px; scrollbar-width: thin; }
+.la-chips button { flex: none; border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 8px 14px; font: 500 14px/1.2 var(--font-sans); color: var(--ink); cursor: pointer; min-height: 40px; }
+.la-chips button[aria-pressed="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
+.la-grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .la-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 980px) { .la-grid { grid-template-columns: repeat(3, 1fr); } }
+.la-post { padding: 18px; display: flex; flex-direction: column; gap: 8px; border-top: 4px solid var(--orange); }
+.la-post h3 { font-size: 17px; line-height: 1.5; margin: 0; }
+.la-post p { margin: 0; font-size: 14px; color: var(--ink-2); }
+.la-post .meta { margin-top: auto; }
+.la-post[data-topic="announcements"] { border-top-color: var(--coesg-green); }
+.la-count { font-size: 13px; color: var(--ink-2); margin: 4px 0 12px; }
+.la-band { background: var(--surface-dark); color: #fff; padding: 36px 0; }
+.la-band .w { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; justify-content: space-between; }
+.la-band h2 { margin: 0 0 4px; font-size: clamp(20px, 3.6vw, 26px); }
+.la-band p { margin: 0; color: #D9DADD; }
+.la-band .acts { display: flex; flex-wrap: wrap; gap: 10px; }
+.la-band .acts a.ghost { color: #fff; border-color: #fff; background: transparent; }
+
+/* A · article */
+.la-art { padding: 28px 0 0; background: #fff; }
+.crumb { font-size: 13px; color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.crumb a { color: var(--orange-strong); }
+.la-art h1 { font-size: clamp(26px, 5vw, 40px); line-height: 1.3; margin: 14px 0 16px; max-width: 820px; }
+.byline { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.avatar { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font-weight: 900; background: var(--orange-soft); color: #9A2E12; flex: none; }
+.avatar.green { background: #E3F5E6; color: #17672A; }
+.byline .who { font-weight: 700; font-size: 15px; line-height: 1.3; }
+.byline .who small { display: block; font-weight: 400; color: var(--ink-2); font-size: 12.5px; }
+.la-layout { display: grid; gap: 32px; padding: 28px 0 40px; }
+@media (min-width: 1000px) { .la-layout { grid-template-columns: minmax(0, 680px) 260px; justify-content: space-between; } }
+.toc-m { border: 1px solid var(--line); border-radius: 12px; padding: 0 14px; background: var(--paper); }
+.toc-m summary { cursor: pointer; padding: 12px 0; font-weight: 700; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+.toc-m summary::-webkit-details-marker { display: none; }
+.toc-m[open] summary .ic { transform: rotate(180deg); }
+.toc ol { margin: 0; padding: 0 0 12px 1.2em; font-size: 14px; }
+.toc li { padding: 4px 0; }
+.toc a { color: var(--ink); text-decoration: none; }
+.toc a:hover { color: var(--orange-strong); text-decoration: underline; }
+.toc li.on a { color: var(--orange-strong); font-weight: 700; }
+@media (min-width: 1000px) { .toc-m { display: none; } }
+.la-aside { display: none; }
+@media (min-width: 1000px) { .la-aside { display: block; } .la-aside .stick { position: sticky; top: calc(var(--ppbar, 0px) + 24px); display: grid; gap: 16px; } }
+.la-aside .box { border: 1px solid var(--line); border-radius: 12px; padding: 16px; background: var(--paper); }
+.la-aside h2 { font-size: 13px; letter-spacing: .1em; color: var(--ink-2); margin: 0 0 8px; }
+.prose { font-size: 17px; line-height: 1.95; }
+.prose h2 { font-size: 22px; line-height: 1.45; margin: 36px 0 10px; scroll-margin-top: 24px; }
+.prose p { margin: 0 0 16px; }
+.prose blockquote { margin: 20px 0; padding: 4px 0 4px 18px; border-left: 4px solid var(--orange); color: var(--ink); font-weight: 500; }
+.statlist { list-style: none; margin: 8px 0 16px; padding: 0; display: grid; gap: 10px; }
+.statlist li { display: grid; grid-template-columns: 86px 1fr; gap: 12px; align-items: center; padding: 12px 14px; background: var(--paper); border-radius: 10px; }
+.statlist b { font: 800 26px/1 var(--font-display); color: var(--orange-strong); }
+.statlist span { font-size: 15px; line-height: 1.6; }
+.endcta { margin: 36px 0 0; background: var(--surface-dark); color: #fff; border-radius: 16px; padding: 26px; display: grid; gap: 18px; }
+.endcta h2 { margin: 0; font-size: 22px; color: #fff; }
+.endcta p { margin: 0; color: #D9DADD; font-size: 15px; }
+.endcta .opts { display: grid; gap: 12px; }
+@media (min-width: 640px) { .endcta .opts { grid-template-columns: 1fr 1fr; } }
+.endcta .opt { background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .16); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.endcta .opt b { color: var(--yellow); font-size: 15px; }
+.endcta .opt span { font-size: 14px; color: #D9DADD; }
+.author-box { display: flex; gap: 14px; align-items: flex-start; border: 1px solid var(--line); border-radius: 14px; padding: 18px; margin-top: 24px; background: #fff; }
+.author-box img { width: 92px; height: auto; flex: none; }
+.author-box p { margin: 4px 0 0; font-size: 14px; color: var(--ink-2); }
+.related { background: var(--paper); padding: 32px 0 40px; border-top: 1px solid var(--line); }
+.related .la-grid { margin-top: 14px; }
+.taglist { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; }
+.taglist a { font-size: 13px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink-2); text-decoration: none; }
+
+/* ================= B · 學習路徑 ================= */
+.lb-hero { background: var(--orange-soft); padding: 44px 0 36px; }
+.lb-hero .w { display: grid; gap: 24px; }
+@media (min-width: 900px) { .lb-hero .w { grid-template-columns: 1.1fr 1fr; align-items: center; } }
+.lb-hero h1 { font-size: clamp(28px, 6vw, 44px); line-height: 1.25; margin: 8px 0 12px; }
+.lb-hero h1 em { font-style: normal; background: linear-gradient(transparent 62%, var(--yellow) 62%); }
+.lb-rail { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.lb-rail li a { display: grid; grid-template-columns: 44px 1fr auto; gap: 12px; align-items: center; padding: 12px 14px; background: #fff; border: 1px solid var(--line); color: var(--ink); text-decoration: none; position: relative; }
+.lb-rail li:first-child a { border-radius: 14px 14px 0 0; }
+.lb-rail li:last-child a { border-radius: 0 0 14px 14px; }
+.lb-rail li + li a { border-top: 0; }
+.lb-rail li a:hover { background: var(--yellow-soft); }
+.lb-rail .no { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font: 800 18px/1 var(--font-display); background: var(--ink); color: #fff; }
+.lb-rail b { display: block; font-size: 16px; }
+.lb-rail small { color: var(--ink-2); font-size: 13px; }
+.lb-rail .mins { font-size: 12.5px; color: var(--ink-2); white-space: nowrap; }
+.lb-notice { background: #E3F5E6; color: #17672A; font-size: 14px; }
+.lb-notice .w { display: flex; gap: 10px; align-items: center; padding-top: 10px; padding-bottom: 10px; flex-wrap: wrap; }
+.lb-notice a { color: #17672A; font-weight: 700; }
+.lb-toggle { display: inline-flex; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 4px; gap: 4px; margin: 28px 0 6px; }
+.lb-toggle button { border: 0; background: transparent; border-radius: 999px; padding: 8px 16px; font: 700 14px/1.2 var(--font-sans); color: var(--ink-2); cursor: pointer; min-height: 40px; }
+.lb-toggle button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+.lb-stage { display: grid; gap: 16px; padding: 28px 0; border-bottom: 1px dashed var(--line); }
+@media (min-width: 900px) { .lb-stage { grid-template-columns: 260px 1fr; gap: 32px; } }
+.lb-stage:last-child { border-bottom: 0; }
+.lb-stage .head .no { font: 800 54px/1 var(--font-display); color: var(--orange); }
+.lb-stage .head h2 { margin: 4px 0 6px; font-size: 22px; line-height: 1.35; }
+.lb-stage .head p { margin: 0; color: var(--ink-2); font-size: 14px; }
+.lb-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.lb-list a { display: grid; grid-template-columns: 1fr auto; gap: 4px 14px; align-items: center; padding: 14px 16px; background: #fff; border: 1px solid var(--line); border-radius: 12px; color: var(--ink); text-decoration: none; }
+.lb-list a:hover { border-color: var(--orange-strong); }
+.lb-list a:hover h3 { color: var(--orange-strong); }
+.lb-list h3 { font-size: 16px; line-height: 1.5; margin: 0; }
+.lb-list p { grid-column: 1; margin: 0; font-size: 13.5px; color: var(--ink-2); }
+.lb-list .t { grid-row: 1 / 3; grid-column: 2; font-size: 12.5px; color: var(--ink-2); display: inline-flex; gap: 4px; align-items: center; white-space: nowrap; }
+.lb-people { background: var(--surface-dark); color: #fff; border-radius: 16px; padding: 22px; display: grid; gap: 10px; margin: 8px 0 28px; }
+.lb-people .q { font-size: clamp(18px, 3.4vw, 22px); line-height: 1.6; font-weight: 700; margin: 0; }
+.lb-people a { color: var(--yellow); }
+.lb-topicview { display: grid; gap: 18px; padding: 24px 0; }
+@media (min-width: 760px) { .lb-topicview { grid-template-columns: 1fr 1fr; } }
+.lb-topicview section { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+.lb-topicview h2 { font-size: 17px; margin: 0 0 8px; display: flex; gap: 8px; align-items: center; }
+.lb-topicview h2 .ic { color: var(--orange-strong); }
+.lb-topicview ul { margin: 0; padding-left: 1.1em; font-size: 14.5px; }
+.lb-topicview li { padding: 3px 0; }
+.lb-end { padding: 36px 0; background: #fff; border-top: 1px solid var(--line); }
+.lb-end .w { display: grid; gap: 16px; }
+@media (min-width: 860px) { .lb-end .w { grid-template-columns: 1.2fr 1fr; align-items: center; } }
+.lb-end .acts { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* B · article */
+.lb-art { background: #fff; }
+.lb-progress { background: var(--paper); border-bottom: 1px solid var(--line); font-size: 13px; }
+.lb-progress .w { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; padding-top: 10px; padding-bottom: 10px; }
+.lb-dots { display: inline-flex; gap: 6px; align-items: center; }
+.lb-dots i { width: 28px; height: 6px; border-radius: 3px; background: var(--line); display: block; }
+.lb-dots i.done { background: var(--orange); }
+.lb-dots i.now { background: var(--orange-strong); width: 40px; }
+.lb-art .main { max-width: 720px; margin: 0 auto; padding: 32px 20px 40px; }
+@media (max-width: 480px) { .lb-art .main { padding: 28px 16px 36px; } }
+.lb-art h1 { font-size: clamp(26px, 5.4vw, 38px); line-height: 1.32; margin: 10px 0 14px; }
+.takeaway { background: var(--yellow-soft); border-radius: 14px; padding: 18px 20px; margin: 22px 0; }
+.takeaway h2 { margin: 0 0 8px; font-size: 15px; letter-spacing: .08em; }
+.takeaway ol { margin: 0; padding-left: 1.3em; }
+.takeaway li { padding: 3px 0; }
+.toc-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 8px; }
+.toc-chips a { font-size: 13.5px; padding: 6px 12px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+.toc-chips a:hover { border-color: var(--orange-strong); color: var(--orange-strong); }
+.nextstop { display: grid; gap: 0; border-radius: 16px; overflow: hidden; border: 2px solid var(--ink); margin-top: 36px; }
+.nextstop .top { background: var(--ink); color: #fff; padding: 10px 18px; font-size: 13px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.nextstop .top b { color: var(--yellow); }
+.nextstop a { padding: 20px 18px; color: var(--ink); text-decoration: none; display: grid; gap: 6px; background: #fff; }
+.nextstop a h3 { margin: 0; font-size: 20px; line-height: 1.45; }
+.nextstop a:hover h3 { color: var(--orange-strong); text-decoration: underline; }
+.nextstop .go { color: var(--orange-strong); font-weight: 700; display: inline-flex; gap: 6px; align-items: center; }
+.lb-mini { margin-top: 18px; display: grid; gap: 10px; }
+.lb-mini a { font-size: 14.5px; }
+.lb-ribbon { margin-top: 28px; background: var(--orange-soft); border-radius: 16px; padding: 22px; display: grid; gap: 12px; }
+.lb-ribbon h2 { margin: 0; font-size: 20px; }
+.lb-ribbon p { margin: 0; color: var(--ink-2); font-size: 15px; }
+.lb-ribbon .acts { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* ================= C · 索引與篩選 ================= */
+.lc-hero { background: var(--surface-dark); color: #fff; padding: 36px 0 30px; }
+.lc-hero h1 { font-size: clamp(26px, 5vw, 38px); line-height: 1.3; margin: 6px 0 8px; }
+.lc-hero p { color: #D9DADD; margin: 0; }
+.lc-hero .eyebrow { color: var(--yellow); }
+.lc-search { margin-top: 18px; display: flex; gap: 8px; align-items: center; background: #fff; border-radius: 12px; padding: 4px 4px 4px 14px; max-width: 640px; color: var(--ink); }
+.lc-search input { flex: 1; min-width: 0; border: 0; font: inherit; font-size: 16px; padding: 10px 0; outline: none; background: transparent; }
+.lc-body { display: grid; gap: 24px; padding: 28px 0 40px; }
+@media (min-width: 960px) { .lc-body { grid-template-columns: 240px 1fr; gap: 36px; } }
+.lc-filter details { border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+.lc-filter summary { padding: 12px 14px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; list-style: none; }
+.lc-filter summary::-webkit-details-marker { display: none; }
+.lc-filter .inner { padding: 0 14px 14px; display: grid; gap: 16px; }
+@media (min-width: 960px) { .lc-filter details { position: sticky; top: calc(var(--ppbar, 0px) + 24px); } .lc-filter summary { pointer-events: none; } .lc-filter summary .ic { display: none; } }
+.lc-filter fieldset { border: 0; margin: 0; padding: 0; }
+.lc-filter legend { font-size: 12px; font-weight: 700; letter-spacing: .1em; color: var(--ink-2); margin-bottom: 6px; }
+.lc-filter label { display: flex; align-items: center; gap: 8px; padding: 5px 0; font-size: 14.5px; cursor: pointer; min-height: 32px; }
+.lc-filter label span { margin-left: auto; font: 700 12px/1 var(--font-display); color: var(--ink-2); }
+.lc-filter input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--orange-strong); }
+.lc-picks { display: grid; gap: 12px; margin-bottom: 26px; }
+@media (min-width: 720px) { .lc-picks { grid-template-columns: repeat(3, 1fr); } }
+.lc-pick { padding: 16px; display: flex; flex-direction: column; gap: 8px; min-height: 150px; }
+.lc-pick:nth-child(1) { background: var(--yellow-soft); border-color: transparent; }
+.lc-pick:nth-child(2) { background: var(--orange-soft); border-color: transparent; }
+.lc-pick:nth-child(3) { background: #EEECE8; border-color: transparent; }
+.lc-pick h3 { font-size: 16.5px; line-height: 1.5; margin: 0; }
+.lc-pick .why { font-size: 13px; color: var(--ink-2); margin-top: auto; }
+.lc-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; border-bottom: 2px solid var(--ink); padding-bottom: 10px; }
+.lc-toolbar h2 { margin: 0; font-size: 18px; }
+.lc-toolbar select { font: inherit; font-size: 14px; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); background: #fff; min-height: 40px; }
+.lc-rows { list-style: none; margin: 0; padding: 0; }
+.lc-rows li { border-bottom: 1px solid var(--line); }
+.lc-rows a { display: grid; grid-template-columns: 1fr; gap: 4px; padding: 16px 0; color: var(--ink); text-decoration: none; }
+@media (min-width: 720px) { .lc-rows a { grid-template-columns: 96px 1fr 140px; gap: 18px; align-items: baseline; } }
+.lc-rows time { font: 700 13px/1.4 var(--font-display); color: var(--ink-2); }
+.lc-rows h3 { margin: 0; font-size: 16.5px; line-height: 1.5; }
+.lc-rows p { margin: 4px 0 0; font-size: 14px; color: var(--ink-2); }
+.lc-rows .side { font-size: 13px; color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.lc-rows a:hover h3 { color: var(--orange-strong); text-decoration: underline; }
+.lc-empty { padding: 24px; text-align: center; color: var(--ink-2); }
+.lc-ask { margin-top: 28px; border: 2px dashed var(--line); border-radius: 14px; padding: 18px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+.lc-ask p { margin: 0; }
+
+/* C · article */
+.lc-art { background: #fff; position: relative; }
+.lc-bar { position: sticky; top: var(--ppbar, 0px); height: 4px; background: var(--line); z-index: 5; }
+.lc-bar i { display: block; height: 100%; width: 0; background: var(--orange); }
+.lc-head { background: var(--surface-dark); color: #fff; padding: 36px 0 40px; }
+.lc-head .crumb, .lc-head .crumb a { color: #D9DADD; }
+.lc-head h1 { font-size: clamp(26px, 5.4vw, 42px); line-height: 1.3; margin: 14px 0 16px; max-width: 860px; }
+.lc-head .meta { color: #D9DADD; }
+.lc-head .eyebrow { color: var(--yellow); }
+.lc-quote { margin: 0; padding: 28px 0; background: var(--yellow); }
+.lc-quote p { margin: 0; font: 900 clamp(20px, 4.4vw, 30px)/1.5 var(--font-sans); color: var(--ink); max-width: 860px; }
+.lc-quote cite { display: block; margin-top: 8px; font-style: normal; font-size: 14px; color: var(--ink); }
+.lc-grid { display: grid; gap: 24px; padding: 32px 0 40px; }
+@media (min-width: 1000px) { .lc-grid { grid-template-columns: 200px minmax(0, 680px); gap: 48px; } }
+.lc-side { font-size: 14px; }
+@media (min-width: 1000px) { .lc-side .stick { position: sticky; top: calc(var(--ppbar, 0px) + 24px); } }
+.lc-side ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 14px; }
+@media (min-width: 1000px) { .lc-side ol { display: grid; gap: 10px; border-left: 2px solid var(--line); padding-left: 14px; } }
+.lc-side ol a { color: var(--ink); text-decoration: none; }
+.lc-side ol a:hover { color: var(--orange-strong); text-decoration: underline; }
+.lc-side .copy { margin-top: 16px; display: inline-flex; align-items: center; gap: 6px; background: none; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; font: inherit; font-size: 13px; cursor: pointer; color: var(--ink); min-height: 40px; }
+.lc-split { display: grid; gap: 14px; margin-top: 40px; }
+@media (min-width: 640px) { .lc-split { grid-template-columns: 1.15fr 1fr; } }
+.lc-split > div { border-radius: 16px; padding: 22px; display: flex; flex-direction: column; gap: 10px; }
+.lc-split h2 { margin: 0; font-size: 19px; line-height: 1.4; }
+.lc-split p { margin: 0; font-size: 14.5px; }
+.lc-split .a { background: #E8F6EC; }
+.lc-split .b { background: var(--paper); border: 1px solid var(--line); }
+.lc-split .btn { align-self: flex-start; margin-top: auto; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+<symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+<symbol id="i-line" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3.5C6.8 3.5 2.6 6.9 2.6 11.1c0 3.8 3.3 6.9 7.8 7.5.3.1.7.2.8.5.1.3.1.6 0 .9l-.1.8c0 .2-.2.9.8.5s5.4-3.2 7.4-5.4c1.4-1.5 2-3.1 2-4.8 0-4.2-4.2-7.6-9.3-7.6z"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+<symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+<symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></symbol>
+<symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h7"/></symbol>
+<symbol id="i-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></symbol>
+<symbol id="i-coffee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5zM17 10h1.5a2.5 2.5 0 0 1 0 5H17M8 3v3M12 3v3"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></symbol>
+<symbol id="i-rss" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 11a8 8 0 0 1 8 8M5 5a14 14 0 0 1 14 14"/><circle cx="6" cy="18" r="1.5" fill="currentColor"/></symbol>
+<symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+<symbol id="i-bulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V17h5v-1.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></symbol>
+<symbol id="i-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5" stroke-linecap="round"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14c2.4 0 4 1.6 4.5 4.5"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+<symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
+<symbol id="i-mega" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M3 10v4h4l6 4V6l-6 4zM16.5 9a4 4 0 0 1 0 6"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/></symbol>
+</defs></svg>
+<div class="pp-bar" role="toolbar" aria-label="切換提案" hidden><strong>/learning</strong><button type="button" data-show="A" aria-pressed="false">A｜主題書架</button><button type="button" data-show="B" aria-pressed="false">B｜學習路徑</button><button type="button" data-show="C" aria-pressed="false">C｜索引與篩選</button><button type="button" data-show="all" aria-pressed="false">全部並排</button></div><header class="pp-intro"><div class="in">
+<span class="pp-label">Proposal · /learning + /learning/[slug]</span>
+<h1>共好學習：知識庫首頁＋文章頁模板 三案</h1>
+<p>旅程位置：<strong>認識（Awareness）</strong>。多數人從 Google 搜尋直接落在文章頁，這一頁唯一的工作是讓人讀完一篇還想讀下一篇，最後知道「這是誰寫的、可以找他們」。主要角色 P4 個人學習者、P1 品牌主。</p><p>每一案都包含 <strong>① 知識庫首頁</strong> 與 <strong>② 文章頁模板</strong>。文章內容、分類、日期皆取自 <code>content/posts/</code>；閱讀時間以約 400 字／分鐘估算。</p>
+<p class="pp-note">共同修正：7 個分類（6 主題＋ESG共學坊公告）一次說清；精選不再是「訂閱 3 步驟」公告（L02）；文章頁「返回」回到所屬主題（L01）；文末 CTA 依認識階段導向 <strong>官方 LINE</strong> 與 <strong>永續學習地圖</strong>，不再只有「返回列表」。</p>
+</div></header>
+<section class="proposal" id="A" aria-label="提案 A"><div class="pp-meta"><div class="pp-meta-card">
+<span class="pp-label">提案 A</span>
+<h2>主題書架：先選主題，再讀精選</h2>
+<dl>
+<div class="full"><dt>概念</dt><dd>把 7 個分類做成首屏的「書架」，訪客先選主題再看文章；同一份列表用篩選切換，不再上下重複列兩次。文章頁是經典長文版型：麵包屑、作者列、側欄目錄、文末雙選項 CTA 與同主題延伸閱讀。</dd></div>
+<div class="full"><dt>參考來源</dt><dd>Unilever「Planet &amp; Society」與 IKEA 永續頁的「議題入口」：先用少數主題組織內容，每個主題有一句說明；South Pole 的「每篇報告結尾都接下一步」。</dd></div>
+<div><dt>優點</dt><dd><ul><li>最貼近現有資料結構（<code>learning-sections.ts</code>），工程量最小</li><li>首屏就回答「這裡有什麼」，搜尋進站的人也能橫向跳主題</li><li>「從這三篇開始」給新手明確起點</li></ul></dd></div>
+<div><dt>風險</dt><dd><ul><li>主題數量不平均（永續責任 5 篇、人物專訪 1 篇），書架看起來會有落差</li><li>精選要有人維護，否則會停在舊文章</li><li>版型較常見，品牌辨識度靠封面色塊與文案</li></ul></dd></div>
+<div class="full"><dt>對旅程的作用</dt><dd>接住 SEO 落地者（文章頁麵包屑 → 主題），把一次性閱讀延長成「同主題再讀一篇」；文末把高意圖讀者導向官方 LINE（留存）或學習地圖（往 /events 參與），首頁精選與書架同時服務第一次來的 P4。</dd></div>
+</dl></div></div>
+<div class="frame"><p class="frame-label">① 知識庫首頁 /learning</p><div class="screen"><header class="sh"><img src="../../../public/brand/gungho-horizontal.svg" alt="共好玟化 CO-ESG" width="76" height="30"><nav aria-label="主選單"><a href="#">共好永續力</a><a href="#">永續足跡</a><a href="#" aria-current="page">共好學習</a><a href="#">最新文章</a><a href="#">合作洽詢</a></nav><a class="btn btn-sm sh-cta" href="#">預約諮詢</a></header>
+<main>
+<section class="la-hero"><div class="w">
+<p class="eyebrow">共好學習 · Knowledge Hub</p>
+<h1>永續知識與實踐案例</h1>
+<p class="lede">從企業合作模式到創新策略，從人物專訪到ESG共學坊公告，持續學習永續的各種面向。</p>
+<form class="la-search" role="search" onsubmit="return false"><label class="sr" for="la-q">搜尋文章</label><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><input id="la-q" type="search" placeholder="搜尋：SDGs、重大性、碳手印…" data-search="la-list"><button class="btn btn-sm" type="submit">搜尋</button></form>
+<p class="la-stats">16 篇文章 · 7 個主題 · 由ESG共學坊與創辦人吳玟樺撰寫</p>
+</div></section>
+
+<section class="la-sec" style="padding-top:8px" aria-labelledby="la-topics-h"><div class="w">
+<h2 class="h-sec" id="la-topics-h">依主題探索</h2>
+<div class="la-topics"><button type="button" class="la-tile" data-target="la-list" data-f="all" aria-pressed="true"><span class="tic"><svg class="ic" aria-hidden="true"><use href="#i-doc"/></svg></span><b>全部文章</b><span class="n">16</span><small>依發布日期由新到舊排列。</small></button><button type="button" class="la-tile" data-target="la-list" data-f="innovation" aria-pressed="false"><span class="tic"><svg class="ic" aria-hidden="true"><use href="#i-bulb"/></svg></span><b>創新策略</b><span class="n">2</span><small>探索永續轉型的創新方法，從商業模式到產品設計，重新定義品牌的永續競爭力。</small></button><button type="button" class="la-tile" data-target="la-list" data-f="market" aria-pressed="false"><span class="tic"><svg class="ic" aria-hidden="true"><use href="#i-trend"/></svg></span><b>市場競爭力</b><span class="n">2</span><small>提升品牌在永續市場中的能見度，掌握消費者趨勢與企業採購標準。</small></button><button type="button" class="la-tile" data-target="la-list" data-f="responsibility" aria-pressed="false"><span class="tic"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg></span><b>永續責任</b><span class="n">5</span><small>深入了解企業社會責任的實踐方式，從 ESG 報告到利害關係人溝通。</small></button><button type="button" class="la-tile" data-target="la-list" data-f="collaboration" aria-pressed="false"><span class="tic"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg></span><b>合作模式</b><span class="n">2</span><small>了解多元的產業合作形式，從供應鏈整合到跨界聯名，找到最適合的合作路徑。</small></button><button type="button" class="la-tile" data-target="la-list" data-f="communication" aria-pressed="false"><span class="tic"><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></span><b>溝通與換位思考</b><span class="n">3</span><small>培養跨界對話的溝通能力，學習如何用不同產業的語言傳達永續價值。</small></button><button type="button" class="la-tile" data-target="la-list" data-f="interviews" aria-pressed="false"><span class="tic"><svg class="ic" aria-hidden="true"><use href="#i-mic"/></svg></span><b>人物專訪</b><span class="n">1</span><small>永續實踐者的第一手故事，聆聽不同領域的先驅者如何將理念化為行動。</small></button><button type="button" class="la-tile is-class" data-target="la-list" data-f="announcements" aria-pressed="false"><span class="tic"><svg class="ic" aria-hidden="true"><use href="#i-mega"/></svg></span><b>ESG共學坊公告</b><span class="n">1</span><small>ESG共學坊的課程、訂閱與活動相關通知。</small></button></div>
+</div></section>
+
+<section class="la-sec" style="background:#fff" aria-labelledby="la-feat-h"><div class="w">
+<p class="eyebrow">編輯精選</p>
+<h2 class="sr" id="la-feat-h">精選文章</h2>
+<a class="cardlink card la-feature" href="#" style="margin-top:10px">
+<div class="la-cover" aria-hidden="true"><span class="chip" style="align-self:flex-start">調查報告</span><div><div class="big">43.6%</div><p>的 ESG 工作者，永續工作經驗不足一年</p></div></div>
+<div class="body"><span class="chip" style="align-self:flex-start">永續責任</span><h3>ESG 實務工作者需求與挑戰調查結果報告</h3><p style="margin:0;color:var(--ink-2)">調查顯示 43.6% ESG 工作者經驗不足一年，面臨學習平衡、數據衡量與資源匱乏三大挑戰。</p><div class="meta"><span>2024.06.26</span><span>ESG共學坊</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 3 分鐘</span></div><span style="color:var(--orange-strong);font-weight:700;display:inline-flex;gap:6px;align-items:center">閱讀報告 <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
+</a>
+<p class="anno" style="margin-top:10px">精選由 frontmatter <code>featured: true</code> 決定，排除「ESG共學坊公告」（L02）。</p>
+</div></section>
+
+<section class="la-sec" aria-labelledby="la-start-h"><div class="w">
+<p class="eyebrow">剛開始接觸 ESG？</p>
+<h2 class="h-sec" id="la-start-h">從這三篇開始</h2>
+<p class="lede" style="margin-bottom:16px">先懂框架，再挑重點，最後學會看別人怎麼做。三篇加起來不到 10 分鐘。</p>
+<div class="la-start"><a class="cardlink card" href="#"><h4>透過 SDGs 打造永續競爭優勢</h4><div class="meta"><span>永續責任</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 2 分鐘</span></div></a><a class="cardlink card" href="#"><h4>聚焦重大性議題：有限資源下的最優選擇</h4><div class="meta"><span>永續責任</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 2 分鐘</span></div></a><a class="cardlink card" href="#"><h4>從永續報告書中洞察企業未來承諾</h4><div class="meta"><span>永續責任</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 2 分鐘</span></div></a></div>
+</div></section>
+
+<section class="la-sec" style="background:#fff" aria-labelledby="la-all-h" id="la-all"><div class="w">
+<h2 class="h-sec" id="la-all-h">所有文章</h2>
+<div class="la-chips" role="group" aria-label="依主題篩選"><button type="button" data-target="la-list" data-f="all" aria-pressed="true">全部</button><button type="button" data-target="la-list" data-f="innovation" aria-pressed="false">創新策略（2）</button><button type="button" data-target="la-list" data-f="market" aria-pressed="false">市場競爭力（2）</button><button type="button" data-target="la-list" data-f="responsibility" aria-pressed="false">永續責任（5）</button><button type="button" data-target="la-list" data-f="collaboration" aria-pressed="false">合作模式（2）</button><button type="button" data-target="la-list" data-f="communication" aria-pressed="false">溝通與換位思考（3）</button><button type="button" data-target="la-list" data-f="interviews" aria-pressed="false">人物專訪（1）</button><button type="button" data-target="la-list" data-f="announcements" aria-pressed="false">ESG共學坊公告（1）</button></div>
+<p class="la-count" aria-live="polite" data-count="la-list">共 16 篇</p>
+<div class="la-grid" id="la-list"><a class="cardlink card la-post" href="#" data-topic="announcements"><span class="chip chip-green">ESG共學坊公告</span><h3>訂閱 3 步驟</h3><p class="clamp2">加入ESG共學坊的三個簡單步驟：LINE 註冊、系統登入、信用卡綁定，輕鬆開啟永續學習之旅。</p><div class="meta"><span>2024.11.11</span><span>ESG共學坊</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 2 分鐘</span></div></a><a class="cardlink card la-post" href="#" data-topic="interviews"><span class="chip">人物專訪</span><h3>從父親的塑膠建材到我的永續革命：彭欣惠的接班與新生</h3><p class="clamp2">彭欣惠接掌家族塑膠建材事業，將父親的技術創新轉化為永續推廣，在 ESG 的路上找到新方向。</p><div class="meta"><span>2024.10.19</span><span>ESG共學坊</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 3 分鐘</span></div></a><a class="cardlink card la-post" href="#" data-topic="innovation"><span class="chip">創新策略</span><h3>核心策略指引：九宮格模型助力創新與問題解決</h3><p class="clamp2">運用商業模式九宮格框架，提供結構化思考方式，幫助企業聚焦核心要素，提高效率與效益。</p><div class="meta"><span>2024.10.08</span><span>ESG共學坊</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 3 分鐘</span></div></a><a class="cardlink card la-post" href="#" data-topic="market"><span class="chip">市場競爭力</span><h3>數據驅動的決策：推動永續策略實現的第一步</h3><p class="clamp2">企業如何透過問卷調查與數據量化分析，為永續策略建立扎實基礎，提升市場競爭力。</p><div class="meta"><span>2024.10.08</span><span>ESG共學坊</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 3 分鐘</span></div></a><a class="cardlink card la-post" href="#" data-topic="market"><span class="chip">市場競爭力</span><h3>透過市場數據洞察趨勢，提升永續產品競爭力</h3><p class="clamp2">以展場鋼架製造商為例，探討如何運用數據策略來強化永續產品的市場地位。</p><div class="meta"><span>2024.10.08</span><span>ESG共學坊</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 3 分鐘</span></div></a><a class="cardlink card la-post" href="#" data-topic="innovation"><span class="chip">創新策略</span><h3>擴大影響力：聯合利華的永續成功策略</h3><p class="clamp2">探討如何透過尋找可複製模式與號召更多人參與，擴大組織的永續影響力。</p><div class="meta"><span>2024.10.08</span><span>ESG共學坊</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 2 分鐘</span></div></a><a class="cardlink card la-post" href="#" data-topic="communication"><span class="chip">溝通與換位思考</span><h3>透過對話創造價值：搭建企業與社會的溝通橋樑</h3><p class="clamp2">對話是建立關係與培養信任的關鍵。從客戶、合作夥伴到社會，每一次對話都在創造價值。</p><div class="meta"><span>2024.10.02</span><span>ESG共學坊</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 2 分鐘</span></div></a><a class="cardlink card la-post" href="#" data-topic="communication"><span class="chip">溝通與換位思考</span><h3>換位思考：提升問卷設計的有效性</h3><p class="clamp2">透過換位思考改善問卷設計，減少受訪者心理壓力，提升數據品質與回答真實性。</p><div class="meta"><span>2024.10.02</span><span>ESG共學坊</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 2 分鐘</span></div></a><a class="cardlink card la-post" href="#" data-topic="communication"><span class="chip">溝通與換位思考</span><h3>從內部落實到外部溝通：強化永續理念的傳播</h3><p class="clamp2">以台灣血液基金會為例，探討如何透過內外並行的策略，有效傳遞組織的永續理念。</p><div class="meta"><span>2024.10.02</span><span>ESG共學坊</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 3 分鐘</span></div></a><a class="cardlink card la-post" href="#" data-topic="collaboration"><span class="chip">合作模式</span><h3>公益與企業共贏：提升社會價值與經濟效益</h3><p class="clamp2">將公益團體重新定位為企業夥伴，從單方面施與受轉變為互利互惠的合作模式。</p><div class="meta"><span>2024.09.27</span><span>ESG共學坊</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 2 分鐘</span></div></a><a class="cardlink card la-post" href="#" data-topic="collaboration"><span class="chip">合作模式</span><h3>從贊助到夥伴：企業與非營利組織的雙贏策略</h3><p class="clamp2">探討如何將企業與非營利組織的關係從傳統贊助轉變為互惠夥伴關係，形成正向循環。</p><div class="meta"><span>2024.09.27</span><span>ESG共學坊</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 2 分鐘</span></div></a><a class="cardlink card la-post" href="#" data-topic="responsibility"><span class="chip">永續責任</span><h3>聚焦重大性議題：有限資源下的最優選擇</h3><p class="clamp2">企業資源有限，透過重大性議題評估，精準選擇最具影響力的 ESG 議題，實現資源最大化配置。</p><div class="meta"><span>2024.09.26</span><span>ESG共學坊</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 2 分鐘</span></div></a><a class="cardlink card la-post" href="#" data-topic="responsibility"><span class="chip">永續責任</span><h3>透過 SDGs 打造永續競爭優勢</h3><p class="clamp2">永續發展目標為企業提供明確框架，從品牌價值、創新驅動到競爭力強化，全面提升企業的永續競爭力。</p><div class="meta"><span>2024.09.26</span><span>ESG共學坊</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 2 分鐘</span></div></a><a class="cardlink card la-post" href="#" data-topic="responsibility"><span class="chip">永續責任</span><h3>從永續報告書中洞察企業未來承諾</h3><p class="clamp2">了解如何閱讀永續報告書，從企業的遠程目標中洞察其對未來的承諾與永續發展方向。</p><div class="meta"><span>2024.09.26</span><span>ESG共學坊</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 2 分鐘</span></div></a><a class="cardlink card la-post" href="#" data-topic="responsibility"><span class="chip">永續責任</span><h3>ESG 實務工作者需求與挑戰調查結果報告</h3><p class="clamp2">調查顯示 43.6% ESG 工作者經驗不足一年，面臨學習平衡、數據衡量與資源匱乏三大挑戰。</p><div class="meta"><span>2024.06.26</span><span>ESG共學坊</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 3 分鐘</span></div></a><a class="cardlink card la-post" href="#" data-topic="responsibility"><span class="chip">永續責任</span><h3>從碳足跡到碳手印：塑造更永續的明天</h3><p class="clamp2">探討碳足跡與碳手印兩個概念的差異，以及五項實踐策略，形成雙軌策略應對氣候變化。</p><div class="meta"><span>2024.03.25</span><span>吳玟樺</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 2 分鐘</span></div></a></div>
+<p class="anno" style="margin-top:14px">篩選狀態寫進網址 <code>?topic=market</code>，文章頁「返回」可完整還原（L01 後續加強）。原本「上方格線 + 下方主題區塊」重複列出同一篇的問題一併解決。</p>
+</div></section>
+
+<section class="la-band"><div class="w">
+<div><h2>每週一則永續觀點，直接送到 LINE</h2><p>新文章、ESG共學坊課程與活動，第一時間通知你。</p></div>
+<div class="acts"><a class="btn btn-line" href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>加入官方 LINE</a><a class="btn ghost" href="#"><svg class="ic" aria-hidden="true"><use href="#i-map"/></svg>看永續學習地圖</a></div>
+</div></section>
+</main><footer class="sf"><span>共好玟化組織發展顧問有限公司 · 統編 90223501</span><span><a href="mailto:pt@coesg.tw">pt@coesg.tw</a> · LINE @381iutjm</span></footer></div></div><div class="frame"><p class="frame-label">② 文章頁模板 /learning/esg-practitioners-survey-2024</p><div class="screen"><header class="sh"><img src="../../../public/brand/gungho-horizontal.svg" alt="共好玟化 CO-ESG" width="76" height="30"><nav aria-label="主選單"><a href="#">共好永續力</a><a href="#">永續足跡</a><a href="#" aria-current="page">共好學習</a><a href="#">最新文章</a><a href="#">合作洽詢</a></nav><a class="btn btn-sm sh-cta" href="#">預約諮詢</a></header>
+<article class="la-art">
+<div class="w">
+<nav class="crumb" aria-label="麵包屑"><a href="#">共好學習</a><span aria-hidden="true">›</span><a href="#">永續責任</a><span aria-hidden="true">›</span><span>調查報告</span></nav>
+<h1>ESG 實務工作者需求與挑戰調查結果報告</h1>
+<div class="byline"><span class="avatar green" aria-hidden="true">共</span><span class="who">ESG共學坊<small>共好玟化旗下永續學習品牌</small></span><div class="meta" style="margin-left:auto"><span><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg><time datetime="2024-06-26">2024.06.26</time></span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>閱讀約 3 分鐘</span></div></div>
+<div class="la-layout">
+<div>
+<details class="toc-m toc"><summary>本文目錄（4）<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><ol><li><a href="#a-s1">工作經驗現況</a></li><li><a href="#a-s2">三大工作困難</a></li><li><a href="#a-s3">問題解決現況</a></li><li><a href="#a-s4">平台服務期望</a></li></ol></details>
+<div class="prose">
+<p>這份報告調查了 ESG 實務工作者面臨的挑戰與需求。</p>
+<h2 id="a-s1">工作經驗現況</h2>
+<p>43.6% 的受訪者擁有不到一年的永續工作經驗，近八成工作者經驗未滿三年，凸顯此領域從業人員整體經驗不足。</p>
+<h2 id="a-s2">三大工作困難</h2>
+<ul class="statlist"><li><b>63.6%</b><span><strong>學習與工作平衡</strong>：從業者時間有限，難以充分投入學習</span></li><li><b>59%</b><span><strong>數據衡量與管理</strong>：缺乏統一標準，各框架差異大</span></li><li><b>59%</b><span><strong>資源與工具匱乏</strong>：預算限制影響完整評估</span></li></ul>
+<h2 id="a-s3">問題解決現況</h2>
+<p>工作者主要依賴 Google 搜尋（69%）、外部專家諮詢（63.6%）與線上學習平台（53.6%），但超過 70% 的受訪者認為問題的解決程度不足 3 分（滿分 5 分）。</p>
+<h2 id="a-s4">平台服務期望</h2>
+<p>工作者希望建立共學平台，提供線上講座（65.4%）、影片回放（50.9%）、講師資料（50%）與實體分享會（48.1%）。</p>
+</div>
+<div class="taglist" aria-label="標籤"><a href="#">#ESG</a><a href="#">#調查報告</a><a href="#">#實務工作者</a></div>
+<div class="author-box"><img src="../../../public/brand/coesg-class.svg" alt="ESG共學坊 CLASS" width="92" height="28"><div><strong>關於ESG共學坊</strong><p>共好玟化旗下的永續學習品牌，以講座、工作坊與線上共學，陪實務工作者把永續變成能力。</p></div></div>
+<section class="endcta" aria-labelledby="a-end">
+<div><h2 id="a-end">讀完了，下一步？</h2><p>受訪者最希望有一個共學平台——這正是ESG共學坊在做的事。</p></div>
+<div class="opts">
+<div class="opt"><b>每週收到永續趨勢週報</b><span>新文章、課程與活動通知，加入官方 LINE 就會收到。</span><a class="btn btn-line" href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>加入官方 LINE</a></div>
+<div class="opt"><b>依程度找到適合的課程</b><span>永續學習地圖：3 個層次 × 8 個主題，找到你的起點。</span><a class="btn btn-light" href="#"><svg class="ic" aria-hidden="true"><use href="#i-map"/></svg>看永續學習地圖</a></div>
+</div>
+</section>
+</div>
+<aside class="la-aside" aria-label="文章導覽"><div class="stick">
+<nav class="box toc" aria-label="本文目錄"><h2>本文目錄</h2><ol><li class="on"><a href="#a-s1">工作經驗現況</a></li><li><a href="#a-s2">三大工作困難</a></li><li><a href="#a-s3">問題解決現況</a></li><li><a href="#a-s4">平台服務期望</a></li></ol></nav>
+<div class="box"><h2>同主題</h2><p style="margin:0 0 10px;font-size:14px">永續責任 · 5 篇</p><a href="#" style="font-size:14px;font-weight:700">回到「永續責任」 →</a></div>
+</div></aside>
+</div>
+</div>
+<section class="related" aria-labelledby="a-rel"><div class="w">
+<h2 class="h-sec" id="a-rel" style="font-size:22px">同主題延伸閱讀</h2>
+<div class="la-grid"><a class="cardlink card la-post" href="#" data-topic="responsibility"><span class="chip">永續責任</span><h3>聚焦重大性議題：有限資源下的最優選擇</h3><p class="clamp2">企業資源有限，透過重大性議題評估，精準選擇最具影響力的 ESG 議題，實現資源最大化配置。</p><div class="meta"><span>2024.09.26</span><span>ESG共學坊</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 2 分鐘</span></div></a><a class="cardlink card la-post" href="#" data-topic="responsibility"><span class="chip">永續責任</span><h3>透過 SDGs 打造永續競爭優勢</h3><p class="clamp2">永續發展目標為企業提供明確框架，從品牌價值、創新驅動到競爭力強化，全面提升企業的永續競爭力。</p><div class="meta"><span>2024.09.26</span><span>ESG共學坊</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 2 分鐘</span></div></a><a class="cardlink card la-post" href="#" data-topic="responsibility"><span class="chip">永續責任</span><h3>從碳足跡到碳手印：塑造更永續的明天</h3><p class="clamp2">探討碳足跡與碳手印兩個概念的差異，以及五項實踐策略，形成雙軌策略應對氣候變化。</p><div class="meta"><span>2024.03.25</span><span>吳玟樺</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 2 分鐘</span></div></a></div>
+</div></section>
+</article><footer class="sf"><span>共好玟化組織發展顧問有限公司 · 統編 90223501</span><span><a href="mailto:pt@coesg.tw">pt@coesg.tw</a> · LINE @381iutjm</span></footer></div></div></section><section class="proposal" id="B" aria-label="提案 B"><div class="pp-meta"><div class="pp-meta-card">
+<span class="pp-label">提案 B</span>
+<h2>學習路徑：四站走完，從入門到能溝通</h2>
+<dl>
+<div class="full"><dt>概念</dt><dd>不按分類、按「學習順序」排：起步 → 診斷 → 行動 → 溝通。每站有篇數與總分鐘數，文章頁頂端顯示「你在第幾站」，讀完直接接「下一站」。仍保留「依主題（7）」切換，給明確知道要找什麼的人。</dd></div>
+<div class="full"><dt>參考來源</dt><dd>South Pole「Climate Journey」（依階段排服務與內容）；Patagonia Action Works 的分級參與；線上課程平台常見的進度條與「下一課」。</dd></div>
+<div><dt>優點</dt><dd><ul><li>最能回答 P4「從哪裡開始」的焦慮，和 /events 學習地圖概念一致</li><li>「下一站」大卡讓單篇閱讀變成連續閱讀，最能拉長停留</li><li>每篇文章頂端的「三個重點」對搜尋進站者友善</li></ul></dd></div>
+<div><dt>風險</dt><dd><ul><li>四站歸類是編輯判斷，需要新增 frontmatter 欄位並由客戶確認</li><li>與學習地圖「3 層次 × 8 主題」命名需統一，否則兩套地圖會互相打架</li><li>新文章若不屬任何一站，需要決策規則</li></ul></dd></div>
+<div class="full"><dt>對旅程的作用</dt><dd>把認識階段做成一條有終點的路：讀完第 04 站「溝通」時，訪客已經走到「我需要被看見」——正好接上 /consulting 的 Coffee Chat；中途每一站都提供加 LINE 收下一篇，留住還沒準備好的人。</dd></div>
+</dl></div></div>
+<div class="frame"><p class="frame-label">① 知識庫首頁 /learning</p><div class="screen"><header class="sh"><img src="../../../public/brand/gungho-horizontal.svg" alt="共好玟化 CO-ESG" width="76" height="30"><nav aria-label="主選單"><a href="#">共好永續力</a><a href="#">永續足跡</a><a href="#" aria-current="page">共好學習</a><a href="#">最新文章</a><a href="#">合作洽詢</a></nav><a class="btn btn-sm sh-cta" href="#">預約諮詢</a></header>
+<div class="lb-notice"><div class="w"><svg class="ic" aria-hidden="true"><use href="#i-mega"/></svg><span><strong>ESG共學坊公告</strong>（2024.11.11）訂閱 3 步驟</span><a href="#">看公告 →</a></div></div>
+<main>
+<section class="lb-hero"><div class="w">
+<div><p class="eyebrow">共好學習 · 學習路徑</p><h1>不知道從哪裡讀起？<br><em>照著四站走</em>就好。</h1><p class="lede">16 篇文章依「起步 → 診斷 → 行動 → 溝通」排好順序。每一站約 6–11 分鐘，可以從任何一站開始。</p></div>
+<ol class="lb-rail" aria-label="四站學習路徑"><li><a href="#lb-st01"><span class="no">01</span><span><b>起步：認識永續</b><small>先懂框架與名詞，知道別人在說什麼。</small></span><span class="mins">3 篇 · 6 分</span></a></li><li><a href="#lb-st02"><span class="no">02</span><span><b>診斷：用數據找重點</b><small>資源有限，先找出對你最重要的議題。</small></span><span class="mins">4 篇 · 11 分</span></a></li><li><a href="#lb-st03"><span class="no">03</span><span><b>行動：設計策略與合作</b><small>把重點變成商業模式與跨界合作。</small></span><span class="mins">4 篇 · 9 分</span></a></li><li><a href="#lb-st04"><span class="no">04</span><span><b>溝通：讓價值被看見</b><small>做了好事，也要說得清楚、被聽懂。</small></span><span class="mins">3 篇 · 7 分</span></a></li></ol>
+</div></section>
+<div class="w">
+<div class="lb-toggle" role="group" aria-label="檢視方式"><button type="button" data-view-target="lb-views" data-view="path" aria-pressed="true">依學習路徑</button><button type="button" data-view-target="lb-views" data-view="topic" aria-pressed="false">依主題（7）</button></div>
+<div id="lb-views">
+<div data-view-panel="path"><section class="lb-stage" id="lb-st01" aria-labelledby="lb-h01"><div class="head"><div class="no" aria-hidden="true">01</div><h2 id="lb-h01">起步：認識永續</h2><p>先懂框架與名詞，知道別人在說什麼。</p><p style="margin-top:8px"><span class="chip chip-grey">本站 3 篇 · 約 6 分鐘</span></p></div><ol class="lb-list"><li><a href="#"><h3>透過 SDGs 打造永續競爭優勢</h3><p class="clamp2">永續發展目標為企業提供明確框架，從品牌價值、創新驅動到競爭力強化，全面提升企業的永續競爭力。</p><span class="t"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>2 分</span></a></li><li><a href="#"><h3>從永續報告書中洞察企業未來承諾</h3><p class="clamp2">了解如何閱讀永續報告書，從企業的遠程目標中洞察其對未來的承諾與永續發展方向。</p><span class="t"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>2 分</span></a></li><li><a href="#"><h3>從碳足跡到碳手印：塑造更永續的明天</h3><p class="clamp2">探討碳足跡與碳手印兩個概念的差異，以及五項實踐策略，形成雙軌策略應對氣候變化。</p><span class="t"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>2 分</span></a></li></ol></section><section class="lb-stage" id="lb-st02" aria-labelledby="lb-h02"><div class="head"><div class="no" aria-hidden="true">02</div><h2 id="lb-h02">診斷：用數據找重點</h2><p>資源有限，先找出對你最重要的議題。</p><p style="margin-top:8px"><span class="chip chip-grey">本站 4 篇 · 約 11 分鐘</span></p></div><ol class="lb-list"><li><a href="#"><h3>聚焦重大性議題：有限資源下的最優選擇</h3><p class="clamp2">企業資源有限，透過重大性議題評估，精準選擇最具影響力的 ESG 議題，實現資源最大化配置。</p><span class="t"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>2 分</span></a></li><li><a href="#"><h3>ESG 實務工作者需求與挑戰調查結果報告</h3><p class="clamp2">調查顯示 43.6% ESG 工作者經驗不足一年，面臨學習平衡、數據衡量與資源匱乏三大挑戰。</p><span class="t"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>3 分</span></a></li><li><a href="#"><h3>數據驅動的決策：推動永續策略實現的第一步</h3><p class="clamp2">企業如何透過問卷調查與數據量化分析，為永續策略建立扎實基礎，提升市場競爭力。</p><span class="t"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>3 分</span></a></li><li><a href="#"><h3>透過市場數據洞察趨勢，提升永續產品競爭力</h3><p class="clamp2">以展場鋼架製造商為例，探討如何運用數據策略來強化永續產品的市場地位。</p><span class="t"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>3 分</span></a></li></ol></section><section class="lb-stage" id="lb-st03" aria-labelledby="lb-h03"><div class="head"><div class="no" aria-hidden="true">03</div><h2 id="lb-h03">行動：設計策略與合作</h2><p>把重點變成商業模式與跨界合作。</p><p style="margin-top:8px"><span class="chip chip-grey">本站 4 篇 · 約 9 分鐘</span></p></div><ol class="lb-list"><li><a href="#"><h3>核心策略指引：九宮格模型助力創新與問題解決</h3><p class="clamp2">運用商業模式九宮格框架，提供結構化思考方式，幫助企業聚焦核心要素，提高效率與效益。</p><span class="t"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>3 分</span></a></li><li><a href="#"><h3>擴大影響力：聯合利華的永續成功策略</h3><p class="clamp2">探討如何透過尋找可複製模式與號召更多人參與，擴大組織的永續影響力。</p><span class="t"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>2 分</span></a></li><li><a href="#"><h3>公益與企業共贏：提升社會價值與經濟效益</h3><p class="clamp2">將公益團體重新定位為企業夥伴，從單方面施與受轉變為互利互惠的合作模式。</p><span class="t"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>2 分</span></a></li><li><a href="#"><h3>從贊助到夥伴：企業與非營利組織的雙贏策略</h3><p class="clamp2">探討如何將企業與非營利組織的關係從傳統贊助轉變為互惠夥伴關係，形成正向循環。</p><span class="t"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>2 分</span></a></li></ol></section><section class="lb-stage" id="lb-st04" aria-labelledby="lb-h04"><div class="head"><div class="no" aria-hidden="true">04</div><h2 id="lb-h04">溝通：讓價值被看見</h2><p>做了好事，也要說得清楚、被聽懂。</p><p style="margin-top:8px"><span class="chip chip-grey">本站 3 篇 · 約 7 分鐘</span></p></div><ol class="lb-list"><li><a href="#"><h3>透過對話創造價值：搭建企業與社會的溝通橋樑</h3><p class="clamp2">對話是建立關係與培養信任的關鍵。從客戶、合作夥伴到社會，每一次對話都在創造價值。</p><span class="t"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>2 分</span></a></li><li><a href="#"><h3>換位思考：提升問卷設計的有效性</h3><p class="clamp2">透過換位思考改善問卷設計，減少受訪者心理壓力，提升數據品質與回答真實性。</p><span class="t"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>2 分</span></a></li><li><a href="#"><h3>從內部落實到外部溝通：強化永續理念的傳播</h3><p class="clamp2">以台灣血液基金會為例，探討如何透過內外並行的策略，有效傳遞組織的永續理念。</p><span class="t"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>3 分</span></a></li></ol></section>
+<aside class="lb-people" aria-label="路上的人"><span class="eyebrow" style="color:var(--yellow)">路上的人 · 人物專訪</span><p class="q">「減塑其實非常困難，我們能做的是延長塑膠的生命週期。」</p><p style="margin:0;color:#D9DADD;font-size:14px">彭欣惠接掌家族塑膠建材事業，在 ESG 的路上找到新方向。 <a href="#">讀專訪 →</a></p></aside>
+</div>
+<div data-view-panel="topic" hidden><div class="lb-topicview"><section><h2><svg class="ic" aria-hidden="true"><use href="#i-bulb"/></svg>創新策略 <span class="chip chip-grey">2</span></h2><ul><li><a href="#">核心策略指引：九宮格模型助力創新與問題解決</a></li><li><a href="#">擴大影響力：聯合利華的永續成功策略</a></li></ul></section><section><h2><svg class="ic" aria-hidden="true"><use href="#i-trend"/></svg>市場競爭力 <span class="chip chip-grey">2</span></h2><ul><li><a href="#">數據驅動的決策：推動永續策略實現的第一步</a></li><li><a href="#">透過市場數據洞察趨勢，提升永續產品競爭力</a></li></ul></section><section><h2><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg>永續責任 <span class="chip chip-grey">5</span></h2><ul><li><a href="#">聚焦重大性議題：有限資源下的最優選擇</a></li><li><a href="#">透過 SDGs 打造永續競爭優勢</a></li><li><a href="#">從永續報告書中洞察企業未來承諾</a></li><li><a href="#">ESG 實務工作者需求與挑戰調查結果報告</a></li><li><a href="#">從碳足跡到碳手印：塑造更永續的明天</a></li></ul></section><section><h2><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg>合作模式 <span class="chip chip-grey">2</span></h2><ul><li><a href="#">公益與企業共贏：提升社會價值與經濟效益</a></li><li><a href="#">從贊助到夥伴：企業與非營利組織的雙贏策略</a></li></ul></section><section><h2><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg>溝通與換位思考 <span class="chip chip-grey">3</span></h2><ul><li><a href="#">透過對話創造價值：搭建企業與社會的溝通橋樑</a></li><li><a href="#">換位思考：提升問卷設計的有效性</a></li><li><a href="#">從內部落實到外部溝通：強化永續理念的傳播</a></li></ul></section><section><h2><svg class="ic" aria-hidden="true"><use href="#i-mic"/></svg>人物專訪 <span class="chip chip-grey">1</span></h2><ul><li><a href="#">從父親的塑膠建材到我的永續革命：彭欣惠的接班與新生</a></li></ul></section><section><h2><svg class="ic" aria-hidden="true"><use href="#i-mega"/></svg>ESG共學坊公告 <span class="chip chip-grey">1</span></h2><ul><li><a href="#">訂閱 3 步驟</a></li></ul></section></div></div>
+</div>
+<p class="anno" style="margin-bottom:24px">四站的歸類是編輯判斷，需新增 frontmatter <code>stage: 1–4</code>；與 /events「永續學習地圖」（3 層次 × 8 主題）的關係待統一命名。</p>
+</div>
+<section class="lb-end"><div class="w">
+<div><p class="eyebrow">想要有人帶著走？</p><h2 class="h-sec">ESG共學坊每月有課程與回放</h2><p class="lede">文章幫你建立概念；要練成能力，可以從學習地圖挑一堂課開始。</p></div>
+<div class="acts"><a class="btn" href="#"><svg class="ic" aria-hidden="true"><use href="#i-map"/></svg>看永續學習地圖</a><a class="btn btn-line" href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>加 LINE 收新文章</a></div>
+</div></section>
+</main><footer class="sf"><span>共好玟化組織發展顧問有限公司 · 統編 90223501</span><span><a href="mailto:pt@coesg.tw">pt@coesg.tw</a> · LINE @381iutjm</span></footer></div></div><div class="frame"><p class="frame-label">② 文章頁模板 /learning/carbon-footprint-to-handprint</p><div class="screen"><header class="sh"><img src="../../../public/brand/gungho-horizontal.svg" alt="共好玟化 CO-ESG" width="76" height="30"><nav aria-label="主選單"><a href="#">共好永續力</a><a href="#">永續足跡</a><a href="#" aria-current="page">共好學習</a><a href="#">最新文章</a><a href="#">合作洽詢</a></nav><a class="btn btn-sm sh-cta" href="#">預約諮詢</a></header>
+<article class="lb-art">
+<div class="lb-progress"><div class="w"><span><a href="#" style="font-weight:700">學習路徑</a> · 第 01 站 起步：認識永續</span><span class="lb-dots" aria-label="本站第 3 篇，共 3 篇"><i class="done"></i><i class="done"></i><i class="now"></i></span></div></div>
+<div class="main">
+<span class="chip">永續責任</span>
+<h1>從碳足跡到碳手印：塑造更永續的明天</h1>
+<div class="byline"><span class="avatar" aria-hidden="true">吳</span><span class="who">吳玟樺<small>共好玟化創辦人</small></span><div class="meta" style="margin-left:auto"><span><time datetime="2024-03-25">2024.03.25</time></span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>閱讀約 2 分鐘</span></div></div>
+<section class="takeaway" aria-labelledby="b-tk"><h2 id="b-tk">三個重點，30 秒讀完</h2><ol><li><strong>碳足跡</strong>看的是排放，重點在減少負面影響。</li><li><strong>碳手印</strong>看的是行動，重點在創造正面成果。</li><li>兩者不是二選一，而是可以相輔相成的<strong>雙軌策略</strong>。</li></ol></section>
+<nav class="toc-chips" aria-label="本文目錄"><a href="#b-s1">五項實踐策略</a><a href="#b-s2">雙軌策略</a></nav>
+<div class="prose">
+<p>碳足跡指個人、企業或產品在生產、生活或消費過程中產生的二氧化碳排放量，著重於減少對環境的負面影響。</p>
+<p>相比之下，碳手印採取更積極的策略，聚焦於如何透過行動創造正面的永續成果。</p>
+<h2 id="b-s1">五項實踐策略</h2>
+<ol><li><strong>低碳生活平台</strong> — 透過點數獎勵鼓勵環保行為</li><li><strong>跨領域 ESG 專案</strong> — 結合藝術與教育推動永續發展</li><li><strong>碳足跡標籤與負碳標章</strong> — 企業展示永續承諾</li><li><strong>科技與金融創新</strong> — 運用區塊鏈與個人碳帳戶</li><li><strong>校園社區教育</strong> — 推行碳教育與在地專案</li></ol>
+<h2 id="b-s2">雙軌策略</h2>
+<p>降低碳足跡與增加碳手印可相輔相成，形成雙軌策略以應對氣候變化並建構永續社會。</p>
+</div>
+<div class="nextstop"><div class="top"><span>你完成了 <b>第 01 站</b></span><span>下一站 02 · 診斷：用數據找重點</span></div>
+<a href="#"><span class="chip" style="justify-self:start">永續責任 · 約 2 分鐘</span><h3>聚焦重大性議題：有限資源下的最優選擇</h3><span style="color:var(--ink-2);font-size:14.5px">企業資源有限，透過重大性議題評估，精準選擇最具影響力的 ESG 議題。</span><span class="go">前往下一站 <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></div>
+<div class="lb-mini"><strong style="font-size:14px;color:var(--ink-2)">本站其他文章</strong><a href="#">透過 SDGs 打造永續競爭優勢</a><a href="#">從永續報告書中洞察企業未來承諾</a></div>
+<section class="lb-ribbon" aria-labelledby="b-rb"><h2 id="b-rb">把下一站寄給你</h2><p>加入官方 LINE，每週收到一篇精選文章與ESG共學坊課程通知；想系統化學習，可以看學習地圖。</p><div class="acts"><a class="btn btn-line" href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>加入官方 LINE</a><a class="btn btn-ghost" href="#"><svg class="ic" aria-hidden="true"><use href="#i-map"/></svg>永續學習地圖</a></div></section>
+</div>
+</article><footer class="sf"><span>共好玟化組織發展顧問有限公司 · 統編 90223501</span><span><a href="mailto:pt@coesg.tw">pt@coesg.tw</a> · LINE @381iutjm</span></footer></div></div></section><section class="proposal" id="C" aria-label="提案 C"><div class="pp-meta"><div class="pp-meta-card">
+<span class="pp-label">提案 C</span>
+<h2>索引與篩選：像資料庫一樣找文章</h2>
+<dl>
+<div class="full"><dt>概念</dt><dd>以「可被查找」為核心：搜尋、主題與類型多選、排序，列表緊湊易掃描；上方「依身分的編輯推薦」補足人味。文章頁採沉浸式長讀：深色標題區、黃色引言、閱讀進度條，文末把 LINE 與 Coffee Chat 分成「還在摸索／已有問題」兩條路。</dd></div>
+<div class="full"><dt>參考來源</dt><dd>B Lab「Resources / Updates &amp; Insights」的篩選式資料庫；Patagonia Stories 的大引言與沉浸式長讀；Interface 用一句話打中人心的敘事。</dd></div>
+<div><dt>優點</dt><dd><ul><li>文章數增加到 50、100 篇時最耐用</li><li>多選篩選讓 P2、P3 直接找到「合作模式」「調查報告」</li><li>專訪頁版型最有雜誌感，適合未來的人物故事與 NPO 案例</li></ul></dd></div>
+<div><dt>風險</dt><dd><ul><li>16 篇時篩選器顯得比內容還重，第一印象偏工具</li><li>需要 JS 才能篩選（無 JS 時仍顯示完整列表）</li><li>文末雙 CTA 並列，若文案不清楚會稀釋 LINE 主行動</li></ul></dd></div>
+<div class="full"><dt>對旅程的作用</dt><dd>服務「知道自己要什麼」的回訪者與 P2／P3 研究者；「找不到你想讀的主題？用 LINE 告訴我們」把搜尋失敗變成對話起點。文章頁依讀者成熟度分流：摸索者 → LINE（留存），有具體問題 → Coffee Chat（轉換）。</dd></div>
+</dl></div></div>
+<div class="frame"><p class="frame-label">① 知識庫首頁 /learning</p><div class="screen"><header class="sh"><img src="../../../public/brand/gungho-horizontal.svg" alt="共好玟化 CO-ESG" width="76" height="30"><nav aria-label="主選單"><a href="#">共好永續力</a><a href="#">永續足跡</a><a href="#" aria-current="page">共好學習</a><a href="#">最新文章</a><a href="#">合作洽詢</a></nav><a class="btn btn-sm sh-cta" href="#">預約諮詢</a></header>
+<main>
+<section class="lc-hero"><div class="w">
+<p class="eyebrow">共好學習 · 文章索引</p>
+<h1>永續知識與實踐案例</h1>
+<p>16 篇文章、7 個主題。用主題、類型與關鍵字，找到你現在需要的那一篇。</p>
+<form class="lc-search" role="search" onsubmit="return false"><label class="sr" for="lc-q">搜尋文章</label><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><input id="lc-q" type="search" placeholder="輸入關鍵字，例如：重大性" data-search="lc-list"><button class="btn btn-sm" type="submit">搜尋</button></form>
+</div></section>
+<div class="w"><div class="lc-body">
+<aside class="lc-filter" aria-label="篩選"><details open data-desktop-open><summary>篩選文章 <svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><div class="inner" data-checkfilter="lc-list">
+<fieldset><legend>主題</legend><label><input type="checkbox" name="topic" value="innovation">創新策略<span>2</span></label><label><input type="checkbox" name="topic" value="market">市場競爭力<span>2</span></label><label><input type="checkbox" name="topic" value="responsibility">永續責任<span>5</span></label><label><input type="checkbox" name="topic" value="collaboration">合作模式<span>2</span></label><label><input type="checkbox" name="topic" value="communication">溝通與換位思考<span>3</span></label><label><input type="checkbox" name="topic" value="interviews">人物專訪<span>1</span></label><label><input type="checkbox" name="topic" value="announcements">ESG共學坊公告<span>1</span></label></fieldset>
+<fieldset><legend>類型</legend><label><input type="checkbox" name="type" value="觀點">觀點<span>13</span></label><label><input type="checkbox" name="type" value="專訪">專訪<span>1</span></label><label><input type="checkbox" name="type" value="調查報告">調查報告<span>1</span></label><label><input type="checkbox" name="type" value="公告">公告<span>1</span></label></fieldset>
+<button type="button" class="btn btn-ghost btn-sm" data-clear="lc-list">清除篩選</button>
+</div></details></aside>
+<div>
+<h2 class="h-sec" style="font-size:20px">編輯推薦 · 依你的身分</h2>
+<div class="lc-picks"><a class="cardlink card lc-pick" href="#"><span class="chip chip-grey" style="align-self:flex-start;background:#fff">調查報告</span><h3>ESG 實務工作者需求與挑戰調查結果報告</h3><span class="why">適合：想知道同行卡在哪的實務工作者</span></a><a class="cardlink card lc-pick" href="#"><span class="chip chip-grey" style="align-self:flex-start;background:#fff">觀點</span><h3>公益與企業共贏：提升社會價值與經濟效益</h3><span class="why">適合：正在找企業夥伴的 NPO</span></a><a class="cardlink card lc-pick" href="#"><span class="chip chip-grey" style="align-self:flex-start;background:#fff">專訪</span><h3>從父親的塑膠建材到我的永續革命：彭欣惠的接班與新生</h3><span class="why">適合：接班中、想轉型的品牌主</span></a></div>
+<div class="lc-toolbar"><h2>所有文章 <span class="la-count" style="font-weight:400" aria-live="polite" data-count="lc-list">共 16 篇</span></h2><label><span class="sr">排序</span><select data-sort="lc-list"><option value="desc">最新優先</option><option value="asc">最舊優先</option></select></label></div>
+<ul class="lc-rows" id="lc-list"><li data-topic="announcements" data-type="公告" data-date="2024-11-11"><a href="#"><time datetime="2024-11-11">2024.11.11</time><div><h3>訂閱 3 步驟</h3><p class="clamp2">加入ESG共學坊的三個簡單步驟：LINE 註冊、系統登入、信用卡綁定，輕鬆開啟永續學習之旅。</p></div><div class="side"><span class="chip chip-green">ESG共學坊公告</span><span>公告 · 2 分</span></div></a></li><li data-topic="interviews" data-type="專訪" data-date="2024-10-19"><a href="#"><time datetime="2024-10-19">2024.10.19</time><div><h3>從父親的塑膠建材到我的永續革命：彭欣惠的接班與新生</h3><p class="clamp2">彭欣惠接掌家族塑膠建材事業，將父親的技術創新轉化為永續推廣，在 ESG 的路上找到新方向。</p></div><div class="side"><span class="chip chip-grey">人物專訪</span><span>專訪 · 3 分</span></div></a></li><li data-topic="innovation" data-type="觀點" data-date="2024-10-08"><a href="#"><time datetime="2024-10-08">2024.10.08</time><div><h3>核心策略指引：九宮格模型助力創新與問題解決</h3><p class="clamp2">運用商業模式九宮格框架，提供結構化思考方式，幫助企業聚焦核心要素，提高效率與效益。</p></div><div class="side"><span class="chip chip-grey">創新策略</span><span>觀點 · 3 分</span></div></a></li><li data-topic="market" data-type="觀點" data-date="2024-10-08"><a href="#"><time datetime="2024-10-08">2024.10.08</time><div><h3>數據驅動的決策：推動永續策略實現的第一步</h3><p class="clamp2">企業如何透過問卷調查與數據量化分析，為永續策略建立扎實基礎，提升市場競爭力。</p></div><div class="side"><span class="chip chip-grey">市場競爭力</span><span>觀點 · 3 分</span></div></a></li><li data-topic="market" data-type="觀點" data-date="2024-10-08"><a href="#"><time datetime="2024-10-08">2024.10.08</time><div><h3>透過市場數據洞察趨勢，提升永續產品競爭力</h3><p class="clamp2">以展場鋼架製造商為例，探討如何運用數據策略來強化永續產品的市場地位。</p></div><div class="side"><span class="chip chip-grey">市場競爭力</span><span>觀點 · 3 分</span></div></a></li><li data-topic="innovation" data-type="觀點" data-date="2024-10-08"><a href="#"><time datetime="2024-10-08">2024.10.08</time><div><h3>擴大影響力：聯合利華的永續成功策略</h3><p class="clamp2">探討如何透過尋找可複製模式與號召更多人參與，擴大組織的永續影響力。</p></div><div class="side"><span class="chip chip-grey">創新策略</span><span>觀點 · 2 分</span></div></a></li><li data-topic="communication" data-type="觀點" data-date="2024-10-02"><a href="#"><time datetime="2024-10-02">2024.10.02</time><div><h3>透過對話創造價值：搭建企業與社會的溝通橋樑</h3><p class="clamp2">對話是建立關係與培養信任的關鍵。從客戶、合作夥伴到社會，每一次對話都在創造價值。</p></div><div class="side"><span class="chip chip-grey">溝通與換位思考</span><span>觀點 · 2 分</span></div></a></li><li data-topic="communication" data-type="觀點" data-date="2024-10-02"><a href="#"><time datetime="2024-10-02">2024.10.02</time><div><h3>換位思考：提升問卷設計的有效性</h3><p class="clamp2">透過換位思考改善問卷設計，減少受訪者心理壓力，提升數據品質與回答真實性。</p></div><div class="side"><span class="chip chip-grey">溝通與換位思考</span><span>觀點 · 2 分</span></div></a></li><li data-topic="communication" data-type="觀點" data-date="2024-10-02"><a href="#"><time datetime="2024-10-02">2024.10.02</time><div><h3>從內部落實到外部溝通：強化永續理念的傳播</h3><p class="clamp2">以台灣血液基金會為例，探討如何透過內外並行的策略，有效傳遞組織的永續理念。</p></div><div class="side"><span class="chip chip-grey">溝通與換位思考</span><span>觀點 · 3 分</span></div></a></li><li data-topic="collaboration" data-type="觀點" data-date="2024-09-27"><a href="#"><time datetime="2024-09-27">2024.09.27</time><div><h3>公益與企業共贏：提升社會價值與經濟效益</h3><p class="clamp2">將公益團體重新定位為企業夥伴，從單方面施與受轉變為互利互惠的合作模式。</p></div><div class="side"><span class="chip chip-grey">合作模式</span><span>觀點 · 2 分</span></div></a></li><li data-topic="collaboration" data-type="觀點" data-date="2024-09-27"><a href="#"><time datetime="2024-09-27">2024.09.27</time><div><h3>從贊助到夥伴：企業與非營利組織的雙贏策略</h3><p class="clamp2">探討如何將企業與非營利組織的關係從傳統贊助轉變為互惠夥伴關係，形成正向循環。</p></div><div class="side"><span class="chip chip-grey">合作模式</span><span>觀點 · 2 分</span></div></a></li><li data-topic="responsibility" data-type="觀點" data-date="2024-09-26"><a href="#"><time datetime="2024-09-26">2024.09.26</time><div><h3>聚焦重大性議題：有限資源下的最優選擇</h3><p class="clamp2">企業資源有限，透過重大性議題評估，精準選擇最具影響力的 ESG 議題，實現資源最大化配置。</p></div><div class="side"><span class="chip chip-grey">永續責任</span><span>觀點 · 2 分</span></div></a></li><li data-topic="responsibility" data-type="觀點" data-date="2024-09-26"><a href="#"><time datetime="2024-09-26">2024.09.26</time><div><h3>透過 SDGs 打造永續競爭優勢</h3><p class="clamp2">永續發展目標為企業提供明確框架，從品牌價值、創新驅動到競爭力強化，全面提升企業的永續競爭力。</p></div><div class="side"><span class="chip chip-grey">永續責任</span><span>觀點 · 2 分</span></div></a></li><li data-topic="responsibility" data-type="觀點" data-date="2024-09-26"><a href="#"><time datetime="2024-09-26">2024.09.26</time><div><h3>從永續報告書中洞察企業未來承諾</h3><p class="clamp2">了解如何閱讀永續報告書，從企業的遠程目標中洞察其對未來的承諾與永續發展方向。</p></div><div class="side"><span class="chip chip-grey">永續責任</span><span>觀點 · 2 分</span></div></a></li><li data-topic="responsibility" data-type="調查報告" data-date="2024-06-26"><a href="#"><time datetime="2024-06-26">2024.06.26</time><div><h3>ESG 實務工作者需求與挑戰調查結果報告</h3><p class="clamp2">調查顯示 43.6% ESG 工作者經驗不足一年，面臨學習平衡、數據衡量與資源匱乏三大挑戰。</p></div><div class="side"><span class="chip chip-grey">永續責任</span><span>調查報告 · 3 分</span></div></a></li><li data-topic="responsibility" data-type="觀點" data-date="2024-03-25"><a href="#"><time datetime="2024-03-25">2024.03.25</time><div><h3>從碳足跡到碳手印：塑造更永續的明天</h3><p class="clamp2">探討碳足跡與碳手印兩個概念的差異，以及五項實踐策略，形成雙軌策略應對氣候變化。</p></div><div class="side"><span class="chip chip-grey">永續責任</span><span>觀點 · 2 分</span></div></a></li></ul>
+<p class="lc-empty" hidden data-empty="lc-list">沒有符合條件的文章，試試清除篩選。</p>
+<div class="lc-ask"><p><strong>找不到你想讀的主題？</strong><br><span style="color:var(--ink-2);font-size:14px">用 LINE 告訴我們，下一篇也許就寫它。</span></p><a class="btn btn-line" href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>LINE 告訴我們</a></div>
+</div>
+</div></div>
+</main><footer class="sf"><span>共好玟化組織發展顧問有限公司 · 統編 90223501</span><span><a href="mailto:pt@coesg.tw">pt@coesg.tw</a> · LINE @381iutjm</span></footer></div></div><div class="frame"><p class="frame-label">② 文章頁模板 /learning/peng-hsin-hui-sustainability-revolution</p><div class="screen"><header class="sh"><img src="../../../public/brand/gungho-horizontal.svg" alt="共好玟化 CO-ESG" width="76" height="30"><nav aria-label="主選單"><a href="#">共好永續力</a><a href="#">永續足跡</a><a href="#" aria-current="page">共好學習</a><a href="#">最新文章</a><a href="#">合作洽詢</a></nav><a class="btn btn-sm sh-cta" href="#">預約諮詢</a></header>
+<article class="lc-art" id="lc-article">
+<div class="lc-bar" aria-hidden="true"><i id="lc-bar"></i></div>
+<header class="lc-head"><div class="w">
+<nav class="crumb" aria-label="麵包屑"><a href="#">共好學習</a><span aria-hidden="true">›</span><a href="#">人物專訪</a></nav>
+<h1>從父親的塑膠建材到我的永續革命：彭欣惠的接班與新生</h1>
+<div class="meta"><span><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg>採訪撰文ESG共學坊</span><span><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg><time datetime="2024-10-19">2024.10.19</time></span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>閱讀約 3 分鐘</span></div>
+</div></header>
+<figure class="lc-quote"><div class="w"><blockquote style="margin:0"><p>「減塑其實非常困難，我們能做的是延長塑膠的生命週期。」</p></blockquote><figcaption><cite>— 彭欣惠</cite></figcaption></div></figure>
+<div class="w"><div class="lc-grid">
+<aside class="lc-side" aria-label="本文目錄"><div class="stick"><p class="eyebrow" style="margin:0 0 10px;color:var(--ink-2)">章節</p><ol><li><a href="#c-s1">從接班到轉型</a></li><li><a href="#c-s2">推動永續實踐</a></li><li><a href="#c-s3">教育與合作</a></li></ol><button type="button" class="copy" data-copy><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span>複製文章連結</span></button></div></aside>
+<div>
+<div class="prose">
+<p>彭欣惠原本規劃從事教育或策展工作，卻在父母年長之際回到家族的塑膠建材企業。她說：「隨著深入了解，才發現這個行業的潛力不僅僅在於回收材料。」</p>
+<h2 id="c-s1">從接班到轉型</h2>
+<p>回到家族企業後，彭欣惠逐漸理解到塑膠建材產業在永續發展中的潛力。她將父親多年來的技術創新轉化為永續推廣的基礎，強調材料能達到三十度溫差隔絕的節能效果。</p>
+<h2 id="c-s2">推動永續實踐</h2>
+<p>她積極推動企業員工在日常環境中體驗綠色建材的實際應用，讓永續不只是口號，而是可以觸摸、感受的真實改變。</p>
+<h2 id="c-s3">教育與合作</h2>
+<p>彭欣惠認為，真正的永續轉變需從教育著手。透過與合作夥伴的誠實溝通，共同推動正向循環。她也感謝共學平台讓她「在 ESG 的路上不再孤單」。</p>
+</div>
+<div class="lc-split">
+<div class="a"><span class="chip chip-green" style="align-self:flex-start">還在摸索方向</span><h2>和彭欣惠一樣，在 ESG 的路上不再孤單</h2><p>加入官方 LINE，收到每週永續趨勢與ESG共學坊課程通知。</p><a class="btn btn-line" href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>加入官方 LINE</a></div>
+<div class="b"><span class="chip" style="align-self:flex-start">已經有具體問題</span><h2>15 分鐘 Coffee Chat</h2><p>免費線上聊聊你的現況，我們幫你找最適合的下一步。</p><a class="btn btn-ghost" href="#"><svg class="ic" aria-hidden="true"><use href="#i-coffee"/></svg>預約 Coffee Chat</a></div>
+</div>
+</div>
+</div></div>
+<section class="related" aria-labelledby="c-rel"><div class="w">
+<h2 class="h-sec" id="c-rel" style="font-size:22px">你可能也想讀</h2>
+<div class="la-grid"><a class="cardlink card la-post" href="#" data-topic="collaboration"><span class="chip">合作模式</span><h3>從贊助到夥伴：企業與非營利組織的雙贏策略</h3><p class="clamp2">探討如何將企業與非營利組織的關係從傳統贊助轉變為互惠夥伴關係，形成正向循環。</p><div class="meta"><span>2024.09.27</span><span>ESG共學坊</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 2 分鐘</span></div></a><a class="cardlink card la-post" href="#" data-topic="communication"><span class="chip">溝通與換位思考</span><h3>從內部落實到外部溝通：強化永續理念的傳播</h3><p class="clamp2">以台灣血液基金會為例，探討如何透過內外並行的策略，有效傳遞組織的永續理念。</p><div class="meta"><span>2024.10.02</span><span>ESG共學坊</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 3 分鐘</span></div></a><a class="cardlink card la-post" href="#" data-topic="responsibility"><span class="chip">永續責任</span><h3>ESG 實務工作者需求與挑戰調查結果報告</h3><p class="clamp2">調查顯示 43.6% ESG 工作者經驗不足一年，面臨學習平衡、數據衡量與資源匱乏三大挑戰。</p><div class="meta"><span>2024.06.26</span><span>ESG共學坊</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 3 分鐘</span></div></a></div>
+</div></section>
+</article><footer class="sf"><span>共好玟化組織發展顧問有限公司 · 統編 90223501</span><span><a href="mailto:pt@coesg.tw">pt@coesg.tw</a> · LINE @381iutjm</span></footer></div></div></section>
+<script>
+(function () {
+  var bar = document.querySelector('.pp-bar');
+  if (!bar) return;
+  bar.hidden = false;
+  function ph() { document.documentElement.style.setProperty('--ppbar', bar.offsetHeight + 'px'); }
+  ph(); window.addEventListener('resize', ph);
+  var btns = bar.querySelectorAll('button[data-show]');
+  var ps = document.querySelectorAll('.proposal');
+  function show(id, scroll) {
+    ps.forEach(function (p) { p.hidden = !(id === 'all' || p.id === id); });
+    btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.show === id)); });
+    try { history.replaceState(null, '', id === 'all' ? location.pathname : '#' + id); } catch (e) {}
+    if (scroll) window.scrollTo(0, 0);
+  }
+  btns.forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.show, true); }); });
+  var h = location.hash.slice(1);
+  show(['A', 'B', 'C'].indexOf(h) > -1 ? h : 'A', false);
+})();
+</script>
+
+<script>
+(function () {
+  // A · topic tiles + chips (single-select filter)
+  document.querySelectorAll('[data-target][data-f]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var t = b.dataset.target, f = b.dataset.f, n = 0;
+      document.querySelectorAll('[data-target="' + t + '"][data-f]').forEach(function (x) { x.setAttribute('aria-pressed', String(x.dataset.f === f)); });
+      document.querySelectorAll('#' + t + ' > *').forEach(function (it) { var ok = f === 'all' || it.dataset.topic === f; it.hidden = !ok; if (ok) n++; });
+      var c = document.querySelector('[data-count="' + t + '"]'); if (c) c.textContent = '共 ' + n + ' 篇';
+      if (b.classList.contains('la-tile')) document.getElementById('la-all').scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+  // keyword search (A, C)
+  document.querySelectorAll('[data-search]').forEach(function (inp) {
+    inp.addEventListener('input', function () {
+      var t = inp.dataset.search, q = inp.value.trim().toLowerCase(), n = 0;
+      document.querySelectorAll('#' + t + ' > *').forEach(function (it) { var ok = !q || it.textContent.toLowerCase().indexOf(q) > -1; it.hidden = !ok; if (ok) n++; });
+      var c = document.querySelector('[data-count="' + t + '"]'); if (c) c.textContent = '共 ' + n + ' 篇';
+      var e = document.querySelector('[data-empty="' + t + '"]'); if (e) e.hidden = n > 0;
+    });
+  });
+  // C · checkbox filters
+  document.querySelectorAll('[data-checkfilter]').forEach(function (box) {
+    var t = box.dataset.checkfilter;
+    function run() {
+      var topics = [], kinds = [], n = 0;
+      box.querySelectorAll('input[name=topic]:checked').forEach(function (i) { topics.push(i.value); });
+      box.querySelectorAll('input[name=type]:checked').forEach(function (i) { kinds.push(i.value); });
+      document.querySelectorAll('#' + t + ' > *').forEach(function (it) {
+        var ok = (!topics.length || topics.indexOf(it.dataset.topic) > -1) && (!kinds.length || kinds.indexOf(it.dataset.type) > -1);
+        it.hidden = !ok; if (ok) n++;
+      });
+      var c = document.querySelector('[data-count="' + t + '"]'); if (c) c.textContent = '共 ' + n + ' 篇';
+      var e = document.querySelector('[data-empty="' + t + '"]'); if (e) e.hidden = n > 0;
+    }
+    box.addEventListener('change', run);
+    var clr = box.querySelector('[data-clear]');
+    if (clr) clr.addEventListener('click', function () { box.querySelectorAll('input').forEach(function (i) { i.checked = false; }); run(); });
+  });
+  // C · sort
+  document.querySelectorAll('[data-sort]').forEach(function (sel) {
+    sel.addEventListener('change', function () {
+      var list = document.getElementById(sel.dataset.sort);
+      var items = Array.prototype.slice.call(list.children);
+      items.sort(function (a, b) { return sel.value === 'asc' ? (a.dataset.date > b.dataset.date ? 1 : -1) : (a.dataset.date < b.dataset.date ? 1 : -1); });
+      items.forEach(function (i) { list.appendChild(i); });
+    });
+  });
+  // C · filter drawer closed on phones
+  if (window.matchMedia('(max-width: 959px)').matches) document.querySelectorAll('[data-desktop-open]').forEach(function (d) { d.open = false; });
+  // B · view toggle
+  document.querySelectorAll('[data-view-target]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var t = b.dataset.viewTarget, v = b.dataset.view;
+      document.querySelectorAll('[data-view-target="' + t + '"]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      document.querySelectorAll('#' + t + ' > [data-view-panel]').forEach(function (p) { p.hidden = p.dataset.viewPanel !== v; });
+    });
+  });
+  // C · reading progress + copy link
+  var art = document.getElementById('lc-article'), bar = document.getElementById('lc-bar');
+  if (art && bar) window.addEventListener('scroll', function () {
+    var r = art.getBoundingClientRect(), h = r.height - window.innerHeight;
+    bar.style.width = Math.max(0, Math.min(100, (-r.top / (h > 0 ? h : 1)) * 100)) + '%';
+  }, { passive: true });
+  document.querySelectorAll('[data-copy]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var s = b.querySelector('span');
+      try { navigator.clipboard.writeText(location.href); } catch (e) {}
+      s.textContent = '已複製'; setTimeout(function () { s.textContent = '複製文章連結'; }, 1600);
+    });
+  });
+})();
+</script>
+</body></html>

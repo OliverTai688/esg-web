@@ -10,11 +10,11 @@ export async function GET() {
       (post) => `
     <item>
       <title><![CDATA[${post.title}]]></title>
-      <link>${BASE_URL}/zh/insights/${post.slug}</link>
+      <link>${BASE_URL}/zh/learning/${post.slug}</link>
       <description><![CDATA[${post.excerpt}]]></description>
       <pubDate>${new Date(post.date).toUTCString()}</pubDate>
-      <category>${post.category}</category>
-      <guid isPermaLink="true">${BASE_URL}/zh/insights/${post.slug}</guid>
+      <category><![CDATA[${post.category}]]></category>
+      <guid isPermaLink="true">${BASE_URL}/zh/learning/${post.slug}</guid>
     </item>`
     )
     .join('')

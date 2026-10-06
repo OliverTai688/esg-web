@@ -1,132 +1,114 @@
-import { Container } from "@/components/core/Container"
-import { Section } from "@/components/core/Section"
-import { Heading } from "@/components/core/Heading"
-import { Button } from "@/components/ui/button"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import type { Metadata } from "next"
-import { getDictionary } from "@/i18n/getDictionary"
+import { ArrowRight, Mail, MessageCircle, Rss } from "lucide-react"
+import { Container } from "@/components/core/Container"
+import { SectionHeader } from "@/components/site/SectionHeader"
+import { getMessages } from "@/i18n/messages"
 import type { Locale } from "@/i18n/config"
-import { getAllPosts, getCategories } from "@/lib/posts"
-
-export async function generateStaticParams() {
-  return [{ locale: "zh" }, { locale: "en" }]
-}
+import { getAllPosts } from "@/lib/posts"
+import { categoryLabel } from "@/lib/learning-sections"
+import { site } from "@/lib/site"
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
-  const t = await getDictionary(locale as Locale)
-  return {
-    title: `${t.insightsPage.label} | 共好玟化 CO-ESG`,
-    description: t.insightsPage.description,
-  }
+  const t = await getMessages(locale as Locale)
+  return { title: t.learning.insights.meta.title, description: t.learning.insights.meta.description }
 }
 
+// Chronological newsroom. /learning organises the same articles by topic.
 export default async function InsightsPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
-  const t = await getDictionary(locale as Locale)
-
+  const t = await getMessages(locale as Locale)
+  const l = t.learning
+  const n = l.insights
   const posts = await getAllPosts()
-  const cats = getCategories(posts)
 
-  const featured = posts[0]
-  const remaining = posts.slice(1)
+  const typeOf = (slug: string) =>
+    slug === "announcements" ? n.types.announcement : slug === "interviews" ? n.types.interview : n.types.article
+  const years = [...new Set(posts.map((p) => p.date.slice(0, 4)))]
 
   return (
-    <main className="flex min-h-screen flex-col">
-      {/* Hero */}
-      <Section padding="lg">
-        <Container>
-          <Heading
-            level={1}
-            label={t.insightsPage.label}
-            title={t.insightsPage.title}
-            description={t.insightsPage.description}
-            align="center"
-          />
+    <>
+      <section className="border-b border-border">
+        <Container className="py-16 md:py-20">
+          <SectionHeader as="h1" kicker={n.label} title={n.title} description={n.description} />
+          {posts[0] && (
+            <p className="mt-6 text-sm text-muted-foreground">
+              {n.latestUpdate}：<time dateTime={posts[0].date}>{posts[0].date.replaceAll("-", ".")}</time>
+            </p>
+          )}
         </Container>
-      </Section>
+      </section>
 
-      {/* 精選文章 */}
-      {featured && (
-        <Section>
-          <Container>
-            <h2 className="text-2xl font-bold mb-6">精選文章</h2>
-            <Link href={`/${locale}/insights/${featured.slug}`} className="block">
-              <Card className="overflow-hidden">
-                <CardHeader className="p-8">
-                  <div className="flex items-center gap-3 mb-2">
-                    <Badge variant="secondary">{featured.category}</Badge>
-                    <span className="text-sm text-muted-foreground">{featured.date}</span>
-                  </div>
-                  <CardTitle className="text-3xl">{featured.title}</CardTitle>
-                </CardHeader>
-                <CardContent className="px-8 pb-8">
-                  <CardDescription className="text-base">{featured.excerpt}</CardDescription>
-                  <p className="text-sm text-muted-foreground mt-4">作者：{featured.author}</p>
-                </CardContent>
-              </Card>
+      <section className="py-14 md:py-20">
+        <Container className="grid gap-12 lg:grid-cols-[1fr_300px]">
+          <div className="space-y-14">
+            {years.map((year) => (
+              <div key={year}>
+                <h2 className="sticky top-[68px] z-10 -mx-2 bg-background/95 px-2 py-2 font-display text-3xl font-bold text-ink backdrop-blur">
+                  {year}
+                  {n.year}
+                </h2>
+                <ol className="mt-2 divide-y divide-border border-t border-border">
+                  {posts
+                    .filter((p) => p.date.startsWith(year))
+                    .map((p) => (
+                      <li key={p.slug}>
+                        <Link
+                          href={`/${locale}/learning/${p.slug}`}
+                          className="group grid gap-2 py-6 sm:grid-cols-[7.5rem_1fr] sm:gap-6"
+                        >
+                          <span className="flex items-center gap-3 sm:flex-col sm:items-start sm:gap-1.5">
+                            <time dateTime={p.date} className="font-display text-sm font-bold text-ink">
+                              {p.date.slice(5).replace("-", ".")}
+                            </time>
+                            <span className="rounded-full bg-sand px-2.5 py-0.5 text-xs font-bold text-ink/80">{typeOf(p.categorySlug)}</span>
+                          </span>
+                          <span>
+                            <span className="block text-lg font-black leading-[1.5] text-ink group-hover:text-primary">{p.title}</span>
+                            <span className="mt-1.5 block line-clamp-2 text-sm leading-relaxed text-muted-foreground">{p.excerpt}</span>
+                            <span className="mt-2 block text-xs text-muted-foreground">
+                              {categoryLabel(p.categorySlug, p.category, l)}・{p.readingMinutes} {l.article.readingTime}
+                            </span>
+                          </span>
+                        </Link>
+                      </li>
+                    ))}
+                </ol>
+              </div>
+            ))}
+          </div>
+
+          <aside className="space-y-4 lg:sticky lg:top-24 lg:h-fit">
+            <div className="rounded-2xl bg-surface-dark p-6 text-white">
+              <p className="font-black">{n.mediaTitle}</p>
+              <p className="mt-2 text-sm leading-relaxed text-white/70">{n.mediaBody}</p>
+              <ul className="mt-5 space-y-2.5 text-sm">
+                <li>
+                  <a href={`mailto:${site.supportEmail}`} className="flex items-center gap-2 font-bold text-brand-yellow underline-offset-4 hover:underline">
+                    <Mail className="size-4" aria-hidden="true" />
+                    {site.supportEmail}
+                  </a>
+                </li>
+                <li>
+                  <a href={site.line.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 font-bold text-brand-yellow underline-offset-4 hover:underline">
+                    <MessageCircle className="size-4" aria-hidden="true" />
+                    LINE {site.line.id}
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <Link href={`/${locale}/learning`} className="flex items-center justify-between rounded-2xl border border-border bg-card p-5 font-bold text-ink hover:border-primary/40">
+              {n.byTopic}
+              <ArrowRight className="size-4 text-primary" aria-hidden="true" />
             </Link>
-          </Container>
-        </Section>
-      )}
-
-      {/* 最新文章列表 */}
-      {remaining.length > 0 && (
-        <Section>
-          <Container>
-            <h2 className="text-2xl font-bold mb-6">最新文章</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {remaining.map((post) => (
-                <Link key={post.slug} href={`/${locale}/insights/${post.slug}`} className="block">
-                  <Card className="h-full flex flex-col">
-                    <CardHeader>
-                      <div className="flex items-center gap-3 mb-2">
-                        <Badge variant="secondary">{post.category}</Badge>
-                        <span className="text-sm text-muted-foreground">{post.date}</span>
-                      </div>
-                      <CardTitle className="text-lg">{post.title}</CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex-1">
-                      <CardDescription>{post.excerpt}</CardDescription>
-                    </CardContent>
-                    <CardFooter>
-                      <span className="text-sm text-muted-foreground">作者：{post.author}</span>
-                    </CardFooter>
-                  </Card>
-                </Link>
-              ))}
-            </div>
-          </Container>
-        </Section>
-      )}
-
-      {/* 分類篩選 */}
-      {cats.length > 0 && (
-        <Section>
-          <Container>
-            <h2 className="text-2xl font-bold mb-6">文章分類</h2>
-            <div className="flex flex-wrap gap-3">
-              {cats.map((cat) => (
-                <Link key={cat.slug} href={`/${locale}/insights/category/${cat.slug}`}>
-                  <Badge variant="outline" className="text-sm px-4 py-2 cursor-pointer">
-                    {cat.name} ({cat.count})
-                  </Badge>
-                </Link>
-              ))}
-            </div>
-          </Container>
-        </Section>
-      )}
-
-      <Section>
-        <Container className="text-center">
-          <Button variant="outline" size="lg" className="rounded-full" asChild>
-            <Link href={`/${locale}`}>{t.insightsPage.back}</Link>
-          </Button>
+            <a href="/feed.xml" className="flex items-center gap-2 rounded-2xl border border-border bg-card p-5 text-sm font-bold text-ink hover:border-primary/40">
+              <Rss className="size-4 text-primary" aria-hidden="true" />
+              {n.rss}
+            </a>
+          </aside>
         </Container>
-      </Section>
-    </main>
+      </section>
+    </>
   )
 }

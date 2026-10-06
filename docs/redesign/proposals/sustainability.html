@@ -1,0 +1,1411 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>共好永續力｜三案提案</title>
+<link rel="stylesheet" href="_tokens.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700;900&display=swap">
+<style>
+/* ============ proposal chrome + shared mock primitives ============ */
+:root{
+  --pp-h:48px;
+  --orange-deep:#B8361A;      /* small orange text on tinted surfaces (5.1:1 on orange-soft) */
+  --orange-on-dark:#FF8A6E;   /* small orange text on surface-dark (5.9:1) */
+  --muted-on-dark:#C7CBD2;    /* secondary text on surface-dark (8.3:1) */
+  --font-serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+h1,h2,h3,h4{margin:0;line-height:1.3}
+p{margin:0 0 1em}
+ul,ol{margin:0;padding:0}
+[id]{scroll-margin-top:calc(var(--pp-h) + 76px)}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:4px}
+
+.pp-bar .pp-title{font-weight:700;margin-right:auto}
+.pp-bar .pp-title small{font-weight:400;opacity:.75;margin-left:6px}
+@media (max-width:560px){.pp-bar .pp-title small{display:none}.pp-bar button{padding:6px 11px}}
+.pp-intro{max-width:1120px;margin:0 auto;padding:32px 16px 8px}
+.pp-intro h1{font-size:clamp(22px,3vw,30px);font-weight:900;margin-bottom:8px}
+.pp-intro p{color:var(--ink-2);max-width:72ch}
+.pp-meta{background:#ECE7E0;padding:40px 16px;border-top:6px solid #111}
+.pp-card{max-width:1120px;margin:0 auto;background:#fff;border-radius:18px;padding:24px;box-shadow:0 1px 0 var(--line),0 12px 32px rgba(31,32,34,.06)}
+.pp-card h2{font-size:clamp(22px,3vw,28px);font-weight:900;margin:12px 0 4px}
+.pp-card .pp-sub{color:var(--ink-2);margin-bottom:20px}
+.pp-card dl{display:grid;gap:18px;margin:0}
+.pp-card dt{font-weight:700;font-size:13px;letter-spacing:.06em;color:var(--orange-strong);margin-bottom:4px}
+.pp-card dd{margin:0;font-size:15px}
+.pp-card dd ul{padding-left:1.2em}
+@media (min-width:800px){.pp-card{padding:32px 36px}.pp-card dl{grid-template-columns:1fr 1fr;column-gap:40px}.pp-card .full{grid-column:1/-1}}
+.pp-end{background:#111;color:#fff;text-align:center;padding:10px 16px;font:500 12px/1.4 var(--font-sans);letter-spacing:.08em}
+
+.mock{background:var(--paper);overflow-x:clip;position:relative}
+.wrap{max-width:1160px;margin:0 auto;padding:0 16px}
+@media (min-width:640px){.wrap{padding:0 24px}}
+.eyebrow{display:inline-block;font:700 13px/1.3 var(--font-display);letter-spacing:.14em;text-transform:uppercase;color:var(--orange-strong)}
+.lead{font-size:clamp(17px,1.6vw,19px);color:var(--ink-2)}
+
+/* mock site header + footer */
+.site-h{background:#fff;border-bottom:1px solid var(--line)}
+.site-h .wrap{display:flex;align-items:center;gap:20px;height:64px}
+.site-h img{height:34px;width:auto;display:block}
+.site-h nav{display:none;gap:22px;font-size:15px;margin-left:auto}
+.site-h nav a{color:var(--ink);text-decoration:none}
+.site-h nav a[aria-current]{color:var(--orange-strong);font-weight:700}
+.site-h .burger{margin-left:auto;width:40px;height:40px;border:1px solid var(--line);border-radius:10px;display:grid;place-items:center;background:#fff}
+@media (min-width:960px){.site-h nav{display:flex}.site-h .burger{display:none}}
+.site-f{background:var(--surface-dark);color:var(--muted-on-dark);font-size:14px;padding:32px 0}
+.site-f .wrap{display:flex;flex-wrap:wrap;gap:16px 32px;align-items:center;justify-content:space-between}
+.site-f img{height:30px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 22px;border-radius:999px;font:700 16px/1.2 var(--font-sans);text-decoration:none;border:2px solid transparent;cursor:pointer}
+.btn-primary{background:var(--orange-strong);color:#fff}
+.btn-primary:hover{background:var(--orange-deep)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn-light{background:#fff;color:var(--ink)}
+.btn-ghost-dark{background:transparent;color:#fff;border-color:rgba(255,255,255,.7)}
+.btn-row{display:flex;flex-wrap:wrap;gap:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-size:14px;font-weight:700}
+.tag-hot{display:inline-block;background:var(--yellow);color:var(--ink);font-size:13px;font-weight:700;padding:3px 10px;border-radius:999px}
+
+/* SDG badges (self-made, NOT UN icons) */
+.sdg{flex:none;width:92px;height:92px;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--font-display);line-height:1}
+.sdg small{font-size:12px;font-weight:700;letter-spacing:.18em;margin-bottom:6px}
+.sdg b{font-size:32px;font-weight:800;letter-spacing:-.02em}
+.sdg-1{background:var(--surface-dark);color:var(--yellow)}
+.sdg-2{background:var(--orange-strong);color:#fff}
+.sdg-3{background:var(--grey);color:#fff}
+
+/* ecosystem avatars (initials — real photos come from public/team in build) */
+.avs{display:flex;flex-wrap:wrap}
+.avs span{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:14px;font-weight:700;color:#fff;background:var(--grey);border:2px solid #fff;margin-right:-8px}
+.avs span:nth-child(2n){background:var(--orange-strong)}
+.avs span:nth-child(3n){background:var(--surface-dark)}
+.names{font-size:13px;color:var(--ink-2);margin-top:8px}
+
+/* =========================================================
+   PROPOSAL A — 章節目錄（sticky side table of contents）
+   ========================================================= */
+.mA .a-hero{background:var(--paper);padding:56px 0 64px;border-bottom:1px solid var(--line)}
+.mA .a-hero .wrap{display:grid;gap:40px;align-items:center}
+@media (min-width:900px){.mA .a-hero .wrap{grid-template-columns:1.15fr .85fr}}
+.mA .a-hero h1{font-size:clamp(44px,8vw,88px);font-weight:900;letter-spacing:.02em;line-height:1.08;margin:16px 0 24px}
+.mA .a-hero h1 .w{display:flex;align-items:center;gap:16px}
+.mA .a-hero h1 .w i{font:800 14px/1 var(--font-display);font-style:normal;color:var(--orange-strong);border:2px solid currentColor;border-radius:999px;padding:5px 9px;letter-spacing:.06em}
+.mA .a-hero h1 .w:last-child{color:var(--orange-strong)}
+.mA .a-hero .sub{font-size:clamp(19px,2vw,22px);font-weight:700;max-width:30em;margin-bottom:12px}
+.mA .a-hero .desc{color:var(--ink-2);max-width:36em;margin-bottom:28px}
+.mA .a-rings{max-width:420px;width:100%;justify-self:center}
+
+.mA .a-layout{display:grid;gap:0}
+@media (min-width:1024px){.mA .a-layout{grid-template-columns:250px minmax(0,1fr);gap:56px}}
+.mA .a-toc{display:none}
+@media (min-width:1024px){
+  .mA .a-toc{display:block;position:sticky;top:calc(var(--pp-h) + 24px);align-self:start;padding:32px 0;max-height:calc(100vh - var(--pp-h) - 48px);overflow:auto}
+}
+.mA .a-toc .k{font:700 12px/1 var(--font-display);letter-spacing:.16em;color:var(--ink-2);margin-bottom:14px;display:block}
+.mA .a-toc ol{list-style:none}
+.mA .a-toc .grp{font-size:12px;font-weight:700;color:var(--ink-2);margin:18px 0 6px;letter-spacing:.08em}
+.mA .a-toc a{display:flex;gap:10px;padding:7px 10px;border-radius:8px;color:var(--ink);text-decoration:none;font-size:15px;border-left:3px solid transparent}
+.mA .a-toc a b{font:700 13px/1.6 var(--font-display);color:var(--ink-2);min-width:20px}
+.mA .a-toc a:hover{background:#fff}
+.mA .a-toc a[aria-current="true"]{background:#fff;border-left-color:var(--orange);font-weight:700}
+.mA .a-toc a[aria-current="true"] b{color:var(--orange-strong)}
+.mA .a-prog{height:4px;background:var(--line);border-radius:4px;margin:20px 10px 0;overflow:hidden}
+.mA .a-prog i{display:block;height:100%;width:0;background:var(--orange)}
+.mA .a-tocbar{position:sticky;top:var(--pp-h);z-index:20;background:rgba(251,248,244,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+@media (min-width:1024px){.mA .a-tocbar{display:none}}
+.mA .a-tocbar summary{list-style:none;display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;font-size:15px}
+.mA .a-tocbar summary::-webkit-details-marker{display:none}
+.mA .a-tocbar summary .k{font:700 12px/1 var(--font-display);letter-spacing:.12em;color:var(--ink-2)}
+.mA .a-tocbar summary .cur{font-weight:700;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mA .a-tocbar summary::after{content:"";width:10px;height:10px;border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(45deg) translateY(-3px)}
+.mA .a-tocbar[open] summary::after{transform:rotate(-135deg)}
+.mA .a-tocbar ol{list-style:none;padding:0 8px 12px;display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.mA .a-tocbar a{display:block;padding:9px 10px;border-radius:8px;color:var(--ink);text-decoration:none;font-size:14px}
+.mA .a-tocbar a[aria-current="true"]{background:#fff;color:var(--orange-strong);font-weight:700}
+
+.mA .a-sec{padding:64px 0;border-bottom:1px solid var(--line)}
+.mA .a-sec:last-child{border-bottom:0}
+.mA .a-num{font:800 14px/1 var(--font-display);color:var(--orange-strong);letter-spacing:.1em;display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.mA .a-num::after{content:"";height:1px;background:var(--line);flex:1}
+.mA .a-sec h2{font-size:clamp(26px,3.4vw,36px);font-weight:900;margin-bottom:16px}
+.mA .a-sec .intro{color:var(--ink-2);max-width:40em;margin-bottom:28px}
+.mA .a-prose{max-width:40em}
+.mA .a-prose strong{color:var(--ink)}
+
+.mA .a-cred{display:grid;grid-template-columns:1fr;gap:10px;margin:24px 0 28px}
+@media (min-width:560px){.mA .a-cred{grid-template-columns:1fr 1fr}}
+.mA .a-cred li{list-style:none;display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-weight:700}
+.mA .a-cred svg{flex:none}
+.mA .a-facts{display:flex;flex-wrap:wrap;gap:24px 40px;padding-top:20px;border-top:1px dashed var(--line)}
+.mA .a-facts div{font-size:14px;color:var(--ink-2)}
+.mA .a-facts b{display:block;font:800 26px/1.2 var(--font-display);color:var(--ink)}
+
+.mA .a-vm{display:grid;gap:16px}
+@media (min-width:760px){.mA .a-vm{grid-template-columns:1fr 1fr}}
+.mA .a-vm article{background:var(--surface-dark);color:#fff;border-radius:20px;padding:32px 28px;position:relative;overflow:hidden}
+.mA .a-vm article:nth-child(2){background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.mA .a-vm .lbl{font:800 13px/1 var(--font-display);letter-spacing:.2em;color:var(--yellow);display:block;margin-bottom:6px}
+.mA .a-vm article:nth-child(2) .lbl{color:var(--orange-strong)}
+.mA .a-vm h3{font-size:28px;font-weight:900;margin-bottom:14px}
+.mA .a-vm .big{font-size:clamp(20px,2.2vw,24px);font-weight:700;line-height:1.6;margin:0}
+.mA .a-vm .more{font-size:16px;margin:12px 0 0;color:var(--ink-2)}
+
+.mA .a-values{list-style:none;display:grid;gap:0;border-top:2px solid var(--ink)}
+.mA .a-values li{display:grid;grid-template-columns:72px 1fr;gap:16px;align-items:baseline;padding:18px 0;border-bottom:1px solid var(--line)}
+@media (min-width:700px){.mA .a-values li{grid-template-columns:56px 140px 1fr}}
+.mA .a-values .n{font:800 14px/1 var(--font-display);color:var(--ink-2)}
+.mA .a-values h3{font-size:24px;font-weight:900}
+.mA .a-values p{margin:0;color:var(--ink-2);grid-column:2}
+@media (min-width:700px){.mA .a-values p{grid-column:3}}
+
+.mA .a-iooi{list-style:none;display:grid;gap:14px;margin:8px 0 36px}
+@media (min-width:860px){.mA .a-iooi{grid-template-columns:repeat(4,1fr);gap:0}}
+.mA .a-iooi li{position:relative;padding:22px 22px 22px 22px;border-radius:14px;background:#fff;border:1px solid var(--line)}
+.mA .a-iooi li:nth-child(2){background:var(--yellow-soft)}
+.mA .a-iooi li:nth-child(3){background:var(--orange-soft)}
+.mA .a-iooi li:nth-child(4){background:var(--surface-dark);color:#fff;border-color:var(--surface-dark)}
+@media (min-width:860px){
+  .mA .a-iooi li{border-radius:0;padding:22px 30px 22px 30px}
+  .mA .a-iooi li:first-child{border-radius:14px 0 0 14px;padding-left:22px}
+  .mA .a-iooi li:last-child{border-radius:0 14px 14px 0}
+  .mA .a-iooi li:not(:last-child)::after{content:"";position:absolute;right:-14px;top:50%;width:26px;height:26px;transform:translateY(-50%) rotate(45deg);background:inherit;border-top:1px solid var(--line);border-right:1px solid var(--line);z-index:1}
+}
+@media (max-width:859px){
+  .mA .a-iooi li:not(:last-child)::after{content:"";position:absolute;left:28px;bottom:-12px;width:2px;height:12px;background:var(--orange)}
+}
+.mA .a-iooi .L{font:800 30px/1 var(--font-display);color:var(--orange-strong)}
+.mA .a-iooi li:nth-child(4) .L{color:var(--yellow)}
+.mA .a-iooi h3{font-size:20px;font-weight:900;margin:6px 0 2px}
+.mA .a-iooi .en{font:700 13px/1 var(--font-display);letter-spacing:.08em;color:var(--ink-2)}
+.mA .a-iooi li:nth-child(4) .en{color:var(--muted-on-dark)}
+.mA .a-iooi p{font-size:14px;margin:12px 0 0;color:var(--ink-2)}
+.mA .a-iooi li:nth-child(4) p{color:var(--muted-on-dark)}
+.mA .a-pillars{display:grid;gap:14px}
+@media (min-width:760px){.mA .a-pillars{grid-template-columns:repeat(3,1fr)}}
+.mA .a-pillars article{background:#fff;border-radius:14px;padding:22px;border-top:4px solid var(--orange)}
+.mA .a-pillars .k{font-size:13px;font-weight:700;color:var(--orange-strong)}
+.mA .a-pillars h3{font-size:20px;font-weight:900;margin:4px 0 8px}
+.mA .a-pillars p{font-size:15px;color:var(--ink-2);margin:0}
+
+.mA .a-sdgs{list-style:none;display:grid;gap:14px}
+.mA .a-sdgs li{display:flex;gap:20px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}
+.mA .a-sdgs h3{font-size:19px;font-weight:900;margin:4px 0 6px}
+.mA .a-sdgs p{margin:0;color:var(--ink-2);font-size:15px}
+
+.mA .a-diff{list-style:none;display:grid;gap:12px;counter-reset:d}
+@media (min-width:700px){.mA .a-diff{grid-template-columns:1fr 1fr}}
+.mA .a-diff li{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 20px 20px 64px;position:relative}
+.mA .a-diff li::before{counter-increment:d;content:counter(d);position:absolute;left:18px;top:18px;width:32px;height:32px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font:800 15px/1 var(--font-display)}
+.mA .a-diff h3{font-size:18px;font-weight:900;margin-bottom:4px}
+.mA .a-diff p{margin:0;color:var(--ink-2);font-size:15px}
+.mA .a-closing{margin-top:24px;font-size:clamp(18px,2vw,21px);font-weight:700;border-left:4px solid var(--orange);padding:4px 0 4px 18px;max-width:38em}
+
+.mA .a-theory blockquote{margin:0 0 24px;font-size:clamp(21px,2.6vw,28px);font-weight:900;line-height:1.5;max-width:22em}
+.mA .a-theory blockquote::before{content:"";display:block;width:48px;height:4px;background:var(--orange);margin-bottom:16px}
+.mA .a-layers{list-style:none;display:grid;gap:14px;margin:28px 0}
+@media (min-width:860px){.mA .a-layers{grid-template-columns:repeat(3,1fr);gap:36px}}
+.mA .a-layers li{position:relative;background:#fff;border-radius:16px;padding:24px;border:1px solid var(--line)}
+.mA .a-layers .tier{display:inline-block;font:800 12px/1 var(--font-display);letter-spacing:.14em;background:var(--ink);color:#fff;border-radius:4px;padding:5px 8px;margin-bottom:12px}
+.mA .a-layers h3{font-size:24px;font-weight:900;margin-bottom:8px}
+.mA .a-layers p{margin:0;font-size:15px;color:var(--ink-2)}
+.mA .a-layers li:not(:last-child)::after{content:"→";position:absolute;font:800 22px/1 var(--font-display);color:var(--orange-strong)}
+@media (min-width:860px){.mA .a-layers li:not(:last-child)::after{right:-29px;top:50%;transform:translateY(-50%)}}
+@media (max-width:859px){.mA .a-layers li:not(:last-child)::after{content:"↓";left:50%;bottom:-19px;transform:translateX(-50%)}}
+.mA .a-emph{background:var(--yellow-soft);border-radius:16px;padding:24px;font-size:clamp(18px,2vw,21px);font-weight:700;margin:0}
+
+.mA .a-svc{display:grid;gap:14px}
+@media (min-width:700px){.mA .a-svc{grid-template-columns:1fr 1fr}}
+.mA .a-svc article{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:8px}
+.mA .a-svc article.hot{border:2px solid var(--orange)}
+.mA .a-svc .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.mA .a-svc .t{font-size:13px;font-weight:700;color:var(--ink-2);letter-spacing:.1em}
+.mA .a-svc h3{font-size:21px;font-weight:900}
+.mA .a-svc p{margin:0;color:var(--ink-2);font-size:15px;flex:1}
+.mA .a-svc a{font-weight:700;font-size:15px}
+
+.mA .a-story{display:grid;gap:12px;margin:8px 0 32px}
+@media (min-width:760px){.mA .a-story{grid-template-columns:1fr 1fr}}
+.mA .a-story div{border-radius:16px;padding:24px}
+.mA .a-story .before{background:#fff;border:1px dashed #BDB6AC}
+.mA .a-story .after{background:var(--surface-dark);color:#fff}
+.mA .a-story .k{font:800 12px/1 var(--font-display);letter-spacing:.16em;display:block;margin-bottom:10px;color:var(--ink-2)}
+.mA .a-story .after .k{color:var(--yellow)}
+.mA .a-story p{margin:0;font-size:clamp(18px,2vw,20px);font-weight:700}
+.mA .a-quant{display:grid;gap:0;background:#fff;border-radius:16px;border:1px solid var(--line);margin-bottom:28px}
+@media (min-width:640px){.mA .a-quant{grid-template-columns:repeat(3,1fr)}}
+.mA .a-quant div{padding:24px;border-bottom:1px solid var(--line)}
+@media (min-width:640px){.mA .a-quant div{border-bottom:0;border-right:1px solid var(--line)}.mA .a-quant div:last-child{border-right:0}}
+.mA .a-quant b{display:block;font:800 clamp(36px,4.5vw,48px)/1.1 var(--font-display);color:var(--orange-strong)}
+.mA .a-quant span{font-weight:700}
+.mA .a-quant small{display:block;color:var(--ink-2);font-size:13px;margin-top:4px}
+.mA .a-qual{list-style:none;display:grid;gap:10px}
+.mA .a-qual li{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line)}
+.mA .a-qual li::before{content:"";flex:none;width:10px;height:10px;margin-top:9px;border-radius:50%;background:var(--orange)}
+.mA .a-qual h3{font-size:17px;font-weight:900}
+.mA .a-qual p{margin:2px 0 0;color:var(--ink-2);font-size:15px}
+
+.mA .a-eco{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:760px){.mA .a-eco{grid-template-columns:1fr 1.1fr 1fr;grid-template-areas:"n1 c n2" "n3 c n4"}}
+.mA .a-eco .c{background:#fff;border-radius:20px;border:2px solid var(--coesg-green);display:grid;place-items:center;padding:28px;text-align:center}
+@media (min-width:760px){.mA .a-eco .c{grid-area:c}.mA .a-eco .n1{grid-area:n1}.mA .a-eco .n2{grid-area:n2}.mA .a-eco .n3{grid-area:n3}.mA .a-eco .n4{grid-area:n4}}
+.mA .a-eco .c img{width:200px;max-width:100%}
+.mA .a-eco .c p{font-size:14px;color:var(--ink-2);margin:12px 0 0}
+.mA .a-eco .n{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}
+.mA .a-eco .n h3{font-size:18px;font-weight:900;margin-bottom:4px}
+.mA .a-eco .n p{font-size:14px;color:var(--ink-2);margin:0}
+
+.mA .a-cta{background:var(--surface-dark);color:#fff;padding:72px 0}
+.mA .a-cta .wrap{display:grid;gap:24px;align-items:center}
+@media (min-width:860px){.mA .a-cta .wrap{grid-template-columns:1.3fr 1fr}}
+.mA .a-cta h2{font-size:clamp(28px,3.6vw,40px);font-weight:900;margin-bottom:12px}
+.mA .a-cta p{color:var(--muted-on-dark);margin:0}
+
+/* =========================================================
+   PROPOSAL B — 膠囊子導覽（horizontal sticky pills, modular bands）
+   ========================================================= */
+.mB .b-hero{background:var(--surface-dark);color:#fff;position:relative;overflow:hidden;padding:72px 0 88px}
+.mB .b-hero svg.bg{position:absolute;right:-120px;bottom:-60px;width:720px;max-width:none;opacity:.9;pointer-events:none}
+.mB .b-hero .wrap{position:relative}
+.mB .b-hero .eyebrow{color:var(--yellow)}
+.mB .b-hero h1{font-size:clamp(38px,7vw,76px);font-weight:900;line-height:1.15;margin:18px 0 26px;display:flex;flex-wrap:wrap;gap:4px 0;align-items:center}
+.mB .b-hero h1 .bar{display:inline-block;width:6px;height:.8em;background:var(--orange);border-radius:3px;margin:0 .35em}
+.mB .b-hero h1 em{font-style:normal;color:var(--yellow)}
+.mB .b-hero .sub{font-size:clamp(19px,2vw,23px);font-weight:700;max-width:28em;margin-bottom:12px}
+.mB .b-hero .desc{color:var(--muted-on-dark);max-width:36em;margin-bottom:32px}
+
+.mB .b-pills{position:sticky;top:var(--pp-h);z-index:20;background:rgba(255,255,255,.97);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);box-shadow:0 6px 18px rgba(31,32,34,.05)}
+.mB .b-pills .wrap{display:flex;align-items:center;gap:12px}
+.mB .b-pills .k{flex:none;font:700 12px/1 var(--font-display);letter-spacing:.14em;color:var(--ink-2);display:none}
+@media (min-width:1100px){.mB .b-pills .k{display:block}}
+.mB .b-pills ul{list-style:none;display:flex;gap:8px;overflow-x:auto;padding:12px 0;scrollbar-width:none;mask-image:linear-gradient(90deg,#000 88%,transparent)}
+.mB .b-pills ul::-webkit-scrollbar{display:none}
+.mB .b-pills a{flex:none;display:block;white-space:nowrap;padding:8px 16px;border-radius:999px;background:var(--paper);border:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:15px;font-weight:500}
+.mB .b-pills a[aria-current="true"]{background:var(--ink);color:#fff;border-color:var(--ink);font-weight:700}
+.mB .b-pills .cta{flex:none;display:none}
+@media (min-width:760px){.mB .b-pills .cta{display:inline-flex;min-height:40px;padding:8px 16px;font-size:15px}}
+
+.mB .b-sec{padding:72px 0}
+.mB .b-sec.alt{background:#fff}
+.mB .b-head{display:grid;gap:12px;margin-bottom:36px}
+@media (min-width:860px){.mB .b-head{grid-template-columns:1fr 1fr;align-items:end;gap:40px}}
+.mB .b-head h2{font-size:clamp(28px,3.6vw,40px);font-weight:900}
+.mB .b-head p{margin:0;color:var(--ink-2)}
+
+.mB .b-who{display:grid;gap:28px;align-items:start}
+@media (min-width:860px){.mB .b-who{grid-template-columns:320px 1fr;gap:56px}}
+.mB .b-founder{background:var(--orange-soft);border-radius:24px;padding:28px;text-align:center}
+.mB .b-founder .mono{width:140px;height:140px;border-radius:50%;margin:0 auto 16px;background:var(--orange);color:#fff;display:grid;place-items:center;font:800 40px/1 var(--font-display);letter-spacing:.02em}
+.mB .b-founder h3{font-size:22px;font-weight:900}
+.mB .b-founder p{font-size:14px;color:var(--ink-2);margin:4px 0 0}
+.mB .b-founder .ph{font-size:12px;color:var(--ink-2);margin-top:14px;border-top:1px dashed #E3C7BD;padding-top:10px}
+.mB .b-cred{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 0}
+.mB .b-cred li{list-style:none;background:var(--orange-soft);color:var(--orange-deep);border:1px solid #F6CDBF;border-radius:999px;padding:8px 14px;font-weight:700;font-size:15px}
+
+.mB .b-vm{display:grid;gap:16px}
+@media (min-width:860px){.mB .b-vm{grid-template-columns:1fr 1fr}}
+.mB .b-vm article{border-radius:24px;padding:36px 30px;min-height:280px;display:flex;flex-direction:column}
+.mB .b-vm .v{background:var(--orange);color:#fff}
+.mB .b-vm .m{background:var(--surface-dark);color:#fff}
+.mB .b-vm .lbl{align-self:flex-start;background:#fff;color:var(--orange-strong);font:800 13px/1 var(--font-display);letter-spacing:.14em;padding:8px 12px;border-radius:999px;margin-bottom:24px}
+.mB .b-vm .m .lbl{color:var(--ink)}
+.mB .b-vm .v p{font-size:clamp(24px,2.8vw,30px);font-weight:900;line-height:1.5;margin:0}
+.mB .b-vm .m p{font-size:clamp(18px,1.8vw,20px);font-weight:500;line-height:1.75;margin:0}
+.mB .b-vm .m p strong{color:var(--yellow)}
+
+.mB .b-values{list-style:none;display:grid;gap:12px}
+@media (min-width:640px){.mB .b-values{grid-template-columns:1fr 1fr}}
+@media (min-width:1024px){.mB .b-values{grid-template-columns:repeat(5,1fr)}}
+.mB .b-values li{background:var(--paper);border-radius:18px;padding:22px 20px;border:1px solid var(--line)}
+.mB .b-values .ic{width:44px;height:44px;border-radius:12px;background:var(--yellow);display:grid;place-items:center;margin-bottom:14px}
+.mB .b-values h3{font-size:22px;font-weight:900;margin-bottom:6px}
+.mB .b-values p{margin:0;font-size:15px;color:var(--ink-2)}
+
+.mB .b-stairs{display:grid;gap:10px;align-items:end;margin-bottom:40px}
+@media (min-width:860px){.mB .b-stairs{grid-template-columns:repeat(4,1fr)}}
+.mB .b-stairs .st{border-radius:16px 16px 6px 6px;padding:20px;display:flex;flex-direction:column;justify-content:flex-end;position:relative}
+.mB .b-stairs .st:nth-child(1){background:#fff;border:1px solid var(--line)}
+.mB .b-stairs .st:nth-child(2){background:var(--yellow-soft)}
+.mB .b-stairs .st:nth-child(3){background:var(--yellow)}
+.mB .b-stairs .st:nth-child(4){background:var(--surface-dark);color:#fff}
+@media (min-width:860px){
+  .mB .b-stairs .st:nth-child(1){min-height:150px}.mB .b-stairs .st:nth-child(2){min-height:200px}
+  .mB .b-stairs .st:nth-child(3){min-height:250px}.mB .b-stairs .st:nth-child(4){min-height:300px}
+}
+@media (max-width:859px){.mB .b-stairs .st:nth-child(1){margin-right:30%}.mB .b-stairs .st:nth-child(2){margin-right:20%}.mB .b-stairs .st:nth-child(3){margin-right:10%}}
+.mB .b-stairs .n{font:800 13px/1 var(--font-display);letter-spacing:.12em;opacity:.85}
+.mB .b-stairs h3{font-size:24px;font-weight:900;margin:6px 0 2px}
+.mB .b-stairs .en{font:700 15px/1 var(--font-display)}
+.mB .b-stairs .st:nth-child(4) .en{color:var(--yellow)}
+.mB .b-stairs .cap{position:absolute;top:16px;right:16px;font:800 12px/1 var(--font-display);letter-spacing:.1em;background:var(--yellow);color:var(--ink);padding:6px 8px;border-radius:4px}
+.mB .b-pillars{display:grid;gap:14px}
+@media (min-width:860px){.mB .b-pillars{grid-template-columns:repeat(3,1fr)}}
+.mB .b-pillars article{background:#fff;border-radius:18px;padding:24px;border:1px solid var(--line)}
+.mB .b-pillars .ic{width:52px;height:52px;border-radius:50%;background:var(--orange-soft);display:grid;place-items:center;margin-bottom:14px}
+.mB .b-pillars .k{font-size:13px;font-weight:700;color:var(--orange-strong)}
+.mB .b-pillars h3{font-size:20px;font-weight:900;margin:2px 0 8px}
+.mB .b-pillars p{margin:0;color:var(--ink-2);font-size:15px}
+
+.mB .b-sdgs{display:grid;gap:14px}
+@media (min-width:860px){.mB .b-sdgs{grid-template-columns:repeat(3,1fr)}}
+.mB .b-sdgs article{background:var(--paper);border-radius:18px;padding:24px;border:1px solid var(--line)}
+.mB .b-sdgs .sdg{margin-bottom:16px}
+.mB .b-sdgs h3{font-size:20px;font-weight:900;margin-bottom:6px}
+.mB .b-sdgs p{margin:0;font-size:15px;color:var(--ink-2)}
+
+.mB .b-diff{display:grid;gap:0;background:#fff;border-radius:24px;overflow:hidden;border:1px solid var(--line)}
+@media (min-width:760px){.mB .b-diff{grid-template-columns:1fr 1fr}}
+.mB .b-diff article{padding:28px;border-bottom:1px solid var(--line);position:relative}
+@media (min-width:760px){.mB .b-diff article:nth-child(odd){border-right:1px solid var(--line)}.mB .b-diff article:nth-child(n+3){border-bottom:0}}
+.mB .b-diff .x{font:800 13px/1 var(--font-display);color:var(--orange-strong);letter-spacing:.14em}
+.mB .b-diff h3{font-size:20px;font-weight:900;margin:8px 0 6px}
+.mB .b-diff p{margin:0;color:var(--ink-2);font-size:15px}
+.mB .b-diff-close{margin-top:20px;background:var(--ink);color:#fff;border-radius:18px;padding:22px 26px;font-size:clamp(17px,1.8vw,20px);font-weight:700}
+.mB .b-diff-close strong{color:var(--yellow)}
+
+.mB .b-theory{display:grid;gap:40px}
+@media (min-width:960px){.mB .b-theory{grid-template-columns:1fr 1fr;gap:64px;align-items:start}}
+.mB .b-theory .claim{font-size:clamp(22px,2.6vw,28px);font-weight:900;line-height:1.5;margin-bottom:20px}
+.mB .b-theory .claim mark{background:linear-gradient(transparent 60%,var(--yellow) 60%);color:inherit}
+.mB .b-stack{list-style:none;display:flex;flex-direction:column-reverse;gap:10px}
+.mB .b-stack li{border-radius:16px;padding:20px 22px;display:grid;grid-template-columns:auto 1fr;gap:4px 16px;align-items:start}
+.mB .b-stack li:nth-child(1){background:#fff;border:1px solid var(--line);margin:0 0 0 0}
+.mB .b-stack li:nth-child(2){background:var(--yellow-soft);margin:0 18px}
+.mB .b-stack li:nth-child(3){background:var(--orange-soft);margin:0 36px}
+@media (max-width:520px){.mB .b-stack li:nth-child(2){margin:0 8px}.mB .b-stack li:nth-child(3){margin:0 16px}}
+.mB .b-stack .lv{grid-row:span 2;font:800 12px/1.2 var(--font-display);letter-spacing:.1em;background:var(--ink);color:#fff;border-radius:6px;padding:6px 8px;text-align:center}
+.mB .b-stack h3{font-size:22px;font-weight:900}
+.mB .b-stack p{margin:0;font-size:15px;color:var(--ink-2)}
+.mB .b-stack-cap{font-size:13px;color:var(--ink-2);text-align:center;margin-top:10px}
+.mB .b-theory-close{margin-top:32px;font-size:clamp(18px,2vw,22px);font-weight:900;text-align:center;max-width:30em;margin-left:auto;margin-right:auto}
+
+.mB .b-svc{display:grid;gap:14px}
+@media (min-width:640px){.mB .b-svc{grid-template-columns:1fr 1fr}}
+@media (min-width:1080px){.mB .b-svc{grid-template-columns:repeat(4,1fr)}}
+.mB .b-svc article{background:var(--paper);border-radius:18px;padding:24px;border:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.mB .b-svc .hot{background:var(--surface-dark);color:#fff;border-color:var(--surface-dark)}
+.mB .b-svc .hot p{color:var(--muted-on-dark)!important}
+.mB .b-svc .hot a{color:var(--yellow)}
+.mB .b-svc .ic{width:48px;height:48px;border-radius:12px;background:#fff;display:grid;place-items:center;border:1px solid var(--line)}
+.mB .b-svc h3{font-size:20px;font-weight:900}
+.mB .b-svc p{margin:0;font-size:15px;color:var(--ink-2);flex:1}
+.mB .b-svc a{font-weight:700;font-size:15px}
+
+.mB .b-impact{background:var(--surface-dark);color:#fff;padding:80px 0}
+.mB .b-impact .eyebrow{color:var(--yellow)}
+.mB .b-impact h2{font-size:clamp(26px,3.4vw,38px);font-weight:900;max-width:24em;margin:12px 0 18px;line-height:1.45}
+.mB .b-impact .lead{color:var(--muted-on-dark);max-width:38em}
+.mB .b-ba{display:grid;gap:12px;margin:28px 0 40px}
+@media (min-width:760px){.mB .b-ba{grid-template-columns:1fr auto 1fr;align-items:center}}
+.mB .b-ba div{border:1px solid rgba(255,255,255,.25);border-radius:18px;padding:22px}
+.mB .b-ba div:last-child{background:#fff;color:var(--ink);border-color:#fff}
+.mB .b-ba .k{display:block;font:800 12px/1 var(--font-display);letter-spacing:.16em;color:var(--yellow);margin-bottom:10px}
+.mB .b-ba div:last-child .k{color:var(--orange-strong)}
+.mB .b-ba p{margin:0;font-size:clamp(17px,1.8vw,19px);font-weight:700}
+.mB .b-ba .arr{font:800 28px/1 var(--font-display);color:var(--orange);text-align:center}
+.mB .b-split{display:grid;gap:28px}
+@media (min-width:960px){.mB .b-split{grid-template-columns:1fr 1fr;gap:48px}}
+.mB .b-split h3{font:800 13px/1 var(--font-display);letter-spacing:.16em;color:var(--yellow);margin-bottom:14px}
+.mB .b-nums{list-style:none;display:grid;gap:10px}
+.mB .b-nums li{display:flex;align-items:baseline;gap:16px;border-bottom:1px solid rgba(255,255,255,.18);padding:10px 0}
+.mB .b-nums b{font:800 clamp(38px,4.6vw,54px)/1.1 var(--font-display);color:#fff;min-width:4.2em}
+.mB .b-nums span{font-size:18px;font-weight:700;color:var(--yellow)}
+.mB .b-qual{list-style:none;display:grid;gap:12px}
+.mB .b-qual li{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:18px 20px}
+.mB .b-qual h4{font-size:17px;font-weight:900;margin-bottom:4px}
+.mB .b-qual p{margin:0;color:var(--muted-on-dark);font-size:15px}
+
+.mB .b-eco{display:grid;gap:12px;grid-template-columns:1fr;max-width:900px;margin:0 auto;position:relative}
+@media (min-width:760px){.mB .b-eco{grid-template-columns:1fr 1fr 1fr;grid-template-areas:". n1 ." "n4 c n2" ". n3 ."}}
+.mB .b-eco .c{background:#fff;border-radius:50%;aspect-ratio:1;display:grid;place-items:center;border:3px solid var(--coesg-green);padding:24px;max-width:260px;justify-self:center;width:100%}
+.mB .b-eco .c img{width:80%}
+@media (min-width:760px){.mB .b-eco .c{grid-area:c}.mB .b-eco .n1{grid-area:n1}.mB .b-eco .n2{grid-area:n2}.mB .b-eco .n3{grid-area:n3}.mB .b-eco .n4{grid-area:n4}}
+.mB .b-eco .n{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;align-self:center}
+.mB .b-eco .n h3{font-size:17px;font-weight:900;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.mB .b-eco .n h3::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--orange)}
+.mB .b-eco .n p{margin:0;font-size:14px;color:var(--ink-2)}
+
+.mB .b-cta{padding:80px 0;background:var(--orange-soft)}
+.mB .b-cta .box{background:#fff;border-radius:28px;padding:40px 28px;text-align:center;max-width:820px;margin:0 auto;box-shadow:0 20px 40px rgba(207,63,28,.12)}
+.mB .b-cta h2{font-size:clamp(26px,3.4vw,38px);font-weight:900;margin-bottom:12px}
+.mB .b-cta p{color:var(--ink-2);max-width:32em;margin:0 auto 24px}
+.mB .b-cta .btn-row{justify-content:center}
+
+/* =========================================================
+   PROPOSAL C — 編輯長文（editorial long-read, chapter dividers）
+   ========================================================= */
+.mC{background:#FFFDFa}
+.mC .serif{font-family:var(--font-serif)}
+.mC .c-hero{padding:48px 0 0;border-bottom:1px solid var(--ink)}
+.mC .c-mast{display:flex;justify-content:space-between;gap:12px;border-bottom:3px double var(--ink);padding-bottom:10px;font:700 13px/1.4 var(--font-display);letter-spacing:.12em;color:var(--ink-2);flex-wrap:wrap}
+.mC .c-hero h1{font-family:var(--font-serif);font-weight:900;font-size:clamp(46px,9.5vw,120px);line-height:1.1;letter-spacing:.02em;margin:28px 0 8px}
+.mC .c-hero h1 .l1,.mC .c-hero h1 .l2,.mC .c-hero h1 .l3{display:block}
+.mC .c-hero h1 .l2{padding-left:1.2em}
+.mC .c-hero h1 .l3{padding-left:.6em;color:var(--orange-strong)}
+@media (max-width:520px){.mC .c-hero h1 .l2{padding-left:.6em}.mC .c-hero h1 .l3{padding-left:0}}
+.mC .c-deck{display:grid;gap:24px;padding:28px 0 40px;border-top:1px solid var(--line);margin-top:24px}
+@media (min-width:860px){.mC .c-deck{grid-template-columns:1.4fr 1fr;gap:56px}}
+.mC .c-deck .sub{font-family:var(--font-serif);font-size:clamp(20px,2.2vw,26px);font-weight:700;line-height:1.6;margin:0 0 14px}
+.mC .c-deck .desc{color:var(--ink-2);margin:0 0 24px}
+.mC .c-contents{border-left:1px solid var(--line);padding-left:24px}
+@media (max-width:859px){.mC .c-contents{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:20px}}
+.mC .c-contents .k{font:800 12px/1 var(--font-display);letter-spacing:.2em;color:var(--ink-2);margin-bottom:10px;display:block}
+.mC .c-contents ol{list-style:none}
+.mC .c-contents li a{display:grid;grid-template-columns:44px 1fr;gap:8px;padding:9px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.mC .c-contents li a b{font-family:var(--font-serif);font-weight:900;color:var(--orange-strong)}
+.mC .c-contents li a small{display:block;color:var(--ink-2);font-size:13px}
+.mC .c-contents .time{font-size:13px;color:var(--ink-2);margin-top:12px}
+
+.mC .c-bar{position:sticky;top:var(--pp-h);z-index:20;background:rgba(255,253,250,.97);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.mC .c-bar .wrap{display:flex;align-items:center;gap:14px;height:48px}
+.mC .c-bar .cur{font-family:var(--font-serif);font-weight:700;font-size:15px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mC .c-bar ol{list-style:none;display:flex;gap:4px}
+.mC .c-bar ol a{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;font-family:var(--font-serif);font-weight:700;font-size:14px;text-decoration:none;color:var(--ink);border:1px solid var(--line)}
+.mC .c-bar ol a[aria-current="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.mC .c-bar .prog{position:absolute;left:0;bottom:-1px;height:3px;background:var(--orange);width:0}
+
+.mC .c-ch{background:var(--ink);color:#fff;padding:64px 0 56px;position:relative;overflow:hidden}
+.mC .c-ch .num{font-family:var(--font-serif);font-weight:900;font-size:clamp(90px,16vw,200px);line-height:.8;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.35);position:absolute;right:16px;bottom:-10px;pointer-events:none}
+.mC .c-ch .k{font:800 13px/1 var(--font-display);letter-spacing:.2em;color:var(--yellow)}
+.mC .c-ch h2{font-family:var(--font-serif);font-size:clamp(32px,5vw,56px);font-weight:900;margin:14px 0 10px;position:relative}
+.mC .c-ch p{color:var(--muted-on-dark);max-width:32em;margin:0;position:relative}
+
+.mC .c-body{max-width:700px;margin:0 auto;padding:56px 16px}
+.mC .c-body.wide{max-width:1100px}
+.mC .c-body h3.sh{font-family:var(--font-serif);font-size:clamp(24px,3vw,32px);font-weight:900;margin:0 0 18px}
+.mC .c-body h3.sh .k{display:block;font:800 12px/1 var(--font-display);letter-spacing:.2em;color:var(--orange-strong);margin-bottom:10px}
+.mC .c-body p{font-size:18px;line-height:1.95}
+.mC .dropcap::first-letter{font-family:var(--font-serif);float:left;font-size:4.2em;line-height:.9;font-weight:900;margin:.08em .12em 0 0;color:var(--orange-strong)}
+.mC .hl{background:linear-gradient(transparent 58%,var(--yellow-soft) 58%);font-weight:700;padding:0 2px}
+.mC .c-margin{border-top:2px solid var(--ink);margin:28px 0;padding-top:12px;display:grid;gap:8px}
+@media (min-width:700px){.mC .c-margin{grid-template-columns:repeat(4,1fr);gap:16px}}
+.mC .c-margin div{font-size:14px}
+.mC .c-margin b{display:block;font-family:var(--font-serif);font-size:17px}
+.mC .c-margin span{color:var(--ink-2)}
+.mC .sep{border:0;border-top:1px solid var(--line);margin:48px 0}
+
+.mC .c-vm{padding:72px 0;background:var(--yellow-soft)}
+.mC .c-vm .wrap{max-width:1000px}
+.mC .c-vm .row{display:grid;gap:12px;padding:28px 0;border-top:1px solid var(--ink)}
+@media (min-width:760px){.mC .c-vm .row{grid-template-columns:160px 1fr;gap:32px}}
+.mC .c-vm .lbl{font-family:var(--font-serif);font-weight:900;font-size:28px}
+.mC .c-vm .lbl small{display:block;font:800 12px/1 var(--font-display);letter-spacing:.2em;color:var(--orange-deep);margin-top:6px}
+.mC .c-vm .v{font-family:var(--font-serif);font-weight:900;font-size:clamp(26px,3.6vw,42px);line-height:1.45;margin:0}
+.mC .c-vm .m{font-family:var(--font-serif);font-weight:700;font-size:clamp(19px,2.2vw,24px);line-height:1.75;margin:0}
+
+.mC .c-gloss{margin:0}
+.mC .c-gloss div{display:grid;grid-template-columns:96px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.mC .c-gloss dt{font-family:var(--font-serif);font-weight:900;font-size:26px;line-height:1.3}
+.mC .c-gloss dt small{display:block;font:700 11px/1.4 var(--font-display);letter-spacing:.14em;color:var(--ink-2)}
+.mC .c-gloss dd{margin:0;font-size:17px;line-height:1.8;padding-top:4px}
+
+.mC .c-ripple{display:grid;gap:32px;align-items:center;margin:8px 0 40px}
+@media (min-width:860px){.mC .c-ripple{grid-template-columns:440px 1fr;gap:56px}}
+.mC .c-ripple svg{width:100%;max-width:440px;justify-self:center}
+.mC .c-ripple ol{list-style:none;display:grid;gap:0}
+.mC .c-ripple li{display:grid;grid-template-columns:40px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.mC .c-ripple li b{font-family:var(--font-serif);font-size:22px;color:var(--orange-strong)}
+.mC .c-ripple li h4{font-size:18px;font-weight:900}
+.mC .c-ripple li h4 span{font:700 13px/1 var(--font-display);color:var(--ink-2);margin-left:6px;letter-spacing:.06em}
+.mC .c-ripple li p{margin:2px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+.mC .c-pill3{display:grid;gap:0;border-top:2px solid var(--ink)}
+@media (min-width:860px){.mC .c-pill3{grid-template-columns:repeat(3,1fr)}}
+.mC .c-pill3 article{padding:22px 0;border-bottom:1px solid var(--line)}
+@media (min-width:860px){.mC .c-pill3 article{padding:22px 24px;border-bottom:0;border-right:1px solid var(--line)}.mC .c-pill3 article:first-child{padding-left:0}.mC .c-pill3 article:last-child{border-right:0}}
+.mC .c-pill3 .k{font-family:var(--font-serif);font-weight:900;font-size:15px;color:var(--orange-strong)}
+.mC .c-pill3 h4{font-family:var(--font-serif);font-size:22px;font-weight:900;margin:4px 0 8px}
+.mC .c-pill3 p{font-size:15px!important;line-height:1.8!important;color:var(--ink-2);margin:0}
+
+.mC .c-sdg{list-style:none;display:grid;gap:22px}
+.mC .c-sdg li{display:grid;grid-template-columns:92px 1fr;gap:20px;align-items:start}
+.mC .c-sdg h4{font-family:var(--font-serif);font-size:22px;font-weight:900;margin:2px 0 6px}
+.mC .c-sdg p{font-size:16px!important;line-height:1.8!important;margin:0;color:var(--ink-2)}
+
+.mC .c-diff{list-style:none;counter-reset:cd}
+.mC .c-diff li{padding:16px 0 16px 56px;position:relative;border-bottom:1px solid var(--line)}
+.mC .c-diff li::before{counter-increment:cd;content:counter(cd,cjk-ideographic);position:absolute;left:0;top:14px;font-family:var(--font-serif);font-weight:900;font-size:28px;color:var(--orange-strong)}
+.mC .c-diff h4{font-family:var(--font-serif);font-size:20px;font-weight:900;margin-bottom:4px}
+.mC .c-diff p{font-size:16px!important;margin:0;color:var(--ink-2)}
+.mC .pull{font-family:var(--font-serif);font-weight:900;font-size:clamp(22px,3vw,30px);line-height:1.6;border-top:3px solid var(--ink);border-bottom:1px solid var(--ink);padding:24px 0;margin:36px 0;text-align:center}
+.mC .pull em{font-style:normal;color:var(--orange-strong)}
+
+.mC .c-flow{list-style:none;margin:28px 0;position:relative;padding-left:0}
+.mC .c-flow li{display:grid;grid-template-columns:64px 1fr;gap:16px;padding:0 0 26px;position:relative}
+.mC .c-flow li:not(:last-child)::after{content:"";position:absolute;left:31px;top:64px;bottom:2px;width:2px;background:repeating-linear-gradient(var(--orange) 0 6px,transparent 6px 12px)}
+.mC .c-flow .ring{width:64px;height:64px;border-radius:50%;border:2px solid var(--ink);display:grid;place-items:center;font-family:var(--font-serif);font-weight:900;font-size:24px;background:#fff}
+.mC .c-flow li:last-child .ring{background:var(--ink);color:#fff}
+.mC .c-flow h4{font-family:var(--font-serif);font-size:22px;font-weight:900;margin:14px 0 4px}
+.mC .c-flow p{font-size:16px!important;margin:0;color:var(--ink-2)}
+
+.mC .c-index{border-top:2px solid var(--ink)}
+.mC .c-index article{display:grid;gap:6px 24px;padding:22px 0;border-bottom:1px solid var(--line)}
+@media (min-width:760px){.mC .c-index article{grid-template-columns:60px 260px 1fr auto;align-items:baseline}}
+.mC .c-index .no{font-family:var(--font-serif);font-weight:900;font-size:22px;color:var(--ink-2)}
+.mC .c-index h4{font-family:var(--font-serif);font-size:22px;font-weight:900}
+.mC .c-index p{font-size:15px!important;line-height:1.8!important;margin:0;color:var(--ink-2)}
+.mC .c-index a{font-weight:700;white-space:nowrap}
+
+.mC .c-feature{display:grid;gap:32px}
+@media (min-width:960px){.mC .c-feature{grid-template-columns:1fr 320px;gap:56px}}
+.mC .c-feature .ba{font-family:var(--font-serif);font-size:clamp(20px,2.4vw,26px);font-weight:900;line-height:1.7;margin:24px 0;padding-left:20px;border-left:4px solid var(--orange)}
+.mC .c-feature .ba span{display:block}
+.mC .c-feature .ba span:first-child{color:var(--ink-2)}
+.mC .c-bynum{background:var(--ink);color:#fff;border-radius:4px;padding:24px;align-self:start}
+@media (min-width:960px){.mC .c-bynum{position:sticky;top:calc(var(--pp-h) + 72px)}}
+.mC .c-bynum .k{font:800 12px/1 var(--font-display);letter-spacing:.2em;color:var(--yellow)}
+.mC .c-bynum ol{list-style:none;margin-top:8px}
+.mC .c-bynum li{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.2)}
+.mC .c-bynum li:last-child{border-bottom:0}
+.mC .c-bynum b{display:block;font:800 44px/1.1 var(--font-display)}
+.mC .c-bynum span{color:var(--muted-on-dark);font-size:15px}
+.mC .c-qual{list-style:none;counter-reset:q;margin-top:12px}
+.mC .c-qual li{padding:16px 0;border-top:1px solid var(--line)}
+.mC .c-qual h4{font-family:var(--font-serif);font-size:19px;font-weight:900;margin-bottom:4px}
+.mC .c-qual p{font-size:16px!important;line-height:1.8!important;margin:0;color:var(--ink-2)}
+
+.mC .c-net{position:relative;max-width:820px;margin:16px auto 0;display:grid;gap:12px}
+@media (min-width:760px){.mC .c-net{grid-template-columns:1fr 1fr;gap:150px 220px;padding:30px 0}}
+.mC .c-net svg.lines{display:none}
+@media (min-width:760px){.mC .c-net svg.lines{display:block;position:absolute;inset:0;width:100%;height:100%;pointer-events:none}}
+.mC .c-net .hub{background:#fff;border:1px solid var(--ink);padding:22px;text-align:center;border-radius:4px}
+@media (min-width:760px){.mC .c-net .hub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:200px;z-index:2}}
+.mC .c-net .hub img{width:160px;max-width:100%}
+.mC .c-net .hub p{font-size:13px!important;line-height:1.5!important;color:var(--ink-2);margin:10px 0 0}
+.mC .c-net .node{background:#FFFDFa;border-top:2px solid var(--ink);padding:14px 0 0;position:relative;z-index:1}
+.mC .c-net .node h4{font-family:var(--font-serif);font-size:19px;font-weight:900;margin-bottom:4px}
+.mC .c-net .node p{font-size:14px!important;line-height:1.7!important;margin:0;color:var(--ink-2)}
+
+.mC .c-cta{background:var(--paper);padding:80px 0;border-top:1px solid var(--ink)}
+.mC .c-letter{max-width:700px;margin:0 auto;padding:0 16px}
+.mC .c-letter h2{font-family:var(--font-serif);font-size:clamp(30px,4vw,44px);font-weight:900;margin-bottom:16px}
+.mC .c-letter p{font-size:18px;line-height:1.9}
+.mC .c-letter .sig{font-family:var(--font-serif);font-weight:700;margin:24px 0 28px;color:var(--ink-2)}
+</style>
+</head>
+<body>
+
+<div class="pp-bar" role="toolbar" aria-label="切換提案">
+  <span class="pp-title">/sustainability 共好永續力<small>三案比較</small></span>
+  <button type="button" data-show="A" aria-pressed="false">A 章節目錄</button>
+  <button type="button" data-show="B" aria-pressed="false">B 膠囊導覽</button>
+  <button type="button" data-show="C" aria-pressed="false">C 編輯長文</button>
+  <button type="button" data-show="all" aria-pressed="false">全部</button>
+</div>
+
+<header class="pp-intro">
+  <span class="pp-label">Proposal · /sustainability</span>
+  <h1>共好永續力：三種頁內導覽與敘事方式</h1>
+  <p>三案都依客戶指定的 12 個區塊順序（S01–S06），使用相同的品牌色與客戶原稿文案（已依 G01 改為「永續白皮書」「ESG共學坊」，並避開禁用詞）。差異在於：長頁面怎麼導覽、Hero 怎麼說、IOOI 模型怎麼畫。每一案前面的卡片說明概念、參考來源、優缺點與在使用者旅程中的作用。</p>
+</header>
+
+<!-- ======================================================================
+     PROPOSAL A
+     ====================================================================== -->
+<section class="pp-proposal" id="pA" data-proposal="A" aria-label="提案 A">
+  <div class="pp-meta">
+    <div class="pp-card">
+      <span class="pp-label">提案 A</span>
+      <h2>章節目錄：像一份網頁版的永續報告</h2>
+      <p class="pp-sub">桌機左側固定「章節目錄」，12 個區塊分成五章；手機收合成頂部的「本頁章節」選單。</p>
+      <dl>
+        <div><dt>概念</dt><dd>把「我們是誰 → 我們相信 → 我們怎麼做 → 我們提供 → 我們的成果」當作一份報告的五章。目錄隨捲動標示目前位置並顯示閱讀進度；Hero 以三個關鍵字直排、配上「陪跑・連結・影響力」三個逐漸擴大的圓。IOOI 畫成四段由淺到深的箭頭流程，每一步附一個 CO-ESG 的例子。</dd></div>
+        <div><dt>參考來源</dt><dd>Ørsted「Sustainability」與 Schneider Electric 永續頁的左側固定子導覽；台達電 ESG 網站的報告式章節目錄（benchmark 原則 P2、P13）。</dd></div>
+        <div><dt>優點</dt><dd><ul><li>P2 採購窗口、P5 論壇主辦方可一鍵跳到「方法」或「成果」，不必捲完 12 段。</li><li>章節分組讓長頁面有秩序，也讓願景使命獨立成一章、視覺權重僅次於 Hero。</li><li>最接近企業端熟悉的永續報告閱讀習慣，顯得專業、可信。</li></ul></dd></div>
+        <div><dt>風險</dt><dd><ul><li>桌機內容欄被側欄吃掉約 300px，圖表類區塊（IOOI、生態圈）空間較緊。</li><li>捲動標示需要少量 JS（無 JS 時目錄仍可用，只是不會高亮）。</li><li>IOOI 每一步的「例」是示意文字，需客戶確認。</li></ul></dd></div>
+        <div class="full"><dt>對旅程的作用</dt><dd>本頁位在「信任」階段。從論壇或合作夥伴網站直接進站的 P2／P5 通常不從頭讀，而是帶著問題找答案。目錄先讓他們看到「這頁有方法、有理論、有成果」，再引導到底部的 Coffee Chat；次要出口是 <code>/events</code> 的足跡時間軸。</dd></div>
+      </dl>
+    </div>
+  </div>
+
+  <div class="mock mA" id="mockA">
+    <div class="site-h"><div class="wrap">
+      <img src="../../../public/brand/gungho-horizontal.svg" alt="共好玟化">
+      <nav aria-label="主選單（示意）"><a href="#">首頁</a><a href="#" aria-current="page">共好永續力</a><a href="#">永續足跡</a><a href="#">共好學習</a><a href="#">合作洽詢</a></nav>
+      <span class="burger" aria-hidden="true"><svg width="18" height="14" viewBox="0 0 18 14"><path d="M0 1h18M0 7h18M0 13h18" stroke="#1F2022" stroke-width="2"/></svg></span>
+    </div></div>
+
+    <section class="a-hero">
+      <div class="wrap">
+        <div>
+          <span class="eyebrow">共好永續力 · About CO-ESG</span>
+          <h1>
+            <span class="w"><i aria-hidden="true">01</i>陪跑</span><span class="sr-only">｜</span>
+            <span class="w"><i aria-hidden="true">02</i>連結</span><span class="sr-only">｜</span>
+            <span class="w"><i aria-hidden="true">03</i>創造影響力</span>
+          </h1>
+          <p class="sub">我們相信，永續不該只是一份報告，而是一種能被實踐、被分享、被持續滋養的影響力。</p>
+          <p class="desc">共好玟化陪伴企業、社會組織與公益機構，從「永續藍圖」走向「真正的永續影響力」，建立具備共學、共創與生態圈精神的永續循環。</p>
+          <div class="btn-row">
+            <a class="btn btn-primary" href="#a-cta">預約 15 分鐘 Coffee Chat</a>
+            <a class="btn btn-ghost" href="#a-approach">了解我們的方法</a>
+          </div>
+        </div>
+        <svg class="a-rings" viewBox="0 0 420 340" role="img" aria-label="陪跑、連結、創造影響力，三個逐漸擴大的圓">
+          <circle cx="92" cy="226" r="56" fill="#FDEDE8"/>
+          <circle cx="92" cy="226" r="56" fill="none" stroke="#CF3F1C" stroke-width="2"/>
+          <circle cx="196" cy="190" r="90" fill="none" stroke="#1F2022" stroke-width="2" stroke-dasharray="4 6"/>
+          <circle cx="282" cy="160" r="128" fill="none" stroke="#F25232" stroke-width="3"/>
+          <circle cx="282" cy="160" r="128" fill="#F25232" fill-opacity=".07"/>
+          <circle cx="92" cy="226" r="7" fill="#CF3F1C"/>
+          <circle cx="196" cy="190" r="7" fill="#1F2022"/>
+          <circle cx="330" cy="120" r="9" fill="#F25232"/>
+          <text x="92" y="231" text-anchor="middle" font-family="Noto Sans TC" font-weight="900" font-size="20" fill="#1F2022" dy="30">陪跑</text>
+          <text x="196" y="226" text-anchor="middle" font-family="Noto Sans TC" font-weight="900" font-size="20" fill="#1F2022">連結</text>
+          <text x="330" y="160" text-anchor="middle" font-family="Noto Sans TC" font-weight="900" font-size="22" fill="#1F2022">影響力</text>
+        </svg>
+      </div>
+    </section>
+
+    <details class="a-tocbar">
+      <summary><span class="k">本頁章節</span><span class="cur" data-spy-label>01 我們是誰</span></summary>
+      <nav aria-label="本頁章節（手機）" data-spy>
+        <ol>
+          <li><a href="#a-who">01 我們是誰</a></li>
+          <li><a href="#a-vision">02 願景與使命</a></li>
+          <li><a href="#a-values">03 核心價值</a></li>
+          <li><a href="#a-approach">04 我們怎麼做</a></li>
+          <li><a href="#a-sdgs">05 全球目標</a></li>
+          <li><a href="#a-difference">06 我們的不同</a></li>
+          <li><a href="#a-theory">07 雙效益理論</a></li>
+          <li><a href="#a-services">08 服務</a></li>
+          <li><a href="#a-impact">09 實際成果</a></li>
+          <li><a href="#a-ecosystem">10 共好生態圈</a></li>
+        </ol>
+      </nav>
+    </details>
+
+    <div class="wrap a-layout">
+      <nav class="a-toc" aria-label="本頁章節" data-spy>
+        <span class="k">CONTENTS 本頁章節</span>
+        <ol>
+          <li class="grp">第一章　認識我們</li>
+          <li><a href="#a-who"><b>01</b>我們是誰</a></li>
+          <li class="grp">第二章　我們相信</li>
+          <li><a href="#a-vision"><b>02</b>願景與使命</a></li>
+          <li><a href="#a-values"><b>03</b>核心價值</a></li>
+          <li class="grp">第三章　我們的方法</li>
+          <li><a href="#a-approach"><b>04</b>我們怎麼做</a></li>
+          <li><a href="#a-sdgs"><b>05</b>對齊的全球目標</a></li>
+          <li><a href="#a-difference"><b>06</b>我們的不同</a></li>
+          <li><a href="#a-theory"><b>07</b>雙效益理論</a></li>
+          <li class="grp">第四章　我們提供</li>
+          <li><a href="#a-services"><b>08</b>一站式服務</a></li>
+          <li class="grp">第五章　我們的成果</li>
+          <li><a href="#a-impact"><b>09</b>實際成果</a></li>
+          <li><a href="#a-ecosystem"><b>10</b>共好生態圈</a></li>
+        </ol>
+        <div class="a-prog" aria-hidden="true"><i data-progress="mockA"></i></div>
+      </nav>
+
+      <main>
+        <section class="a-sec" id="a-who">
+          <div class="a-num">01 · 我們是誰</div>
+          <h2>社會工作 × 永續管理 × 國際認證</h2>
+          <div class="a-prose">
+            <p>共好玟化組織發展顧問有限公司成立於 2022 年，由一群跨領域專業者共同組成。我們的創辦人吳玟樺（Evvon），擁有 15 年以上社會永續、醫療與公益機構的專案實戰經驗，並具備以下跨域專業資格：</p>
+          </div>
+          <ul class="a-cred">
+            <li><svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="14" fill="#FDEDE8"/><path d="M8 14.5l4 4 8-9" fill="none" stroke="#CF3F1C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>社會工作師執照</li>
+            <li><svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="14" fill="#FDEDE8"/><path d="M8 14.5l4 4 8-9" fill="none" stroke="#CF3F1C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>企業永續管理師</li>
+            <li><svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="14" fill="#FDEDE8"/><path d="M8 14.5l4 4 8-9" fill="none" stroke="#CF3F1C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>PMP 國際專案管理師</li>
+            <li><svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="14" fill="#FDEDE8"/><path d="M8 14.5l4 4 8-9" fill="none" stroke="#CF3F1C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>ICF 國際教練認證</li>
+          </ul>
+          <div class="a-prose">
+            <p>社會工作 × 永續管理 × 國際認證——這份跨域積累，是共好玟化最深的底氣。我們不只提供永續的「理論」，更陪企業把承諾化為「行動」：從釐清願景、制定策略，到產出真正有靈魂的<strong>永續白皮書</strong>，我們始終站在客戶身邊一起跑。</p>
+          </div>
+          <div class="a-facts">
+            <div><b>2022</b>公司成立</div>
+            <div><b>15 年+</b>創辦人實戰經驗</div>
+            <div><b>4 項</b>跨域專業資格</div>
+          </div>
+        </section>
+
+        <section class="a-sec" id="a-vision">
+          <div class="a-num">02 · 願景與使命</div>
+          <h2 class="sr-only">願景與使命</h2>
+          <div class="a-vm">
+            <article>
+              <span class="lbl">VISION</span>
+              <h3>願景</h3>
+              <p class="big">成為推動企業與社會永續轉型的催化劑，激發個人與組織的專業價值，共創更美好的未來。</p>
+            </article>
+            <article>
+              <span class="lbl">MISSION</span>
+              <h3>使命</h3>
+              <p class="big">致力成為企業與個人在永續發展領域的長期夥伴，透過教育、顧問服務與技術支持，加速邁向永續目標。</p>
+              <p class="more">我們不僅提供知識與工具，更激發行動力，促使各界在自身領域中推動永續轉型。</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="a-sec" id="a-values">
+          <div class="a-num">03 · 核心價值</div>
+          <h2>我們的合作，建立在五個共同信念之上</h2>
+          <ol class="a-values">
+            <li><span class="n">01</span><h3>對話</h3><p>從理解開始，每一份永續策略都生於真誠的對話。</p></li>
+            <li><span class="n">02</span><h3>價值</h3><p>點亮每個組織獨特的專業價值，而非套用同一份模板。</p></li>
+            <li><span class="n">03</span><h3>分享</h3><p>知識在流動中增值，我們相信開放共學的力量。</p></li>
+            <li><span class="n">04</span><h3>成長</h3><p>陪客戶累積能力，讓永續成為內部長出來的習慣。</p></li>
+            <li><span class="n">05</span><h3>影響力</h3><p>一切努力，都指向可被看見、可被衡量的真實改變。</p></li>
+          </ol>
+        </section>
+
+        <section class="a-sec" id="a-approach">
+          <div class="a-num">04 · 我們怎麼做</div>
+          <h2>從藍圖到影響力</h2>
+          <p class="intro">我們以 <strong>IOOI 模型</strong> 作為核心框架，協助組織把每一分投入，一路推進到真實的社會影響。</p>
+          <ol class="a-iooi" aria-label="IOOI 模型四個階段">
+            <li><span class="L">I</span><h3>投入</h3><span class="en">INPUT</span><p>例：顧問陪跑時數、課程設計、量化工具</p></li>
+            <li><span class="L">O</span><h3>產出</h3><span class="en">OUTPUT</span><p>例：永續白皮書、工作坊場次、策略文件</p></li>
+            <li><span class="L">O</span><h3>成果</h3><span class="en">OUTCOME</span><p>例：品牌被企業理解、取得合作與資源</p></li>
+            <li><span class="L">I</span><h3>影響力</h3><span class="en">IMPACT</span><p>例：供應鏈與社區的長期正向改變</p></li>
+          </ol>
+          <p class="intro" style="margin-bottom:16px">在這個框架下，我們透過三大支柱展開服務：</p>
+          <div class="a-pillars">
+            <article><span class="k">支柱一</span><h3>永續教育與課程</h3><p>協助企業內部建立永續識能，推動永續教育與影響力思維，讓永續成為組織的共同語言。</p></article>
+            <article><span class="k">支柱二</span><h3>影響力顧問專案</h3><p>提供系統性引導，協助企業釐清永續願景、制定策略、產出永續白皮書，並對應 ESG 評估標準與政府法規。</p></article>
+            <article><span class="k">支柱三</span><h3>永續生態圈建立</h3><p>定期舉辦ESG共學坊、搭建互動交流平台，推動企業間經驗分享，形成相互滋養的永續生態網絡。</p></article>
+          </div>
+        </section>
+
+        <section class="a-sec" id="a-sdgs">
+          <div class="a-num">05 · 我們對齊的全球目標</div>
+          <h2>每一項服務，都呼應聯合國永續發展目標</h2>
+          <ul class="a-sdgs">
+            <li><div class="sdg sdg-1" aria-hidden="true"><small>SDG</small><b>4.7</b></div><div><h3>SDG 4.7　優質教育</h3><p>促進所有人習得推動永續發展所需的知識與技能，包括永續生活模式、人權與文化對永續發展的貢獻。</p></div></li>
+            <li><div class="sdg sdg-2" aria-hidden="true"><small>SDG</small><b>12.6</b></div><div><h3>SDG 12.6　責任消費及生產</h3><p>協助更多企業採用永續發展作法，將永續資訊融入企業營運與採購計畫，讓報告不只是形式。</p></div></li>
+            <li><div class="sdg sdg-3" aria-hidden="true"><small>SDG</small><b>17.17</b></div><div><h3>SDG 17.17　多元夥伴關係</h3><p>持續與政府、企業及非營利組織建立合作夥伴關係，共同開展合作項目。</p></div></li>
+          </ul>
+        </section>
+
+        <section class="a-sec" id="a-difference">
+          <div class="a-num">06 · 我們的不同</div>
+          <h2>四種能力的交會</h2>
+          <p class="intro">在眾多 ESG 顧問之中，共好玟化的差異化來自：</p>
+          <ol class="a-diff">
+            <li><h3>社會工作的深厚底蘊</h3><p>懂組織、懂人，能把永續扎進真實的人與情境裡。</p></li>
+            <li><h3>工科的系統化思維</h3><p>用結構與邏輯，把抽象的永續理念變成可執行的步驟。</p></li>
+            <li><h3>量化工具與 AI 數據技術</h3><p>讓影響力被看見、被衡量，而非停留在口號。</p></li>
+            <li><h3>共學與數位合作模式</h3><p>我們不只交付成果，更陪客戶長出自己的永續能力。</p></li>
+          </ol>
+          <p class="a-closing">這讓我們的客戶不只「擁有」永續策略，更能「實踐」永續承諾，創造可持續的社會影響力。</p>
+        </section>
+
+        <section class="a-sec a-theory" id="a-theory">
+          <div class="a-num">07 · 雙效益理論</div>
+          <h2>雙效益理論</h2>
+          <blockquote>兼顧社會與環境的商業模式，本身就能創造經濟效益。</blockquote>
+          <div class="a-prose">
+            <p>環境、社會、經濟並不是互相拉扯的取捨。綠色採購能減少資源消耗與碳排，直接降低營運成本；良好的社會形象與利害關係人信任，則會累積成品牌溢價與長期競爭力。當企業把永續放進營運核心，這些投入就會回流成實質的財務回報。</p>
+            <p>而真正讓環境表現轉化為經濟回報的，是企業的「動態能力」，也就是跨組織協作、帶動整條供應鏈一起轉型的能力。內部符合規範只是基本盤；能驅動供應鏈一起升級的企業，才拿得到真正的競爭優勢。</p>
+            <p><strong>我們用「議題 → 系統 → 商模」三層架構，協助企業把這件事做出來：</strong></p>
+          </div>
+          <ol class="a-layers">
+            <li><span class="tier">LAYER 1</span><h3>議題</h3><p>從社會與環境意義的切角切入（綠色採購、供應鏈碳足跡、公平貿易），對準企業真正的痛點。</p></li>
+            <li><span class="tier">LAYER 2</span><h3>系統</h3><p>建立 AI 平台與知識體系，把議題轉化為可量化、追蹤、比較的數據。</p></li>
+            <li><span class="tier">LAYER 3</span><h3>商模</h3><p>透過永續白皮書、顧問服務與ESG共學坊，協助企業從動態能力出發，提升整條供應鏈的永續績效。</p></li>
+          </ol>
+          <p class="a-emph">當社會與環境的價值能被清楚量化，永續投入就會從一項開銷，變成企業最值得的長期投資。</p>
+        </section>
+
+        <section class="a-sec" id="a-services">
+          <div class="a-num">08 · 服務</div>
+          <h2>一站式永續解決方案</h2>
+          <p class="intro">從顧問輔導到市場連結，每一項服務都以商業成果為導向。</p>
+          <div class="a-svc">
+            <article><div class="top"><span class="t">顧問</span></div><h3>永續品牌顧問輔導</h3><p>從品牌定位到 ESG 策略，量身打造永續轉型路徑，找到你的獨特價值主張。</p><a href="#">了解顧問方案 →</a></article>
+            <article class="hot"><div class="top"><span class="t">報告</span><span class="tag-hot">最受歡迎</span></div><h3>永續白皮書</h3><p>深度調研與數據分析，產出具公信力的永續報告，建立可量化的 ESG 敘事。</p><a href="#">看白皮書怎麼做 →</a></article>
+            <article><div class="top"><span class="t">課程</span></div><h3>永續課程／工作坊</h3><p>協助企業、品牌將永續理念轉化為實際行動與市場語言。透過課程與工作坊，建立 ESG 思維、溝通能力與永續應用策略。</p><a href="#">看永續學習地圖 →</a></article>
+            <article><div class="top"><span class="t">平台</span></div><h3>ESG共學坊溝通平台</h3><p>串連跨產業永續專家、企業與供應鏈資源，打造知識共享與合作交流場域，推動永續經驗、產業連結與共好轉型。</p><a href="#">加入 ESG共學坊 →</a></article>
+          </div>
+        </section>
+
+        <section class="a-sec" id="a-impact">
+          <div class="a-num">09 · 實際成果</div>
+          <h2>一份永續白皮書，讓一個用海洋廢棄物製成手錶的品牌，站上國際青年論壇的舞台。</h2>
+          <p class="intro">透過永續說出自己的故事，是走向國際的第一步。</p>
+          <div class="a-story">
+            <div class="before"><span class="k">有數據之前</span><p>這支手錶是一個有意義來源的美麗產品。</p></div>
+            <div class="after"><span class="k">有數據之後</span><p>它是買家可以寫進報告、合作夥伴可以圍繞它建立關係的證據。</p></div>
+          </div>
+          <h3 style="font-size:18px;font-weight:900;margin-bottom:12px">量化成果</h3>
+          <div class="a-quant">
+            <div><b>1000萬</b><span>資源挹注</span><small>協助客戶取得的補助、投資與貸款</small></div>
+            <div><b>130+</b><span>跨產業合作</span><small>經由共好玟化促成的合作連結</small></div>
+            <div><b>8+</b><span>國際論壇</span><small>陪伴企業登上的國際舞台</small></div>
+          </div>
+          <h3 style="font-size:18px;font-weight:900;margin-bottom:4px">質化成果</h3>
+          <ul class="a-qual">
+            <li><div><h3>從產品到證據</h3><p>海廢手錶品牌以永續白皮書整理影響力，站上國際青年論壇舞台。</p></div></li>
+            <li><div><h3>全台首創「ESG 永續農創師」認證課程</h3><p>與台灣休閒農業學會合作，把永續語言帶進農業現場。</p></div></li>
+            <li><div><h3>受台北市政府邀請擔任課程講師</h3><p>「台北友善店家」主題課程（初階、進階），把永續帶進日常店家。</p></div></li>
+          </ul>
+        </section>
+
+        <section class="a-sec" id="a-ecosystem">
+          <div class="a-num">10 · 共好生態圈</div>
+          <h2>共好生態圈</h2>
+          <p class="intro">串連顧問、供應鏈、企業與國際網絡，形成互相賦能的永續共同體。</p>
+          <div class="a-eco">
+            <div class="c"><div><img src="../../../public/brand/coesg-class.svg" alt="ESG共學坊 CO-ESG CLASS"><p>ESG共學坊是生態圈的交流中心</p></div></div>
+            <div class="n n1"><h3>永續顧問團隊</h3><p>資深 ESG 顧問與品牌策略師，提供一對一專業輔導。</p>
+              <div class="avs" style="margin-top:12px" aria-hidden="true"><span>吳</span><span>蕭</span><span>王</span><span>朱</span><span>劉</span><span>吳</span><span>陳</span></div>
+              <p class="names">吳玟樺・蕭冠宇・王欽泉・朱建毓・劉建成・吳宗曄・陳宜均</p></div>
+            <div class="n n2"><h3>供應鏈對接</h3><p>擁有優質供應商，並可精準對接。</p></div>
+            <div class="n n3"><h3>企業合作夥伴</h3><p>跨產業品牌與企業，共同打造永續商業模式。</p></div>
+            <div class="n n4"><h3>國際連結網絡</h3><p>與全球永續組織接軌，引進國際最新趨勢與資源。</p></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <section class="a-cta" id="a-cta">
+      <div class="wrap">
+        <div>
+          <h2>準備好讓市場看見你了嗎？</h2>
+          <p>預約一場 15 分鐘的 Coffee Chat，讓我們聊聊如何把你正在做的事，說清楚、被看見、被理解。</p>
+        </div>
+        <div class="btn-row">
+          <a class="btn btn-light" href="#">預約 15 分鐘 Coffee Chat</a>
+          <a class="btn btn-ghost-dark" href="#">看我們的永續足跡</a>
+        </div>
+      </div>
+    </section>
+    <footer class="site-f"><div class="wrap"><img src="../../../public/brand/gungho-horizontal-white.svg" alt="共好玟化"><span>© 2026 共好玟化組織發展顧問有限公司</span></div></footer>
+  </div>
+  <div class="pp-end">— 提案 A 結束 —</div>
+</section>
+
+<!-- ======================================================================
+     PROPOSAL B
+     ====================================================================== -->
+<section class="pp-proposal" id="pB" data-proposal="B" aria-label="提案 B">
+  <div class="pp-meta">
+    <div class="pp-card">
+      <span class="pp-label">提案 B</span>
+      <h2>膠囊導覽：深色宣言 Hero ＋ 模組化色帶</h2>
+      <p class="pp-sub">Hero 下方是一條固定在頂部的水平膠囊選單（10 個錨點，手機可左右滑），各區塊以白／暖白色帶交替。</p>
+      <dl>
+        <div><dt>概念</dt><dd>用深灰滿版 Hero 把「陪跑｜連結｜創造影響力」做成一句宣言，三個詞用橘色直條分隔。之後每個區塊都是一張「模組」，靠固定的膠囊選單切換。願景用整塊品牌橘、使命用深灰，兩張大卡並列，是全頁最搶眼的區塊。IOOI 畫成逐級升高的四階「階梯」，越往影響力越高、越深。</dd></div>
+        <div><dt>參考來源</dt><dd>Unilever「Planet &amp; Society」與 Schneider Electric 的水平子導覽；B Lab 運動宣言式的 Hero；Patagonia 的深色大字開場（benchmark P1、P13）。</dd></div>
+        <div><dt>優點</dt><dd><ul><li>導覽不佔內容寬度，圖表與卡片都能用滿版面。</li><li>最像現有網站的卡片語彙，工程上最容易實作（現有 Section 元件可沿用）。</li><li>願景使命大面積用色，完全符合客戶「要明顯一點」的要求。</li></ul></dd></div>
+        <div><dt>風險</dt><dd><ul><li>10 顆膠囊在手機上只看得到 3–4 顆，其餘要滑動才發現。</li><li>卡片數量多，整頁容易變成「一格一格」的型錄感，敘事連貫性較弱。</li><li>白字只放在 ≥24px 粗體的願景文字上；若之後改小字，需改用 orange-strong 底。</li></ul></dd></div>
+        <div class="full"><dt>對旅程的作用</dt><dd>適合「已經有點信任、想快速核對」的訪客（例如看完首頁再點進來的 P1 品牌主、P3 NPO）。膠囊選單右側常駐「預約諮詢」按鈕，在任何位置都能直接轉換；實際成果改成深色整段，作為頁面的情緒高點，緊接生態圈與 CTA。</dd></div>
+      </dl>
+    </div>
+  </div>
+
+  <div class="mock mB" id="mockB">
+    <div class="site-h"><div class="wrap">
+      <img src="../../../public/brand/gungho-horizontal.svg" alt="共好玟化">
+      <nav aria-label="主選單（示意）"><a href="#">首頁</a><a href="#" aria-current="page">共好永續力</a><a href="#">永續足跡</a><a href="#">共好學習</a><a href="#">合作洽詢</a></nav>
+      <span class="burger" aria-hidden="true"><svg width="18" height="14" viewBox="0 0 18 14"><path d="M0 1h18M0 7h18M0 13h18" stroke="#1F2022" stroke-width="2"/></svg></span>
+    </div></div>
+
+    <section class="b-hero">
+      <svg class="bg" viewBox="0 0 720 420" aria-hidden="true">
+        <path d="M0 400 Q 360 40 720 400" fill="none" stroke="#F25232" stroke-width="3"/>
+        <path d="M60 400 Q 360 110 660 400" fill="none" stroke="#FAB40A" stroke-width="2" stroke-dasharray="6 8"/>
+        <path d="M120 400 Q 360 180 600 400" fill="none" stroke="#4D515B" stroke-width="2"/>
+        <g fill="#FAB40A"><circle cx="360" cy="220" r="6"/><circle cx="180" cy="290" r="4"/><circle cx="540" cy="290" r="4"/></g>
+      </svg>
+      <div class="wrap">
+        <span class="eyebrow">共好永續力 · Who we are</span>
+        <h1>陪跑<span class="bar" aria-hidden="true"></span><span class="sr-only">｜</span>連結<span class="bar" aria-hidden="true"></span><span class="sr-only">｜</span><em>創造影響力</em></h1>
+        <p class="sub">我們相信，永續不該只是一份報告，而是一種能被實踐、被分享、被持續滋養的影響力。</p>
+        <p class="desc">共好玟化陪伴企業、社會組織與公益機構，從「永續藍圖」走向「真正的永續影響力」，建立具備共學、共創與生態圈精神的永續循環。</p>
+        <div class="btn-row">
+          <a class="btn btn-light" href="#b-cta">預約 15 分鐘 Coffee Chat</a>
+          <a class="btn btn-ghost-dark" href="#b-approach">了解我們的方法</a>
+        </div>
+      </div>
+    </section>
+
+    <nav class="b-pills" aria-label="本頁區塊" data-spy>
+      <div class="wrap">
+        <span class="k">本頁</span>
+        <ul>
+          <li><a href="#b-who">我們是誰</a></li>
+          <li><a href="#b-vision">願景使命</a></li>
+          <li><a href="#b-values">核心價值</a></li>
+          <li><a href="#b-approach">IOOI 方法</a></li>
+          <li><a href="#b-sdgs">SDGs</a></li>
+          <li><a href="#b-difference">我們的不同</a></li>
+          <li><a href="#b-theory">雙效益理論</a></li>
+          <li><a href="#b-services">服務</a></li>
+          <li><a href="#b-impact">實際成果</a></li>
+          <li><a href="#b-ecosystem">生態圈</a></li>
+        </ul>
+        <a class="btn btn-primary cta" href="#b-cta">預約諮詢</a>
+      </div>
+    </nav>
+
+    <section class="b-sec alt" id="b-who">
+      <div class="wrap b-who">
+        <div class="b-founder">
+          <div class="mono" aria-hidden="true">Evvon</div>
+          <h3>吳玟樺 Evvon</h3>
+          <p>共好玟化創辦人・15 年以上社會永續、醫療與公益機構專案實戰經驗</p>
+          <p class="ph">（正式版放創辦人照片）</p>
+        </div>
+        <div>
+          <span class="eyebrow">我們是誰</span>
+          <h2 style="font-size:clamp(28px,3.6vw,40px);font-weight:900;margin:10px 0 18px">一群跨領域專業者，站在客戶身邊一起跑</h2>
+          <p>共好玟化組織發展顧問有限公司成立於 2022 年，由一群跨領域專業者共同組成。我們的創辦人吳玟樺（Evvon），擁有 15 年以上社會永續、醫療與公益機構的專案實戰經驗，並具備跨域專業資格：</p>
+          <ul class="b-cred">
+            <li>社會工作師執照</li><li>企業永續管理師</li><li>PMP 國際專案管理師</li><li>ICF 國際教練認證</li>
+          </ul>
+          <p style="margin-top:20px">社會工作 × 永續管理 × 國際認證——這份跨域積累，是共好玟化最深的底氣。我們不只提供永續的「理論」，更陪企業把承諾化為「行動」：從釐清願景、制定策略，到產出真正有靈魂的永續白皮書，我們始終站在客戶身邊一起跑。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="b-sec" id="b-vision">
+      <div class="wrap">
+        <div class="b-head"><h2>願景與使命</h2><p>我們為什麼存在，以及每天在做的事。</p></div>
+        <div class="b-vm">
+          <article class="v"><span class="lbl">願景 VISION</span><p>成為推動企業與社會永續轉型的催化劑，激發個人與組織的專業價值，共創更美好的未來。</p></article>
+          <article class="m"><span class="lbl">使命 MISSION</span><p>致力成為企業與個人在永續發展領域的<strong>長期夥伴</strong>，透過教育、顧問服務與技術支持，加速邁向永續目標。我們不僅提供知識與工具，更激發行動力，促使各界在自身領域中推動永續轉型。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="b-sec alt" id="b-values">
+      <div class="wrap">
+        <div class="b-head"><h2>核心價值</h2><p>我們的合作，建立在五個共同信念之上。</p></div>
+        <ul class="b-values">
+          <li><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F2022" stroke-width="2"><path d="M4 5h11v8H8l-4 3z"/><path d="M15 9h5v8l-3-2h-6v-2"/></svg></span><h3>對話</h3><p>從理解開始，每一份永續策略都生於真誠的對話。</p></li>
+          <li><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F2022" stroke-width="2"><path d="M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.4 6.8 19.2l1-5.9L3.5 9.2l5.9-.8z"/></svg></span><h3>價值</h3><p>點亮每個組織獨特的專業價值，而非套用同一份模板。</p></li>
+          <li><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F2022" stroke-width="2"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M8.7 10.7l6.6-3.4M8.7 13.3l6.6 3.4"/></svg></span><h3>分享</h3><p>知識在流動中增值，我們相信開放共學的力量。</p></li>
+          <li><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F2022" stroke-width="2"><path d="M12 21V10"/><path d="M12 10c0-4 3-6 7-6 0 4-3 6-7 6zM12 13c0-3-2.5-5-6-5 0 3 2.5 5 6 5z"/></svg></span><h3>成長</h3><p>陪客戶累積能力，讓永續成為內部長出來的習慣。</p></li>
+          <li><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F2022" stroke-width="2"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="10"/></svg></span><h3>影響力</h3><p>一切努力，都指向可被看見、可被衡量的真實改變。</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="b-sec" id="b-approach">
+      <div class="wrap">
+        <div class="b-head"><h2>我們怎麼做：從藍圖到影響力</h2><p>我們以 <strong>IOOI 模型</strong> 作為核心框架，協助組織把每一分投入，一路推進到真實的社會影響。</p></div>
+        <div class="b-stairs" role="list" aria-label="IOOI 四個階段，逐級升高">
+          <div class="st" role="listitem"><span class="n">STEP 1</span><h3>投入</h3><span class="en">Input</span></div>
+          <div class="st" role="listitem"><span class="n">STEP 2</span><h3>產出</h3><span class="en">Output</span></div>
+          <div class="st" role="listitem"><span class="n">STEP 3</span><h3>成果</h3><span class="en">Outcome</span></div>
+          <div class="st" role="listitem"><span class="cap">目標</span><span class="n">STEP 4</span><h3>影響力</h3><span class="en">Impact</span></div>
+        </div>
+        <p style="font-weight:700;margin-bottom:16px">在這個框架下，我們透過三大支柱展開服務：</p>
+        <div class="b-pillars">
+          <article><span class="ic" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CF3F1C" stroke-width="2"><path d="M2 8l10-4 10 4-10 4z"/><path d="M6 10v5c3 2 9 2 12 0v-5"/></svg></span><span class="k">支柱一</span><h3>永續教育與課程</h3><p>協助企業內部建立永續識能，推動永續教育與影響力思維，讓永續成為組織的共同語言。</p></article>
+          <article><span class="ic" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CF3F1C" stroke-width="2"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h7M9 8h4"/></svg></span><span class="k">支柱二</span><h3>影響力顧問專案</h3><p>提供系統性引導，協助企業釐清永續願景、制定策略、產出永續白皮書，並對應 ESG 評估標準與政府法規。</p></article>
+          <article><span class="ic" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CF3F1C" stroke-width="2"><circle cx="12" cy="12" r="3"/><circle cx="4" cy="6" r="2"/><circle cx="20" cy="6" r="2"/><circle cx="4" cy="18" r="2"/><circle cx="20" cy="18" r="2"/><path d="M6 7l4 3M18 7l-4 3M6 17l4-3M18 17l-4-3"/></svg></span><span class="k">支柱三</span><h3>永續生態圈建立</h3><p>定期舉辦ESG共學坊、搭建互動交流平台，推動企業間經驗分享，形成相互滋養的永續生態網絡。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="b-sec alt" id="b-sdgs">
+      <div class="wrap">
+        <div class="b-head"><h2>我們對齊的全球目標</h2><p>共好玟化的每一項服務，都呼應聯合國永續發展目標（SDGs）。</p></div>
+        <div class="b-sdgs">
+          <article><div class="sdg sdg-1" aria-hidden="true"><small>SDG</small><b>4.7</b></div><h3>優質教育</h3><p>促進所有人習得推動永續發展所需的知識與技能，包括永續生活模式、人權與文化對永續發展的貢獻。</p></article>
+          <article><div class="sdg sdg-2" aria-hidden="true"><small>SDG</small><b>12.6</b></div><h3>責任消費及生產</h3><p>協助更多企業採用永續發展作法，將永續資訊融入企業營運與採購計畫，讓報告不只是形式。</p></article>
+          <article><div class="sdg sdg-3" aria-hidden="true"><small>SDG</small><b>17.17</b></div><h3>多元夥伴關係</h3><p>持續與政府、企業及非營利組織建立合作夥伴關係，共同開展合作項目。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="b-sec" id="b-difference">
+      <div class="wrap">
+        <div class="b-head"><h2>我們的不同</h2><p>在眾多 ESG 顧問之中，共好玟化的差異化來自四種能力的交會。</p></div>
+        <div class="b-diff">
+          <article><span class="x">01 × 人</span><h3>社會工作的深厚底蘊</h3><p>懂組織、懂人，能把永續扎進真實的人與情境裡。</p></article>
+          <article><span class="x">02 × 結構</span><h3>工科的系統化思維</h3><p>用結構與邏輯，把抽象的永續理念變成可執行的步驟。</p></article>
+          <article><span class="x">03 × 數據</span><h3>量化工具與 AI 數據技術</h3><p>讓影響力被看見、被衡量，而非停留在口號。</p></article>
+          <article><span class="x">04 × 共學</span><h3>共學與數位合作模式</h3><p>我們不只交付成果，更陪客戶長出自己的永續能力。</p></article>
+        </div>
+        <p class="b-diff-close">這讓我們的客戶不只<strong>「擁有」</strong>永續策略，更能<strong>「實踐」</strong>永續承諾，創造可持續的社會影響力。</p>
+      </div>
+    </section>
+
+    <section class="b-sec alt" id="b-theory">
+      <div class="wrap">
+        <div class="b-head"><h2>雙效益理論</h2><p>環境、社會、經濟並不是互相拉扯的取捨。</p></div>
+        <div class="b-theory">
+          <div>
+            <p class="claim">兼顧社會與環境的商業模式，<mark>本身就能創造經濟效益。</mark></p>
+            <p>綠色採購能減少資源消耗與碳排，直接降低營運成本；良好的社會形象與利害關係人信任，則會累積成品牌溢價與長期競爭力。當企業把永續放進營運核心，這些投入就會回流成實質的財務回報。</p>
+            <p>而真正讓環境表現轉化為經濟回報的，是企業的「動態能力」，也就是跨組織協作、帶動整條供應鏈一起轉型的能力。內部符合規範只是基本盤；能驅動供應鏈一起升級的企業，才拿得到真正的競爭優勢。</p>
+          </div>
+          <div>
+            <p style="font-weight:700">我們用「議題 → 系統 → 商模」三層架構，協助企業把這件事做出來：</p>
+            <ol class="b-stack">
+              <li><span class="lv">第一層</span><h3>議題</h3><p>從社會與環境意義的切角切入（綠色採購、供應鏈碳足跡、公平貿易），對準企業真正的痛點。</p></li>
+              <li><span class="lv">第二層</span><h3>系統</h3><p>建立 AI 平台與知識體系，把議題轉化為可量化、追蹤、比較的數據。</p></li>
+              <li><span class="lv">第三層</span><h3>商模</h3><p>透過永續白皮書、顧問服務與ESG共學坊，協助企業從動態能力出發，提升整條供應鏈的永續績效。</p></li>
+            </ol>
+            <p class="b-stack-cap">由下往上堆疊：議題是地基，商模是最後的成果</p>
+          </div>
+        </div>
+        <p class="b-theory-close">當社會與環境的價值能被清楚量化，永續投入就會從一項開銷，變成企業最值得的長期投資。</p>
+      </div>
+    </section>
+
+    <section class="b-sec" id="b-services">
+      <div class="wrap">
+        <div class="b-head"><h2>一站式永續解決方案</h2><p>從顧問輔導到市場連結，每一項服務都以商業成果為導向。</p></div>
+        <div class="b-svc">
+          <article><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F2022" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h5"/></svg></span><h3>永續品牌顧問輔導</h3><p>從品牌定位到 ESG 策略，量身打造永續轉型路徑，找到你的獨特價值主張。</p><a href="#">了解更多 →</a></article>
+          <article class="hot"><span class="tag-hot" style="align-self:flex-start">最受歡迎</span><h3>永續白皮書</h3><p>深度調研與數據分析，產出具公信力的永續報告，建立可量化的 ESG 敘事。</p><a href="#">了解更多 →</a></article>
+          <article><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F2022" stroke-width="2"><path d="M2 8l10-4 10 4-10 4z"/><path d="M6 10v5c3 2 9 2 12 0v-5"/></svg></span><h3>永續課程／工作坊</h3><p>協助企業、品牌將永續理念轉化為實際行動與市場語言。透過課程與工作坊，建立 ESG 思維、溝通能力與永續應用策略。</p><a href="#">看學習地圖 →</a></article>
+          <article><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F2022" stroke-width="2"><path d="M4 5h11v8H8l-4 3z"/><path d="M15 9h5v8l-3-2h-6v-2"/></svg></span><h3>ESG共學坊溝通平台</h3><p>串連跨產業永續專家、企業與供應鏈資源，打造知識共享與合作交流場域，推動永續經驗、產業連結與共好轉型。</p><a href="#">了解更多 →</a></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="b-impact" id="b-impact">
+      <div class="wrap">
+        <span class="eyebrow">實際成果</span>
+        <h2>一份永續白皮書，讓一個用海洋廢棄物製成手錶的品牌，站上國際青年論壇的舞台。</h2>
+        <p class="lead">透過永續說出自己的故事，是走向國際的第一步。</p>
+        <div class="b-ba">
+          <div><span class="k">有數據之前</span><p>這支手錶是一個有意義來源的美麗產品，</p></div>
+          <span class="arr" aria-hidden="true">→</span>
+          <div><span class="k">有數據之後</span><p>它是買家可以寫進報告、合作夥伴可以圍繞它建立關係的證據。</p></div>
+        </div>
+        <div class="b-split">
+          <div>
+            <h3>量化成果</h3>
+            <ol class="b-nums">
+              <li><b>1000萬</b><span>資源挹注</span></li>
+              <li><b>130+</b><span>跨產業合作</span></li>
+              <li><b>8+</b><span>國際論壇</span></li>
+            </ol>
+          </div>
+          <div>
+            <h3>質化成果</h3>
+            <ul class="b-qual">
+              <li><h4>海廢手錶品牌站上國際青年論壇</h4><p>從「美麗的產品」變成「可被引用的證據」。</p></li>
+              <li><h4>全台首創「ESG 永續農創師」認證課程</h4><p>與台灣休閒農業學會合作推出。</p></li>
+              <li><h4>台北市政府「台北友善店家」課程講師</h4><p>受邀主講初階、進階主題課程。</p></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="b-sec alt" id="b-ecosystem">
+      <div class="wrap">
+        <div class="b-head"><h2>共好生態圈</h2><p>串連顧問、供應鏈、企業與國際網絡，形成互相賦能的永續共同體。</p></div>
+        <div class="b-eco">
+          <div class="c"><img src="../../../public/brand/coesg-class.svg" alt="ESG共學坊 CO-ESG CLASS"></div>
+          <div class="n n1"><h3>永續顧問團隊</h3><p>資深 ESG 顧問與品牌策略師，提供一對一專業輔導。</p><div class="avs" style="margin-top:10px" aria-hidden="true"><span>吳</span><span>蕭</span><span>王</span><span>朱</span><span>劉</span><span>吳</span><span>陳</span></div><p class="names">7 位顧問：吳玟樺・蕭冠宇・王欽泉・朱建毓・劉建成・吳宗曄・陳宜均</p></div>
+          <div class="n n2"><h3>供應鏈對接</h3><p>擁有優質供應商，並可精準對接。</p></div>
+          <div class="n n3"><h3>企業合作夥伴</h3><p>跨產業品牌與企業，共同打造永續商業模式。</p></div>
+          <div class="n n4"><h3>國際連結網絡</h3><p>與全球永續組織接軌，引進國際最新趨勢與資源。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="b-cta" id="b-cta">
+      <div class="wrap"><div class="box">
+        <h2>準備好讓市場看見你了嗎？</h2>
+        <p>預約一場 15 分鐘的 Coffee Chat，讓我們聊聊如何把你正在做的事，說清楚、被看見、被理解。</p>
+        <div class="btn-row"><a class="btn btn-primary" href="#">預約 15 分鐘 Coffee Chat</a><a class="btn btn-ghost" href="#">看我們的永續足跡</a></div>
+      </div></div>
+    </section>
+    <footer class="site-f"><div class="wrap"><img src="../../../public/brand/gungho-horizontal-white.svg" alt="共好玟化"><span>© 2026 共好玟化組織發展顧問有限公司</span></div></footer>
+  </div>
+  <div class="pp-end">— 提案 B 結束 —</div>
+</section>
+
+<!-- ======================================================================
+     PROPOSAL C
+     ====================================================================== -->
+<section class="pp-proposal" id="pC" data-proposal="C" aria-label="提案 C">
+  <div class="pp-meta">
+    <div class="pp-card">
+      <span class="pp-label">提案 C</span>
+      <h2>編輯長文：一本關於「為什麼是我們」的小誌</h2>
+      <p class="pp-sub">雜誌封面式 Hero ＋ 開頭目錄，五個深色「章節扉頁」分段；頂部細條顯示目前章節與閱讀進度。</p>
+      <dl>
+        <div><dt>概念</dt><dd>把整頁當成一篇有章節的長文：明體標題、窄行寬（約 34 字）、首字放大、引言與邊欄。導覽靠三件事：開頭目錄、全寬章節扉頁（大號「一」到「五」）、頂部固定的「目前章節＋進度」細條。IOOI 畫成由內而外擴散的「影響力漣漪」：投入在中心，影響力在最外圈。</dd></div>
+        <div><dt>參考來源</dt><dd>Patagonia「Our Footprint」與 Interface「Climate Take Back」的長篇敘事；Natura 網頁版年報的章節扉頁（benchmark P5、P7、P8）。</dd></div>
+        <div><dt>優點</dt><dd><ul><li>最能承載「雙效益理論」這類論述型長文，也最不像一般顧問公司的型錄頁。</li><li>創辦人故事與海廢手錶案例讀起來像真人故事，情感連結最強（P7）。</li><li>章節扉頁讓 12 個區塊有清楚的段落感，願景使命獨佔一整個色帶。</li></ul></dd></div>
+        <div><dt>風險</dt><dd><ul><li>需要多載一套明體字型（Noto Serif TC），中文字型檔大，需子集化（P14）。</li><li>想快速找「服務」或「價格」的訪客會覺得慢；服務區刻意做得低調。</li><li>文字量大，英文版翻譯與排版成本最高。</li></ul></dd></div>
+        <div class="full"><dt>對旅程的作用</dt><dd>最適合 P3 非營利組織與 P5 合辦方／媒體：他們要判斷「這群人的價值觀與方法是否站得住」，需要讀論述而不是看卡片。頁尾以創辦人署名的「一封信」收尾，把信任轉成 Coffee Chat；對 P2 企業窗口，開頭目錄可直接跳到第三章「方法」。</dd></div>
+      </dl>
+    </div>
+  </div>
+
+  <div class="mock mC" id="mockC">
+    <div class="site-h"><div class="wrap">
+      <img src="../../../public/brand/gungho-horizontal.svg" alt="共好玟化">
+      <nav aria-label="主選單（示意）"><a href="#">首頁</a><a href="#" aria-current="page">共好永續力</a><a href="#">永續足跡</a><a href="#">共好學習</a><a href="#">合作洽詢</a></nav>
+      <span class="burger" aria-hidden="true"><svg width="18" height="14" viewBox="0 0 18 14"><path d="M0 1h18M0 7h18M0 13h18" stroke="#1F2022" stroke-width="2"/></svg></span>
+    </div></div>
+
+    <section class="c-hero">
+      <div class="wrap">
+        <div class="c-mast"><span>共好永續力</span><span>CO-ESG · SINCE 2022</span></div>
+        <h1><span class="l1">陪跑</span><span class="sr-only">｜</span><span class="l2">連結</span><span class="sr-only">｜</span><span class="l3">創造影響力</span></h1>
+        <div class="c-deck">
+          <div>
+            <p class="sub">我們相信，永續不該只是一份報告，而是一種能被實踐、被分享、被持續滋養的影響力。</p>
+            <p class="desc">共好玟化陪伴企業、社會組織與公益機構，從「永續藍圖」走向「真正的永續影響力」，建立具備共學、共創與生態圈精神的永續循環。</p>
+            <div class="btn-row"><a class="btn btn-primary" href="#c-cta">預約 15 分鐘 Coffee Chat</a><a class="btn btn-ghost" href="#c-ch3">了解我們的方法</a></div>
+          </div>
+          <nav class="c-contents" aria-label="目錄">
+            <span class="k">目錄 CONTENTS</span>
+            <ol>
+              <li><a href="#c-ch1"><b>一</b><span>我們是誰<small>創辦人與四項跨域資格</small></span></a></li>
+              <li><a href="#c-ch2"><b>二</b><span>我們相信<small>願景、使命與五個核心價值</small></span></a></li>
+              <li><a href="#c-ch3"><b>三</b><span>我們怎麼做<small>IOOI、SDGs、我們的不同、雙效益理論</small></span></a></li>
+              <li><a href="#c-ch4"><b>四</b><span>我們提供<small>一站式永續解決方案</small></span></a></li>
+              <li><a href="#c-ch5"><b>五</b><span>我們的成果<small>海廢手錶的故事、數字與生態圈</small></span></a></li>
+            </ol>
+            <p class="time">閱讀時間約 8 分鐘</p>
+          </nav>
+        </div>
+      </div>
+    </section>
+
+    <nav class="c-bar" aria-label="章節進度" data-spy>
+      <div class="wrap">
+        <span class="cur" data-spy-label>第一章　我們是誰</span>
+        <ol>
+          <li><a href="#c-ch1" data-label="第一章　我們是誰" title="我們是誰">一</a></li>
+          <li><a href="#c-ch2" data-label="第二章　我們相信" title="我們相信">二</a></li>
+          <li><a href="#c-ch3" data-label="第三章　我們怎麼做" title="我們怎麼做">三</a></li>
+          <li><a href="#c-ch4" data-label="第四章　我們提供" title="我們提供">四</a></li>
+          <li><a href="#c-ch5" data-label="第五章　我們的成果" title="我們的成果">五</a></li>
+        </ol>
+      </div>
+      <span class="prog" data-progress="mockC" aria-hidden="true"></span>
+    </nav>
+
+    <!-- 第一章 -->
+    <div id="c-ch1">
+      <header class="c-ch"><div class="wrap"><span class="k">CHAPTER ONE</span><h2>第一章　我們是誰</h2><p>社會工作 × 永續管理 × 國際認證</p></div><span class="num" aria-hidden="true">一</span></header>
+      <article class="c-body">
+        <p class="dropcap">共好玟化組織發展顧問有限公司成立於 2022 年，由一群跨領域專業者共同組成。我們的創辦人吳玟樺（Evvon），擁有 15 年以上社會永續、醫療與公益機構的專案實戰經驗，並具備 <span class="hl">社會工作師執照</span>、<span class="hl">企業永續管理師</span>、<span class="hl">PMP 國際專案管理師</span>、<span class="hl">ICF 國際教練認證</span> 等跨域專業資格。</p>
+        <div class="c-margin" aria-label="四項專業資格">
+          <div><b>社會工作師</b><span>國家考試執照</span></div>
+          <div><b>企業永續管理師</b><span>永續管理專業</span></div>
+          <div><b>PMP</b><span>國際專案管理師</span></div>
+          <div><b>ICF</b><span>國際教練認證</span></div>
+        </div>
+        <p>社會工作 × 永續管理 × 國際認證——這份跨域積累，是共好玟化最深的底氣。我們不只提供永續的「理論」，更陪企業把承諾化為「行動」：從釐清願景、制定策略，到產出真正有靈魂的永續白皮書，我們始終站在客戶身邊一起跑。</p>
+      </article>
+    </div>
+
+    <!-- 第二章 -->
+    <div id="c-ch2">
+      <header class="c-ch"><div class="wrap"><span class="k">CHAPTER TWO</span><h2>第二章　我們相信</h2><p>願景、使命，與五個共同信念</p></div><span class="num" aria-hidden="true">二</span></header>
+      <section class="c-vm" id="c-vision" aria-label="願景與使命">
+        <div class="wrap">
+          <div class="row"><div class="lbl">願景<small>VISION</small></div><p class="v">成為推動企業與社會永續轉型的催化劑，激發個人與組織的專業價值，共創更美好的未來。</p></div>
+          <div class="row"><div class="lbl">使命<small>MISSION</small></div><p class="m">致力成為企業與個人在永續發展領域的長期夥伴，透過教育、顧問服務與技術支持，加速邁向永續目標。我們不僅提供知識與工具，更激發行動力，促使各界在自身領域中推動永續轉型。</p></div>
+        </div>
+      </section>
+      <section class="c-body" id="c-values">
+        <h3 class="sh"><span class="k">核心價值</span>我們的合作，建立在五個共同信念之上</h3>
+        <dl class="c-gloss">
+          <div><dt>對話<small>DIALOGUE</small></dt><dd>從理解開始，每一份永續策略都生於真誠的對話。</dd></div>
+          <div><dt>價值<small>VALUE</small></dt><dd>點亮每個組織獨特的專業價值，而非套用同一份模板。</dd></div>
+          <div><dt>分享<small>SHARING</small></dt><dd>知識在流動中增值，我們相信開放共學的力量。</dd></div>
+          <div><dt>成長<small>GROWTH</small></dt><dd>陪客戶累積能力，讓永續成為內部長出來的習慣。</dd></div>
+          <div><dt>影響力<small>IMPACT</small></dt><dd>一切努力，都指向可被看見、可被衡量的真實改變。</dd></div>
+        </dl>
+      </section>
+    </div>
+
+    <!-- 第三章 -->
+    <div id="c-ch3">
+      <header class="c-ch"><div class="wrap"><span class="k">CHAPTER THREE</span><h2>第三章　我們怎麼做</h2><p>從藍圖到影響力：一個框架、三個目標、四種能力、一套理論</p></div><span class="num" aria-hidden="true">三</span></header>
+      <section class="c-body wide" id="c-approach">
+        <h3 class="sh"><span class="k">IOOI 模型</span>每一分投入，都像投進水面的石頭</h3>
+        <div class="c-ripple">
+          <svg viewBox="0 0 440 440" role="img" aria-label="IOOI 影響力漣漪：投入在中心，向外依序是產出、成果、影響力">
+            <circle cx="220" cy="220" r="210" fill="#2B2E35"/>
+            <circle cx="220" cy="220" r="160" fill="#4D515B"/>
+            <circle cx="220" cy="220" r="110" fill="#FDEDE8"/>
+            <circle cx="220" cy="220" r="58" fill="#F25232"/>
+            <text x="220" y="228" text-anchor="middle" font-family="Noto Sans TC" font-weight="900" font-size="24" fill="#FFFFFF">投入</text>
+            <text x="220" y="150" text-anchor="middle" font-family="Noto Sans TC" font-weight="900" font-size="18" fill="#1F2022">產出</text>
+            <text x="220" y="88" text-anchor="middle" font-family="Noto Sans TC" font-weight="900" font-size="18" fill="#FFFFFF">成果</text>
+            <text x="220" y="38" text-anchor="middle" font-family="Noto Sans TC" font-weight="900" font-size="18" fill="#FAB40A">影響力</text>
+            <text x="220" y="300" text-anchor="middle" font-family="DM Sans" font-weight="700" font-size="12" fill="#5F636B" letter-spacing="2">OUTPUT</text>
+            <text x="220" y="364" text-anchor="middle" font-family="DM Sans" font-weight="700" font-size="12" fill="#E5E7EB" letter-spacing="2">OUTCOME</text>
+            <text x="220" y="414" text-anchor="middle" font-family="DM Sans" font-weight="700" font-size="12" fill="#FAB40A" letter-spacing="2">IMPACT</text>
+          </svg>
+          <div>
+            <p>我們以 <strong>IOOI 模型</strong> 作為核心框架，協助組織把每一分投入，一路推進到真實的社會影響：</p>
+            <ol>
+              <li><b>1</b><div><h4>投入<span>INPUT</span></h4><p>人力、時間、知識與工具——組織願意放進來的資源。</p></div></li>
+              <li><b>2</b><div><h4>產出<span>OUTPUT</span></h4><p>課程、工作坊、永續白皮書——看得見、數得出的交付物。</p></div></li>
+              <li><b>3</b><div><h4>成果<span>OUTCOME</span></h4><p>利害關係人的改變：被理解、被選擇、取得合作。</p></div></li>
+              <li><b>4</b><div><h4>影響力<span>IMPACT</span></h4><p>擴散到供應鏈與社會的長期改變。</p></div></li>
+            </ol>
+          </div>
+        </div>
+        <p style="font-size:17px;font-weight:700">在這個框架下，我們透過三大支柱展開服務：</p>
+        <div class="c-pill3">
+          <article><span class="k">支柱一</span><h4>永續教育與課程</h4><p>協助企業內部建立永續識能，推動永續教育與影響力思維，讓永續成為組織的共同語言。</p></article>
+          <article><span class="k">支柱二</span><h4>影響力顧問專案</h4><p>提供系統性引導，協助企業釐清永續願景、制定策略、產出永續白皮書，並對應 ESG 評估標準與政府法規。</p></article>
+          <article><span class="k">支柱三</span><h4>永續生態圈建立</h4><p>定期舉辦ESG共學坊、搭建互動交流平台，推動企業間經驗分享，形成相互滋養的永續生態網絡。</p></article>
+        </div>
+      </section>
+
+      <section class="c-body" id="c-sdgs">
+        <h3 class="sh"><span class="k">我們對齊的全球目標</span>共好玟化的每一項服務，都呼應聯合國永續發展目標</h3>
+        <ul class="c-sdg">
+          <li><div class="sdg sdg-1" aria-hidden="true"><small>SDG</small><b>4.7</b></div><div><h4>SDG 4.7　優質教育</h4><p>促進所有人習得推動永續發展所需的知識與技能，包括永續生活模式、人權與文化對永續發展的貢獻。</p></div></li>
+          <li><div class="sdg sdg-2" aria-hidden="true"><small>SDG</small><b>12.6</b></div><div><h4>SDG 12.6　責任消費及生產</h4><p>協助更多企業採用永續發展作法，將永續資訊融入企業營運與採購計畫，讓報告不只是形式。</p></div></li>
+          <li><div class="sdg sdg-3" aria-hidden="true"><small>SDG</small><b>17.17</b></div><div><h4>SDG 17.17　多元夥伴關係</h4><p>持續與政府、企業及非營利組織建立合作夥伴關係，共同開展合作項目。</p></div></li>
+        </ul>
+        <hr class="sep">
+        <div id="c-difference">
+          <h3 class="sh"><span class="k">我們的不同</span>四種能力的交會</h3>
+          <p>在眾多 ESG 顧問之中，共好玟化的差異化來自：</p>
+          <ol class="c-diff">
+            <li><h4>社會工作的深厚底蘊</h4><p>懂組織、懂人，能把永續扎進真實的人與情境裡。</p></li>
+            <li><h4>工科的系統化思維</h4><p>用結構與邏輯，把抽象的永續理念變成可執行的步驟。</p></li>
+            <li><h4>量化工具與 AI 數據技術</h4><p>讓影響力被看見、被衡量，而非停留在口號。</p></li>
+            <li><h4>共學與數位合作模式</h4><p>我們不只交付成果，更陪客戶長出自己的永續能力。</p></li>
+          </ol>
+          <p class="pull">這讓我們的客戶不只「擁有」永續策略，<br>更能<em>「實踐」永續承諾</em>。</p>
+        </div>
+        <hr class="sep">
+        <div id="c-theory">
+          <h3 class="sh"><span class="k">雙效益理論</span>兼顧社會與環境的商業模式，本身就能創造經濟效益。</h3>
+          <p>環境、社會、經濟並不是互相拉扯的取捨。綠色採購能減少資源消耗與碳排，直接降低營運成本；良好的社會形象與利害關係人信任，則會累積成品牌溢價與長期競爭力。當企業把永續放進營運核心，這些投入就會回流成實質的財務回報。</p>
+          <p>而真正讓環境表現轉化為經濟回報的，是企業的「動態能力」，也就是跨組織協作、帶動整條供應鏈一起轉型的能力。內部符合規範只是基本盤；能驅動供應鏈一起升級的企業，才拿得到真正的競爭優勢。</p>
+          <p>我們用「議題 → 系統 → 商模」三層架構，協助企業把這件事做出來：</p>
+          <ol class="c-flow">
+            <li><span class="ring">議</span><div><h4>議題</h4><p>從社會與環境意義的切角切入（綠色採購、供應鏈碳足跡、公平貿易），對準企業真正的痛點。</p></div></li>
+            <li><span class="ring">系</span><div><h4>系統</h4><p>建立 AI 平台與知識體系，把議題轉化為可量化、追蹤、比較的數據。</p></div></li>
+            <li><span class="ring">商</span><div><h4>商模</h4><p>透過永續白皮書、顧問服務與ESG共學坊，協助企業從動態能力出發，提升整條供應鏈的永續績效。</p></div></li>
+          </ol>
+          <p class="pull">當社會與環境的價值能被清楚量化，<br>永續投入就會從一項開銷，變成企業<em>最值得的長期投資</em>。</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- 第四章 -->
+    <div id="c-ch4">
+      <header class="c-ch"><div class="wrap"><span class="k">CHAPTER FOUR</span><h2>第四章　我們提供</h2><p>一站式永續解決方案：從顧問輔導到市場連結，每一項服務都以商業成果為導向。</p></div><span class="num" aria-hidden="true">四</span></header>
+      <section class="c-body wide" id="c-services">
+        <div class="c-index">
+          <article><span class="no">01</span><h4>永續品牌顧問輔導</h4><p>從品牌定位到 ESG 策略，量身打造永續轉型路徑，找到你的獨特價值主張。</p><a href="#">了解 →</a></article>
+          <article><span class="no">02</span><h4>永續白皮書 <span class="tag-hot" style="vertical-align:middle;font-family:var(--font-sans)">最受歡迎</span></h4><p>深度調研與數據分析，產出具公信力的永續報告，建立可量化的 ESG 敘事。</p><a href="#">了解 →</a></article>
+          <article><span class="no">03</span><h4>永續課程／工作坊</h4><p>協助企業、品牌將永續理念轉化為實際行動與市場語言。透過課程與工作坊，建立 ESG 思維、溝通能力與永續應用策略。</p><a href="#">了解 →</a></article>
+          <article><span class="no">04</span><h4>ESG共學坊溝通平台</h4><p>串連跨產業永續專家、企業與供應鏈資源，打造知識共享與合作交流場域，推動永續經驗、產業連結與共好轉型。</p><a href="#">了解 →</a></article>
+        </div>
+      </section>
+    </div>
+
+    <!-- 第五章 -->
+    <div id="c-ch5">
+      <header class="c-ch"><div class="wrap"><span class="k">CHAPTER FIVE</span><h2>第五章　我們的成果</h2><p>一支手錶的故事，以及它背後的共好生態圈</p></div><span class="num" aria-hidden="true">五</span></header>
+      <section class="c-body wide" id="c-impact">
+        <div class="c-feature">
+          <div>
+            <h3 class="sh"><span class="k">實際成果</span>一份永續白皮書，讓一個用海洋廢棄物製成手錶的品牌，站上國際青年論壇的舞台。</h3>
+            <p>透過永續說出自己的故事，是走向國際的第一步。</p>
+            <p class="ba"><span>有數據之前，這支手錶是一個有意義來源的美麗產品；</span><span>有數據之後，它是買家可以寫進報告、合作夥伴可以圍繞它建立關係的證據。</span></p>
+            <h3 class="sh" style="font-size:22px;margin-top:32px"><span class="k">質化成果</span>數字之外，我們看見的改變</h3>
+            <ul class="c-qual">
+              <li><h4>從「產品」到「證據」</h4><p>海廢手錶品牌以永續白皮書整理影響力，站上國際青年論壇舞台。</p></li>
+              <li><h4>把永續語言帶進農業現場</h4><p>與台灣休閒農業學會合作，推出全台首創「ESG 永續農創師」認證課程。</p></li>
+              <li><h4>從城市店家開始</h4><p>受台北市政府邀請，擔任「台北友善店家」主題課程講師（初階、進階）。</p></li>
+            </ul>
+          </div>
+          <aside class="c-bynum" aria-label="量化成果">
+            <span class="k">量化成果 BY THE NUMBERS</span>
+            <ol>
+              <li><b>1000萬</b><span>資源挹注</span></li>
+              <li><b>130+</b><span>跨產業合作</span></li>
+              <li><b>8+</b><span>國際論壇</span></li>
+            </ol>
+          </aside>
+        </div>
+        <hr class="sep">
+        <div id="c-ecosystem">
+          <h3 class="sh" style="text-align:center"><span class="k">共好生態圈</span>串連顧問、供應鏈、企業與國際網絡</h3>
+          <div class="c-net">
+            <svg class="lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M25 25 L50 50 L75 25 M25 75 L50 50 L75 75" stroke="#1F2022" stroke-width=".3" stroke-dasharray="1 1" fill="none" vector-effect="non-scaling-stroke"/></svg>
+            <div class="hub"><img src="../../../public/brand/coesg-class.svg" alt="ESG共學坊 CO-ESG CLASS"><p>形成互相賦能的永續共同體</p></div>
+            <div class="node"><h4>永續顧問團隊</h4><p>資深 ESG 顧問與品牌策略師，提供一對一專業輔導。</p><div class="avs" style="margin-top:10px" aria-hidden="true"><span>吳</span><span>蕭</span><span>王</span><span>朱</span><span>劉</span><span>吳</span><span>陳</span></div><p class="names">吳玟樺・蕭冠宇・王欽泉・朱建毓・劉建成・吳宗曄・陳宜均</p></div>
+            <div class="node"><h4>供應鏈對接</h4><p>擁有優質供應商，並可精準對接。</p></div>
+            <div class="node"><h4>企業合作夥伴</h4><p>跨產業品牌與企業，共同打造永續商業模式。</p></div>
+            <div class="node"><h4>國際連結網絡</h4><p>與全球永續組織接軌，引進國際最新趨勢與資源。</p></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="c-cta" id="c-cta">
+      <div class="c-letter">
+        <span class="eyebrow">寫在最後</span>
+        <h2>準備好讓市場看見你了嗎？</h2>
+        <p>如果你也在做一件好事，卻還說不清楚它的價值——歡迎預約一場 15 分鐘的 Coffee Chat，讓我們聊聊如何把你正在做的事，說清楚、被看見、被理解。</p>
+        <p class="sig">—— 吳玟樺 Evvon，共好玟化創辦人</p>
+        <div class="btn-row"><a class="btn btn-primary" href="#">預約 15 分鐘 Coffee Chat</a><a class="btn btn-ghost" href="#">看我們的永續足跡</a></div>
+      </div>
+    </section>
+    <footer class="site-f"><div class="wrap"><img src="../../../public/brand/gungho-horizontal-white.svg" alt="共好玟化"><span>© 2026 共好玟化組織發展顧問有限公司</span></div></footer>
+  </div>
+  <div class="pp-end">— 提案 C 結束 —</div>
+</section>
+
+<script>
+(function(){
+  var bar=document.querySelector('.pp-bar');
+  function setH(){document.documentElement.style.setProperty('--pp-h',bar.offsetHeight+'px')}
+  setH();addEventListener('resize',setH);
+
+  /* A/B/C toggle — without JS all three proposals stay stacked */
+  var btns=[].slice.call(bar.querySelectorAll('button[data-show]'));
+  var props=[].slice.call(document.querySelectorAll('.pp-proposal'));
+  function show(k,scroll){
+    props.forEach(function(p){p.hidden=(k!=='all'&&p.dataset.proposal!==k)});
+    btns.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.show===k))});
+    try{history.replaceState(null,'',k==='all'?'#all':'#p'+k)}catch(e){}
+    if(scroll)window.scrollTo(0,0);
+    update();
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){show(b.dataset.show,true)})});
+  var m=/^#p([ABC])$/.exec(location.hash);
+  show(m?m[1]:(location.hash==='#all'?'all':'A'),false);
+
+  /* scroll-spy: any nav[data-spy] marks the link whose target is in view */
+  var navs=[].slice.call(document.querySelectorAll('[data-spy]'));
+  function update(){
+    var line=(parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pp-h'))||48)+120;
+    navs.forEach(function(nav){
+      if(!nav.offsetParent&&!nav.closest('details'))return;
+      var links=[].slice.call(nav.querySelectorAll('a[href^="#"]')),active=null;
+      links.forEach(function(a){var t=document.getElementById(a.getAttribute('href').slice(1));if(t&&t.getBoundingClientRect().top<=line)active=a});
+      links.forEach(function(a){if(a===active)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current')});
+      var lbl=nav.querySelector('[data-spy-label]')||(nav.closest('details')&&nav.closest('details').querySelector('[data-spy-label]'));
+      if(lbl&&active)lbl.textContent=active.dataset.label||active.textContent.replace(/^(\d+)/,'$1 ');
+      var ul=nav.querySelector('ul');
+      if(ul&&active){var r=active.getBoundingClientRect(),u=ul.getBoundingClientRect();if(r.left<u.left||r.right>u.right)ul.scrollLeft+=r.left-u.left-24}
+    });
+    [].slice.call(document.querySelectorAll('[data-progress]')).forEach(function(el){
+      var mock=document.getElementById(el.dataset.progress);if(!mock||!mock.offsetParent)return;
+      var r=mock.getBoundingClientRect(),p=Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)));
+      el.style.width=(p*100).toFixed(1)+'%';
+    });
+  }
+  var ticking=false;
+  addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(function(){ticking=false;update()})}},{passive:true});
+  update();
+  /* close the mobile chapter menu after choosing */
+  [].slice.call(document.querySelectorAll('.a-tocbar a')).forEach(function(a){a.addEventListener('click',function(){a.closest('details').open=false})});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>最新文章 提案</title>
+<meta name="description" content="/insights 新聞室列表頁的三個設計提案">
+<link rel="stylesheet" href="_tokens.css">
+<style>
+:root { --line-strong: #00843A; --line-green: #06C755; }
+html { scroll-padding-top: calc(var(--ppbar, 0px) + 16px); }
+body { overflow-x: hidden; }
+[hidden] { display: none !important; }
+.ic { width: 1.15em; height: 1.15em; flex: none; vertical-align: -0.2em; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+:focus-visible { outline: 3px solid var(--orange-strong); outline-offset: 2px; }
+
+/* ---------- proposal chrome ---------- */
+.pp-intro { background: #fff; border-bottom: 1px solid var(--line); }
+.pp-intro .in { max-width: 1180px; margin: 0 auto; padding: 28px 16px 24px; }
+.pp-intro h1 { font-size: clamp(22px, 4.5vw, 32px); line-height: 1.3; margin: 10px 0 8px; }
+.pp-intro p { margin: 0 0 6px; color: var(--ink-2); max-width: 760px; }
+.pp-intro .pp-note { margin-top: 14px; max-width: 900px; }
+.proposal { padding: 36px 0 64px; border-bottom: 8px solid #111; }
+.pp-meta { max-width: 1180px; margin: 0 auto 8px; padding: 0 16px; }
+.pp-meta-card { background: #fff; border: 2px dashed #555; border-radius: 14px; padding: 20px; }
+.pp-meta-card h2 { margin: 12px 0 14px; font-size: clamp(20px, 3.6vw, 26px); line-height: 1.35; }
+.pp-meta-card dl { display: grid; gap: 14px 28px; margin: 0; }
+.pp-meta-card dt { font-weight: 700; font-size: 13px; color: var(--ink-2); letter-spacing: .08em; }
+.pp-meta-card dd { margin: 2px 0 0; font-size: 15px; }
+.pp-meta-card dd ul { margin: 0; padding-left: 1.2em; }
+@media (min-width: 820px) { .pp-meta-card dl { grid-template-columns: 1fr 1fr; } .pp-meta-card .full { grid-column: 1 / -1; } }
+.frame { max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+.frame-label { display: flex; align-items: center; gap: 8px; font: 700 12px/1.4 var(--font-display); color: var(--ink-2); margin: 28px 0 10px; letter-spacing: .1em; }
+.frame-label::before { content: ""; width: 18px; height: 2px; background: var(--ink-2); }
+.screen { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; box-shadow: 0 14px 40px rgba(31, 32, 34, .08); }
+.anno { font-size: 12px; line-height: 1.5; color: #6b5200; background: var(--yellow-soft); border: 1px dashed #d6a000; border-radius: 8px; padding: 6px 10px; display: inline-block; }
+
+/* ---------- site chrome (part of the design) ---------- */
+.sh { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 20px; background: #fff; border-bottom: 1px solid var(--line); }
+.sh img { height: 30px; width: auto; display: block; }
+.sh nav { display: none; gap: 22px; font-size: 14px; }
+.sh nav a { color: var(--ink); text-decoration: none; }
+.sh nav a[aria-current] { color: var(--orange-strong); font-weight: 700; box-shadow: inset 0 -2px 0 var(--orange-strong); }
+.sh .sh-cta { font-size: 14px; padding: 8px 16px; min-height: 40px; }
+@media (min-width: 960px) { .sh nav { display: flex; } }
+.sf { background: var(--surface-dark); color: #fff; font-size: 13px; padding: 18px 20px; display: flex; flex-wrap: wrap; gap: 6px 24px; justify-content: space-between; }
+.sf a { color: #fff; }
+
+/* ---------- shared atoms ---------- */
+.w { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+@media (max-width: 480px) { .w { padding: 0 16px; } }
+.eyebrow { font: 700 12px/1.3 var(--font-display); letter-spacing: .16em; color: var(--orange-strong); text-transform: uppercase; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 10px 22px; border-radius: 999px; font: 700 15px/1.3 var(--font-sans); text-decoration: none; background: var(--orange-strong); color: #fff; border: 2px solid var(--orange-strong); cursor: pointer; text-align: center; }
+.btn:hover { background: #B53513; border-color: #B53513; }
+.btn-line { background: var(--line-strong); border-color: var(--line-strong); }
+.btn-line:hover { background: #006E30; border-color: #006E30; }
+.btn-ghost { background: transparent; color: var(--orange-strong); }
+.btn-ghost:hover { background: var(--orange-soft); }
+.btn-dark { background: var(--ink); border-color: var(--ink); }
+.btn-light { background: #fff; color: var(--ink); border-color: #fff; }
+.btn-light:hover { background: var(--yellow-soft); border-color: var(--yellow-soft); }
+.btn-sm { min-height: 40px; padding: 7px 16px; font-size: 14px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; background: var(--orange-soft); color: #9A2E12; }
+.chip-grey { background: #EEECE8; color: var(--ink-2); }
+.chip-green { background: #E3F5E6; color: #17672A; }
+.meta { font-size: 13px; color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; }
+.meta span { display: inline-flex; align-items: center; gap: 5px; }
+.h-sec { font-size: clamp(22px, 4vw, 30px); line-height: 1.35; margin: 6px 0 10px; letter-spacing: .01em; }
+.lede { color: var(--ink-2); margin: 0; max-width: 680px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+a.cardlink { color: inherit; text-decoration: none; display: block; }
+a.cardlink:hover h3, a.cardlink:hover h4, a.cardlink:focus-visible h3 { color: var(--orange-strong); text-decoration: underline; text-underline-offset: 3px; }
+.clamp2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* ================= A · 新聞室 ================= */
+.ia-hero { background: #fff; border-bottom: 1px solid var(--line); padding: 40px 0 28px; }
+.ia-hero .w { display: grid; gap: 20px; }
+@media (min-width: 900px) { .ia-hero .w { grid-template-columns: 1fr 320px; align-items: end; } }
+.ia-hero h1 { font-size: clamp(28px, 6vw, 44px); line-height: 1.25; margin: 8px 0 10px; }
+.ia-press { border: 1px solid var(--line); border-radius: 14px; padding: 16px; font-size: 14px; display: grid; gap: 8px; background: var(--paper); }
+.ia-press b { font-size: 13px; letter-spacing: .08em; color: var(--ink-2); }
+.ia-press a { display: inline-flex; gap: 6px; align-items: center; font-weight: 700; }
+.ia-lead { padding: 32px 0; }
+.ia-lead a { display: grid; gap: 14px; text-decoration: none; color: var(--ink); background: #fff; border: 1px solid var(--line); border-left: 8px solid var(--orange); border-radius: 14px; padding: 22px; }
+@media (min-width: 760px) { .ia-lead a { grid-template-columns: 130px 1fr; gap: 28px; padding: 28px; } }
+.ia-date { font-family: var(--font-display); line-height: 1; }
+.ia-date .d { font-size: 46px; font-weight: 800; color: var(--orange-strong); }
+.ia-date .ym { font-size: 14px; font-weight: 700; color: var(--ink-2); margin-top: 6px; display: block; }
+.ia-lead h2 { font-size: clamp(22px, 4vw, 30px); line-height: 1.4; margin: 8px 0; }
+.ia-lead a:hover h2 { color: var(--orange-strong); text-decoration: underline; text-underline-offset: 4px; }
+.ia-lead p { margin: 0; color: var(--ink-2); }
+.ia-body { display: grid; gap: 32px; padding-bottom: 40px; }
+@media (min-width: 960px) { .ia-body { grid-template-columns: minmax(0, 1fr) 280px; gap: 48px; } }
+.ia-month { margin: 0 0 8px; }
+.ia-month h2 { font: 800 15px/1 var(--font-display); letter-spacing: .08em; padding: 14px 0 10px; margin: 0; border-bottom: 2px solid var(--ink); }
+.ia-items { list-style: none; margin: 0; padding: 0; }
+.ia-items li { display: grid; grid-template-columns: 52px 1fr; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.ia-items .day { font: 800 26px/1 var(--font-display); color: var(--ink); padding-top: 2px; }
+.ia-items .day small { display: block; font-size: 11px; color: var(--ink-2); font-weight: 700; margin-top: 4px; letter-spacing: .06em; }
+.ia-items h3 { margin: 6px 0 4px; font-size: 17px; line-height: 1.5; }
+.ia-items h3 a { color: var(--ink); text-decoration: none; }
+.ia-items h3 a:hover { color: var(--orange-strong); text-decoration: underline; }
+.ia-items p { margin: 0 0 6px; font-size: 14px; color: var(--ink-2); }
+.ia-items .more { font-size: 13px; }
+.ia-aside { display: grid; gap: 16px; align-content: start; }
+@media (min-width: 960px) { .ia-aside { position: sticky; top: calc(var(--ppbar, 0px) + 16px); } }
+.ia-aside .box { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+.ia-aside h2 { font-size: 13px; letter-spacing: .1em; color: var(--ink-2); margin: 0 0 10px; }
+.ia-aside ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: 14.5px; }
+.ia-aside li { display: flex; justify-content: space-between; }
+.ia-type { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; letter-spacing: .04em; }
+.ia-type::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: currentColor; }
+.t-觀點 { color: #9A2E12; } .t-專訪 { color: #5B4A00; } .t-調查報告 { color: #2B2E35; } .t-公告 { color: #17672A; }
+.t-專訪::before { background: var(--yellow); } .t-觀點::before { background: var(--orange); }
+.ia-cta { background: var(--surface-dark); color: #fff; padding: 36px 0; }
+.ia-cta .w { display: grid; gap: 16px; }
+@media (min-width: 860px) { .ia-cta .w { grid-template-columns: 1fr auto; align-items: center; } }
+.ia-cta h2 { margin: 0 0 4px; font-size: clamp(20px, 3.6vw, 26px); }
+.ia-cta p { margin: 0; color: #D9DADD; }
+.ia-cta .acts { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* ================= B · 雜誌 ================= */
+.ib-mast { background: var(--paper); padding: 28px 0 0; }
+.ib-mast .w { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; flex-wrap: wrap; border-bottom: 3px solid var(--ink); padding-bottom: 12px; }
+.ib-mast h1 { margin: 0; font: 900 clamp(34px, 9vw, 72px)/1 var(--font-sans); letter-spacing: .02em; }
+.ib-mast h1 span { color: var(--orange); }
+.ib-mast .issue { font: 700 13px/1.5 var(--font-display); letter-spacing: .1em; text-align: right; color: var(--ink-2); }
+.ib-sub { font-size: 14px; color: var(--ink-2); padding: 10px 0 0; }
+.ib-cover { padding: 26px 0; }
+.ib-cover a { display: grid; text-decoration: none; color: var(--ink); border-radius: 18px; overflow: hidden; }
+@media (min-width: 860px) { .ib-cover a { grid-template-columns: 1.2fr 1fr; } }
+.ib-poster { background: var(--orange); color: var(--ink); padding: 30px 26px; position: relative; overflow: hidden; min-height: 280px; display: flex; flex-direction: column; justify-content: flex-end; }
+.ib-poster::before { content: "“"; position: absolute; top: -40px; left: 14px; font: 900 220px/1 var(--font-display); color: var(--yellow); opacity: .9; }
+.ib-poster p { position: relative; margin: 0; font: 900 clamp(24px, 5vw, 36px)/1.45 var(--font-sans); color: #fff; }
+.ib-cover .txt { background: #fff; padding: 26px; display: flex; flex-direction: column; gap: 10px; justify-content: center; border: 1px solid var(--line); border-left: 0; }
+@media (max-width: 859px) { .ib-cover .txt { border-left: 1px solid var(--line); border-top: 0; border-radius: 0 0 18px 18px; } }
+.ib-cover h2 { margin: 0; font-size: clamp(22px, 4vw, 28px); line-height: 1.4; }
+.ib-cover a:hover h2 { color: var(--orange-strong); text-decoration: underline; }
+.ib-kicker { font: 800 12px/1.3 var(--font-display); letter-spacing: .16em; color: var(--orange-strong); }
+.ib-sec-h { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; border-top: 1px solid var(--ink); padding-top: 10px; margin: 18px 0 16px; }
+.ib-sec-h h2 { margin: 0; font-size: 20px; }
+.ib-sec-h span { font-size: 13px; color: var(--ink-2); }
+.ib-mosaic { display: grid; gap: 16px; }
+@media (min-width: 760px) { .ib-mosaic { grid-template-columns: repeat(6, 1fr); } .ib-mosaic > :nth-child(1) { grid-column: span 4; grid-row: span 2; } .ib-mosaic > :nth-child(n+2) { grid-column: span 2; } .ib-mosaic > :nth-child(n+4) { grid-column: span 3; } }
+.ib-card { display: flex; flex-direction: column; text-decoration: none; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.ib-card:hover h3 { color: var(--orange-strong); text-decoration: underline; }
+.ib-art { height: 120px; position: relative; }
+.ib-mosaic > :nth-child(1) .ib-art { height: 220px; }
+.ib-art span { position: absolute; left: 14px; bottom: 12px; font: 800 12px/1 var(--font-display); letter-spacing: .12em; background: #fff; color: var(--ink); padding: 6px 8px; border-radius: 4px; }
+.pat-innovation { background: radial-gradient(circle at 30% 40%, var(--yellow) 0 24%, transparent 25%), radial-gradient(circle at 70% 60%, var(--orange) 0 18%, transparent 19%), var(--yellow-soft); }
+.pat-market { background: linear-gradient(0deg, var(--orange) 0 30%, transparent 30%) 0 0 / 25% 100% no-repeat, linear-gradient(0deg, var(--orange) 0 50%, transparent 50%) 33% 0 / 25% 100% no-repeat, linear-gradient(0deg, var(--orange) 0 75%, transparent 75%) 66% 0 / 25% 100% no-repeat, linear-gradient(0deg, var(--yellow) 0 95%, transparent 95%) 100% 0 / 25% 100% no-repeat, var(--orange-soft); }
+.pat-responsibility { background: linear-gradient(135deg, var(--surface-dark) 0 50%, var(--grey) 50%); }
+.pat-collaboration { background: radial-gradient(circle at 35% 50%, transparent 0 22%, var(--orange) 22% 26%, transparent 26%), radial-gradient(circle at 60% 50%, transparent 0 22%, var(--yellow) 22% 26%, transparent 26%), #fff; }
+.pat-communication { background: repeating-radial-gradient(circle at 0 100%, var(--orange-soft) 0 14px, #fff 14px 28px); }
+.pat-interviews { background: var(--yellow); }
+.pat-announcements { background: repeating-linear-gradient(45deg, #E3F5E6 0 12px, #fff 12px 24px); }
+.ib-card .c { padding: 16px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.ib-card h3 { margin: 0; font-size: 17px; line-height: 1.5; }
+.ib-mosaic > :nth-child(1) h3 { font-size: clamp(20px, 3.4vw, 26px); }
+.ib-card p { margin: 0; font-size: 14px; color: var(--ink-2); }
+.ib-card .meta { margin-top: auto; }
+.ib-voice { margin: 32px 0; display: grid; gap: 16px; }
+@media (min-width: 860px) { .ib-voice { grid-template-columns: 1fr 1fr; } }
+.ib-voice blockquote { margin: 0; background: var(--surface-dark); color: #fff; border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 12px; }
+.ib-voice blockquote p { margin: 0; font-size: clamp(18px, 3.4vw, 21px); line-height: 1.65; font-weight: 700; }
+.ib-voice blockquote footer { font-size: 13.5px; color: #D9DADD; }
+.ib-voice blockquote a { color: var(--yellow); }
+.ib-archive details { border-top: 1px solid var(--line); }
+.ib-archive details:last-child { border-bottom: 1px solid var(--line); }
+.ib-archive summary { padding: 16px 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; list-style: none; }
+.ib-archive summary::-webkit-details-marker { display: none; }
+.ib-archive summary small { font-weight: 400; color: var(--ink-2); margin-left: 8px; }
+.ib-archive details[open] summary .ic { transform: rotate(180deg); }
+.ib-archive ul { list-style: none; margin: 0 0 16px; padding: 0; display: grid; gap: 8px; }
+@media (min-width: 760px) { .ib-archive ul { grid-template-columns: 1fr 1fr; } }
+.ib-archive li a { display: flex; gap: 12px; padding: 10px 12px; background: #fff; border-radius: 10px; text-decoration: none; color: var(--ink); font-size: 15px; border: 1px solid var(--line); }
+.ib-archive li a:hover { border-color: var(--orange-strong); color: var(--orange-strong); }
+.ib-archive time { font: 700 12.5px/1.8 var(--font-display); color: var(--ink-2); flex: none; }
+.ib-sub-cta { margin: 36px 0 40px; background: var(--yellow-soft); border-radius: 18px; padding: 24px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; }
+.ib-sub-cta h2 { margin: 0 0 4px; font-size: 20px; }
+.ib-sub-cta p { margin: 0; color: var(--ink-2); font-size: 15px; }
+
+/* ================= C · 精簡清單 ================= */
+.ic-head { padding: 32px 0 18px; background: #fff; border-bottom: 1px solid var(--line); }
+.ic-head .w { display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: flex-end; }
+.ic-head h1 { margin: 6px 0 6px; font-size: clamp(24px, 5vw, 34px); line-height: 1.3; }
+.ic-head p { margin: 0; color: var(--ink-2); font-size: 14.5px; }
+.ic-subs { display: flex; flex-wrap: wrap; gap: 8px; }
+.ic-layout { display: grid; gap: 28px; padding: 22px 0 40px; }
+@media (min-width: 960px) { .ic-layout { grid-template-columns: minmax(0, 1fr) 260px; gap: 40px; } }
+.ic-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--line); overflow-x: auto; }
+.ic-tabs button { flex: none; border: 0; background: none; padding: 12px 14px; font: 700 14px/1 var(--font-sans); color: var(--ink-2); cursor: pointer; border-bottom: 3px solid transparent; min-height: 44px; }
+.ic-tabs button[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--orange-strong); }
+.ic-tabs button span { font: 700 12px/1 var(--font-display); margin-left: 4px; color: var(--ink-2); }
+.ic-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.ic-table caption { text-align: left; font-size: 13px; color: var(--ink-2); padding: 10px 0; }
+.ic-table th { text-align: left; font-size: 12px; letter-spacing: .1em; color: var(--ink-2); font-weight: 700; padding: 8px 8px; border-bottom: 2px solid var(--ink); }
+.ic-table td { padding: 12px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.ic-table td.d { font: 700 13px/1.6 var(--font-display); color: var(--ink-2); white-space: nowrap; }
+.ic-table td a { color: var(--ink); text-decoration: none; font-weight: 500; }
+.ic-table td a:hover { color: var(--orange-strong); text-decoration: underline; }
+.ic-table td.t, .ic-table td.m { font-size: 13px; color: var(--ink-2); white-space: nowrap; }
+.ic-table tr:hover td { background: #fff; }
+@media (max-width: 719px) {
+  .ic-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .ic-table, .ic-table tbody, .ic-table tr, .ic-table td { display: block; }
+  .ic-table tr { display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .ic-table td { border: 0; padding: 0; }
+  .ic-table td.title { grid-column: 1 / -1; order: 3; font-size: 16px; line-height: 1.5; }
+  .ic-table td.m { display: none; }
+}
+.ic-side { display: grid; gap: 14px; align-content: start; }
+.ic-side .box { border: 1px solid var(--line); border-radius: 12px; padding: 16px; background: #fff; font-size: 14px; }
+.ic-side h2 { font-size: 13px; letter-spacing: .1em; color: var(--ink-2); margin: 0 0 8px; }
+.ic-side p { margin: 0 0 10px; }
+.ic-side .row { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
+.ic-foot { font-size: 13px; color: var(--ink-2); margin-top: 14px; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+<symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+<symbol id="i-line" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3.5C6.8 3.5 2.6 6.9 2.6 11.1c0 3.8 3.3 6.9 7.8 7.5.3.1.7.2.8.5.1.3.1.6 0 .9l-.1.8c0 .2-.2.9.8.5s5.4-3.2 7.4-5.4c1.4-1.5 2-3.1 2-4.8 0-4.2-4.2-7.6-9.3-7.6z"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+<symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+<symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></symbol>
+<symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h7"/></symbol>
+<symbol id="i-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></symbol>
+<symbol id="i-coffee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5zM17 10h1.5a2.5 2.5 0 0 1 0 5H17M8 3v3M12 3v3"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></symbol>
+<symbol id="i-rss" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 11a8 8 0 0 1 8 8M5 5a14 14 0 0 1 14 14"/><circle cx="6" cy="18" r="1.5" fill="currentColor"/></symbol>
+<symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+<symbol id="i-bulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V17h5v-1.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></symbol>
+<symbol id="i-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5" stroke-linecap="round"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14c2.4 0 4 1.6 4.5 4.5"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+<symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
+<symbol id="i-mega" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M3 10v4h4l6 4V6l-6 4zM16.5 9a4 4 0 0 1 0 6"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/></symbol>
+</defs></svg>
+<div class="pp-bar" role="toolbar" aria-label="切換提案" hidden><strong>/insights</strong><button type="button" data-show="A" aria-pressed="false">A｜時間序新聞室</button><button type="button" data-show="B" aria-pressed="false">B｜季刊雜誌</button><button type="button" data-show="C" aria-pressed="false">C｜精簡清單</button><button type="button" data-show="all" aria-pressed="false">全部並排</button></div><header class="pp-intro"><div class="in">
+<span class="pp-label">Proposal · /insights</span>
+<h1>最新文章：新聞室列表 三案</h1>
+<p>旅程位置：<strong>認識（最新觀點）</strong>。主要角色 P5 政府／學校／論壇主辦／媒體、P2 大企業窗口：他們想快速判斷「這個團隊最近在做什麼、是否活躍」。</p><p>與 /learning 的分工：<strong>/learning 依主題、教你從哪裡開始；/insights 依時間、告訴你最近發生什麼。</strong>三案都刻意不用主題書架、不放「從這裡開始」，避免兩條路由長得一樣。</p>
+<p class="pp-note">現況兩頁共用 <code>content/posts/</code> 且版面幾乎相同（精選大卡＋卡片格線），是客戶覺得「重複」的來源。三案的精選都不是「訂閱 3 步驟」公告（L02）。注意：最新一篇是 2024.11.11，時間序版面會直接曝露更新頻率，上線前建議補 2025–2026 的活動回顧或公告。</p>
+</div></header>
+<section class="proposal" id="A" aria-label="提案 A"><div class="pp-meta"><div class="pp-meta-card">
+<span class="pp-label">提案 A</span>
+<h2>時間序新聞室：日期是主角</h2>
+<dl>
+<div class="full"><dt>概念</dt><dd>像企業新聞室一樣，以「年 · 月」分段、日期大字排列，每則標示類型（觀點／專訪／調查報告／公告）。最新一則以無圖的頭條呈現；側欄放類型統計、媒體窗口與 RSS，並把想深入某主題的人送回共好學習。</dd></div>
+<div class="full"><dt>參考來源</dt><dd>Schneider Electric 與 Ørsted 的 Newsroom（日期＋類型標籤＋媒體聯絡窗口）；South Pole 的新聞與報告發布頁。</dd></div>
+<div><dt>優點</dt><dd><ul><li>與 /learning 差異最明確，一眼就是「新聞室」</li><li>媒體窗口與 RSS 直接服務 P5</li><li>每則附「在共好學習延伸閱讀」，兩頁互相導流而不重複</li></ul></dd></div>
+<div><dt>風險</dt><dd><ul><li>內容停在 2024 年，時間軸會讓「不活躍」更明顯</li><li>需要新增 <code>type</code> 欄位（觀點／專訪／調查報告／公告／活動回顧）</li><li>文章少時月份段落顯得稀疏</li></ul></dd></div>
+<div class="full"><dt>對旅程的作用</dt><dd>讓 P5、P2 在 10 秒內確認「這個團隊持續在產出」，並提供明確的邀約管道（mailto＋LINE）；想深入的人被導回 /learning 依主題延伸閱讀。</dd></div>
+</dl></div></div>
+<div class="frame"><p class="frame-label">列表頁 /insights</p><div class="screen"><header class="sh"><img src="../../../public/brand/gungho-horizontal.svg" alt="共好玟化 CO-ESG" width="76" height="30"><nav aria-label="主選單"><a href="#">共好永續力</a><a href="#">永續足跡</a><a href="#">共好學習</a><a href="#" aria-current="page">最新文章</a><a href="#">合作洽詢</a></nav><a class="btn btn-sm sh-cta" href="#">預約諮詢</a></header>
+<main>
+<section class="ia-hero"><div class="w">
+<div><p class="eyebrow">最新文章 · Newsroom</p><h1>永續觀點與產業洞察</h1><p class="lede">從趨勢分析到合作案例，持續分享永續實踐的第一手觀察與思考。依發布時間排列，最新的在最上面。</p></div>
+<div class="ia-press"><b>媒體、講座與論壇邀約</b><span>共好玟化組織發展顧問有限公司</span><a href="mailto:pt@coesg.tw"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg>pt@coesg.tw</a><a href="/feed.xml"><svg class="ic" aria-hidden="true"><use href="#i-rss"/></svg>RSS 訂閱</a></div>
+</div></section>
+<section class="ia-lead" aria-labelledby="ia-lead-h"><div class="w">
+<a href="#"><div class="ia-date"><span class="d">19</span><span class="ym">2024 · 10 月</span></div><div><span class="ia-type t-專訪">專訪 · 最新</span><h2 id="ia-lead-h">從父親的塑膠建材到我的永續革命：彭欣惠的接班與新生</h2><p>彭欣惠接掌家族塑膠建材事業，將父親的技術創新轉化為永續推廣，在 ESG 的路上找到新方向。</p></div></a>
+</div></section>
+<div class="w"><div class="ia-body">
+<div><section class="ia-month" aria-label="2024 年 11 月"><h2>2024 · 11 月</h2><ul class="ia-items"><li><div class="day">11<small>11月</small></div><div><span class="ia-type t-公告">公告</span><h3><a href="#">訂閱 3 步驟</a></h3><p>加入ESG共學坊的三個簡單步驟：LINE 註冊、系統登入、信用卡綁定，輕鬆開啟永續學習之旅。</p></div></li></ul></section><section class="ia-month" aria-label="2024 年 10 月"><h2>2024 · 10 月</h2><ul class="ia-items"><li><div class="day">08<small>10月</small></div><div><span class="ia-type t-觀點">觀點</span><h3><a href="#">核心策略指引：九宮格模型助力創新與問題解決</a></h3><p>運用商業模式九宮格框架，提供結構化思考方式，幫助企業聚焦核心要素，提高效率與效益。</p><a class="more" href="#">在共好學習延伸閱讀「創新策略」 →</a></div></li><li><div class="day">08<small>10月</small></div><div><span class="ia-type t-觀點">觀點</span><h3><a href="#">數據驅動的決策：推動永續策略實現的第一步</a></h3><p>企業如何透過問卷調查與數據量化分析，為永續策略建立扎實基礎，提升市場競爭力。</p><a class="more" href="#">在共好學習延伸閱讀「市場競爭力」 →</a></div></li><li><div class="day">08<small>10月</small></div><div><span class="ia-type t-觀點">觀點</span><h3><a href="#">透過市場數據洞察趨勢，提升永續產品競爭力</a></h3><p>以展場鋼架製造商為例，探討如何運用數據策略來強化永續產品的市場地位。</p><a class="more" href="#">在共好學習延伸閱讀「市場競爭力」 →</a></div></li><li><div class="day">08<small>10月</small></div><div><span class="ia-type t-觀點">觀點</span><h3><a href="#">擴大影響力：聯合利華的永續成功策略</a></h3><p>探討如何透過尋找可複製模式與號召更多人參與，擴大組織的永續影響力。</p><a class="more" href="#">在共好學習延伸閱讀「創新策略」 →</a></div></li><li><div class="day">02<small>10月</small></div><div><span class="ia-type t-觀點">觀點</span><h3><a href="#">透過對話創造價值：搭建企業與社會的溝通橋樑</a></h3><p>對話是建立關係與培養信任的關鍵。從客戶、合作夥伴到社會，每一次對話都在創造價值。</p><a class="more" href="#">在共好學習延伸閱讀「溝通與換位思考」 →</a></div></li><li><div class="day">02<small>10月</small></div><div><span class="ia-type t-觀點">觀點</span><h3><a href="#">換位思考：提升問卷設計的有效性</a></h3><p>透過換位思考改善問卷設計，減少受訪者心理壓力，提升數據品質與回答真實性。</p><a class="more" href="#">在共好學習延伸閱讀「溝通與換位思考」 →</a></div></li><li><div class="day">02<small>10月</small></div><div><span class="ia-type t-觀點">觀點</span><h3><a href="#">從內部落實到外部溝通：強化永續理念的傳播</a></h3><p>以台灣血液基金會為例，探討如何透過內外並行的策略，有效傳遞組織的永續理念。</p><a class="more" href="#">在共好學習延伸閱讀「溝通與換位思考」 →</a></div></li></ul></section><section class="ia-month" aria-label="2024 年 9 月"><h2>2024 · 09 月</h2><ul class="ia-items"><li><div class="day">27<small>9月</small></div><div><span class="ia-type t-觀點">觀點</span><h3><a href="#">公益與企業共贏：提升社會價值與經濟效益</a></h3><p>將公益團體重新定位為企業夥伴，從單方面施與受轉變為互利互惠的合作模式。</p><a class="more" href="#">在共好學習延伸閱讀「合作模式」 →</a></div></li><li><div class="day">27<small>9月</small></div><div><span class="ia-type t-觀點">觀點</span><h3><a href="#">從贊助到夥伴：企業與非營利組織的雙贏策略</a></h3><p>探討如何將企業與非營利組織的關係從傳統贊助轉變為互惠夥伴關係，形成正向循環。</p><a class="more" href="#">在共好學習延伸閱讀「合作模式」 →</a></div></li><li><div class="day">26<small>9月</small></div><div><span class="ia-type t-觀點">觀點</span><h3><a href="#">聚焦重大性議題：有限資源下的最優選擇</a></h3><p>企業資源有限，透過重大性議題評估，精準選擇最具影響力的 ESG 議題，實現資源最大化配置。</p><a class="more" href="#">在共好學習延伸閱讀「永續責任」 →</a></div></li><li><div class="day">26<small>9月</small></div><div><span class="ia-type t-觀點">觀點</span><h3><a href="#">透過 SDGs 打造永續競爭優勢</a></h3><p>永續發展目標為企業提供明確框架，從品牌價值、創新驅動到競爭力強化，全面提升企業的永續競爭力。</p><a class="more" href="#">在共好學習延伸閱讀「永續責任」 →</a></div></li><li><div class="day">26<small>9月</small></div><div><span class="ia-type t-觀點">觀點</span><h3><a href="#">從永續報告書中洞察企業未來承諾</a></h3><p>了解如何閱讀永續報告書，從企業的遠程目標中洞察其對未來的承諾與永續發展方向。</p><a class="more" href="#">在共好學習延伸閱讀「永續責任」 →</a></div></li></ul></section><section class="ia-month" aria-label="2024 年 6 月"><h2>2024 · 06 月</h2><ul class="ia-items"><li><div class="day">26<small>6月</small></div><div><span class="ia-type t-調查報告">調查報告</span><h3><a href="#">ESG 實務工作者需求與挑戰調查結果報告</a></h3><p>調查顯示 43.6% ESG 工作者經驗不足一年，面臨學習平衡、數據衡量與資源匱乏三大挑戰。</p><a class="more" href="#">在共好學習延伸閱讀「永續責任」 →</a></div></li></ul></section><section class="ia-month" aria-label="2024 年 3 月"><h2>2024 · 03 月</h2><ul class="ia-items"><li><div class="day">25<small>3月</small></div><div><span class="ia-type t-觀點">觀點</span><h3><a href="#">從碳足跡到碳手印：塑造更永續的明天</a></h3><p>探討碳足跡與碳手印兩個概念的差異，以及五項實踐策略，形成雙軌策略應對氣候變化。</p><a class="more" href="#">在共好學習延伸閱讀「永續責任」 →</a></div></li></ul></section></div>
+<aside class="ia-aside" aria-label="新聞室資訊">
+<div class="box"><h2>內容類型</h2><ul><li><span class="ia-type t-公告">公告</span><span>1</span></li><li><span class="ia-type t-專訪">專訪</span><span>1</span></li><li><span class="ia-type t-觀點">觀點</span><span>13</span></li><li><span class="ia-type t-調查報告">調查報告</span><span>1</span></li></ul></div>
+<div class="box"><h2>想依主題讀？</h2><p style="margin:0 0 10px;font-size:14px">新聞室依時間排列；共好學習依 7 個主題整理同一批文章與入門路徑。</p><a href="#" style="font-weight:700;font-size:14px">前往共好學習 →</a></div>
+<div class="box"><h2>年份</h2><ul><li><a href="#">2024</a><span>16</span></li></ul></div>
+</aside>
+</div>
+<p class="anno" style="margin-bottom:28px">新聞室與共好學習的分工建議：新聞室收「公告、活動回顧、調查報告、專訪、立場聲明」等有時效的內容；知識型長青文章只放在共好學習，避免同一篇在兩處重複出現。</p>
+</div>
+<section class="ia-cta"><div class="w">
+<div><h2>合辦論壇、邀請講座或採訪？</h2><p>來信說明主題、時間與地點。服務時間：週一至週五 09:00-18:00。</p></div>
+<div class="acts"><a class="btn btn-light" href="mailto:pt@coesg.tw?subject=%E8%AC%9B%E5%BA%A7%E8%88%87%E5%90%88%E4%BD%9C%E9%82%80%E7%B4%84"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg>寫信給我們</a><a class="btn btn-line" href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>LINE 詢問</a></div>
+</div></section>
+</main><footer class="sf"><span>共好玟化組織發展顧問有限公司 · 統編 90223501</span><span><a href="mailto:pt@coesg.tw">pt@coesg.tw</a> · LINE @381iutjm</span></footer></div></div></section><section class="proposal" id="B" aria-label="提案 B"><div class="pp-meta"><div class="pp-meta-card">
+<span class="pp-label">提案 B</span>
+<h2>季刊雜誌：把文章編成一期一期</h2>
+<dl>
+<div class="full"><dt>概念</dt><dd>以「共好觀點」為刊名，按季度編排：封面故事用一句真實引言做成海報，本季文章用馬賽克版面，再穿插「觀點引言」與數據金句；過去的季度收進過刊。沒有照片也能有雜誌感——每個主題一款 CSS 紋樣封面。</dd></div>
+<div class="full"><dt>參考來源</dt><dd>Patagonia Stories 的編輯式版面與大引言；Natura &amp;Co 網頁版年報與 IKEA highlights 的「一期一報」節奏。</dd></div>
+<div><dt>優點</dt><dd><ul><li>品牌感最強，最能展現「有觀點的顧問」</li><li>引言與數據金句讓 P2、P5 快速掌握立場</li><li>季度節奏給團隊固定的內容產出目標</li></ul></dd></div>
+<div><dt>風險</dt><dd><ul><li>需要持續編輯（每季選封面、寫引言），人力不足時最容易荒廢</li><li>一季文章太少時版面會空</li><li>視覺較重，需注意手機載入與閱讀效率</li></ul></dd></div>
+<div class="full"><dt>對旅程的作用</dt><dd>把散落的文章包裝成「有立場的出版品」，強化信任階段的專業形象；封面故事與引言是對外分享（社群、提案簡報）最好用的素材，文末以 LINE 留住讀者。</dd></div>
+</dl></div></div>
+<div class="frame"><p class="frame-label">列表頁 /insights</p><div class="screen"><header class="sh"><img src="../../../public/brand/gungho-horizontal.svg" alt="共好玟化 CO-ESG" width="76" height="30"><nav aria-label="主選單"><a href="#">共好永續力</a><a href="#">永續足跡</a><a href="#">共好學習</a><a href="#" aria-current="page">最新文章</a><a href="#">合作洽詢</a></nav><a class="btn btn-sm sh-cta" href="#">預約諮詢</a></header>
+<main>
+<header class="ib-mast"><div class="w"><h1>共好<span>觀點</span></h1><div class="issue">2024 Q4<br>10–12 月</div></div><div class="w"><p class="ib-sub">永續觀點與產業洞察 · 由ESG共學坊與共好玟化團隊撰寫</p></div></header>
+<section class="ib-cover" aria-labelledby="ib-cover-h"><div class="w">
+<a href="#"><div class="ib-poster" aria-hidden="true"><p>減塑其實非常困難，我們能做的是延長塑膠的生命週期。</p></div>
+<div class="txt"><span class="ib-kicker">封面故事 · 人物專訪</span><h2 id="ib-cover-h">從父親的塑膠建材到我的永續革命：彭欣惠的接班與新生</h2><p style="margin:0;color:var(--ink-2)">彭欣惠接掌家族塑膠建材事業，將父親的技術創新轉化為永續推廣，在 ESG 的路上找到新方向。</p><div class="meta"><span>2024.10.19</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>約 3 分鐘</span></div></div></a>
+</div></section>
+<section aria-labelledby="ib-q4"><div class="w">
+<div class="ib-sec-h"><h2 id="ib-q4">本季文章</h2><span>2024 年 10–12 月 · 9 篇</span></div>
+<div class="ib-mosaic"><a class="ib-card" href="#"><div class="ib-art pat-innovation" aria-hidden="true"><span>觀點</span></div><div class="c"><span class="ib-kicker">創新策略</span><h3>核心策略指引：九宮格模型助力創新與問題解決</h3><p class="clamp2">運用商業模式九宮格框架，提供結構化思考方式，幫助企業聚焦核心要素，提高效率與效益。</p><div class="meta"><span>2024.10.08</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>3 分</span></div></div></a><a class="ib-card" href="#"><div class="ib-art pat-market" aria-hidden="true"><span>觀點</span></div><div class="c"><span class="ib-kicker">市場競爭力</span><h3>數據驅動的決策：推動永續策略實現的第一步</h3><p class="clamp2">企業如何透過問卷調查與數據量化分析，為永續策略建立扎實基礎，提升市場競爭力。</p><div class="meta"><span>2024.10.08</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>3 分</span></div></div></a><a class="ib-card" href="#"><div class="ib-art pat-market" aria-hidden="true"><span>觀點</span></div><div class="c"><span class="ib-kicker">市場競爭力</span><h3>透過市場數據洞察趨勢，提升永續產品競爭力</h3><p class="clamp2">以展場鋼架製造商為例，探討如何運用數據策略來強化永續產品的市場地位。</p><div class="meta"><span>2024.10.08</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>3 分</span></div></div></a><a class="ib-card" href="#"><div class="ib-art pat-innovation" aria-hidden="true"><span>觀點</span></div><div class="c"><span class="ib-kicker">創新策略</span><h3>擴大影響力：聯合利華的永續成功策略</h3><p class="clamp2">探討如何透過尋找可複製模式與號召更多人參與，擴大組織的永續影響力。</p><div class="meta"><span>2024.10.08</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>2 分</span></div></div></a><a class="ib-card" href="#"><div class="ib-art pat-communication" aria-hidden="true"><span>觀點</span></div><div class="c"><span class="ib-kicker">溝通與換位思考</span><h3>透過對話創造價值：搭建企業與社會的溝通橋樑</h3><p class="clamp2">對話是建立關係與培養信任的關鍵。從客戶、合作夥伴到社會，每一次對話都在創造價值。</p><div class="meta"><span>2024.10.02</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>2 分</span></div></div></a></div>
+<div class="ib-archive" style="margin-top:16px"><details><summary><span>本季其他文章<small>3 篇</small></span><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><ul><li><a href="#"><time datetime="2024-11-11">11.11</time><span>〔公告〕訂閱 3 步驟</span></a></li><li><a href="#"><time datetime="2024-10-02">10.02</time><span>換位思考：提升問卷設計的有效性</span></a></li><li><a href="#"><time datetime="2024-10-02">10.02</time><span>從內部落實到外部溝通：強化永續理念的傳播</span></a></li></ul></details></div>
+<p class="anno" style="margin-top:10px">封面為純 CSS 的主題紋樣（7 個主題各一款），之後有攝影素材可直接替換成照片；不使用圖庫照片。</p>
+<div class="ib-voice">
+<blockquote><p>夥伴模式讓雙方關係從「單方面施與及接受」，轉變為互利互惠。</p><footer>摘自〈公益與企業共贏〉，引述共好創辦人玟樺 <a href="#">讀全文 →</a></footer></blockquote>
+<blockquote style="background:var(--orange-soft);color:var(--ink)"><p>超過 70% 的受訪者認為，問題的解決程度不足 3 分（滿分 5 分）。</p><footer style="color:var(--ink-2)">ESG 實務工作者需求與挑戰調查 · 2024 <a href="#" style="color:var(--orange-strong)">看報告 →</a></footer></blockquote>
+</div>
+<div class="ib-sec-h"><h2>過刊</h2><span>依季度整理</span></div>
+<div class="ib-archive"><details open><summary><span>2024 Q3<small>7–9 月 · 5 篇</small></span><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><ul><li><a href="#"><time datetime="2024-09-27">09.27</time><span>公益與企業共贏：提升社會價值與經濟效益</span></a></li><li><a href="#"><time datetime="2024-09-27">09.27</time><span>從贊助到夥伴：企業與非營利組織的雙贏策略</span></a></li><li><a href="#"><time datetime="2024-09-26">09.26</time><span>聚焦重大性議題：有限資源下的最優選擇</span></a></li><li><a href="#"><time datetime="2024-09-26">09.26</time><span>透過 SDGs 打造永續競爭優勢</span></a></li><li><a href="#"><time datetime="2024-09-26">09.26</time><span>從永續報告書中洞察企業未來承諾</span></a></li></ul></details><details><summary><span>2024 Q2<small>4–6 月 · 1 篇</small></span><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><ul><li><a href="#"><time datetime="2024-06-26">06.26</time><span>ESG 實務工作者需求與挑戰調查結果報告</span></a></li></ul></details><details><summary><span>2024 Q1<small>1–3 月 · 1 篇</small></span><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><ul><li><a href="#"><time datetime="2024-03-25">03.25</time><span>從碳足跡到碳手印：塑造更永續的明天</span></a></li></ul></details></div>
+<div class="ib-sub-cta"><div><h2>新文章上架時通知你</h2><p>加入官方 LINE，收到最新觀點與ESG共學坊活動消息。</p></div><a class="btn btn-line" href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>加入官方 LINE</a></div>
+</div></section>
+</main><footer class="sf"><span>共好玟化組織發展顧問有限公司 · 統編 90223501</span><span><a href="mailto:pt@coesg.tw">pt@coesg.tw</a> · LINE @381iutjm</span></footer></div></div></section><section class="proposal" id="C" aria-label="提案 C"><div class="pp-meta"><div class="pp-meta-card">
+<span class="pp-label">提案 C</span>
+<h2>精簡清單：像更新紀錄一樣好掃</h2>
+<dl>
+<div class="full"><dt>概念</dt><dd>不放精選、不放封面：一張依日期排列的表格（日期｜類型｜標題｜主題與閱讀時間），上方用類型頁籤篩選。手機上自動變成兩行式列表。右側只有訂閱（LINE、RSS）與媒體窗口。</dd></div>
+<div class="full"><dt>參考來源</dt><dd>South Pole 與 B Lab 的新聞／更新列表、GOV.UK 式的高密度清單；Delta 歷年報告的固定命名與完整列表。</dd></div>
+<div><dt>優點</dt><dd><ul><li>最輕、最快，維護成本最低</li><li>誠實呈現「全部 16 篇、最近更新日期」</li><li>與 /learning 的卡片視覺完全不同，不會被誤認是同一頁</li></ul></dd></div>
+<div><dt>風險</dt><dd><ul><li>缺少情緒與品牌感，第一次來的人不會被吸引往下讀</li><li>標題寫得不好時，列表會變得乾</li><li>「最近更新 2024.11.11」若不持續更新，反而是負面訊號</li></ul></dd></div>
+<div class="full"><dt>對旅程的作用</dt><dd>定位為「檔案室」：服務已經知道 CO-ESG、要找特定文章或確認近況的 P2／P5；把吸引新訪客的工作完全交給 /learning，兩頁職責切得最乾淨。</dd></div>
+</dl></div></div>
+<div class="frame"><p class="frame-label">列表頁 /insights</p><div class="screen"><header class="sh"><img src="../../../public/brand/gungho-horizontal.svg" alt="共好玟化 CO-ESG" width="76" height="30"><nav aria-label="主選單"><a href="#">共好永續力</a><a href="#">永續足跡</a><a href="#">共好學習</a><a href="#" aria-current="page">最新文章</a><a href="#">合作洽詢</a></nav><a class="btn btn-sm sh-cta" href="#">預約諮詢</a></header>
+<main>
+<section class="ic-head"><div class="w">
+<div><p class="eyebrow">最新文章</p><h1>永續觀點與產業洞察</h1><p>全部 16 篇 · 最近更新 2024.11.11</p></div>
+<div class="ic-subs"><a class="btn btn-sm btn-ghost" href="/feed.xml"><svg class="ic" aria-hidden="true"><use href="#i-rss"/></svg>RSS</a><a class="btn btn-sm btn-line" href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>LINE 通知</a></div>
+</div></section>
+<div class="w"><div class="ic-layout">
+<div>
+<div class="ic-tabs" role="group" aria-label="依類型篩選"><button type="button" data-ityp="all" aria-pressed="true">全部<span>16</span></button><button type="button" data-ityp="公告" aria-pressed="false">公告<span>1</span></button><button type="button" data-ityp="專訪" aria-pressed="false">專訪<span>1</span></button><button type="button" data-ityp="觀點" aria-pressed="false">觀點<span>13</span></button><button type="button" data-ityp="調查報告" aria-pressed="false">調查報告<span>1</span></button></div>
+<table class="ic-table"><caption aria-live="polite" id="ic-cap">依發布日期排列，共 16 篇</caption><thead><tr><th scope="col">日期</th><th scope="col">類型</th><th scope="col">標題</th><th scope="col">主題 · 閱讀</th></tr></thead><tbody id="ic-rows"><tr data-type="公告"><td class="d"><time datetime="2024-11-11">2024.11.11</time></td><td class="t"><span class="ia-type t-公告">公告</span></td><td class="title"><a href="#">訂閱 3 步驟</a></td><td class="m">ESG共學坊公告 · 2 分</td></tr><tr data-type="專訪"><td class="d"><time datetime="2024-10-19">2024.10.19</time></td><td class="t"><span class="ia-type t-專訪">專訪</span></td><td class="title"><a href="#">從父親的塑膠建材到我的永續革命：彭欣惠的接班與新生</a></td><td class="m">人物專訪 · 3 分</td></tr><tr data-type="觀點"><td class="d"><time datetime="2024-10-08">2024.10.08</time></td><td class="t"><span class="ia-type t-觀點">觀點</span></td><td class="title"><a href="#">核心策略指引：九宮格模型助力創新與問題解決</a></td><td class="m">創新策略 · 3 分</td></tr><tr data-type="觀點"><td class="d"><time datetime="2024-10-08">2024.10.08</time></td><td class="t"><span class="ia-type t-觀點">觀點</span></td><td class="title"><a href="#">數據驅動的決策：推動永續策略實現的第一步</a></td><td class="m">市場競爭力 · 3 分</td></tr><tr data-type="觀點"><td class="d"><time datetime="2024-10-08">2024.10.08</time></td><td class="t"><span class="ia-type t-觀點">觀點</span></td><td class="title"><a href="#">透過市場數據洞察趨勢，提升永續產品競爭力</a></td><td class="m">市場競爭力 · 3 分</td></tr><tr data-type="觀點"><td class="d"><time datetime="2024-10-08">2024.10.08</time></td><td class="t"><span class="ia-type t-觀點">觀點</span></td><td class="title"><a href="#">擴大影響力：聯合利華的永續成功策略</a></td><td class="m">創新策略 · 2 分</td></tr><tr data-type="觀點"><td class="d"><time datetime="2024-10-02">2024.10.02</time></td><td class="t"><span class="ia-type t-觀點">觀點</span></td><td class="title"><a href="#">透過對話創造價值：搭建企業與社會的溝通橋樑</a></td><td class="m">溝通與換位思考 · 2 分</td></tr><tr data-type="觀點"><td class="d"><time datetime="2024-10-02">2024.10.02</time></td><td class="t"><span class="ia-type t-觀點">觀點</span></td><td class="title"><a href="#">換位思考：提升問卷設計的有效性</a></td><td class="m">溝通與換位思考 · 2 分</td></tr><tr data-type="觀點"><td class="d"><time datetime="2024-10-02">2024.10.02</time></td><td class="t"><span class="ia-type t-觀點">觀點</span></td><td class="title"><a href="#">從內部落實到外部溝通：強化永續理念的傳播</a></td><td class="m">溝通與換位思考 · 3 分</td></tr><tr data-type="觀點"><td class="d"><time datetime="2024-09-27">2024.09.27</time></td><td class="t"><span class="ia-type t-觀點">觀點</span></td><td class="title"><a href="#">公益與企業共贏：提升社會價值與經濟效益</a></td><td class="m">合作模式 · 2 分</td></tr><tr data-type="觀點"><td class="d"><time datetime="2024-09-27">2024.09.27</time></td><td class="t"><span class="ia-type t-觀點">觀點</span></td><td class="title"><a href="#">從贊助到夥伴：企業與非營利組織的雙贏策略</a></td><td class="m">合作模式 · 2 分</td></tr><tr data-type="觀點"><td class="d"><time datetime="2024-09-26">2024.09.26</time></td><td class="t"><span class="ia-type t-觀點">觀點</span></td><td class="title"><a href="#">聚焦重大性議題：有限資源下的最優選擇</a></td><td class="m">永續責任 · 2 分</td></tr><tr data-type="觀點"><td class="d"><time datetime="2024-09-26">2024.09.26</time></td><td class="t"><span class="ia-type t-觀點">觀點</span></td><td class="title"><a href="#">透過 SDGs 打造永續競爭優勢</a></td><td class="m">永續責任 · 2 分</td></tr><tr data-type="觀點"><td class="d"><time datetime="2024-09-26">2024.09.26</time></td><td class="t"><span class="ia-type t-觀點">觀點</span></td><td class="title"><a href="#">從永續報告書中洞察企業未來承諾</a></td><td class="m">永續責任 · 2 分</td></tr><tr data-type="調查報告"><td class="d"><time datetime="2024-06-26">2024.06.26</time></td><td class="t"><span class="ia-type t-調查報告">調查報告</span></td><td class="title"><a href="#">ESG 實務工作者需求與挑戰調查結果報告</a></td><td class="m">永續責任 · 3 分</td></tr><tr data-type="觀點"><td class="d"><time datetime="2024-03-25">2024.03.25</time></td><td class="t"><span class="ia-type t-觀點">觀點</span></td><td class="title"><a href="#">從碳足跡到碳手印：塑造更永續的明天</a></td><td class="m">永續責任 · 2 分</td></tr></tbody></table>
+<p class="ic-foot">想依主題閱讀？<a href="#">前往共好學習</a>，同一批文章依 7 個主題整理。</p>
+</div>
+<aside class="ic-side" aria-label="訂閱與聯絡">
+<div class="box"><h2>訂閱更新</h2><p>不想錯過新文章？</p><div class="row"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg><a href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener">官方 LINE @381iutjm</a></div><div class="row"><svg class="ic" aria-hidden="true"><use href="#i-rss"/></svg><a href="/feed.xml">RSS feed</a></div></div>
+<div class="box"><h2>媒體與合作</h2><p>講座邀約、論壇合辦、採訪需求：</p><div class="row"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg><a href="mailto:pt@coesg.tw">pt@coesg.tw</a></div></div>
+</aside>
+</div></div>
+</main><footer class="sf"><span>共好玟化組織發展顧問有限公司 · 統編 90223501</span><span><a href="mailto:pt@coesg.tw">pt@coesg.tw</a> · LINE @381iutjm</span></footer></div></div></section>
+<script>
+(function () {
+  var bar = document.querySelector('.pp-bar');
+  if (!bar) return;
+  bar.hidden = false;
+  function ph() { document.documentElement.style.setProperty('--ppbar', bar.offsetHeight + 'px'); }
+  ph(); window.addEventListener('resize', ph);
+  var btns = bar.querySelectorAll('button[data-show]');
+  var ps = document.querySelectorAll('.proposal');
+  function show(id, scroll) {
+    ps.forEach(function (p) { p.hidden = !(id === 'all' || p.id === id); });
+    btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.show === id)); });
+    try { history.replaceState(null, '', id === 'all' ? location.pathname : '#' + id); } catch (e) {}
+    if (scroll) window.scrollTo(0, 0);
+  }
+  btns.forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.show, true); }); });
+  var h = location.hash.slice(1);
+  show(['A', 'B', 'C'].indexOf(h) > -1 ? h : 'A', false);
+})();
+</script>
+
+<script>
+(function () {
+  var btns = document.querySelectorAll('[data-ityp]');
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var v = b.dataset.ityp, n = 0;
+      btns.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      document.querySelectorAll('#ic-rows tr').forEach(function (r) { var ok = v === 'all' || r.dataset.type === v; r.hidden = !ok; if (ok) n++; });
+      document.getElementById('ic-cap').textContent = (v === 'all' ? '依發布日期排列，共 ' : '「' + v + '」共 ') + n + ' 篇';
+    });
+  });
+})();
+</script>
+</body></html>

@@ -23,11 +23,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  // Post pages (insights + learning share same posts)
+  // Post pages (canonical address is /learning/[slug])
   for (const locale of locales) {
     for (const post of posts) {
       entries.push({
-        url: `${BASE_URL}/${locale}/insights/${post.slug}`,
+        url: `${BASE_URL}/${locale}/learning/${post.slug}`,
         lastModified: new Date(post.date),
         changeFrequency: 'monthly',
         priority: 0.6,

@@ -1,7 +1,7 @@
-import { Geist, Geist_Mono, DM_Sans } from "next/font/google";
+import { Geist_Mono, DM_Sans, Noto_Sans_TC } from "next/font/google";
 import type { Metadata } from "next"
 import { i18n, type Locale } from "@/i18n/config"
-import { getDictionary } from "@/i18n/getDictionary"
+import { getMessages } from "@/i18n/messages"
 import { Navbar } from "@/components/domain/Navbar"
 import { Footer } from "@/components/domain/Footer"
 import { site } from "@/lib/site"
@@ -16,12 +16,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params
   const typedLocale = locale as Locale
-  const dict = await getDictionary(typedLocale)
+  const dict = await getMessages(typedLocale)
 
-  const defaultTitle =
-    typedLocale === "zh"
-      ? "共好玟化 CO-ESG | 永續品牌的專業橋樑"
-      : "CO-ESG | Professional Bridge for Sustainable Brands"
+  const defaultTitle = dict.home.meta.title
 
   return {
     metadataBase: new URL(site.url),
@@ -29,7 +26,7 @@ export async function generateMetadata({
       template: "%s | 共好玟化 CO-ESG",
       default: defaultTitle,
     },
-    description: dict.hero.description,
+    description: dict.home.hero.subTitle,
     openGraph: {
       siteName: "共好玟化 CO-ESG",
       locale: localeMap[typedLocale] ?? "zh_TW",
@@ -42,10 +39,13 @@ export async function generateMetadata({
   }
 }
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-  display: 'swap',
+// Body and headings: Noto Sans TC covers Traditional Chinese and Latin in one family.
+// next/font splits it by unicode-range, so pages only download the glyphs they use.
+const notoSansTC = Noto_Sans_TC({
+  variable: "--font-body-family",
+  weight: ["400", "500", "700", "900"],
+  display: "swap",
+  preload: false,
 });
 
 const geistMono = Geist_Mono({
@@ -54,8 +54,9 @@ const geistMono = Geist_Mono({
   display: 'swap',
 });
 
+// Display numerals and Latin kickers
 const dmSans = DM_Sans({
-  variable: "--font-heading-family",
+  variable: "--font-display-family",
   subsets: ["latin"],
   weight: ["500", "600", "700", "800", "900"],
   display: 'swap',
@@ -65,7 +66,6 @@ export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ locale }))
 }
 
-import { DotPattern } from "@/components/core/BackgroundPattern"
 
 export default async function LocaleLayout({
   children,
@@ -76,12 +76,12 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params
   const typedLocale = locale as Locale
-  const dict = await getDictionary(typedLocale)
+  const dict = await getMessages(typedLocale)
 
   return (
     <html
       lang={typedLocale}
-      className={`${geistSans.variable} ${geistMono.variable} ${dmSans.variable} h-full antialiased selection:bg-primary/10 selection:text-primary scroll-smooth`}
+      className={`${notoSansTC.variable} ${geistMono.variable} ${dmSans.variable} h-full antialiased scroll-smooth`}
       suppressHydrationWarning
     >
       <body className="relative flex min-h-full flex-col bg-background font-sans text-foreground">
@@ -116,14 +116,14 @@ export default async function LocaleLayout({
             }),
           }}
         />
-        {/* Global Structural Pattern */}
-        <DotPattern className="fixed inset-0 -z-30 opacity-[0.03]" />
-        
-        {/* Global Texture Layer */}
-        <div className="bg-grain fixed inset-0 -z-20 pointer-events-none" />
-
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink focus:px-5 focus:py-3 focus:text-sm focus:font-bold focus:text-white"
+        >
+          {dict.nav.skipToContent}
+        </a>
         <Navbar locale={typedLocale} labels={dict.nav} />
-        <main className="flex-1">
+        <main id="main" className="flex-1">
           {children}
         </main>
         <Footer locale={typedLocale} dict={dict} />

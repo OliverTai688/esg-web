@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>合作洽詢 提案</title>
+<meta name="description" content="/consulting 轉換頁的三個設計提案">
+<link rel="stylesheet" href="_tokens.css">
+<style>
+:root { --line-strong: #00843A; --line-green: #06C755; }
+html { scroll-padding-top: calc(var(--ppbar, 0px) + 16px); }
+body { overflow-x: hidden; }
+[hidden] { display: none !important; }
+.ic { width: 1.15em; height: 1.15em; flex: none; vertical-align: -0.2em; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+:focus-visible { outline: 3px solid var(--orange-strong); outline-offset: 2px; }
+
+/* ---------- proposal chrome ---------- */
+.pp-intro { background: #fff; border-bottom: 1px solid var(--line); }
+.pp-intro .in { max-width: 1180px; margin: 0 auto; padding: 28px 16px 24px; }
+.pp-intro h1 { font-size: clamp(22px, 4.5vw, 32px); line-height: 1.3; margin: 10px 0 8px; }
+.pp-intro p { margin: 0 0 6px; color: var(--ink-2); max-width: 760px; }
+.pp-intro .pp-note { margin-top: 14px; max-width: 900px; }
+.proposal { padding: 36px 0 64px; border-bottom: 8px solid #111; }
+.pp-meta { max-width: 1180px; margin: 0 auto 8px; padding: 0 16px; }
+.pp-meta-card { background: #fff; border: 2px dashed #555; border-radius: 14px; padding: 20px; }
+.pp-meta-card h2 { margin: 12px 0 14px; font-size: clamp(20px, 3.6vw, 26px); line-height: 1.35; }
+.pp-meta-card dl { display: grid; gap: 14px 28px; margin: 0; }
+.pp-meta-card dt { font-weight: 700; font-size: 13px; color: var(--ink-2); letter-spacing: .08em; }
+.pp-meta-card dd { margin: 2px 0 0; font-size: 15px; }
+.pp-meta-card dd ul { margin: 0; padding-left: 1.2em; }
+@media (min-width: 820px) { .pp-meta-card dl { grid-template-columns: 1fr 1fr; } .pp-meta-card .full { grid-column: 1 / -1; } }
+.frame { max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+.frame-label { display: flex; align-items: center; gap: 8px; font: 700 12px/1.4 var(--font-display); color: var(--ink-2); margin: 28px 0 10px; letter-spacing: .1em; }
+.frame-label::before { content: ""; width: 18px; height: 2px; background: var(--ink-2); }
+.screen { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; box-shadow: 0 14px 40px rgba(31, 32, 34, .08); }
+.anno { font-size: 12px; line-height: 1.5; color: #6b5200; background: var(--yellow-soft); border: 1px dashed #d6a000; border-radius: 8px; padding: 6px 10px; display: inline-block; }
+
+/* ---------- site chrome (part of the design) ---------- */
+.sh { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 20px; background: #fff; border-bottom: 1px solid var(--line); }
+.sh img { height: 30px; width: auto; display: block; }
+.sh nav { display: none; gap: 22px; font-size: 14px; }
+.sh nav a { color: var(--ink); text-decoration: none; }
+.sh nav a[aria-current] { color: var(--orange-strong); font-weight: 700; box-shadow: inset 0 -2px 0 var(--orange-strong); }
+.sh .sh-cta { font-size: 14px; padding: 8px 16px; min-height: 40px; }
+@media (min-width: 960px) { .sh nav { display: flex; } }
+.sf { background: var(--surface-dark); color: #fff; font-size: 13px; padding: 18px 20px; display: flex; flex-wrap: wrap; gap: 6px 24px; justify-content: space-between; }
+.sf a { color: #fff; }
+
+/* ---------- shared atoms ---------- */
+.w { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+@media (max-width: 480px) { .w { padding: 0 16px; } }
+.eyebrow { font: 700 12px/1.3 var(--font-display); letter-spacing: .16em; color: var(--orange-strong); text-transform: uppercase; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 10px 22px; border-radius: 999px; font: 700 15px/1.3 var(--font-sans); text-decoration: none; background: var(--orange-strong); color: #fff; border: 2px solid var(--orange-strong); cursor: pointer; text-align: center; }
+.btn:hover { background: #B53513; border-color: #B53513; }
+.btn-line { background: var(--line-strong); border-color: var(--line-strong); }
+.btn-line:hover { background: #006E30; border-color: #006E30; }
+.btn-ghost { background: transparent; color: var(--orange-strong); }
+.btn-ghost:hover { background: var(--orange-soft); }
+.btn-dark { background: var(--ink); border-color: var(--ink); }
+.btn-light { background: #fff; color: var(--ink); border-color: #fff; }
+.btn-light:hover { background: var(--yellow-soft); border-color: var(--yellow-soft); }
+.btn-sm { min-height: 40px; padding: 7px 16px; font-size: 14px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; background: var(--orange-soft); color: #9A2E12; }
+.chip-grey { background: #EEECE8; color: var(--ink-2); }
+.chip-green { background: #E3F5E6; color: #17672A; }
+.meta { font-size: 13px; color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; }
+.meta span { display: inline-flex; align-items: center; gap: 5px; }
+.h-sec { font-size: clamp(22px, 4vw, 30px); line-height: 1.35; margin: 6px 0 10px; letter-spacing: .01em; }
+.lede { color: var(--ink-2); margin: 0; max-width: 680px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+a.cardlink { color: inherit; text-decoration: none; display: block; }
+a.cardlink:hover h3, a.cardlink:hover h4, a.cardlink:focus-visible h3 { color: var(--orange-strong); text-decoration: underline; text-underline-offset: 3px; }
+.clamp2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* ---------- shared consulting atoms ---------- */
+.c-hero { padding: 48px 0 40px; }
+.c-hero h1 { font-size: clamp(30px, 6.4vw, 48px); line-height: 1.22; margin: 8px 0 14px; }
+.sec { padding: 48px 0; }
+.sec.alt { background: #fff; }
+.sec-head { margin-bottom: 24px; }
+.price { font: 800 28px/1 var(--font-display); color: var(--ink); letter-spacing: -.01em; }
+.price small { font: 700 14px/1 var(--font-sans); color: var(--ink-2); margin-left: 2px; }
+.for { font-size: 13.5px; color: var(--ink-2); display: flex; gap: 6px; align-items: flex-start; }
+.for .ic { color: var(--orange-strong); margin-top: 3px; }
+.solgrid { display: grid; gap: 16px; }
+@media (min-width: 720px) { .solgrid { grid-template-columns: 1fr 1fr; } }
+.sol { padding: 22px; display: flex; flex-direction: column; gap: 12px; position: relative; }
+.sol .top { display: flex; gap: 14px; align-items: center; }
+.sol .tic { width: 48px; height: 48px; border-radius: 12px; background: var(--orange-soft); color: var(--orange-strong); display: grid; place-items: center; flex: none; }
+.sol .tic .ic { width: 24px; height: 24px; }
+.sol h3 { margin: 0; font-size: 19px; line-height: 1.4; }
+.sol p { margin: 0; font-size: 15px; color: var(--ink-2); }
+.sol .foot { margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding-top: 14px; border-top: 1px solid var(--line); }
+.badge-hot { position: absolute; top: 16px; right: 16px; }
+.tiers { display: grid; gap: 16px; align-items: stretch; }
+@media (min-width: 900px) { .tiers { grid-template-columns: repeat(3, 1fr); } }
+.tier { padding: 24px 22px; display: flex; flex-direction: column; gap: 12px; position: relative; }
+.tier.rec { border: 2px solid var(--orange-strong); box-shadow: 0 14px 34px rgba(207, 63, 28, .14); }
+.tier .rec-badge { position: absolute; top: -13px; left: 22px; background: var(--orange-strong); color: #fff; font-size: 12.5px; font-weight: 700; padding: 4px 12px; border-radius: 999px; }
+.tier h3 { margin: 0; font-size: 18px; }
+.tier .tag { font-weight: 700; color: var(--ink); font-size: 15.5px; margin: 0; }
+.tier ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 14.5px; }
+.tier li { display: flex; gap: 8px; align-items: flex-start; }
+.tier li .ic { color: var(--orange-strong); margin-top: 4px; }
+.tier .aud { font-size: 13px; color: var(--ink-2); background: var(--paper); border-radius: 8px; padding: 8px 10px; margin-top: auto; }
+.tier .btn { width: 100%; }
+.waitlist { margin-top: 22px; background: var(--surface-dark); color: #fff; border-radius: 18px; padding: 26px; display: grid; gap: 16px; position: relative; overflow: hidden; }
+@media (min-width: 860px) { .waitlist { grid-template-columns: 1fr auto; align-items: center; padding: 30px 34px; } }
+.waitlist::after { content: ""; position: absolute; right: -50px; top: -50px; width: 160px; height: 160px; border-radius: 50%; border: 22px solid var(--yellow); opacity: .25; pointer-events: none; }
+.waitlist .wl-badge { display: inline-block; font-size: 13px; font-weight: 700; color: var(--ink); background: var(--yellow); border-radius: 999px; padding: 4px 12px; }
+.waitlist h3 { margin: 10px 0 8px; font-size: clamp(19px, 3.6vw, 23px); line-height: 1.5; color: #fff; }
+.waitlist p { margin: 0; color: #D9DADD; font-size: 15px; }
+.waitlist .btn { position: relative; z-index: 1; }
+.faq { display: grid; gap: 10px; }
+.faq details { background: #fff; border: 1px solid var(--line); border-radius: 12px; }
+.faq details[open] { border-color: var(--orange); }
+.faq summary { cursor: pointer; padding: 16px 18px; display: flex; gap: 12px; align-items: center; justify-content: space-between; font-weight: 700; list-style: none; min-height: 52px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .ic { color: var(--orange-strong); transition: transform .2s; }
+.faq details[open] summary .ic { transform: rotate(180deg); }
+.faq details p { margin: 0; padding: 0 18px 18px; color: var(--ink-2); font-size: 15px; }
+.form { display: grid; gap: 14px; }
+.form .two { display: grid; gap: 14px; }
+@media (min-width: 640px) { .form .two { grid-template-columns: 1fr 1fr; } }
+.form label { display: grid; gap: 6px; font-size: 14px; font-weight: 700; }
+.form label .opt { font-weight: 400; color: var(--ink-2); }
+.form input, .form select, .form textarea { font: inherit; font-size: 16px; font-weight: 400; border: 1px solid #CFC8BE; border-radius: 10px; padding: 11px 12px; background: #fff; color: var(--ink); width: 100%; min-height: 46px; }
+.form input:focus, .form select:focus, .form textarea:focus { border-color: var(--orange-strong); outline: 2px solid var(--orange-soft); }
+.form .fine { font-size: 12.5px; color: var(--ink-2); margin: 0; }
+.contact-info { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 14px; color: var(--ink-2); }
+.contact-info span, .contact-info a { display: inline-flex; gap: 6px; align-items: center; }
+.ph { position: relative; aspect-ratio: 4 / 3; border-radius: 12px; overflow: hidden; background: repeating-linear-gradient(135deg, var(--orange-soft) 0 14px, #FBE3DB 14px 28px); display: grid; place-items: center; color: #9A2E12; text-align: center; font-size: 12.5px; font-weight: 700; }
+.ph .ic { width: 30px; height: 30px; display: block; margin: 0 auto 6px; }
+.skel { display: grid; gap: 7px; }
+.skel i { display: block; height: 9px; border-radius: 5px; background: #ECE7E0; }
+.skel i:nth-child(2) { width: 86%; } .skel i:nth-child(3) { width: 64%; }
+.lbl { font-size: 12px; font-weight: 700; color: var(--ink-2); letter-spacing: .06em; }
+
+/* ================= A · 漏斗順序 ================= */
+.ca-hero { background: linear-gradient(180deg, #fff, var(--paper)); text-align: center; }
+.ca-hero .lede { margin: 0 auto; }
+.ca-hero .acts { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 26px; }
+.ca-hero .acts .btn { min-width: 220px; }
+.ca-sub { position: sticky; top: var(--ppbar, 0px); z-index: 4; background: rgba(255, 255, 255, .96); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); }
+.ca-sub nav { display: flex; gap: 4px; overflow-x: auto; padding: 0 12px; }
+.ca-sub a { flex: none; padding: 12px 12px; font-size: 14px; font-weight: 700; color: var(--ink); text-decoration: none; border-bottom: 3px solid transparent; }
+.ca-sub a:hover { border-bottom-color: var(--orange-strong); color: var(--orange-strong); }
+.ca-npo { display: grid; gap: 16px; }
+@media (min-width: 760px) { .ca-npo { grid-template-columns: 1fr 1fr; } }
+.npo-model { padding: 24px; display: grid; gap: 10px; }
+.npo-model .tic { width: 52px; height: 52px; border-radius: 14px; background: var(--yellow-soft); color: #5B4A00; display: grid; place-items: center; }
+.npo-model .tic .ic { width: 26px; height: 26px; }
+.npo-model h3 { margin: 0; font-size: 20px; }
+.npo-model p { margin: 0; color: var(--ink-2); font-size: 15px; }
+.npo-model ul { margin: 6px 0 0; padding: 12px 0 0; border-top: 1px solid var(--line); list-style: none; display: grid; gap: 6px; font-size: 14.5px; }
+.npo-model li { display: flex; gap: 8px; } .npo-model li .ic { color: var(--orange-strong); margin-top: 4px; }
+.ca-cases { display: grid; gap: 14px; margin-top: 26px; grid-template-columns: 1fr; }
+@media (min-width: 560px) { .ca-cases { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1000px) { .ca-cases { grid-template-columns: repeat(4, 1fr); } }
+.ca-case { padding: 12px; display: grid; gap: 10px; }
+.ca-case .ph.dark { background: linear-gradient(135deg, var(--grey), var(--surface-dark)); color: #fff; }
+.ca-contact { display: grid; gap: 20px; }
+@media (min-width: 900px) { .ca-contact { grid-template-columns: 1.5fr 1fr; align-items: start; } }
+.ca-linecard { background: #E8F6EC; border-radius: 16px; padding: 22px; display: grid; gap: 10px; }
+.ca-linecard h3 { margin: 0; font-size: 19px; }
+.ca-linecard p { margin: 0; font-size: 14.5px; }
+
+/* ================= B · 先幫你選 ================= */
+.cb-hero { background: var(--orange-soft); }
+.cb-hero .grid { display: grid; gap: 24px; }
+@media (min-width: 960px) { .cb-hero .grid { grid-template-columns: 1fr 1.25fr; align-items: start; } }
+.chooser { background: #fff; border-radius: 18px; padding: 20px; box-shadow: 0 10px 30px rgba(207, 63, 28, .10); }
+.chooser fieldset { border: 0; margin: 0; padding: 0; }
+.chooser legend { font-weight: 900; font-size: 18px; margin-bottom: 12px; padding: 0; }
+.chooser .opts { display: grid; gap: 8px; }
+.chooser label { display: flex; gap: 12px; align-items: center; padding: 12px 14px; border: 1.5px solid var(--line); border-radius: 12px; cursor: pointer; font-size: 15px; font-weight: 500; min-height: 52px; }
+.chooser label:hover { border-color: var(--orange); }
+.chooser input { width: 20px; height: 20px; accent-color: var(--orange-strong); flex: none; }
+.chooser label:has(input:checked) { border-color: var(--orange-strong); background: var(--orange-soft); font-weight: 700; }
+.result { margin-top: 14px; border-top: 2px dashed var(--line); padding-top: 14px; display: grid; gap: 10px; }
+.result h3 { margin: 0; font-size: 14px; color: var(--ink-2); letter-spacing: .06em; }
+.rec-item { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; align-items: center; padding: 12px 14px; border-radius: 12px; background: var(--paper); }
+.rec-item b { font-size: 16px; }
+.rec-item span { font-size: 13px; color: var(--ink-2); grid-column: 1; }
+.rec-item .price { grid-row: 1 / 3; grid-column: 2; font-size: 20px; text-align: right; }
+.result .acts { display: flex; flex-wrap: wrap; gap: 8px; }
+.ladder { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.ladder li { display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; position: relative; overflow: hidden; }
+.ladder li::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: var(--lv); background: linear-gradient(90deg, var(--orange-soft), rgba(253, 237, 232, 0)); z-index: 0; }
+.ladder li > * { position: relative; z-index: 1; }
+.ladder .k { font-size: 12px; font-weight: 700; color: var(--ink-2); letter-spacing: .06em; }
+.ladder b { font-size: 16.5px; display: block; }
+.ladder .d { font-size: 13.5px; color: var(--ink-2); }
+.ladder .price { font-size: 22px; text-align: right; }
+.ladder a { grid-column: 1 / -1; font-size: 13.5px; font-weight: 700; }
+@media (min-width: 760px) { .ladder li { grid-template-columns: 110px 1fr auto 150px; } .ladder a { grid-column: auto; text-align: right; } }
+.ladder li.mem { border-style: dashed; }
+.cb-npo { display: grid; gap: 16px; }
+@media (min-width: 900px) { .cb-npo { grid-template-columns: 1fr 1fr; } }
+.cb-model { padding: 22px; }
+.cb-model h3 { margin: 0 0 6px; font-size: 19px; display: flex; gap: 8px; align-items: center; }
+.cb-model h3 .ic { color: var(--orange-strong); }
+.cb-model p { margin: 0 0 10px; color: var(--ink-2); font-size: 15px; }
+.cb-model .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.cb-quotes { display: grid; gap: 14px; margin-top: 20px; }
+@media (min-width: 760px) { .cb-quotes { grid-template-columns: repeat(2, 1fr); } }
+.cb-quote { background: #fff; border-radius: 16px; padding: 22px 22px 18px; border: 1px solid var(--line); position: relative; display: grid; gap: 12px; }
+.cb-quote::before { content: "“"; font: 900 64px/0.6 var(--font-display); color: var(--orange); display: block; height: 26px; }
+.cb-quote .who { display: flex; gap: 10px; align-items: center; font-size: 13.5px; }
+.cb-quote .who .avatar { width: 36px; height: 36px; font-size: 13px; }
+.cb-contact { display: grid; gap: 22px; }
+@media (min-width: 900px) { .cb-contact { grid-template-columns: 1fr 1.4fr; } }
+
+/* ================= C · 對話優先 ================= */
+.cc-hero { background: var(--surface-dark); color: #fff; padding: 44px 0; }
+.cc-hero h1 { color: #fff; }
+.cc-hero .lede { color: #D9DADD; }
+.cc-hero .eyebrow { color: var(--yellow); }
+.cc-doors { display: grid; gap: 16px; margin-top: 26px; }
+@media (min-width: 900px) { .cc-doors { grid-template-columns: 1.4fr 1fr; } }
+.cc-door { border-radius: 18px; padding: 22px; color: var(--ink); }
+.cc-door h2 { margin: 0 0 4px; font-size: 20px; display: flex; gap: 8px; align-items: center; }
+.cc-door .sub { margin: 0 0 14px; color: var(--ink-2); font-size: 14.5px; }
+.cc-door.form-door { background: #fff; }
+.cc-door.line-door { background: #E8F6EC; display: grid; gap: 12px; align-content: start; }
+.qr { width: 148px; aspect-ratio: 1; border-radius: 12px; background: #fff; border: 2px dashed #17672A; display: grid; place-items: center; text-align: center; font-size: 12px; color: #17672A; font-weight: 700; padding: 10px; position: relative; }
+.qr::before, .qr::after { content: ""; position: absolute; width: 26px; height: 26px; border: 5px solid #17672A; border-radius: 4px; }
+.qr::before { top: 10px; left: 10px; } .qr::after { bottom: 10px; right: 10px; }
+.cc-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.cc-tabs button { border: 1.5px solid var(--line); background: #fff; border-radius: 999px; padding: 10px 18px; font: 700 15px/1.2 var(--font-sans); color: var(--ink); cursor: pointer; display: inline-flex; gap: 8px; align-items: center; min-height: 46px; }
+.cc-tabs button[aria-selected="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
+.cc-panel { display: grid; gap: 16px; }
+.cc-panel + .cc-panel { margin-top: 40px; }
+.cc-panel > h3 { margin: 0; font-size: 22px; }
+.cc-rows { display: grid; gap: 0; background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.cc-row { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; padding: 18px 20px; border-bottom: 1px solid var(--line); align-items: center; }
+.cc-row:last-child { border-bottom: 0; }
+.cc-row h4 { margin: 0; font-size: 17px; }
+.cc-row p { margin: 0; font-size: 14px; color: var(--ink-2); grid-column: 1 / -1; }
+.cc-row .price { font-size: 22px; }
+.cc-row .for { grid-column: 1 / -1; }
+@media (min-width: 860px) { .cc-row { grid-template-columns: 260px 1fr auto; } .cc-row p { grid-column: 2; grid-row: 1 / 3; } .cc-row .price { grid-column: 3; grid-row: 1 / 3; } .cc-row .for { grid-column: 1; } }
+.cc-story { display: grid; gap: 14px; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 18px; }
+@media (min-width: 860px) { .cc-story { grid-template-columns: 180px 1fr; align-items: start; } }
+.cc-steps { display: grid; gap: 10px; }
+@media (min-width: 640px) { .cc-steps { grid-template-columns: repeat(3, 1fr); } }
+.cc-steps > div { border-left: 3px solid var(--orange); padding: 2px 0 2px 12px; display: grid; gap: 8px; }
+.cc-steps > div:nth-child(2) { border-color: var(--yellow); } .cc-steps > div:nth-child(3) { border-color: var(--line-green); }
+.cc-wl { margin-top: 18px; background: var(--yellow); border-radius: 18px; padding: 24px; display: grid; gap: 14px; color: var(--ink); }
+@media (min-width: 860px) { .cc-wl { grid-template-columns: 1fr auto; align-items: center; } }
+.cc-wl .k { font-weight: 900; font-size: 14px; letter-spacing: .06em; }
+.cc-wl h3 { margin: 6px 0; font-size: clamp(19px, 3.6vw, 23px); line-height: 1.5; }
+.cc-wl p { margin: 0; font-size: 15px; }
+.cc-faq { display: grid; gap: 10px; }
+@media (min-width: 900px) { .cc-faq { grid-template-columns: 1fr 1fr; align-items: start; } }
+.cc-end { background: var(--orange-strong); color: #fff; padding: 36px 0; }
+.cc-end .w { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; }
+.cc-end h2 { margin: 0; font-size: clamp(24px, 4.4vw, 30px); font-weight: 900; }
+.cc-end p { margin: 4px 0 0; color: #fff; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+<symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+<symbol id="i-line" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3.5C6.8 3.5 2.6 6.9 2.6 11.1c0 3.8 3.3 6.9 7.8 7.5.3.1.7.2.8.5.1.3.1.6 0 .9l-.1.8c0 .2-.2.9.8.5s5.4-3.2 7.4-5.4c1.4-1.5 2-3.1 2-4.8 0-4.2-4.2-7.6-9.3-7.6z"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+<symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+<symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></symbol>
+<symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h7"/></symbol>
+<symbol id="i-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></symbol>
+<symbol id="i-coffee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5zM17 10h1.5a2.5 2.5 0 0 1 0 5H17M8 3v3M12 3v3"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></symbol>
+<symbol id="i-rss" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 11a8 8 0 0 1 8 8M5 5a14 14 0 0 1 14 14"/><circle cx="6" cy="18" r="1.5" fill="currentColor"/></symbol>
+<symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+<symbol id="i-bulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V17h5v-1.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></symbol>
+<symbol id="i-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5" stroke-linecap="round"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14c2.4 0 4 1.6 4.5 4.5"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+<symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
+<symbol id="i-mega" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M3 10v4h4l6 4V6l-6 4zM16.5 9a4 4 0 0 1 0 6"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/></symbol>
+</defs></svg>
+<div class="pp-bar" role="toolbar" aria-label="切換提案" hidden><strong>/consulting</strong><button type="button" data-show="A" aria-pressed="false">A｜漏斗順序</button><button type="button" data-show="B" aria-pressed="false">B｜先幫你選</button><button type="button" data-show="C" aria-pressed="false">C｜對話優先</button><button type="button" data-show="all" aria-pressed="false">全部並排</button></div><header class="pp-intro"><div class="in">
+<span class="pp-label">Proposal · /consulting</span>
+<h1>合作洽詢：轉換頁 三案</h1>
+<p>旅程位置：<strong>行動（Conversion）</strong>。唯一的工作是把「想合作」變成「已送出」：先選方案、再消除疑慮、最後填表。主要角色 P1 品牌主（價格敏感、要先信任人）、P2 企業窗口、P3 NPO。</p><p>三案內容相同、差在<strong>順序與決策輔助</strong>：A 依漏斗由上而下；B 先用一題幫你選；C 把預約放在第一屏，再依身分展開方案。</p>
+<p class="pp-note">共同規則：價格只放單一最高價（C02）；會員三方案含標語與適用對象＋「即將推出・共好生態圈會員」候補橫幅，〔加入候補〕連到官方 LINE（C04）；NPO 照片尚未授權，提出三種不使用圖庫照片的占位做法（C03）；表單維持 mailto 送出並誠實說明，另提供 LINE 零摩擦替代（B01）；用語依 G01（永續白皮書／ESG共學坊／供應鏈對接）。</p>
+</div></header>
+<section class="proposal" id="A" aria-label="提案 A"><div class="pp-meta"><div class="pp-meta-card">
+<span class="pp-label">提案 A</span>
+<h2>漏斗順序：方案 → NPO → 會員 → FAQ → 表單</h2>
+<dl>
+<div class="full"><dt>概念</dt><dd>依旅程文件的轉換漏斗原樣排列，加上 sticky 頁內導覽讓直接來要報價的人一鍵跳到方案或表單。每張方案卡加上「適合誰」與單一價格；表單旁固定一張「不想填表？用 LINE」卡。</dd></div>
+<div class="full"><dt>參考來源</dt><dd>South Pole 服務頁（服務 → 案例 → 聯繫專家）、Schneider Electric 的頁內錨點導覽；Patagonia 把影響力資訊放在決策點旁。</dd></div>
+<div><dt>優點</dt><dd><ul><li>最符合客戶既有架構與 C01–C04 任務，改版風險最低</li><li>頁內導覽解決長頁問題，P2 可直接跳 FAQ 或表單</li><li>每一區都有去處，不會卡住</li></ul></dd></div>
+<div><dt>風險</dt><dd><ul><li>決策輔助較弱：訪客要自己比較 4 個方案＋3 個會員</li><li>方案與會員分在兩處，價格感受容易混亂（NT$300 與 NT$100,000 相隔很遠）</li><li>頁面最長</li></ul></dd></div>
+<div class="full"><dt>對旅程的作用</dt><dd>服務已經知道自己要什麼的訪客（從首頁或 LINE 點進來要報價的 P1、P2），用最熟悉的順序降低認知負擔；FAQ 放在表單前，最後一刻消除疑慮。</dd></div>
+</dl></div></div>
+<div class="frame"><p class="frame-label">轉換頁 /consulting</p><div class="screen"><header class="sh"><img src="../../../public/brand/gungho-horizontal.svg" alt="共好玟化 CO-ESG" width="76" height="30"><nav aria-label="主選單"><a href="#">共好永續力</a><a href="#">永續足跡</a><a href="#">共好學習</a><a href="#">最新文章</a><a href="#" aria-current="page">合作洽詢</a></nav><a class="btn btn-sm sh-cta" href="#a-contact">預約諮詢</a></header>
+<main>
+<section class="c-hero ca-hero"><div class="w">
+<p class="eyebrow">合作洽詢</p>
+<h1>預約 15 分鐘 Coffee Chat</h1>
+<p class="lede">讓我們聊聊如何點亮你的專業價值。無論你是品牌主、供應鏈夥伴、還是永續產業的參與者，我們都期待與你對話。</p>
+<div class="acts"><a class="btn" href="#a-contact"><svg class="ic" aria-hidden="true"><use href="#i-coffee"/></svg>預約諮詢時段</a><a class="btn btn-line" href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>先用 LINE 問問</a></div>
+</div></section>
+<div class="ca-sub"><nav aria-label="頁內導覽"><a href="#a-sol">解決方案</a><a href="#a-npo">NPO 合作</a><a href="#a-mem">會員方案</a><a href="#a-faq">常見問題</a><a href="#a-contact">預約諮詢</a></nav></div>
+<section class="sec" id="a-sol"><div class="w">
+<div class="sec-head"><p class="eyebrow">服務項目</p><h2 class="h-sec">企業 ESG 解決方案</h2><p class="lede">從講座到培訓工作坊，從一對一顧問到永續白皮書撰寫，選擇最適合你的永續起步方式。</p></div>
+<div class="solgrid"><article class="card sol"><span class="chip badge-hot">最受歡迎</span><div class="top"><span class="tic"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg></span><h3>永續品牌顧問輔導</h3></div><p>一對一顧問服務，協助品牌釐清永續定位、整理 ESG 敘事架構，找到與企業對話的切入點。</p><p class="for"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg><span>適合：想把自己的價值說清楚的品牌主</span></p><div class="foot"><span class="price">NT$6,000<small>／次</small></span><a class="btn btn-ghost btn-sm" href="#a-contact">預約諮詢 <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></article><article class="card sol"><div class="top"><span class="tic"><svg class="ic" aria-hidden="true"><use href="#i-doc"/></svg></span><h3>永續白皮書精華版</h3></div><p>為品牌量身打造的永續白皮書，整合 ESG 數據與故事，成為對外溝通、爭取資源的有力文件。</p><p class="for"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg><span>適合：需要一份能交給企業或評審的對外文件（約 4–8 週）</span></p><div class="foot"><span class="price">NT$100,000<small></small></span><a class="btn btn-ghost btn-sm" href="#a-contact">預約諮詢 <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></article><article class="card sol"><div class="top"><span class="tic"><svg class="ic" aria-hidden="true"><use href="#i-spark"/></svg></span><h3>永續商創師培訓</h3></div><p>系統化培訓課程，從永續概念到商業實踐，培養具備 ESG 思維的永續商業人才。</p><p class="for"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg><span>適合：想把永續變成團隊能力的企業與實務工作者</span></p><div class="foot"><span class="price">NT$25,000<small></small></span><a class="btn btn-ghost btn-sm" href="#a-contact">預約諮詢 <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></article><article class="card sol"><div class="top"><span class="tic"><svg class="ic" aria-hidden="true"><use href="#i-bulb"/></svg></span><h3>永續品牌初階工作坊</h3></div><p>帶領品牌主快速理解永續框架，找到自身品牌與 ESG 的連結點。</p><p class="for"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg><span>適合：第一次接觸永續、想先有整體概念的品牌主</span></p><div class="foot"><span class="price">NT$6,000<small></small></span><a class="btn btn-ghost btn-sm" href="#a-contact">預約諮詢 <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></article></div>
+<p class="anno" style="margin-top:14px">價格只顯示單一最高價（C02）。商創師培訓原為 NT$22,000–25,000，取最高 NT$25,000；各項是否為最高價待客戶確認。導言提到「講座」，是否新增講座方案卡待確認（C01）。</p>
+</div></section>
+<section class="sec alt" id="a-npo"><div class="w">
+<div class="sec-head"><p class="eyebrow">NPO 合作</p><h2 class="h-sec">非營利組織合作模式</h2><p class="lede">共好玟化與非營利組織攜手，透過專業顧問輔導與資源連結，讓社會影響力被更多企業看見。</p></div>
+<div class="ca-npo"><article class="card npo-model"><span class="tic"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg></span><h3>公益夥伴方案</h3><p>針對非營利組織提供優惠合作方案，協助整理永續影響力數據，建立與企業 CSR / ESG 部門對接的溝通架構。</p><ul><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>優惠合作方案</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>永續影響力數據整理</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>企業 ESG 部門對接</span></li></ul></article><article class="card npo-model"><span class="tic"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg></span><h3>跨界溝通</h3><p>透過ESG共學坊平台與產業網絡，將非營利組織的社會價值轉譯為企業端可理解的永續語言，促成長期合作關係。</p><ul><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>ESG共學坊平台資源</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>永續語言轉譯</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>長期合作關係促成</span></li></ul></article></div>
+<h3 style="margin:34px 0 0;font-size:18px">合作案例</h3>
+<div class="ca-cases"><article class="card ca-case"><div class="ph"><span><svg class="ic" aria-hidden="true"><use href="#i-camera"/></svg>照片授權確認中</span></div><span class="lbl">案例 01 · 社福基金會 · 課程與培力</span><div class="skel" aria-hidden="true"><i></i><i></i><i></i></div></article><article class="card ca-case"><div class="ph"><span><svg class="ic" aria-hidden="true"><use href="#i-camera"/></svg>照片授權確認中</span></div><span class="lbl">案例 02 · 醫療院所 · 合作回饋</span><div class="skel" aria-hidden="true"><i></i><i></i><i></i></div></article><article class="card ca-case"><div class="ph dark"><span><svg class="ic" aria-hidden="true"><use href="#i-doc"/></svg>以文字與成果呈現</span></div><span class="lbl">案例 03 · 精神康復服務團體 · 輔導成果</span><div class="skel" aria-hidden="true"><i></i><i></i><i></i></div></article><article class="card ca-case"><div class="ph dark"><span><svg class="ic" aria-hidden="true"><use href="#i-doc"/></svg>以文字與成果呈現</span></div><span class="lbl">案例 04 · 社會福利組織 · 深度訪談</span><div class="skel" aria-hidden="true"><i></i><i></i><i></i></div></article></div>
+<p class="anno" style="margin-top:12px">照片優先的案例卡：4:3 照片框＋組織類型＋挑戰／做法／成果三行摘要。素材到齊前以品牌斜紋占位；沒有照片的案例改用深色「文字成果」框，不放圖庫照片。組織名稱與引言需對方同意（C03）。</p>
+</div></section>
+<section class="sec" id="a-mem"><div class="w">
+<div class="sec-head"><p class="eyebrow">會員機制</p><h2 class="h-sec">加入共好夥伴，享專屬資源</h2><p class="lede">成為共好玟化的會員夥伴，獲得永續資源、優先活動通知與專屬諮詢優惠。</p></div>
+<div class="tiers"><article class="card tier"><h3>基礎夥伴</h3><div class="price">免費<small></small></div><p class="tag">先連上，開始接觸永續</p><ul><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>加入 LINE 永續社群</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>永續趨勢週報</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>活動與課程優先通知</span></li></ul><p class="aud"><strong>適合：</strong>任何想開始的個人</p><a class="btn btn-ghost" href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>加入官方 LINE</a></article><article class="card tier rec"><span class="rec-badge">推薦</span><h3>進階夥伴</h3><div class="price">NT$300<small>／月</small></div><p class="tag">持續學，把永續變成內部能力</p><ul><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>ESG共學坊每月課程與回放</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>講師影片與教材下載</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>夥伴交流社群</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>課程與工作坊優惠</span></li></ul><p class="aud"><strong>適合：</strong>永續實務工作者、想打底的小團隊</p><a class="btn " href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>LINE 洽詢訂閱</a></article><article class="card tier"><h3>策略夥伴</h3><div class="price">專案報價<small></small></div><p class="tag">深度共創，把永續做進你的商業</p><ul><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>一對一顧問諮詢</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>永續白皮書策略服務</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>國際接軌策略</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>供應鏈對接優先</span></li></ul><p class="aud"><strong>適合：</strong>要做白皮書／供應鏈輔導的企業，專案制</p><a class="btn btn-ghost" href="#a-contact"><svg class="ic" aria-hidden="true"><use href="#i-coffee"/></svg>預約 Coffee Chat</a></article></div>
+<aside class="waitlist" aria-label="即將推出"><div><span class="wl-badge">即將推出・共好生態圈會員</span><h3>不只是學永續，而是進入一條被驗證的永續供應鏈——取得永續認證、被買方看見、與夥伴共同接案。</h3><p>我們正在籌備中。想成為創始夥伴、搶先取得名額與優惠嗎？</p></div><a class="btn btn-light" href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>加入候補</a></aside>
+</div></section>
+<section class="sec alt" id="a-faq"><div class="w" style="max-width:820px">
+<div class="sec-head"><p class="eyebrow">FAQ</p><h2 class="h-sec">常見問題</h2></div>
+<div class="faq"><details open><summary>什麼是 Coffee Chat？<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>15 分鐘免費線上諮詢，就像喝杯咖啡聊聊天。我們聽你的現況，幫你找最適合的下一步——要不要走，由你決定。</p></details><details><summary>誰適合使用共好玟化的服務？<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>我們的客戶涵蓋農業品牌、設計公司、社會企業、非營利組織，以及想尋找永續供應鏈的大型企業。只要你正在做有意義的事，希望被更多人看見，我們都歡迎你來聊聊。</p></details><details><summary>永續白皮書需要多長時間完成？<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>依品牌規模與資料完整度，通常需要 4 至 8 週。過程中我們會進行深度訪談、資料整理與內容撰寫，確保白皮書真實反映品牌的永續實踐。</p></details><details><summary>如何開始合作？<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>最簡單的方式是預約一場 Coffee Chat，讓我們了解你的需求。之後我們會提供客製化的合作建議與報價，確認後即可啟動專案。</p></details><details><summary>ESG共學坊訂閱包含什麼？<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>ESG共學坊是跨產業的永續學習與交流平台，訂閱會員可參加定期舉辦的工作坊、講座與產業交流活動，並獲得會員專屬的永續資源與人脈網絡。</p></details></div>
+</div></section>
+<section class="sec" id="a-contact"><div class="w">
+<div class="sec-head"><p class="eyebrow">合作洽詢</p><h2 class="h-sec">預約合作諮詢</h2><p class="lede">填寫以下表單，我們將盡快與您聯繫安排 Coffee Chat。</p></div>
+<div class="ca-contact">
+<div class="card" style="padding:22px"><form class="form" action="mailto:pt@coesg.tw?subject=%E9%A0%90%E7%B4%84%E5%90%88%E4%BD%9C%E8%AB%AE%E8%A9%A2" method="post" enctype="text/plain">
+<div class="two"><label for="a-name">您的姓名<input id="a-name" name="name" autocomplete="name" placeholder="請輸入姓名" required></label><label for="a-email">電子郵件<input id="a-email" name="email" type="email" autocomplete="email" placeholder="example@email.com" required></label></div>
+<label for="a-org">所屬單位 <span class="opt">（選填）</span><input id="a-org" name="organization" autocomplete="organization" placeholder="企業名稱或組織名稱"></label><label for="a-topic">想聊的主題 <span class="opt">（選填）</span><select id="a-topic" name="topic"><option>還不確定，想先聊聊</option><option>永續品牌顧問輔導</option><option>永續白皮書</option><option>永續商創師培訓</option><option>永續品牌初階工作坊</option><option>非營利組織合作</option><option>會員方案</option></select></label>
+<label for="a-msg">您的需求或訊息<textarea id="a-msg" name="message" rows="4" placeholder="請簡單描述您的合作需求或想聊的主題..."></textarea></label>
+<button class="btn" type="submit">送出預約</button>
+<p class="fine">按下送出會開啟你的郵件軟體並帶入內容，寄到 <a href="mailto:pt@coesg.tw">pt@coesg.tw</a>。沒有設定郵件軟體？直接寫信或改用 LINE 也可以。</p>
+</form></div>
+<aside class="ca-linecard"><h3>不想填表？</h3><p>加入官方 LINE，直接傳訊息給我們，一樣可以約 Coffee Chat。</p><a class="btn btn-line" href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>加入官方 LINE</a><p style="font-size:13px;color:#17672A">LINE ID：<strong>@381iutjm</strong></p><hr style="border:0;border-top:1px solid #C9E8D1;margin:6px 0"><div class="contact-info"><a href="mailto:pt@coesg.tw"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg>pt@coesg.tw</a><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>週一至週五 09:00-18:00</span><a href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>LINE @381iutjm</a></div></aside>
+</div>
+</div></section>
+</main><footer class="sf"><span>共好玟化組織發展顧問有限公司 · 統編 90223501</span><span><a href="mailto:pt@coesg.tw">pt@coesg.tw</a> · LINE @381iutjm</span></footer></div></div></section><section class="proposal" id="B" aria-label="提案 B"><div class="pp-meta"><div class="pp-meta-card">
+<span class="pp-label">提案 B</span>
+<h2>先幫你選：一題問答＋投入階梯</h2>
+<dl>
+<div class="full"><dt>概念</dt><dd>首屏就是「你現在最接近哪一種情況？」五個選項，選了立即顯示建議方案與價格，按鈕會把主題帶進表單。接著用「投入階梯」把會員與單次服務排成一張表（免費 → NT$300／月 → … → 專案報價），讓價格有脈絡。</dd></div>
+<div class="full"><dt>參考來源</dt><dd>IKEA 與 B Lab 的「找到你的路徑」引導；Patagonia Action Works 的分級參與（從低門檻到高投入）；SaaS 定價頁的方案比較。</dd></div>
+<div><dt>優點</dt><dd><ul><li>對價格敏感、還不確定的 P1 最友善：先被理解再看價格</li><li>NT$100,000 放在階梯脈絡裡，比單獨出現更不嚇人</li><li>選擇結果帶入表單，減少填寫並讓團隊先知道需求</li></ul></dd></div>
+<div><dt>風險</dt><dd><ul><li>選項文案要精準，選錯分類會導向錯誤方案</li><li>需要 JS（無 JS 時五組建議全部顯示）</li><li>階梯把會員與服務混排，需客戶接受這種呈現</li></ul></dd></div>
+<div class="full"><dt>對旅程的作用</dt><dd>把轉換頁從「型錄」變成「顧問的第一個問題」，呼應 Coffee Chat 的語氣；主題預填讓 Coffee Chat 更有效率，提高表單完成率。</dd></div>
+</dl></div></div>
+<div class="frame"><p class="frame-label">轉換頁 /consulting</p><div class="screen"><header class="sh"><img src="../../../public/brand/gungho-horizontal.svg" alt="共好玟化 CO-ESG" width="76" height="30"><nav aria-label="主選單"><a href="#">共好永續力</a><a href="#">永續足跡</a><a href="#">共好學習</a><a href="#">最新文章</a><a href="#" aria-current="page">合作洽詢</a></nav><a class="btn btn-sm sh-cta" href="#b-contact">預約諮詢</a></header>
+<main>
+<section class="c-hero cb-hero"><div class="w"><div class="grid">
+<div><p class="eyebrow">合作洽詢</p><h1>不知道該選哪一個？<br>先回答一題。</h1><p class="lede">從講座到培訓工作坊，從一對一顧問到永續白皮書撰寫，選擇最適合你的永續起步方式。選完還不確定，就約 15 分鐘 Coffee Chat。</p>
+<p style="margin-top:18px"><a class="btn btn-ghost" href="#b-contact"><svg class="ic" aria-hidden="true"><use href="#i-coffee"/></svg>直接預約 Coffee Chat</a></p></div>
+<form class="chooser" onsubmit="return false"><fieldset><legend>你現在最接近哪一種情況？</legend><div class="opts"><label><input type="radio" name="cb-who" value="look">我想先了解，還沒準備花錢</label><label><input type="radio" name="cb-who" value="brand" checked>我是品牌主，想把價值說清楚</label><label><input type="radio" name="cb-who" value="paper">我需要一份能拿給企業看的文件</label><label><input type="radio" name="cb-who" value="team">我想讓團隊持續學習</label><label><input type="radio" name="cb-who" value="npo">我們是非營利組織</label></div></fieldset><div class="result" data-result="look"><h3>建議你從這裡開始</h3><div class="rec-item"><b>基礎夥伴</b><span>加入 LINE 永續社群、永續趨勢週報</span><span class="price">免費<small></small></span></div><div class="acts"><a class="btn btn-line" href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>加入官方 LINE</a><a class="btn btn-ghost" href="#b-contact" data-topic="還不確定，想先聊聊"><svg class="ic" aria-hidden="true"><use href="#i-coffee"/></svg>還是想聊聊</a></div></div><div class="result" data-result="brand"><h3>建議你從這裡開始</h3><div class="rec-item"><b>永續品牌初階工作坊</b><span>先有整體概念</span><span class="price">NT$6,000<small></small></span></div><div class="rec-item"><b>永續品牌顧問輔導</b><span>一對一釐清定位與敘事</span><span class="price">NT$6,000<small>／次</small></span></div><div class="acts"><a class="btn" href="#b-contact" data-topic="永續品牌顧問輔導"><svg class="ic" aria-hidden="true"><use href="#i-coffee"/></svg>預約 Coffee Chat 談這個</a></div></div><div class="result" data-result="paper"><h3>建議你從這裡開始</h3><div class="rec-item"><b>永續白皮書精華版</b><span>約 4–8 週完成</span><span class="price">NT$100,000<small></small></span></div><div class="acts"><a class="btn" href="#b-contact" data-topic="永續白皮書"><svg class="ic" aria-hidden="true"><use href="#i-coffee"/></svg>預約 Coffee Chat 談這個</a></div></div><div class="result" data-result="team"><h3>建議你從這裡開始</h3><div class="rec-item"><b>進階夥伴</b><span>ESG共學坊每月課程與回放</span><span class="price">NT$300<small>／月</small></span></div><div class="rec-item"><b>永續商創師培訓</b><span>系統化培訓課程</span><span class="price">NT$25,000<small></small></span></div><div class="acts"><a class="btn" href="#b-contact" data-topic="永續商創師培訓"><svg class="ic" aria-hidden="true"><use href="#i-coffee"/></svg>預約 Coffee Chat 談這個</a></div></div><div class="result" data-result="npo"><h3>建議你從這裡開始</h3><div class="rec-item"><b>公益夥伴方案</b><span>影響力數據整理、企業 ESG 部門對接</span><span class="price">優惠合作<small></small></span></div><div class="rec-item"><b>跨界溝通</b><span>把社會價值轉譯成企業聽得懂的語言</span><span class="price">專案報價<small></small></span></div><div class="acts"><a class="btn" href="#b-contact" data-topic="非營利組織合作"><svg class="ic" aria-hidden="true"><use href="#i-coffee"/></svg>預約 Coffee Chat 談這個</a></div></div></form>
+</div></div></section>
+<section class="sec alt" id="b-ladder"><div class="w">
+<div class="sec-head"><p class="eyebrow">服務項目 · 會員方案</p><h2 class="h-sec">從免費到深度共創，一張表看完</h2><p class="lede">依投入程度由輕到重排列。虛線框是會員方案，實線框是單次服務。</p></div>
+<ol class="ladder"><li class="mem" style="--lv:8%"><span class="k">先連上 · 會員</span><div><b>基礎夥伴</b><span class="d">LINE 社群與永續趨勢週報</span></div><span class="price">免費<small></small></span><a href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener">加入 LINE →</a></li><li class="mem" style="--lv:18%"><span class="k">持續學 · 會員</span><div><b>進階夥伴</b><span class="d">ESG共學坊每月課程與回放</span></div><span class="price">NT$300<small>／月</small></span><a href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener">LINE 洽詢 →</a></li><li class="" style="--lv:30%"><span class="k">試一次</span><div><b>永續品牌初階工作坊</b><span class="d">快速理解永續框架</span></div><span class="price">NT$6,000<small></small></span><a href="#b-contact">預約諮詢 →</a></li><li class="" style="--lv:42%"><span class="k">一對一</span><div><b>永續品牌顧問輔導</b><span class="d">釐清定位與 ESG 敘事</span></div><span class="price">NT$6,000<small>／次</small></span><a href="#b-contact">預約諮詢 →</a></li><li class="" style="--lv:60%"><span class="k">培養人才</span><div><b>永續商創師培訓</b><span class="d">從概念到商業實踐</span></div><span class="price">NT$25,000<small></small></span><a href="#b-contact">預約諮詢 →</a></li><li class="" style="--lv:80%"><span class="k">對外文件</span><div><b>永續白皮書精華版</b><span class="d">整合 ESG 數據與故事，4–8 週</span></div><span class="price">NT$100,000<small></small></span><a href="#b-contact">預約諮詢 →</a></li><li class="mem" style="--lv:100%"><span class="k">深度共創 · 會員</span><div><b>策略夥伴</b><span class="d">顧問、白皮書策略、國際接軌、供應鏈對接</span></div><span class="price">專案報價<small></small></span><a href="#b-contact">預約諮詢 →</a></li></ol>
+<p class="anno" style="margin-top:12px">每項只顯示單一價格（C02 最高價規則）；底色長度只表示「投入程度」的順序，不是價格比例。</p>
+</div></section>
+<section class="sec" id="b-mem"><div class="w">
+<div class="sec-head"><p class="eyebrow">會員機制</p><h2 class="h-sec">加入共好夥伴，享專屬資源</h2><p class="lede">成為共好玟化的會員夥伴，獲得永續資源、優先活動通知與專屬諮詢優惠。</p></div>
+<div class="tiers"><article class="card tier"><h3>基礎夥伴</h3><div class="price">免費<small></small></div><p class="tag">先連上，開始接觸永續</p><ul><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>加入 LINE 永續社群</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>永續趨勢週報</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>活動與課程優先通知</span></li></ul><p class="aud"><strong>適合：</strong>任何想開始的個人</p><a class="btn btn-ghost" href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>加入官方 LINE</a></article><article class="card tier rec"><span class="rec-badge">推薦</span><h3>進階夥伴</h3><div class="price">NT$300<small>／月</small></div><p class="tag">持續學，把永續變成內部能力</p><ul><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>ESG共學坊每月課程與回放</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>講師影片與教材下載</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>夥伴交流社群</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>課程與工作坊優惠</span></li></ul><p class="aud"><strong>適合：</strong>永續實務工作者、想打底的小團隊</p><a class="btn " href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>LINE 洽詢訂閱</a></article><article class="card tier"><h3>策略夥伴</h3><div class="price">專案報價<small></small></div><p class="tag">深度共創，把永續做進你的商業</p><ul><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>一對一顧問諮詢</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>永續白皮書策略服務</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>國際接軌策略</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>供應鏈對接優先</span></li></ul><p class="aud"><strong>適合：</strong>要做白皮書／供應鏈輔導的企業，專案制</p><a class="btn btn-ghost" href="#b-contact"><svg class="ic" aria-hidden="true"><use href="#i-coffee"/></svg>預約 Coffee Chat</a></article></div>
+<aside class="card" style="margin-top:20px;padding:22px;border:2px dashed var(--ink);display:grid;gap:12px" aria-label="即將推出"><span class="chip" style="justify-self:start;background:var(--yellow);color:var(--ink)">即將推出・共好生態圈會員</span><p style="margin:0;font-size:17px;font-weight:700;line-height:1.6">不只是學永續，而是進入一條被驗證的永續供應鏈——取得永續認證、被買方看見、與夥伴共同接案。</p><p style="margin:0;color:var(--ink-2)">我們正在籌備中。想成為創始夥伴、搶先取得名額與優惠嗎？</p><a class="btn btn-line" style="justify-self:start" href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>加入候補</a></aside>
+</div></section>
+<section class="sec alt" id="b-npo"><div class="w">
+<div class="sec-head"><p class="eyebrow">NPO 合作</p><h2 class="h-sec">非營利組織合作模式</h2><p class="lede">共好玟化與非營利組織攜手，透過專業顧問輔導與資源連結，讓社會影響力被更多企業看見。</p></div>
+<div class="cb-npo"><article class="card cb-model"><h3><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg>公益夥伴方案</h3><p>針對非營利組織提供優惠合作方案，協助整理永續影響力數據，建立與企業 CSR / ESG 部門對接的溝通架構。</p><div class="chips"><span class=chip>優惠合作方案</span><span class=chip>永續影響力數據整理</span><span class=chip>企業 ESG 部門對接</span></div></article><article class="card cb-model"><h3><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg>跨界溝通</h3><p>透過ESG共學坊平台與產業網絡，將非營利組織的社會價值轉譯為企業端可理解的永續語言，促成長期合作關係。</p><div class="chips"><span class=chip>ESG共學坊平台資源</span><span class=chip>永續語言轉譯</span><span class=chip>長期合作關係促成</span></div></article></div>
+<div class="cb-quotes"><figure class="cb-quote" style="margin:0"><div class="skel" aria-hidden="true"><i></i><i></i><i></i></div><figcaption class="who"><span class="avatar" aria-hidden="true">01</span><span><strong>社福基金會</strong><br><span style="color:var(--ink-2)">課程與培力 · 引言待對方同意</span></span></figcaption></figure><figure class="cb-quote" style="margin:0"><div class="skel" aria-hidden="true"><i></i><i></i><i></i></div><figcaption class="who"><span class="avatar" aria-hidden="true">02</span><span><strong>醫療院所</strong><br><span style="color:var(--ink-2)">合作回饋 · 引言待對方同意</span></span></figcaption></figure><figure class="cb-quote" style="margin:0"><div class="skel" aria-hidden="true"><i></i><i></i><i></i></div><figcaption class="who"><span class="avatar" aria-hidden="true">03</span><span><strong>精神康復服務團體</strong><br><span style="color:var(--ink-2)">輔導成果 · 引言待對方同意</span></span></figcaption></figure><figure class="cb-quote" style="margin:0"><div class="skel" aria-hidden="true"><i></i><i></i><i></i></div><figcaption class="who"><span class="avatar" aria-hidden="true">04</span><span><strong>社會福利組織</strong><br><span style="color:var(--ink-2)">深度訪談 · 引言待對方同意</span></span></figcaption></figure></div>
+<p class="anno" style="margin-top:12px">文字優先的案例：以對方的一句話為主角，頭像位置用編號，照片可有可無——適合只有訪談或簡報、沒有照片的案例（C03）。</p>
+</div></section>
+<section class="sec" id="b-faq"><div class="w" style="max-width:820px">
+<div class="sec-head"><p class="eyebrow">FAQ</p><h2 class="h-sec">常見問題</h2></div>
+<div class="faq"><details open><summary>什麼是 Coffee Chat？<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>15 分鐘免費線上諮詢，就像喝杯咖啡聊聊天。我們聽你的現況，幫你找最適合的下一步——要不要走，由你決定。</p></details><details><summary>誰適合使用共好玟化的服務？<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>我們的客戶涵蓋農業品牌、設計公司、社會企業、非營利組織，以及想尋找永續供應鏈的大型企業。只要你正在做有意義的事，希望被更多人看見，我們都歡迎你來聊聊。</p></details><details><summary>永續白皮書需要多長時間完成？<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>依品牌規模與資料完整度，通常需要 4 至 8 週。過程中我們會進行深度訪談、資料整理與內容撰寫，確保白皮書真實反映品牌的永續實踐。</p></details><details><summary>如何開始合作？<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>最簡單的方式是預約一場 Coffee Chat，讓我們了解你的需求。之後我們會提供客製化的合作建議與報價，確認後即可啟動專案。</p></details><details><summary>ESG共學坊訂閱包含什麼？<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>ESG共學坊是跨產業的永續學習與交流平台，訂閱會員可參加定期舉辦的工作坊、講座與產業交流活動，並獲得會員專屬的永續資源與人脈網絡。</p></details></div>
+</div></section>
+<section class="sec alt" id="b-contact"><div class="w"><div class="cb-contact">
+<div><p class="eyebrow">合作洽詢</p><h2 class="h-sec">預約合作諮詢</h2><p class="lede">填寫以下表單，我們將盡快與您聯繫安排 Coffee Chat。剛才選的主題已幫你帶入。</p><div style="margin-top:18px"><div class="contact-info"><a href="mailto:pt@coesg.tw"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg>pt@coesg.tw</a><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>週一至週五 09:00-18:00</span><a href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>LINE @381iutjm</a></div></div><p style="margin-top:18px"><a class="btn btn-line" href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>改用 LINE 聯絡</a></p></div>
+<div class="card" style="padding:22px"><form class="form" action="mailto:pt@coesg.tw?subject=%E9%A0%90%E7%B4%84%E5%90%88%E4%BD%9C%E8%AB%AE%E8%A9%A2" method="post" enctype="text/plain">
+<div class="two"><label for="b-name">您的姓名<input id="b-name" name="name" autocomplete="name" placeholder="請輸入姓名" required></label><label for="b-email">電子郵件<input id="b-email" name="email" type="email" autocomplete="email" placeholder="example@email.com" required></label></div>
+<label for="b-org">所屬單位 <span class="opt">（選填）</span><input id="b-org" name="organization" autocomplete="organization" placeholder="企業名稱或組織名稱"></label><label for="b-topic">想聊的主題 <span class="opt">（選填）</span><select id="b-topic" name="topic"><option>還不確定，想先聊聊</option><option>永續品牌顧問輔導</option><option>永續白皮書</option><option>永續商創師培訓</option><option>永續品牌初階工作坊</option><option>非營利組織合作</option><option>會員方案</option></select></label>
+<label for="b-msg">您的需求或訊息<textarea id="b-msg" name="message" rows="4" placeholder="請簡單描述您的合作需求或想聊的主題..."></textarea></label>
+<button class="btn" type="submit">送出預約</button>
+<p class="fine">按下送出會開啟你的郵件軟體並帶入內容，寄到 <a href="mailto:pt@coesg.tw">pt@coesg.tw</a>。沒有設定郵件軟體？直接寫信或改用 LINE 也可以。</p>
+</form></div>
+</div></div></section>
+</main><footer class="sf"><span>共好玟化組織發展顧問有限公司 · 統編 90223501</span><span><a href="mailto:pt@coesg.tw">pt@coesg.tw</a> · LINE @381iutjm</span></footer></div></div></section><section class="proposal" id="C" aria-label="提案 C"><div class="pp-meta"><div class="pp-meta-card">
+<span class="pp-label">提案 C</span>
+<h2>對話優先：第一屏就能預約，再依身分看方案</h2>
+<dl>
+<div class="full"><dt>概念</dt><dd>Hero 直接是兩扇門：左邊三個欄位的精簡表單、右邊官方 LINE（手機顯示按鈕、桌機才顯示 QR）。往下用「品牌與企業／非營利組織／個人與團隊」三個頁籤分開內容，每個人只看到跟自己有關的方案；NPO 案例用「挑戰 → 做法 → 成果」三段式。</dd></div>
+<div class="full"><dt>參考來源</dt><dd>South Pole「Talk to an expert」與 Interface 的人味語氣；Unilever 依利害關係人分流的首頁結構；台灣 B2B 服務常見的「LINE 洽詢」並列。</dd></div>
+<div><dt>優點</dt><dd><ul><li>行動門檻最低：已經被說服的人不用滑到底</li><li>依身分分頁，P3 不會被企業價格嚇走，P4 直接看到會員</li><li>LINE 與表單並列，尊重不想留 email 的人</li></ul></dd></div>
+<div><dt>風險</dt><dd><ul><li>表單在信任建立前出現，第一次來的人可能覺得太急</li><li>頁籤藏起部分內容，SEO 與「全部比較」的需求較弱（無 JS 時全部展開）</li><li>Hero 較重，手機第一屏只看得到表單</li></ul></dd></div>
+<div class="full"><dt>對旅程的作用</dt><dd>服務從 LINE、講座、口碑轉介來、已經有信任基礎的訪客，讓他們在第一屏完成行動；仍在猶豫的人往下依身分自助，FAQ 最後收斂。</dd></div>
+</dl></div></div>
+<div class="frame"><p class="frame-label">轉換頁 /consulting</p><div class="screen"><header class="sh"><img src="../../../public/brand/gungho-horizontal.svg" alt="共好玟化 CO-ESG" width="76" height="30"><nav aria-label="主選單"><a href="#">共好永續力</a><a href="#">永續足跡</a><a href="#">共好學習</a><a href="#">最新文章</a><a href="#" aria-current="page">合作洽詢</a></nav><a class="btn btn-sm sh-cta" href="#c-form">預約諮詢</a></header>
+<main>
+<section class="cc-hero"><div class="w">
+<p class="eyebrow">合作洽詢</p>
+<h1 class="c-h1" style="font-size:clamp(30px,6.4vw,48px);line-height:1.22;margin:8px 0 14px">預約 15 分鐘 Coffee Chat</h1>
+<p class="lede">15 分鐘免費線上諮詢，就像喝杯咖啡聊聊天。我們聽你的現況，幫你找最適合的下一步——要不要走，由你決定。</p>
+<div class="cc-doors">
+<div class="cc-door form-door" id="c-form"><h2><svg class="ic" aria-hidden="true"><use href="#i-coffee"/></svg>留下聯絡方式</h2><p class="sub">我們將盡快與您聯繫安排 Coffee Chat。</p><form class="form" action="mailto:pt@coesg.tw?subject=%E9%A0%90%E7%B4%84%E5%90%88%E4%BD%9C%E8%AB%AE%E8%A9%A2" method="post" enctype="text/plain">
+<div class="two"><label for="c-name">您的姓名<input id="c-name" name="name" autocomplete="name" placeholder="請輸入姓名" required></label><label for="c-email">電子郵件<input id="c-email" name="email" type="email" autocomplete="email" placeholder="example@email.com" required></label></div>
+<label for="c-topic">想聊的主題 <span class="opt">（選填）</span><select id="c-topic" name="topic"><option>還不確定，想先聊聊</option><option>永續品牌顧問輔導</option><option>永續白皮書</option><option>永續商創師培訓</option><option>永續品牌初階工作坊</option><option>非營利組織合作</option><option>會員方案</option></select></label>
+<label for="c-msg">您的需求或訊息<textarea id="c-msg" name="message" rows="3" placeholder="請簡單描述您的合作需求或想聊的主題..."></textarea></label>
+<button class="btn" type="submit">送出預約</button>
+<p class="fine">按下送出會開啟你的郵件軟體並帶入內容，寄到 <a href="mailto:pt@coesg.tw">pt@coesg.tw</a>。沒有設定郵件軟體？直接寫信或改用 LINE 也可以。</p>
+</form></div>
+<div class="cc-door line-door"><h2><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>先用 LINE 問問看</h2><p class="sub" style="margin:0">還沒想清楚要談什麼？傳一句話給我們就好。</p><div class="qr" role="img" aria-label="官方 LINE QR Code 占位">QR Code<br>（桌機顯示）</div><a class="btn btn-line" href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>加入官方 LINE</a><p style="margin:0;font-size:13.5px;color:#17672A">LINE ID：<strong>@381iutjm</strong> · 週一至週五 09:00-18:00</p></div>
+</div>
+</div></section>
+<section class="sec" id="c-offers"><div class="w">
+<div class="sec-head"><p class="eyebrow">合作方式</p><h2 class="h-sec">你是哪一種夥伴？</h2><p class="lede">從講座到培訓工作坊，從一對一顧問到永續白皮書撰寫，選擇最適合你的永續起步方式。</p></div>
+<div class="cc-tabs" role="tablist" aria-label="依身分查看" hidden data-tabs>
+<button type="button" role="tab" aria-selected="true" aria-controls="c-p1" id="c-t1"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg>品牌與企業</button>
+<button type="button" role="tab" aria-selected="false" aria-controls="c-p2" id="c-t2"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg>非營利組織</button>
+<button type="button" role="tab" aria-selected="false" aria-controls="c-p3" id="c-t3"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg>個人與團隊</button>
+</div>
+<div class="cc-panel" role="tabpanel" id="c-p1" aria-labelledby="c-t1"><h3>品牌與企業：企業 ESG 解決方案</h3><div class="cc-rows"><div class="cc-row"><h4>永續品牌顧問輔導</h4><p>一對一顧問服務，協助品牌釐清永續定位、整理 ESG 敘事架構，找到與企業對話的切入點。</p><span class="price">NT$6,000<small>／次</small></span><span class="for"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg><span>想把自己的價值說清楚的品牌主</span></span></div><div class="cc-row"><h4>永續白皮書精華版</h4><p>為品牌量身打造的永續白皮書，整合 ESG 數據與故事，成為對外溝通、爭取資源的有力文件。</p><span class="price">NT$100,000<small></small></span><span class="for"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg><span>需要一份能交給企業或評審的對外文件（約 4–8 週）</span></span></div><div class="cc-row"><h4>永續商創師培訓</h4><p>系統化培訓課程，從永續概念到商業實踐，培養具備 ESG 思維的永續商業人才。</p><span class="price">NT$25,000<small></small></span><span class="for"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg><span>想把永續變成團隊能力的企業與實務工作者</span></span></div><div class="cc-row"><h4>永續品牌初階工作坊</h4><p>帶領品牌主快速理解永續框架，找到自身品牌與 ESG 的連結點。</p><span class="price">NT$6,000<small></small></span><span class="for"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg><span>第一次接觸永續、想先有整體概念的品牌主</span></span></div><div class="cc-row"><h4>策略夥伴</h4><p>一對一顧問諮詢、永續白皮書策略服務、國際接軌策略、供應鏈對接優先。</p><span class="price" style="font-size:18px">專案報價</span><span class="for"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg><span>要做白皮書／供應鏈輔導的企業</span></span></div></div><p class="anno">單一價格（C02）；策略夥伴列在這裡，因為它的對象是企業。</p></div>
+<div class="cc-panel" role="tabpanel" id="c-p2" aria-labelledby="c-t2"><h3>非營利組織：兩種合作模式</h3><p class="lede">共好玟化與非營利組織攜手，透過專業顧問輔導與資源連結，讓社會影響力被更多企業看見。</p><div class="cb-npo"><article class="card cb-model"><h3><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg>公益夥伴方案</h3><p>針對非營利組織提供優惠合作方案，協助整理永續影響力數據，建立與企業 CSR / ESG 部門對接的溝通架構。</p><div class="chips"><span class=chip>優惠合作方案</span><span class=chip>永續影響力數據整理</span><span class=chip>企業 ESG 部門對接</span></div></article><article class="card cb-model"><h3><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg>跨界溝通</h3><p>透過ESG共學坊平台與產業網絡，將非營利組織的社會價值轉譯為企業端可理解的永續語言，促成長期合作關係。</p><div class="chips"><span class=chip>ESG共學坊平台資源</span><span class=chip>永續語言轉譯</span><span class=chip>長期合作關係促成</span></div></article></div><article class="cc-story"><div class="ph" style="aspect-ratio:4/3"><span><svg class="ic" aria-hidden="true"><use href="#i-camera"/></svg>照片待授權</span></div><div><span class="lbl">案例 01 · 社福基金會</span><div class="cc-steps" style="margin-top:10px"><div><span class="lbl">挑戰</span><div class="skel" aria-hidden="true"><i></i><i></i></div></div><div><span class="lbl">我們做了什麼</span><div class="skel" aria-hidden="true"><i></i><i></i></div></div><div><span class="lbl">成果與回饋</span><div class="skel" aria-hidden="true"><i></i><i></i></div></div></div></div></article><article class="cc-story"><div class="ph" style="aspect-ratio:4/3"><span><svg class="ic" aria-hidden="true"><use href="#i-camera"/></svg>照片待授權</span></div><div><span class="lbl">案例 02 · 醫療院所</span><div class="cc-steps" style="margin-top:10px"><div><span class="lbl">挑戰</span><div class="skel" aria-hidden="true"><i></i><i></i></div></div><div><span class="lbl">我們做了什麼</span><div class="skel" aria-hidden="true"><i></i><i></i></div></div><div><span class="lbl">成果與回饋</span><div class="skel" aria-hidden="true"><i></i><i></i></div></div></div></div></article><p class="anno">成果故事三段式：挑戰 → 做法 → 成果。照片欄位可選，沒有照片時同一張卡片仍成立（C03）。</p></div>
+<div class="cc-panel" role="tabpanel" id="c-p3" aria-labelledby="c-t3"><h3>個人與團隊：加入共好夥伴，享專屬資源</h3><div class="tiers"><article class="card tier"><h3>基礎夥伴</h3><div class="price">免費<small></small></div><p class="tag">先連上，開始接觸永續</p><ul><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>加入 LINE 永續社群</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>永續趨勢週報</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>活動與課程優先通知</span></li></ul><p class="aud"><strong>適合：</strong>任何想開始的個人</p><a class="btn btn-ghost" href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>加入官方 LINE</a></article><article class="card tier rec"><span class="rec-badge">推薦</span><h3>進階夥伴</h3><div class="price">NT$300<small>／月</small></div><p class="tag">持續學，把永續變成內部能力</p><ul><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>ESG共學坊每月課程與回放</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>講師影片與教材下載</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>夥伴交流社群</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>課程與工作坊優惠</span></li></ul><p class="aud"><strong>適合：</strong>永續實務工作者、想打底的小團隊</p><a class="btn " href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>LINE 洽詢訂閱</a></article><article class="card tier"><h3>策略夥伴</h3><div class="price">專案報價<small></small></div><p class="tag">深度共創，把永續做進你的商業</p><ul><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>一對一顧問諮詢</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>永續白皮書策略服務</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>國際接軌策略</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>供應鏈對接優先</span></li></ul><p class="aud"><strong>適合：</strong>要做白皮書／供應鏈輔導的企業，專案制</p><a class="btn btn-ghost" href="#c-form"><svg class="ic" aria-hidden="true"><use href="#i-coffee"/></svg>預約 Coffee Chat</a></article></div>
+<aside class="cc-wl" aria-label="即將推出"><div><span class="k">即將推出・共好生態圈會員</span><h3>不只是學永續，而是進入一條被驗證的永續供應鏈——取得永續認證、被買方看見、與夥伴共同接案。</h3><p>我們正在籌備中。想成為創始夥伴、搶先取得名額與優惠嗎？</p></div><a class="btn btn-dark" href="https://line.me/R/ti/p/@381iutjm" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-line"/></svg>加入候補</a></aside></div>
+</div></section>
+<section class="sec alt" id="c-faq"><div class="w">
+<div class="sec-head"><p class="eyebrow">FAQ</p><h2 class="h-sec">常見問題</h2></div>
+<div class="faq cc-faq"><details open><summary>什麼是 Coffee Chat？<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>15 分鐘免費線上諮詢，就像喝杯咖啡聊聊天。我們聽你的現況，幫你找最適合的下一步——要不要走，由你決定。</p></details><details><summary>誰適合使用共好玟化的服務？<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>我們的客戶涵蓋農業品牌、設計公司、社會企業、非營利組織，以及想尋找永續供應鏈的大型企業。只要你正在做有意義的事，希望被更多人看見，我們都歡迎你來聊聊。</p></details><details><summary>永續白皮書需要多長時間完成？<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>依品牌規模與資料完整度，通常需要 4 至 8 週。過程中我們會進行深度訪談、資料整理與內容撰寫，確保白皮書真實反映品牌的永續實踐。</p></details><details><summary>如何開始合作？<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>最簡單的方式是預約一場 Coffee Chat，讓我們了解你的需求。之後我們會提供客製化的合作建議與報價，確認後即可啟動專案。</p></details><details><summary>ESG共學坊訂閱包含什麼？<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>ESG共學坊是跨產業的永續學習與交流平台，訂閱會員可參加定期舉辦的工作坊、講座與產業交流活動，並獲得會員專屬的永續資源與人脈網絡。</p></details></div>
+</div></section>
+<section class="cc-end"><div class="w"><div><h2>聊 15 分鐘，不用先準備</h2><p>要不要走，由你決定。</p></div><a class="btn btn-light" href="#c-form"><svg class="ic" aria-hidden="true"><use href="#i-coffee"/></svg>回到上方預約</a></div></section>
+</main><footer class="sf"><span>共好玟化組織發展顧問有限公司 · 統編 90223501</span><span><a href="mailto:pt@coesg.tw">pt@coesg.tw</a> · LINE @381iutjm</span></footer></div></div></section>
+<script>
+(function () {
+  var bar = document.querySelector('.pp-bar');
+  if (!bar) return;
+  bar.hidden = false;
+  function ph() { document.documentElement.style.setProperty('--ppbar', bar.offsetHeight + 'px'); }
+  ph(); window.addEventListener('resize', ph);
+  var btns = bar.querySelectorAll('button[data-show]');
+  var ps = document.querySelectorAll('.proposal');
+  function show(id, scroll) {
+    ps.forEach(function (p) { p.hidden = !(id === 'all' || p.id === id); });
+    btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.show === id)); });
+    try { history.replaceState(null, '', id === 'all' ? location.pathname : '#' + id); } catch (e) {}
+    if (scroll) window.scrollTo(0, 0);
+  }
+  btns.forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.show, true); }); });
+  var h = location.hash.slice(1);
+  show(['A', 'B', 'C'].indexOf(h) > -1 ? h : 'A', false);
+})();
+</script>
+
+<script>
+(function () {
+  // B · chooser
+  var radios = document.querySelectorAll('input[name="cb-who"]');
+  function pick() {
+    var v = (document.querySelector('input[name="cb-who"]:checked') || {}).value;
+    document.querySelectorAll('[data-result]').forEach(function (r) { r.hidden = r.dataset.result !== v; });
+  }
+  radios.forEach(function (r) { r.addEventListener('change', pick); });
+  if (radios.length) pick();
+  document.querySelectorAll('a[data-topic]').forEach(function (a) {
+    a.addEventListener('click', function () { var s = document.getElementById('b-topic'); if (s) s.value = a.dataset.topic; });
+  });
+  // C · audience tabs (without JS all panels are stacked)
+  var tl = document.querySelector('[data-tabs]');
+  if (tl) {
+    tl.hidden = false;
+    var tabs = tl.querySelectorAll('[role=tab]');
+    function sel(t) {
+      tabs.forEach(function (x) { var on = x === t; x.setAttribute('aria-selected', String(on)); x.tabIndex = on ? 0 : -1; document.getElementById(x.getAttribute('aria-controls')).hidden = !on; });
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { sel(t); });
+      t.addEventListener('keydown', function (e) {
+        var k = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (k) { var n = tabs[(i + k + tabs.length) % tabs.length]; sel(n); n.focus(); }
+      });
+    });
+    sel(tabs[0]);
+  }
+  // C · QR only makes sense on desktop
+  if (window.matchMedia('(max-width: 899px)').matches) document.querySelectorAll('.cc-door .qr').forEach(function (q) { q.hidden = true; });
+})();
+</script>
+</body></html>

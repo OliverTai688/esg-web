@@ -19,9 +19,14 @@ import {
   Users,
   HelpCircle,
   Mail,
+  UserRound,
+  Route,
+  Scale,
+  Flag,
+  Newspaper,
   type LucideIcon,
 } from "lucide-react"
-import type { Dictionary } from "@/i18n/dictionaries/zh"
+import type { Messages } from "@/i18n/messages"
 
 export interface NavItem {
   title: string
@@ -40,7 +45,7 @@ export interface NavGroup {
 // Dropdown menus for the main navigation.
 // Items are listed in the order their sections appear on the page, top to bottom —
 // when a page's sections are added, removed or reordered, update the list here.
-export function getNavGroups(locale: string, labels: Dictionary["nav"]): NavGroup[] {
+export function getNavGroups(locale: string, labels: Messages["nav"]): NavGroup[] {
   const sustainability = `/${locale}/sustainability`
   const events = `/${locale}/events`
   const learning = `/${locale}/learning`
@@ -52,9 +57,12 @@ export function getNavGroups(locale: string, labels: Dictionary["nav"]): NavGrou
       label: labels.sustainability.label,
       href: sustainability,
       items: [
+        { title: labels.sustainability.whoWeAre, desc: labels.sustainability.whoWeAreDesc, href: `${sustainability}#who-we-are`, icon: UserRound },
+        { title: labels.sustainability.vision, desc: labels.sustainability.visionDesc, href: `${sustainability}#vision`, icon: Compass },
+        { title: labels.sustainability.approach, desc: labels.sustainability.approachDesc, href: `${sustainability}#approach`, icon: Route },
+        { title: labels.sustainability.theory, desc: labels.sustainability.theoryDesc, href: `${sustainability}#theory`, icon: Scale },
         { title: labels.sustainability.services, desc: labels.sustainability.servicesDesc, href: `${sustainability}#services`, icon: Briefcase },
         { title: labels.sustainability.practices, desc: labels.sustainability.practicesDesc, href: `${sustainability}#impact`, icon: BarChart3 },
-        { title: labels.sustainability.vision, desc: labels.sustainability.visionDesc, href: `${sustainability}#methodology`, icon: Compass },
         { title: labels.sustainability.ecosystem, desc: labels.sustainability.ecosystemDesc, href: `${sustainability}#ecosystem`, icon: Globe2 },
       ],
     },
@@ -67,6 +75,7 @@ export function getNavGroups(locale: string, labels: Dictionary["nav"]): NavGrou
         { title: labels.events.workshops, desc: labels.events.workshopsDesc, href: `${events}#workshops`, icon: GraduationCap },
         { title: labels.events.services, desc: labels.events.servicesDesc, href: `${events}#services`, icon: Repeat },
         { title: labels.events.history, desc: labels.events.historyDesc, href: `${events}#history`, icon: History },
+        { title: labels.events.roadmap, desc: labels.events.roadmapDesc, href: `${events}#roadmap`, icon: Flag },
         { title: labels.events.caseStudies, desc: labels.events.caseStudiesDesc, href: `${events}#cases`, icon: FileSearch },
       ],
     },
@@ -81,6 +90,7 @@ export function getNavGroups(locale: string, labels: Dictionary["nav"]): NavGrou
         { title: labels.learning.collaboration, desc: labels.learning.collaborationDesc, href: `${learning}#collaboration`, icon: Handshake },
         { title: labels.learning.communication, desc: labels.learning.communicationDesc, href: `${learning}#communication`, icon: MessageCircle },
         { title: labels.learning.interviews, desc: labels.learning.interviewsDesc, href: `${learning}#interviews`, icon: Mic2 },
+        { title: labels.learning.insights, desc: labels.learning.insightsDesc, href: `/${locale}/insights`, icon: Newspaper },
       ],
     },
     {

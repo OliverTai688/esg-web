@@ -18,6 +18,7 @@ export interface Post {
   cover?: string
   published: boolean
   content: string // rendered HTML
+  readingMinutes: number
 }
 
 export interface PostCategory {
@@ -67,6 +68,7 @@ export async function getAllPosts(): Promise<Post[]> {
       cover: data.cover,
       published: data.published,
       content: contentHtml,
+      readingMinutes: estimateReadingMinutes(content),
     })
   }
 
@@ -107,4 +109,20 @@ export function getCategories(posts: Post[]): PostCategory[] {
 
 export function getPostsByCategory(posts: Post[], categorySlug: string): Post[] {
   return posts.filter((post) => post.categorySlug === categorySlug)
+}
+
+// Chinese is read at roughly 400 characters a minute; Latin words count as one character each.
+function estimateReadingMinutes(markdown: string): number {
+  const text = markdown.replace(/[#>*_`\[\]()!-]/g, " ")
+  const cjk = (text.match(/[\u3400-\u9fff]/g) ?? []).length
+  const words = (text.replace(/[\u3400-\u9fff]/g, " ").match(/[A-Za-z0-9]+/g) ?? []).length
+  return Math.max(1, Math.round((cjk + words) / 400))
+}
+
+/** Posts in the same category first, then the most recent others */
+export function getRelatedPosts(posts: Post[], post: Post, count = 3): Post[] {
+  const others = posts.filter((p) => p.slug !== post.slug)
+  const same = others.filter((p) => p.categorySlug === post.categorySlug)
+  const rest = others.filter((p) => p.categorySlug !== post.categorySlug)
+  return [...same, ...rest].slice(0, count)
 }

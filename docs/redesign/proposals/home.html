@@ -1,0 +1,1820 @@
+<!doctype html>
+<html lang="zh-Hant" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>首頁逐區提案</title>
+<meta name="description" content="共好玟化 CO-ESG 首頁八個區塊，各三個設計方案，以及區塊之間的串連與整頁流程建議。">
+<link rel="stylesheet" href="_tokens.css">
+<script>document.documentElement.classList.replace('no-js','js');</script>
+<style>
+/* ============================================================
+   Proposal chrome (frames around the mocks — not part of design)
+   ============================================================ */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { overflow-x: hidden; }
+:focus-visible { outline: 3px solid var(--orange-strong); outline-offset: 2px; }
+.pp-bar { gap: 6px; }
+.pp-bar .pp-jump { display: flex; gap: 6px; flex-wrap: wrap; flex: 1 1 auto; }
+.pp-bar button { padding: 6px 12px; }
+.pp-bar .pp-all { margin-left: auto; background: transparent; border: 1px solid #555; }
+.pp-bar .pp-all[aria-pressed="true"] { background: var(--yellow); color: #111; border-color: var(--yellow); }
+@media (max-width: 720px) {
+  .pp-bar { padding: 8px 12px; }
+  .pp-bar strong { display: none; }
+  .pp-bar .pp-jump { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; max-width: 100%; }
+  .pp-bar .pp-jump::-webkit-scrollbar { display: none; }
+  .pp-bar .pp-jump button { flex: 0 0 auto; }
+  .pp-bar .pp-all { margin-left: 0; }
+}
+
+.pp-cover { padding: 56px 16px 40px; max-width: 1120px; margin: 0 auto; }
+.pp-cover img { height: 44px; width: auto; display: block; margin-bottom: 28px; }
+.pp-cover h1 { font: 900 clamp(28px, 5vw, 46px)/1.25 var(--font-sans); margin: 0 0 12px; letter-spacing: .01em; }
+.pp-cover p { max-width: 720px; color: var(--ink-2); margin: 0 0 12px; }
+.pp-curve { margin-top: 28px; display: grid; grid-template-columns: repeat(8, minmax(0,1fr)); gap: 6px; }
+.pp-curve a { display: block; text-decoration: none; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px; font-size: 13px; line-height: 1.45; }
+.pp-curve a b { display: block; font: 800 12px/1 var(--font-display); color: var(--orange-strong); margin-bottom: 6px; letter-spacing: .08em; }
+.pp-curve a:hover { border-color: var(--orange-strong); }
+@media (max-width: 900px) { .pp-curve { grid-template-columns: repeat(4, minmax(0,1fr)); } }
+@media (max-width: 480px) { .pp-curve { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+
+.pp-section { border-top: 1px solid var(--line); padding: 48px 0 24px; scroll-margin-top: 56px; }
+.pp-head { max-width: 1120px; margin: 0 auto 20px; padding: 0 16px; display: grid; grid-template-columns: 1fr auto; gap: 12px 24px; align-items: end; }
+.pp-head .pp-num { font: 800 14px/1 var(--font-display); color: var(--orange-strong); letter-spacing: .14em; }
+.pp-head h2 { margin: 6px 0 4px; font: 900 clamp(24px, 3.6vw, 34px)/1.3 var(--font-sans); }
+.pp-head p { margin: 0; color: var(--ink-2); font-size: 15px; }
+.pp-toggle { display: inline-flex; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 4px; gap: 2px; }
+.pp-toggle button { border: 0; background: transparent; font: 700 14px/1 var(--font-display); padding: 10px 16px; border-radius: 999px; cursor: pointer; color: var(--ink); min-width: 44px; min-height: 40px; }
+.pp-toggle button[aria-pressed="true"] { background: #111; color: #fff; }
+.no-js .pp-toggle { display: none; }
+@media (max-width: 720px) { .pp-head { grid-template-columns: 1fr; } }
+
+.opt { max-width: 1240px; margin: 0 auto 40px; padding: 0 16px; }
+.js .opt[data-hidden="true"] { display: none; }
+.opt-title { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0 0 12px; }
+.opt-title h3 { margin: 0; font: 700 19px/1.4 var(--font-sans); }
+.frame { border: 1px solid #D9D3CA; border-radius: 16px; overflow: hidden; background: #fff; box-shadow: 0 1px 0 rgba(0,0,0,.03), 0 18px 40px -28px rgba(31,32,34,.35); }
+.frame-bar { display: flex; align-items: center; gap: 6px; padding: 8px 12px; background: #F1EDE7; border-bottom: 1px solid #E2DBD1; font: 500 12px/1 var(--font-display); color: var(--ink-2); }
+.frame-bar i { width: 9px; height: 9px; border-radius: 50%; background: #D5CEC4; display: inline-block; }
+.frame-bar span { margin-left: 8px; }
+
+.pp-card { margin-top: 14px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; background: #fff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.pp-card div { padding: 14px 16px; border-right: 1px solid var(--line); font-size: 14px; line-height: 1.65; }
+.pp-card div:last-child { border-right: 0; }
+.pp-card dt { font: 700 12px/1.2 var(--font-sans); color: var(--orange-strong); letter-spacing: .08em; margin-bottom: 6px; }
+.pp-card dd { margin: 0; color: var(--ink); }
+@media (max-width: 960px) {
+  .pp-card { grid-template-columns: 1fr 1fr; }
+  .pp-card div { border-bottom: 1px solid var(--line); }
+  .pp-card div:first-child { grid-column: 1 / -1; }
+}
+@media (max-width: 560px) { .pp-card { grid-template-columns: 1fr; } .pp-card div { border-right: 0; } }
+
+/* ============================================================
+   Shared mock primitives
+   ============================================================ */
+.m { position: relative; font-family: var(--font-sans); color: var(--ink); overflow: hidden; }
+.m-wrap { max-width: 1120px; margin: 0 auto; padding: 72px 24px; }
+@media (max-width: 720px) { .m-wrap { padding: 52px 16px; } }
+.m-kicker { display: inline-flex; align-items: center; gap: 8px; font: 700 13px/1.2 var(--font-sans); letter-spacing: .14em; color: var(--orange-strong); margin: 0 0 14px; }
+.m-kicker::before { content: ""; width: 22px; height: 2px; background: currentColor; }
+.m-h2 { font: 900 clamp(26px, 3.8vw, 40px)/1.32 var(--font-sans); margin: 0 0 14px; letter-spacing: .01em; }
+.m-lead { font-size: 17px; color: var(--ink-2); max-width: 680px; margin: 0; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 12px 22px; border-radius: 999px; font: 700 16px/1.2 var(--font-sans); text-decoration: none; border: 2px solid transparent; cursor: pointer; }
+.btn-primary { background: var(--orange-strong); color: #fff; }
+.btn-primary:hover { background: #B83516; }
+.btn-ghost { border-color: var(--ink); color: var(--ink); background: transparent; }
+.btn-ghost:hover { background: var(--ink); color: #fff; }
+.btn-light { background: #fff; color: var(--orange-strong); }
+.btn-ghost-light { border-color: rgba(255,255,255,.7); color: #fff; }
+.btn-ghost-light:hover { background: #fff; color: var(--ink); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; font: 700 13px/1.3 var(--font-sans); background: var(--orange-soft); color: var(--orange-strong); }
+.chip-y { background: var(--yellow-soft); color: #6B4A00; }
+.chip-g { background: #EEEFF1; color: var(--grey); }
+.on-dark { background: var(--surface-dark); color: #fff; }
+.on-dark .m-kicker { color: var(--yellow); }
+.on-dark .m-lead { color: rgba(255,255,255,.82); }
+.num { font: 800 clamp(34px, 5vw, 56px)/1 var(--font-display); letter-spacing: -.02em; white-space: nowrap; }
+.h1b .m-kicker, .s4b .m-kicker, .e5c .m-kicker, .f6c .m-kicker, .q7b .m-kicker { color: var(--yellow); }
+.h1b .m-lead, .e5c .m-lead, .f6c .m-lead, .q7b .m-lead { color: rgba(255,255,255,.82); }
+.ph { font: 500 12px/1.4 var(--font-sans); color: var(--ink-2); }
+.mono { display: grid; place-items: center; border-radius: 50%; font: 900 26px/1 var(--font-sans); }
+.mono-1 { background: var(--orange-soft); color: var(--orange-strong); }
+.mono-2 { background: var(--yellow-soft); color: #6B4A00; }
+.mono-3 { background: #E7E9EC; color: var(--grey); }
+.mono-4 { background: var(--grey); color: #fff; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.ico { width: 28px; height: 28px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ============================================================
+   01 HERO
+   ============================================================ */
+/* A — 一句話主張＋橋樑弧線 */
+.h1a { background: var(--paper); }
+.h1a .m-wrap { padding-top: 88px; padding-bottom: 56px; text-align: center; }
+.h1a h1 { font: 900 clamp(30px, 5.4vw, 60px)/1.25 var(--font-sans); margin: 0 auto 18px; max-width: 900px; letter-spacing: .01em; }
+.h1a h1 em { font-style: normal; color: var(--orange-strong); }
+.h1a .m-lead { margin: 0 auto; }
+.h1a .btn-row { justify-content: center; }
+.h1a .bridge { position: relative; margin: 48px auto 0; max-width: 860px; }
+.h1a .bridge svg { width: 100%; height: auto; display: block; }
+.h1a .bridge .ends { display: flex; justify-content: space-between; gap: 16px; margin-top: 6px; font-size: 14px; font-weight: 700; }
+.h1a .bridge .ends span { max-width: 44%; }
+.h1a .bridge .ends span:last-child { text-align: right; }
+.h1a .bridge img { position: absolute; left: 50%; top: 2%; transform: translateX(-50%); height: 18%; min-height: 34px; width: auto; }
+.h1a .metrics { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); max-width: 760px; margin: 40px auto 0; border-top: 1px solid var(--line); }
+.h1a .metrics div { padding: 20px 8px 0; }
+.h1a .metrics .num { font-size: clamp(23px, 5vw, 44px); color: var(--ink); display: block; }
+.h1a .metrics small { display: block; margin-top: 8px; color: var(--ink-2); font-size: 14px; }
+
+/* B — 雙側對話 */
+.h1b { background: var(--surface-dark); color: #fff; }
+.h1b .m-wrap { padding-top: 80px; }
+.h1b h1 { font: 900 clamp(28px, 4.6vw, 52px)/1.3 var(--font-sans); margin: 0 0 16px; max-width: 880px; }
+.h1b .duo { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; margin-top: 44px; align-items: stretch; }
+.h1b .side { border: 1px solid rgba(255,255,255,.16); border-radius: 18px; padding: 28px; background: rgba(255,255,255,.03); }
+.h1b .side h2 { font: 900 22px/1.4 var(--font-sans); margin: 8px 0 10px; }
+.h1b .side p { margin: 0; color: rgba(255,255,255,.82); font-size: 15px; }
+.h1b .side .who { font: 700 13px/1.2 var(--font-sans); letter-spacing: .12em; color: var(--yellow); }
+.h1b .link { position: relative; width: 180px; display: grid; place-items: center; }
+.h1b .link::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; border-top: 2px dashed var(--orange); }
+.h1b .link .hub { position: relative; z-index: 1; width: 150px; padding: 16px 12px; background: var(--surface-dark); border: 2px solid var(--orange); border-radius: 18px; text-align: center; font-size: 13px; line-height: 1.55; }
+.h1b .link .hub img { height: 38px; width: auto; display: block; margin: 0 auto 8px; }
+@media (max-width: 860px) {
+  .h1b .duo { grid-template-columns: 1fr; }
+  .h1b .link { width: auto; height: 170px; }
+  .h1b .link::before { left: 50%; right: auto; top: 0; bottom: 0; border-top: 0; border-left: 2px dashed var(--orange); }
+  .h1b .link .hub { width: 220px; }
+}
+
+/* C — 數字先行 */
+.h1c { background: var(--orange-strong); color: #fff; }
+.h1c .m-wrap { padding-top: 80px; }
+.h1c .m-kicker { color: #fff; }
+.h1c h1 { font: 900 clamp(26px, 3.6vw, 40px)/1.35 var(--font-sans); margin: 0 0 12px; max-width: 760px; }
+.h1c p.sub { margin: 0; font-size: 17px; max-width: 640px; }
+.h1c .big { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 0; margin-top: 48px; border-top: 2px solid rgba(255,255,255,.5); }
+.h1c .big div { padding: 24px 20px 0 0; }
+.h1c .big div + div { padding-left: 20px; border-left: 1px solid rgba(255,255,255,.35); }
+.h1c .big .num { font-size: clamp(40px, 6.4vw, 84px); display: block; }
+.h1c .big b { display: block; margin-top: 10px; font-size: clamp(16px, 2.2vw, 22px); }
+.h1c .big span { display: block; font-size: 14px; margin-top: 6px; }
+.h1c .foot { margin-top: 18px; font-size: 13px; }
+@media (max-width: 640px) {
+  .h1c .big { grid-template-columns: 1fr; }
+  .h1c .big div, .h1c .big div + div { padding: 18px 0; border-left: 0; border-bottom: 1px solid rgba(255,255,255,.35); }
+  .h1c .big .num { font-size: 44px; }
+}
+
+/* ============================================================
+   02 TRUST STRIP
+   ============================================================ */
+.t2 { background: #fff; }
+.t2 .m-wrap { padding-top: 44px; padding-bottom: 44px; }
+.t2 .cap { text-align: center; font: 700 14px/1.4 var(--font-sans); color: var(--ink-2); letter-spacing: .1em; margin: 0 0 24px; }
+/* A — circles */
+.t2a .ring { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 24px 16px; max-width: 880px; margin: 0 auto; }
+.t2a figure { margin: 0; text-align: center; }
+.t2a .mono { width: 96px; height: 96px; margin: 0 auto 10px; font-size: 32px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.06); }
+.t2a figcaption { font-size: 14px; font-weight: 700; }
+.t2a .todo .mono { background: transparent; border: 2px dashed #CFC8BE; color: #9A958E; font: 500 13px/1.3 var(--font-sans); }
+@media (max-width: 560px) { .t2a .ring { grid-template-columns: repeat(2, minmax(0,1fr)); } .t2a .mono { width: 80px; height: 80px; } }
+/* B — typographic marquee */
+.t2b { background: var(--paper); }
+.t2b .m-wrap { padding-left: 0; padding-right: 0; }
+.t2b .cap { padding: 0 16px; }
+.t2b .viewport { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.t2b .track { display: flex; width: max-content; animation: t2b-scroll 36s linear infinite; }
+.t2b .viewport:hover .track, .t2b .viewport:focus-within .track { animation-play-state: paused; }
+.t2b ul { display: flex; align-items: center; gap: 0; list-style: none; margin: 0; padding: 0; }
+.t2b li { font: 900 clamp(22px, 3vw, 34px)/1.2 var(--font-sans); color: var(--grey); white-space: nowrap; padding: 0 28px; position: relative; }
+.t2b li::after { content: ""; position: absolute; right: -9px; top: 50%; width: 18px; height: 9px; border: 2px solid var(--orange); border-bottom: 0; border-radius: 18px 18px 0 0; transform: translateY(-50%); }
+.t2b li small { font: 500 13px/1 var(--font-sans); color: var(--ink-2); margin-left: 8px; letter-spacing: .06em; }
+@keyframes t2b-scroll { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) {
+  .t2b .track { animation: none; width: auto; }
+  .t2b .track ul[aria-hidden] { display: none; }
+  .t2b ul { flex-wrap: wrap; justify-content: center; row-gap: 12px; }
+  .t2b .viewport { -webkit-mask-image: none; mask-image: none; }
+}
+/* C — layered trust */
+.t2c .layers { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 0; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.t2c .layer { padding: 22px 24px; border-right: 1px solid var(--line); }
+.t2c .layer:last-child { border-right: 0; }
+.t2c .layer h3 { margin: 0 0 14px; font: 700 13px/1.2 var(--font-sans); letter-spacing: .12em; color: var(--ink-2); }
+.t2c .layer h3 b { color: var(--orange-strong); font-family: var(--font-display); margin-right: 6px; }
+.t2c .names { display: grid; gap: 10px; }
+.t2c .name { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; }
+.t2c .name .mono { width: 36px; height: 36px; font-size: 15px; flex: none; }
+.t2c .name small { display: block; font-weight: 500; font-size: 12px; color: var(--ink-2); }
+.t2c .fw { display: flex; flex-wrap: wrap; gap: 8px; }
+.t2c .fw span { font: 700 14px/1 var(--font-display); padding: 9px 12px; border-radius: 8px; border: 1.5px solid var(--grey); color: var(--grey); }
+.t2c .stat { display: flex; align-items: baseline; gap: 10px; }
+.t2c .stat .num { color: var(--orange-strong); font-size: 44px; }
+@media (max-width: 860px) { .t2c .layers { grid-template-columns: 1fr; } .t2c .layer { border-right: 0; border-bottom: 1px solid var(--line); } .t2c .layer:last-child { border-bottom: 0; } }
+
+/* ============================================================
+   03 PROBLEM
+   ============================================================ */
+/* A — three cards + solution band */
+.p3a { background: var(--paper); }
+.p3a .cards { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 20px; margin-top: 40px; }
+.p3a .card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 28px 24px; position: relative; }
+.p3a .card .n { position: absolute; right: 20px; top: 16px; font: 800 44px/1 var(--font-display); color: var(--orange-soft); }
+.p3a .card .ico { color: var(--orange-strong); width: 34px; height: 34px; }
+.p3a .card .lbl { display: block; margin: 16px 0 6px; font-size: 13px; color: var(--ink-2); font-weight: 700; letter-spacing: .06em; }
+.p3a .card h3 { font: 900 20px/1.45 var(--font-sans); margin: 0 0 10px; }
+.p3a .card p { margin: 0; font-size: 15px; color: var(--ink-2); }
+.p3a .band { margin-top: 24px; background: var(--surface-dark); color: #fff; border-radius: 18px; padding: 32px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: center; }
+.p3a .band h3 { margin: 0 0 8px; font: 900 24px/1.4 var(--font-sans); }
+.p3a .band p { margin: 0; color: rgba(255,255,255,.82); font-size: 15px; }
+.p3a .pillars { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+.p3a .pillars span { border: 1px solid rgba(255,255,255,.25); border-radius: 12px; padding: 16px 8px; text-align: center; font-weight: 700; font-size: 15px; }
+.p3a .pillars span::before { content: ""; display: block; width: 24px; height: 12px; margin: 0 auto 8px; border: 2px solid var(--yellow); border-bottom: 0; border-radius: 24px 24px 0 0; }
+@media (max-width: 860px) { .p3a .cards { grid-template-columns: 1fr; } .p3a .band { grid-template-columns: 1fr; padding: 24px; } }
+
+/* B — the gap diagram */
+.p3b { background: var(--paper); }
+.p3b .ends { display: flex; justify-content: space-between; margin: 40px 0 8px; gap: 12px; }
+.p3b .ends span { font: 700 14px/1.3 var(--font-sans); padding: 8px 14px; border-radius: 999px; background: #fff; border: 1px solid var(--line); }
+.p3b .ends span b { color: var(--orange-strong); margin-right: 6px; }
+.p3b .row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 40px; padding: 26px 0; border-bottom: 1px solid var(--line); }
+.p3b .gap { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 64px 1fr; align-items: center; }
+.p3b .gap::before, .p3b .gap::after { content: ""; height: 4px; background: var(--grey); border-radius: 4px; }
+.p3b .gap i { font: 800 15px/1 var(--font-display); font-style: normal; width: 44px; height: 44px; margin: 0 auto; border-radius: 50%; display: grid; place-items: center; border: 2px dashed var(--orange-strong); color: var(--orange-strong); background: var(--paper); }
+.p3b .row h3 { margin: 10px 0 0; font: 900 20px/1.45 var(--font-sans); }
+.p3b .row h3 small { display: block; font: 700 13px/1.4 var(--font-sans); color: var(--ink-2); letter-spacing: .06em; margin-bottom: 4px; }
+.p3b .row p { margin: 10px 0 0; color: var(--ink-2); font-size: 15px; }
+.p3b .solved { margin-top: 30px; padding: 28px; border-radius: 18px; background: #fff; border: 2px solid var(--orange-strong); }
+.p3b .solved .line { height: 6px; border-radius: 6px; background: linear-gradient(90deg, var(--orange), var(--yellow)); margin-bottom: 20px; }
+.p3b .solved h3 { margin: 0 0 8px; font: 900 22px/1.4 var(--font-sans); }
+.p3b .solved p { margin: 0 0 14px; color: var(--ink-2); font-size: 15px; }
+.p3b .solved .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+@media (max-width: 720px) { .p3b .row { grid-template-columns: 1fr; } }
+
+/* C — self-identify accordion */
+.p3c { background: #fff; }
+.p3c .grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 48px; align-items: start; }
+.p3c details { border: 1px solid var(--line); border-radius: 14px; margin-bottom: 12px; background: var(--paper); overflow: hidden; }
+.p3c details[open] { background: #fff; border-color: var(--orange-strong); box-shadow: 0 10px 30px -22px rgba(207,63,28,.6); }
+.p3c summary { list-style: none; cursor: pointer; padding: 20px 56px 20px 22px; position: relative; }
+.p3c summary::-webkit-details-marker { display: none; }
+.p3c summary::after { content: "+"; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font: 500 22px/1 var(--font-display); background: #fff; border: 1px solid var(--line); }
+.p3c details[open] summary::after { content: "−"; background: var(--orange-strong); color: #fff; border-color: var(--orange-strong); }
+.p3c summary small { display: block; font: 700 13px/1.3 var(--font-sans); color: var(--orange-strong); letter-spacing: .06em; margin-bottom: 4px; }
+.p3c summary b { font: 900 19px/1.4 var(--font-sans); }
+.p3c .body { padding: 0 22px 22px; }
+.p3c .body p { margin: 0 0 14px; font-size: 15px; color: var(--ink-2); }
+.p3c .body a { font-weight: 700; font-size: 15px; }
+.p3c .q { font: 900 clamp(22px, 3vw, 28px)/1.4 var(--font-sans); margin: 28px 0 0; padding-left: 16px; border-left: 4px solid var(--yellow); }
+@media (max-width: 860px) { .p3c .grid { grid-template-columns: 1fr; gap: 24px; } }
+
+/* ============================================================
+   04 BRAND STORY
+   ============================================================ */
+/* A — founder editorial */
+.s4a { background: var(--yellow-soft); }
+.s4a .grid { display: grid; grid-template-columns: 380px 1fr; gap: 56px; align-items: start; }
+.s4a .portrait { aspect-ratio: 4 / 5; border-radius: 22px; position: relative; overflow: hidden; background: radial-gradient(circle at 30% 25%, #FFF 0 18%, transparent 19%), linear-gradient(160deg, var(--yellow) 0%, var(--orange) 100%); }
+.s4a .portrait img { position: absolute; right: 24px; bottom: 90px; height: 42%; width: auto; filter: drop-shadow(0 8px 20px rgba(0,0,0,.18)); }
+.s4a .portrait .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 18px 22px; background: var(--surface-dark); color: #fff; }
+.s4a .portrait .cap b { display: block; font-size: 18px; }
+.s4a .portrait .cap span { font-size: 13px; color: rgba(255,255,255,.8); }
+.s4a .portrait .tag { position: absolute; left: 18px; top: 18px; background: rgba(255,255,255,.9); color: var(--ink); font-size: 12px; padding: 4px 10px; border-radius: 999px; }
+.s4a blockquote { margin: 0 0 20px; font: 900 clamp(24px, 3.4vw, 34px)/1.4 var(--font-sans); }
+.s4a blockquote span { color: var(--orange-strong); }
+.s4a .summary { font-size: 16px; margin: 0 0 24px; }
+.s4a ol { list-style: none; counter-reset: b; margin: 0 0 24px; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.s4a ol li { counter-increment: b; background: #fff; border-radius: 12px; padding: 16px 16px 16px 52px; position: relative; font-size: 14px; line-height: 1.65; }
+.s4a ol li::before { content: counter(b, decimal-leading-zero); position: absolute; left: 16px; top: 16px; font: 800 15px/1 var(--font-display); color: var(--orange-strong); }
+@media (max-width: 900px) { .s4a .grid { grid-template-columns: 1fr; gap: 32px; } .s4a .portrait { max-width: 360px; aspect-ratio: 1 / 1; } .s4a ol { grid-template-columns: 1fr; } }
+.story-more summary { display: inline-flex; list-style: none; }
+.story-more summary::-webkit-details-marker { display: none; }
+.story-more .full { margin-top: 18px; background: #fff; border-radius: 14px; padding: 20px 22px; font-size: 15px; }
+.story-more .full p { margin: 0 0 10px; }
+
+/* B — the name */
+.s4b { background: var(--surface-dark); color: #fff; }
+.s4b .m-wrap { text-align: center; }
+.s4b .name { font: 800 clamp(72px, 18vw, 200px)/.9 var(--font-display); color: var(--yellow); letter-spacing: -.03em; margin: 8px 0 0; }
+.s4b .eq { font: 900 clamp(24px, 4vw, 40px)/1.3 var(--font-sans); margin: 16px 0 6px; }
+.s4b .en { font: 500 14px/1 var(--font-display); color: rgba(255,255,255,.7); letter-spacing: .14em; text-transform: uppercase; }
+.s4b svg.arc { width: 100%; max-width: 900px; height: auto; display: block; margin: 28px auto 0; }
+.s4b .steps { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 24px; text-align: left; margin-top: 8px; }
+.s4b .steps div { border-top: 2px solid rgba(255,255,255,.2); padding-top: 18px; }
+.s4b .steps b { display: block; font: 800 13px/1 var(--font-display); color: var(--yellow); letter-spacing: .14em; margin-bottom: 10px; }
+.s4b .steps h3 { margin: 0 0 8px; font: 900 19px/1.45 var(--font-sans); }
+.s4b .steps p { margin: 0; color: rgba(255,255,255,.82); font-size: 15px; }
+.s4b .btn-row { justify-content: center; }
+.s4b .story-more .full { color: var(--ink); text-align: left; }
+@media (max-width: 760px) { .s4b .steps { grid-template-columns: 1fr; } }
+
+/* C — values system */
+.s4c { background: var(--paper); }
+.s4c .grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: center; }
+.s4c .lead-q { font: 900 clamp(22px, 3vw, 30px)/1.45 var(--font-sans); margin: 0 0 16px; }
+.s4c p { color: var(--ink-2); font-size: 16px; }
+.s4c .chain { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.s4c .chain li { display: grid; grid-template-columns: 64px 1fr; gap: 16px; align-items: center; position: relative; padding: 10px 0; }
+.s4c .chain li:not(:last-child)::after { content: ""; position: absolute; left: 31px; top: 66px; bottom: -10px; width: 2px; background: repeating-linear-gradient(var(--orange-strong) 0 6px, transparent 6px 11px); }
+.s4c .chain .dot { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; font: 900 18px/1 var(--font-sans); }
+.s4c .chain li:nth-child(1) .dot { background: var(--orange-strong); color: #fff; }
+.s4c .chain li:nth-child(2) .dot { background: var(--orange-soft); color: var(--orange-strong); }
+.s4c .chain li:nth-child(3) .dot { background: var(--yellow-soft); color: #6B4A00; }
+.s4c .chain li:nth-child(4) .dot { background: #E7E9EC; color: var(--grey); }
+.s4c .chain b { display: block; font-size: 18px; }
+.s4c .chain span { font-size: 14px; color: var(--ink-2); }
+.s4c .dual { margin-top: 20px; padding: 18px 20px; border-radius: 14px; background: #fff; border-left: 4px solid var(--orange-strong); font-size: 15px; }
+@media (max-width: 860px) { .s4c .grid { grid-template-columns: 1fr; gap: 32px; } }
+
+/* ============================================================
+   05 EVIDENCE
+   ============================================================ */
+.e5a { background: #fff; }
+.e5a .top { display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; }
+.e5a .cards { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 20px; margin-top: 36px; }
+.e5a .card { border: 1px solid var(--line); border-radius: var(--radius); padding: 28px 24px 22px; display: flex; flex-direction: column; background: linear-gradient(180deg, var(--paper), #fff 40%); }
+.e5a .card .num { color: var(--orange-strong); }
+.e5a .card .unit { display: block; margin: 8px 0 18px; font-weight: 700; color: var(--ink-2); font-size: 14px; }
+.e5a .card h3 { margin: 12px 0 8px; font: 900 19px/1.45 var(--font-sans); }
+.e5a .card p { margin: 0 0 16px; color: var(--ink-2); font-size: 15px; flex: 1; }
+.e5a .card .note { border-top: 1px dashed var(--line); padding-top: 12px; }
+@media (max-width: 860px) { .e5a .cards { grid-template-columns: 1fr; } }
+
+.e5b { background: #fff; }
+.e5b .story { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: center; padding: 36px 0; border-bottom: 1px solid var(--line); }
+.e5b .story:nth-of-type(even) .art { order: 2; }
+.e5b .story:last-child { border-bottom: 0; }
+.e5b .art { aspect-ratio: 16 / 10; border-radius: 20px; position: relative; overflow: hidden; display: grid; place-items: center; }
+.e5b .art svg { width: 56%; height: auto; }
+.e5b .art .chip { position: absolute; left: 16px; bottom: 16px; background: #fff; color: var(--ink); font-size: 14px; box-shadow: 0 6px 20px -10px rgba(0,0,0,.4); }
+.e5b .art .chip b { font: 800 18px/1 var(--font-display); color: var(--orange-strong); }
+.e5b .art-1 { background: linear-gradient(135deg, var(--orange-soft), #fff); }
+.e5b .art-2 { background: linear-gradient(135deg, var(--yellow-soft), #fff); }
+.e5b .art-3 { background: linear-gradient(135deg, #E7E9EC, #fff); }
+.e5b h3 { margin: 12px 0 10px; font: 900 clamp(20px, 2.6vw, 26px)/1.45 var(--font-sans); }
+.e5b p { margin: 0; color: var(--ink-2); font-size: 16px; }
+@media (max-width: 760px) { .e5b .story { grid-template-columns: 1fr; gap: 20px; } .e5b .story:nth-of-type(even) .art { order: 0; } }
+
+.e5c { background: var(--surface-dark); color: #fff; }
+.e5c .path { display: grid; grid-template-columns: .8fr repeat(3, minmax(0,1fr)); gap: 0; margin-top: 44px; position: relative; }
+.e5c .path::before { content: ""; position: absolute; left: 6%; right: 6%; top: 38px; height: 2px; background: linear-gradient(90deg, var(--yellow), var(--orange)); }
+.e5c .node { position: relative; padding: 0 16px; }
+.e5c .node .pin { width: 76px; height: 76px; border-radius: 50%; display: grid; place-items: center; background: var(--surface-dark); border: 2px solid var(--orange); position: relative; z-index: 1; margin-bottom: 18px; }
+.e5c .node .pin svg { width: 34px; height: 34px; stroke: var(--yellow); fill: none; stroke-width: 1.8; }
+.e5c .node:first-child .pin { background: var(--orange-strong); border-color: var(--orange-strong); }
+.e5c .node:first-child .pin svg { stroke: #fff; }
+.e5c .node .num { color: var(--yellow); font-size: clamp(34px, 4vw, 48px); }
+.e5c .node b { display: block; margin: 6px 0 8px; font-size: 16px; }
+.e5c .node p { margin: 0; font-size: 14px; color: rgba(255,255,255,.8); }
+.e5c .node .src { font: 900 20px/1.4 var(--font-sans); display: block; margin-bottom: 6px; }
+@media (max-width: 860px) {
+  .e5c .path { grid-template-columns: 1fr; gap: 24px; }
+  .e5c .path::before { left: 37px; right: auto; top: 20px; bottom: 20px; width: 2px; height: auto; background: linear-gradient(var(--yellow), var(--orange)); }
+  .e5c .node { display: grid; grid-template-columns: 76px 1fr; gap: 0 18px; padding: 0; }
+  .e5c .node .pin { margin: 0; grid-row: span 3; }
+}
+
+/* ============================================================
+   06 WHO WE SERVE / FUTURE
+   ============================================================ */
+.f6a { background: var(--paper); }
+.f6a .grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
+.f6a .door { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 24px 20px; display: flex; flex-direction: column; text-decoration: none; color: var(--ink); transition: transform .2s, box-shadow .2s, border-color .2s; }
+.f6a .door:hover, .f6a .door:focus-visible { transform: translateY(-4px); border-color: var(--orange-strong); box-shadow: 0 18px 40px -24px rgba(207,63,28,.55); }
+.f6a .door .who { font: 700 13px/1.3 var(--font-sans); color: var(--orange-strong); letter-spacing: .08em; }
+.f6a .door h3 { margin: 10px 0 10px; font: 900 18px/1.45 var(--font-sans); }
+.f6a .door p { margin: 0 0 18px; font-size: 14px; color: var(--ink-2); flex: 1; }
+.f6a .door .go { font-weight: 700; font-size: 14px; color: var(--orange-strong); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line); padding-top: 14px; }
+.f6a .door .go small { color: var(--ink-2); font: 500 12px/1 var(--font-display); }
+.f6a .door.class { border-color: #CFE9D4; }
+.f6a .door.class img { height: 30px; width: auto; align-self: flex-start; margin-bottom: 4px; }
+.f6a .door.class .who { color: #1B7A2B; }
+@media (max-width: 960px) { .f6a .grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .f6a .grid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .f6a .door { transition: none; } .f6a .door:hover { transform: none; } }
+
+.f6b { background: #fff; }
+.f6b .stairs { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; align-items: end; margin-top: 40px; }
+.f6b .step { border-radius: 16px 16px 0 0; padding: 22px 18px; display: flex; flex-direction: column; text-decoration: none; color: var(--ink); border: 1px solid var(--line); border-bottom: 4px solid var(--orange-strong); }
+.f6b .step:nth-child(1) { min-height: 220px; background: #fff; }
+.f6b .step:nth-child(2) { min-height: 260px; background: var(--paper); }
+.f6b .step:nth-child(3) { min-height: 300px; background: var(--yellow-soft); }
+.f6b .step:nth-child(4) { min-height: 340px; background: var(--orange-soft); }
+.f6b .lvl { font: 800 12px/1 var(--font-display); letter-spacing: .14em; color: var(--ink-2); }
+.f6b .meter { display: flex; gap: 4px; margin: 10px 0 18px; }
+.f6b .meter i { width: 18px; height: 6px; border-radius: 3px; background: var(--line); }
+.f6b .meter i.on { background: var(--orange-strong); }
+.f6b .step h3 { margin: 0 0 8px; font: 900 18px/1.45 var(--font-sans); }
+.f6b .step p { margin: 0 0 14px; font-size: 14px; color: var(--ink-2); flex: 1; }
+.f6b .step .go { font-weight: 700; font-size: 14px; color: var(--orange-strong); }
+.f6b .ground { height: 6px; background: var(--ink); border-radius: 0 0 6px 6px; }
+@media (max-width: 860px) {
+  .f6b .stairs { grid-template-columns: 1fr; align-items: stretch; }
+  .f6b .step { min-height: 0 !important; border-radius: 14px; border-bottom-width: 1px; border-left: 4px solid var(--orange-strong); }
+  .f6b .step:nth-child(1) { margin-right: 36px; } .f6b .step:nth-child(2) { margin-right: 24px; } .f6b .step:nth-child(3) { margin-right: 12px; }
+  .f6b .ground { display: none; }
+}
+
+.f6c { background: var(--surface-dark); color: #fff; }
+.f6c .groups { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.f6c .groups span { border: 1px solid rgba(255,255,255,.3); border-radius: 999px; padding: 8px 16px; font-size: 14px; font-weight: 700; }
+.f6c .road { list-style: none; margin: 48px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 0; position: relative; }
+.f6c .road::before { content: ""; position: absolute; left: 0; right: 0; top: 11px; height: 2px; background: linear-gradient(90deg, var(--orange) 0 66%, rgba(255,255,255,.3) 66%); }
+.f6c .road li { position: relative; padding: 40px 24px 0 0; }
+.f6c .road li::before { content: ""; position: absolute; left: 0; top: 0; width: 24px; height: 24px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 0 6px rgba(242,82,50,.25); }
+.f6c .road li:last-child::before { background: var(--surface-dark); border: 2px dashed var(--yellow); box-shadow: none; }
+.f6c .road .yr { font: 700 13px/1 var(--font-sans); color: var(--yellow); letter-spacing: .12em; }
+.f6c .road h3 { margin: 10px 0 8px; font: 900 19px/1.45 var(--font-sans); }
+.f6c .road p { margin: 0 0 16px; font-size: 14px; color: rgba(255,255,255,.8); }
+.f6c .road a { color: #fff; font-weight: 700; font-size: 14px; text-underline-offset: 4px; }
+@media (max-width: 860px) {
+  .f6c .road { grid-template-columns: 1fr; gap: 28px; }
+  .f6c .road::before { left: 11px; right: auto; top: 0; bottom: 0; width: 2px; height: auto; background: linear-gradient(var(--orange) 0 66%, rgba(255,255,255,.3) 66%); }
+  .f6c .road li { padding: 0 0 0 48px; }
+}
+
+/* ============================================================
+   07 TESTIMONIALS (logo wall)
+   ============================================================ */
+.q7 .tfull { margin-top: 28px; display: grid; gap: 12px; }
+.js .q7 .tfull { display: none; }
+.q7 .tfull blockquote { margin: 0; padding: 16px 18px; border-radius: 12px; background: var(--paper); font-size: 15px; }
+.q7 .tfull cite { display: block; margin-top: 6px; font-style: normal; font-size: 13px; color: var(--ink-2); }
+
+.q7a { background: #fff; }
+.q7a .wall { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
+.q7a .tile { position: relative; }
+.q7a .tile button { width: 100%; aspect-ratio: 1 / 1; border: 1px solid var(--line); border-radius: 20px; background: var(--paper); cursor: pointer; display: grid; place-items: center; align-content: center; gap: 12px; padding: 16px; font: inherit; color: var(--ink); transition: border-color .2s, background .2s; }
+.q7a .tile .mono { width: 84px; height: 84px; font-size: 30px; }
+.q7a .tile b { font-size: 15px; line-height: 1.4; }
+.q7a .tile .hint { font-size: 12px; color: var(--ink-2); }
+.q7a .tile button:hover, .q7a .tile button:focus-visible { border-color: var(--orange-strong); background: #fff; }
+.q7a .pop { position: absolute; left: 50%; bottom: calc(100% + 12px); transform: translate(-50%, 6px); width: min(300px, 80vw); background: var(--surface-dark); color: #fff; border-radius: 14px; padding: 16px 18px; font-size: 15px; line-height: 1.6; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .18s, transform .18s; z-index: 3; }
+.q7a .pop::after { content: ""; position: absolute; left: 50%; top: 100%; transform: translateX(-50%); border: 8px solid transparent; border-top-color: var(--surface-dark); }
+.q7a .pop small { display: block; margin-top: 8px; color: var(--yellow); font-size: 12px; }
+@media (hover: hover) { .q7a .tile:hover .pop, .q7a .tile:focus-within .pop { opacity: 1; visibility: visible; transform: translate(-50%, 0); } }
+.q7a .tile:nth-child(1) .pop { left: 0; transform: translate(0, 6px); } .q7a .tile:nth-child(1) .pop::after { left: 60px; }
+.q7a .tile:nth-child(4) .pop { left: auto; right: 0; transform: translate(0, 6px); } .q7a .tile:nth-child(4) .pop::after { left: auto; right: 52px; transform: none; }
+@media (hover: hover) { .q7a .tile:nth-child(1):hover .pop, .q7a .tile:nth-child(1):focus-within .pop, .q7a .tile:nth-child(4):hover .pop, .q7a .tile:nth-child(4):focus-within .pop { transform: none; } }
+@media (max-width: 760px) { .q7a .wall { grid-template-columns: 1fr 1fr; } .q7a .pop { display: none; } }
+
+.q7b { background: var(--surface-dark); color: #fff; }
+.q7b .stage { display: grid; grid-template-columns: 280px 1fr; gap: 48px; margin-top: 40px; align-items: start; }
+.q7b [role="tablist"] { display: grid; gap: 10px; }
+.q7b [role="tab"] { display: flex; align-items: center; gap: 14px; text-align: left; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.14); color: #fff; border-radius: 14px; padding: 12px 14px; cursor: pointer; font: 700 15px/1.4 var(--font-sans); min-height: 64px; }
+.q7b [role="tab"] .mono { width: 40px; height: 40px; font-size: 16px; flex: none; }
+.q7b [role="tab"][aria-selected="true"] { background: #fff; color: var(--ink); border-color: #fff; }
+.q7b [role="tabpanel"] { position: relative; padding-top: 40px; }
+.q7b [role="tabpanel"]::before { content: "“"; position: absolute; top: -30px; left: -6px; font: 800 140px/1 var(--font-display); color: var(--orange); }
+.q7b .hl { font: 900 clamp(22px, 3.2vw, 34px)/1.45 var(--font-sans); margin: 0 0 18px; }
+.q7b .qt { font-size: 16px; color: rgba(255,255,255,.82); margin: 0 0 22px; max-width: 640px; }
+.q7b .by { display: flex; align-items: center; gap: 12px; font-size: 14px; }
+.q7b .by b { display: block; font-size: 16px; }
+.q7b .by span { color: rgba(255,255,255,.7); }
+.q7b .by .chip { margin-left: auto; background: rgba(250,180,10,.16); color: var(--yellow); }
+.no-js .q7b [role="tabpanel"] { margin-bottom: 40px; }
+@media (max-width: 860px) {
+  .q7b .stage { grid-template-columns: 1fr; gap: 24px; }
+  .q7b [role="tablist"] { grid-auto-flow: column; grid-auto-columns: minmax(150px, 1fr); overflow-x: auto; padding-bottom: 6px; }
+  .q7b [role="tabpanel"]::before { font-size: 100px; top: -18px; }
+}
+
+.q7c { background: var(--paper); }
+.q7c .grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
+.q7c .flip { perspective: 1000px; min-height: 280px; }
+.q7c .flip button { all: unset; box-sizing: border-box; display: block; width: 100%; height: 100%; min-height: 280px; cursor: pointer; position: relative; transform-style: preserve-3d; transition: transform .6s cubic-bezier(.2,.7,.2,1); border-radius: 18px; }
+.q7c .flip button:focus-visible { outline: 3px solid var(--orange-strong); outline-offset: 3px; }
+.q7c .face { position: absolute; inset: 0; border-radius: 18px; padding: 22px; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: flex; flex-direction: column; }
+.q7c .front { background: #fff; border: 1px solid var(--line); align-items: center; justify-content: center; text-align: center; gap: 12px; }
+.q7c .front .mono { width: 90px; height: 90px; font-size: 32px; }
+.q7c .front b { font-size: 16px; }
+.q7c .front small { font-size: 12px; color: var(--ink-2); }
+.q7c .back { background: var(--orange-strong); color: #fff; transform: rotateY(180deg); justify-content: space-between; }
+.q7c .back .q { display: block; font: 700 17px/1.6 var(--font-sans); }
+.q7c .back span { font-size: 13px; }
+.q7c .back span b { display: block; font-size: 15px; }
+.q7c .flip.is-flipped button { transform: rotateY(180deg); }
+@media (hover: hover) { .q7c .flip:hover button { transform: rotateY(180deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .q7c .flip button { transition: none; transform: none !important; }
+  .q7c .back { transform: none; opacity: 0; transition: opacity .2s; }
+  .q7c .flip.is-flipped .back { opacity: 1; }
+  @media (hover: hover) { .q7c .flip:hover .back { opacity: 1; } }
+}
+.no-js .q7c .flip { min-height: 0; }
+.no-js .q7c .flip button { min-height: 0; transform: none !important; }
+.no-js .q7c .face { position: static; transform: none; }
+.no-js .q7c .front { border-radius: 18px 18px 0 0; padding: 18px; }
+.no-js .q7c .back { border-radius: 0 0 18px 18px; gap: 12px; }
+@media (max-width: 960px) { .q7c .grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .q7c .grid { grid-template-columns: 1fr; } .q7c .flip, .q7c .flip button { min-height: 230px; } }
+
+/* ============================================================
+   08 FINAL CTA
+   ============================================================ */
+.c8a { background: var(--surface-dark); color: #fff; text-align: center; }
+.c8a .m-wrap { padding-top: 96px; padding-bottom: 96px; position: relative; }
+.c8a svg.arc { position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 140%; max-width: 1400px; height: auto; opacity: .9; pointer-events: none; }
+.c8a h2 { font: 900 clamp(30px, 5vw, 56px)/1.3 var(--font-sans); margin: 0 0 16px; position: relative; }
+.c8a p { margin: 0 auto; max-width: 620px; font-size: 17px; color: rgba(255,255,255,.85); position: relative; }
+.c8a .btn-row { justify-content: center; position: relative; }
+.c8a img { height: 40px; width: auto; margin: 0 auto 32px; display: block; position: relative; }
+
+.c8b { background: var(--orange-soft); }
+.c8b .ticket { display: grid; grid-template-columns: 260px 1fr; background: #fff; border-radius: 24px; overflow: hidden; box-shadow: 0 30px 60px -40px rgba(207,63,28,.7); }
+.c8b .stub { background: var(--orange-strong); color: #fff; padding: 36px 28px; display: flex; flex-direction: column; justify-content: center; position: relative; }
+.c8b .stub::after { content: ""; position: absolute; right: -12px; top: 0; bottom: 0; width: 24px; background: radial-gradient(circle at 12px 12px, #fff 0 8px, transparent 9px) 0 0 / 24px 28px repeat-y; }
+.c8b .stub .num { font-size: 104px; }
+.c8b .stub b { font-size: 22px; margin-top: 6px; }
+.c8b .stub span { font-size: 14px; margin-top: 4px; }
+.c8b .body { padding: 40px 44px; }
+.c8b .body h2 { margin: 0 0 18px; font: 900 clamp(24px, 3.2vw, 34px)/1.35 var(--font-sans); }
+.c8b .three { list-style: none; padding: 0; margin: 0 0 8px; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+.c8b .three li { background: var(--paper); border-radius: 12px; padding: 14px; font-size: 14px; color: var(--ink-2); }
+.c8b .three li b { display: block; font-size: 18px; color: var(--ink); margin-bottom: 2px; }
+.c8b .alt { margin-top: 14px; font-size: 14px; color: var(--ink-2); }
+@media (max-width: 800px) {
+  .c8b .ticket { grid-template-columns: 1fr; }
+  .c8b .stub { flex-direction: row; align-items: baseline; gap: 12px; flex-wrap: wrap; padding: 24px; }
+  .c8b .stub::after { display: none; }
+  .c8b .stub .num { font-size: 64px; }
+  .c8b .body { padding: 28px 22px; }
+  .c8b .three { grid-template-columns: 1fr; }
+}
+
+.c8c { background: var(--orange-strong); color: #fff; }
+.c8c h2 { font: 900 clamp(28px, 4.4vw, 46px)/1.3 var(--font-sans); margin: 0 0 10px; }
+.c8c > .m-wrap > p { margin: 0; font-size: 17px; max-width: 640px; }
+.c8c .exits { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 16px; margin-top: 36px; }
+.c8c .exit { background: #fff; color: var(--ink); border-radius: 18px; padding: 24px; text-decoration: none; display: flex; flex-direction: column; min-height: 210px; transition: transform .2s; }
+.c8c .exit:hover { transform: translateY(-3px); }
+.c8c .exit .who { font: 700 13px/1.3 var(--font-sans); color: var(--orange-strong); letter-spacing: .06em; }
+.c8c .exit h3 { margin: 8px 0 8px; font: 900 20px/1.4 var(--font-sans); }
+.c8c .exit p { margin: 0 0 16px; font-size: 14px; color: var(--ink-2); flex: 1; }
+.c8c .exit .go { font-weight: 700; color: var(--orange-strong); }
+.c8c .exit.main { background: var(--surface-dark); color: #fff; }
+.c8c .exit.main .who { color: var(--yellow); }
+.c8c .exit.main p { color: rgba(255,255,255,.8); }
+.c8c .exit.main .go { color: #fff; background: var(--orange-strong); align-self: flex-start; padding: 10px 18px; border-radius: 999px; }
+@media (max-width: 860px) { .c8c .exits { grid-template-columns: 1fr; } .c8c .exit { min-height: 0; } }
+@media (prefers-reduced-motion: reduce) { .c8c .exit { transition: none; } .c8c .exit:hover { transform: none; } }
+
+/* ============================================================
+   09 CONNECTIONS
+   ============================================================ */
+.cx { max-width: 1120px; margin: 0 auto; padding: 0 16px 80px; }
+.cx h3 { font: 900 22px/1.4 var(--font-sans); margin: 48px 0 8px; }
+.cx h3 small { font: 800 13px/1 var(--font-display); color: var(--orange-strong); letter-spacing: .14em; display: block; margin-bottom: 8px; }
+.cx > p, .cx .intro { color: var(--ink-2); max-width: 760px; margin: 0 0 20px; }
+.rhythm { display: grid; grid-template-columns: 1fr; gap: 6px; max-width: 760px; }
+.rhythm div { display: grid; grid-template-columns: 52px 1fr auto; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 10px; font-size: 15px; border: 1px solid var(--line); }
+.rhythm b { font: 800 14px/1 var(--font-display); }
+.rhythm span:last-child { font-size: 12px; font-weight: 700; letter-spacing: .06em; }
+.tone-paper { background: var(--paper); }
+.tone-white { background: #fff; }
+.tone-yellow { background: var(--yellow-soft); }
+.tone-osoft { background: var(--orange-soft); }
+.tone-dark { background: var(--surface-dark); color: #fff; border-color: var(--surface-dark) !important; }
+.tone-orange { background: var(--orange-strong); color: #fff; border-color: var(--orange-strong) !important; }
+
+.devices { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 20px; }
+.device { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
+.device h4 { margin: 0 0 6px; font: 900 18px/1.4 var(--font-sans); }
+.device > p { margin: 0 0 18px; font-size: 14px; color: var(--ink-2); }
+@media (max-width: 860px) { .devices { grid-template-columns: 1fr; } }
+
+/* bridge line demo */
+.bl-demo { display: grid; grid-template-columns: 40px 1fr; gap: 0 14px; }
+.bl-demo .rail { position: relative; }
+.bl-demo .rail::before { content: ""; position: absolute; left: 19px; top: 8px; bottom: 30px; width: 2px; background: linear-gradient(var(--orange), var(--yellow)); }
+.bl-demo ol { list-style: none; margin: 0; padding: 0; display: contents; }
+.bl-demo .stack { display: grid; gap: 8px; }
+.bl-demo .stack div { height: 34px; border-radius: 8px; display: flex; align-items: center; padding: 0 12px; font-size: 13px; position: relative; }
+.bl-demo .stack div::before { content: ""; position: absolute; left: -41px; top: 50%; width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 3px solid var(--orange); transform: translateY(-50%); }
+.bl-demo .stack div.big::before { width: 20px; height: 20px; left: -44px; background: var(--orange); }
+.bl-demo svg { display: block; width: 100%; height: 40px; margin-top: 4px; }
+
+/* chapter marker demo */
+.ch-demo { display: grid; gap: 14px; }
+.ch-demo .ch { display: flex; align-items: center; gap: 14px; }
+.ch-demo .ch b { font: 800 40px/1 var(--font-display); color: var(--orange-strong); letter-spacing: -.02em; }
+.ch-demo .ch span { font: 700 12px/1.4 var(--font-sans); letter-spacing: .14em; color: var(--ink-2); border-left: 2px solid var(--line); padding-left: 12px; }
+.ch-demo .ch span em { font-style: normal; display: block; color: var(--ink); font-size: 16px; letter-spacing: 0; }
+.ch-demo .ch.dark { background: var(--surface-dark); border-radius: 12px; padding: 14px; }
+.ch-demo .ch.dark b { color: var(--yellow); }
+.ch-demo .ch.dark span { color: rgba(255,255,255,.7); border-color: rgba(255,255,255,.2); }
+.ch-demo .ch.dark span em { color: #fff; }
+
+/* kicker demo */
+.kk { width: 100%; border-collapse: collapse; font-size: 14px; }
+.kk th, .kk td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.kk th { font-size: 12px; color: var(--ink-2); letter-spacing: .08em; }
+.kk td:first-child { white-space: nowrap; font-weight: 700; }
+.kk .arrow { color: var(--orange-strong); font-weight: 700; }
+.kick-demo { margin-top: 16px; text-align: center; padding: 18px; border-radius: 12px; background: var(--paper); }
+.kick-demo p { margin: 0; font: 900 18px/1.5 var(--font-sans); }
+.kick-demo span { display: block; margin: 6px auto 0; width: 2px; height: 28px; background: var(--orange-strong); position: relative; }
+.kick-demo span::after { content: ""; position: absolute; left: -5px; bottom: -2px; width: 8px; height: 8px; border-right: 2px solid var(--orange-strong); border-bottom: 2px solid var(--orange-strong); transform: rotate(45deg); }
+
+/* divider demo */
+.dv-demo { border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+.dv-demo .a { height: 70px; background: var(--paper); }
+.dv-demo svg { display: block; width: 100%; height: 48px; background: var(--paper); }
+.dv-demo .b { height: 70px; background: var(--surface-dark); color: #fff; display: grid; place-items: center; font-size: 13px; }
+
+.flows { display: grid; gap: 16px; }
+.flow { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 22px 24px; }
+.flow.rec { border: 2px solid var(--orange-strong); box-shadow: 0 20px 40px -30px rgba(207,63,28,.6); }
+.flow header { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 14px; }
+.flow header h4 { margin: 0; font: 900 19px/1.4 var(--font-sans); }
+.flow .seq { display: grid; grid-template-columns: repeat(8, minmax(0,1fr)); gap: 6px; margin-bottom: 14px; }
+.flow .seq span { border-radius: 8px; padding: 10px 6px; text-align: center; font: 800 14px/1.2 var(--font-display); border: 1px solid var(--line); }
+.flow .seq span small { display: block; font: 500 11px/1.3 var(--font-sans); margin-top: 4px; opacity: .85; }
+.flow p { margin: 0 0 8px; font-size: 14px; color: var(--ink-2); }
+.flow ul { margin: 0; padding-left: 20px; font-size: 14px; }
+.flow ul li { margin-bottom: 4px; }
+@media (max-width: 720px) { .flow .seq { grid-template-columns: repeat(4, minmax(0,1fr)); } }
+
+/* dialog */
+dialog.dlg { border: 0; border-radius: 20px; padding: 0; width: min(640px, calc(100vw - 32px)); max-height: calc(100vh - 48px); box-shadow: 0 30px 80px -20px rgba(0,0,0,.5); color: var(--ink); }
+dialog.dlg::backdrop { background: rgba(31,32,34,.6); }
+dialog.dlg .dlg-in { padding: 32px 28px 28px; overflow: auto; max-height: calc(100vh - 48px); }
+dialog.dlg .x { position: absolute; right: 12px; top: 12px; width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--paper); cursor: pointer; font: 500 22px/1 var(--font-display); }
+dialog.dlg h3 { margin: 0 0 14px; font: 900 22px/1.4 var(--font-sans); padding-right: 40px; }
+dialog.dlg p { margin: 0 0 12px; font-size: 16px; }
+dialog.dlg .hl { font: 900 20px/1.5 var(--font-sans); color: var(--orange-strong); }
+dialog.dlg .meta { display: flex; gap: 12px; align-items: center; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 14px; }
+dialog.dlg .meta .mono { width: 48px; height: 48px; font-size: 20px; }
+
+/* print: show every option, drop chrome */
+@media print {
+  .pp-bar, .pp-toggle, dialog { display: none !important; }
+  .opt { display: block !important; break-inside: avoid-page; }
+  .frame { box-shadow: none; }
+  .t2b .track { animation: none; }
+  .js .q7 .tfull { display: grid; }
+  .js .q7b [role="tabpanel"] { display: block !important; }
+}
+</style>
+</head>
+<body>
+
+<nav class="pp-bar" aria-label="提案導覽">
+  <strong>首頁提案</strong>
+  <div class="pp-jump">
+    <button type="button" data-jump="s1">01 Hero</button>
+    <button type="button" data-jump="s2">02 信任列</button>
+    <button type="button" data-jump="s3">03 痛點</button>
+    <button type="button" data-jump="s4">04 品牌故事</button>
+    <button type="button" data-jump="s5">05 行動證據</button>
+    <button type="button" data-jump="s6">06 服務誰</button>
+    <button type="button" data-jump="s7">07 客戶回饋</button>
+    <button type="button" data-jump="s8">08 CTA</button>
+    <button type="button" data-jump="s9">串連</button>
+  </div>
+  <button type="button" class="pp-all" aria-pressed="false">三案全部展開</button>
+</nav>
+
+<header class="pp-cover">
+  <img src="../../../public/brand/gungho-horizontal.svg" alt="共好玟化">
+  <span class="pp-label">Proposal · Home · 2026-10</span>
+  <h1>首頁逐區提案：八個區塊 × 三個方案</h1>
+  <p>依 <code>02-journey-analysis.md</code> 的首頁旅程排序。每個區塊各有 A／B／C 三個獨立方案，可以自由混搭；用每區右上角的切換鈕比較，或點上方「三案全部展開」並排瀏覽。所有文案取自現行辭典（<code>zh.ts</code>），數字只用單一來源 <code>impact.metrics</code>：1,000萬 資源挹注／130+ 跨產業合作／8+ 國際論壇。</p>
+  <p>品牌色依 CIS：橘 #F25232 用於色塊與大字，文字與按鈕用加深的 #CF3F1C（白字 4.7:1），黃色只放在深色底上。客戶 logo、創辦人照片尚未匯入（G07），以字標與色塊示意，畫面上標「待補」。</p>
+  <p class="pp-note" style="margin-top:16px">訪客心理曲線：好奇 →「這跟我有關嗎？」→「真的有用嗎？」→「他們是誰？」→「怎麼開始？」。下面每一格是一個區塊要回答的問題。</p>
+  <div class="pp-curve">
+    <a href="#s1"><b>01</b>你們在做什麼？</a>
+    <a href="#s2"><b>02</b>誰用過？</a>
+    <a href="#s3"><b>03</b>跟我有關嗎？</a>
+    <a href="#s4"><b>04</b>為什麼是你們？</a>
+    <a href="#s5"><b>05</b>真的有用嗎？</a>
+    <a href="#s6"><b>06</b>我屬於哪一種？</a>
+    <a href="#s7"><b>07</b>別人怎麼說？</a>
+    <a href="#s8"><b>08</b>怎麼開始？</a>
+  </div>
+</header>
+
+<main>
+
+<!-- =========================================================
+     01 HERO
+     ========================================================= -->
+<section class="pp-section" id="s1" data-section>
+  <div class="pp-head">
+    <div>
+      <span class="pp-num">01 / 08</span>
+      <h2>Hero：你們在做什麼？</h2>
+      <p>5 秒內說清楚「為誰解決什麼」。一句主張、一個主要 CTA（Coffee Chat）、一個次要 CTA。主要角色：全部。</p>
+    </div>
+    <div class="pp-toggle" role="group" aria-label="切換 Hero 方案"><button type="button" data-opt="A">A</button><button type="button" data-opt="B">B</button><button type="button" data-opt="C">C</button></div>
+  </div>
+
+  <article class="opt" data-opt="A">
+    <div class="opt-title"><span class="pp-label">01 · A</span><h3>一句話主張＋橋樑弧線</h3></div>
+    <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>co-esg.tw/zh</span></div>
+      <div class="m h1a"><div class="m-wrap">
+        <p class="m-kicker">永續品牌的專業橋樑</p>
+        <h1>很多人正在做有意義的事，<br>卻不知道怎麼<em>讓市場看見</em></h1>
+        <p class="m-lead">致力於讓不同領域的永續價值能被企業理解、被市場看見。</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="#s8">預約 15 分鐘 Coffee Chat</a>
+          <a class="btn btn-ghost" href="#s6">了解服務</a>
+        </div>
+        <div class="bridge" aria-hidden="true">
+          <svg viewBox="0 0 860 150" fill="none">
+            <path d="M30 128 H830" stroke="#4D515B" stroke-width="3" stroke-linecap="round"/>
+            <path d="M30 128 C 260 10, 600 10, 830 128" stroke="#F25232" stroke-width="5" stroke-linecap="round"/>
+            <g stroke="#F25232" stroke-width="2" opacity=".55">
+              <path d="M130 128 V78"/><path d="M230 128 V55"/><path d="M330 128 V44"/><path d="M430 128 V41"/><path d="M530 128 V44"/><path d="M630 128 V55"/><path d="M730 128 V78"/>
+            </g>
+            <circle cx="30" cy="128" r="10" fill="#FAB40A"/><circle cx="830" cy="128" r="10" fill="#4D515B"/>
+          </svg>
+          <img src="../../../public/brand/gungho-mark.svg" alt="">
+          <div class="ends"><span>品牌・小農・社會企業・非營利組織</span><span>企業的 ESG 與採購窗口</span></div>
+        </div>
+        <div class="metrics">
+          <div><span class="num">1,000萬</span><small>資源挹注</small></div>
+          <div><span class="num">130+</span><small>跨產業合作</small></div>
+          <div><span class="num">8+</span><small>國際論壇</small></div>
+        </div>
+      </div></div>
+    </div>
+    <dl class="pp-card">
+      <div><dt>概念</dt><dd>把品牌名「Sayun＝橋樑」直接畫成 Hero 的主視覺：左端是做好事的品牌，右端是企業，橋上是共好玟化。一句主張、置中、留白。</dd></div>
+      <div><dt>參考來源</dt><dd>Ørsted、Interface 的單一主張 Hero（benchmark P1）；B Lab 首頁的宣言式排版。</dd></div>
+      <div><dt>優點</dt><dd>品牌隱喻一眼可懂，不需照片；數字列小而低調，給 P2 第一份證據又不搶主張。</dd></div>
+      <div><dt>風險</dt><dd>置中長標題在手機會斷成 4 行；橋樑圖若做得太裝飾會像模板，需要用品牌插畫師精修。</dd></div>
+      <div><dt>對旅程的作用</dt><dd>回答「你們在做什麼」，並建立全頁的視覺母題（橋樑線），讓之後每個區塊都能呼應。</dd></div>
+    </dl>
+  </article>
+
+  <article class="opt" data-opt="B">
+    <div class="opt-title"><span class="pp-label">01 · B</span><h3>雙側對話：兩端的人，中間的橋</h3></div>
+    <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>co-esg.tw/zh</span></div>
+      <div class="m h1b"><div class="m-wrap">
+        <p class="m-kicker">永續品牌的專業橋樑</p>
+        <h1>很多人正在做有意義的事，卻不知道怎麼讓市場看見</h1>
+        <p class="m-lead">共好玟化想要成為那座橋樑，確保理念相符的夥伴能精準對接。</p>
+        <div class="duo">
+          <div class="side">
+            <span class="who">如果你是 品牌・小農・社企・NPO</span>
+            <h2>已在實踐永續，卻說不清楚能提供什麼</h2>
+            <p>許多品牌、農業、社會企業、非營利組織，已具備扎實的永續理念並正在執行，但面對企業端，經常說不清楚自己能提供什麼。</p>
+          </div>
+          <div class="link" aria-hidden="true"><div class="hub"><img src="../../../public/brand/gungho-mark-white.svg" alt="">永續，就是與企業對話的共同語言</div></div>
+          <div class="side">
+            <span class="who">如果你是 企業 ESG・採購</span>
+            <h2>需要呼應品牌精神的永續夥伴</h2>
+            <p>除了符合規範的供應商，還需要真正呼應品牌精神、對應 ESG 指標的合作夥伴。</p>
+          </div>
+        </div>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="#s8">預約 15 分鐘 Coffee Chat</a>
+          <a class="btn btn-ghost-light" href="#s6">了解服務</a>
+        </div>
+      </div></div>
+    </div>
+    <dl class="pp-card">
+      <div><dt>概念</dt><dd>不只說「我們是橋」，而是把橋兩端的人都放進 Hero，讓 P1 與 P2 各自在第一屏看到自己。</dd></div>
+      <div><dt>參考來源</dt><dd>Schneider Electric 的雙受眾入口（企業／個人）；South Pole 首頁依角色分流的 Hero。</dd></div>
+      <div><dt>優點</dt><dd>分流提前到第一屏，最能回應「這跟我有關嗎」；深色底在眾多白底 ESG 網站中辨識度高。</dd></div>
+      <div><dt>風險</dt><dd>第一屏字數多，手機上需滑動才看到 CTA；NPO 與學習者沒有獨立位置。</dd></div>
+      <div><dt>對旅程的作用</dt><dd>把「理解」與「分流」合併，讓後面的 06 分流可以更輕；不放數字，證據完整留給 05。</dd></div>
+    </dl>
+  </article>
+
+  <article class="opt" data-opt="C">
+    <div class="opt-title"><span class="pp-label">01 · C</span><h3>數字先行：用成果開場</h3></div>
+    <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>co-esg.tw/zh</span></div>
+      <div class="m h1c"><div class="m-wrap">
+        <p class="m-kicker">永續品牌的專業橋樑</p>
+        <h1>很多人正在做有意義的事，卻不知道怎麼讓市場看見</h1>
+        <p class="sub">致力於讓不同領域的永續價值能被企業理解、被市場看見。</p>
+        <div class="big">
+          <div><span class="num">1,000萬</span><b>資源挹注</b><span>一份永續白皮書帶來的經濟資源</span></div>
+          <div><span class="num">130+</span><b>跨產業合作</b><span>透過 ESG共學坊講師平台促成</span></div>
+          <div><span class="num">8+</span><b>國際論壇</b><span>協助企業登上國際論壇</span></div>
+        </div>
+        <p class="foot">數據持續更新中</p>
+        <div class="btn-row">
+          <a class="btn btn-light" href="#s8">預約 15 分鐘 Coffee Chat</a>
+          <a class="btn btn-ghost-light" href="#s5">看這些數字背後的故事</a>
+        </div>
+      </div></div>
+    </div>
+    <dl class="pp-card">
+      <div><dt>概念</dt><dd>品牌色整片鋪底，三個數字放到最大，主張退為副標。先證明有用，再說我們是誰。</dd></div>
+      <div><dt>參考來源</dt><dd>IKEA Sustainability highlights 首屏大數字；台達電 ESG 站的指標首屏。</dd></div>
+      <div><dt>優點</dt><dd>最能說服 P2 企業窗口與 P5 主辦單位；品牌色記憶點最強。</dd></div>
+      <div><dt>風險</dt><dd>只有三個數字，放大後會被追問口徑（130+ 的單位待客戶確認，見 G06）；P1 小品牌可能覺得「離我很遠」。和 05 同時放大數字會重複。</dd></div>
+      <div><dt>對旅程的作用</dt><dd>把「真的有用嗎」提前到第一屏；若選此案，05 必須改為故事優先（05 · B）。</dd></div>
+    </dl>
+  </article>
+</section>
+
+<!-- =========================================================
+     02 TRUST STRIP
+     ========================================================= -->
+<section class="pp-section" id="s2" data-section>
+  <div class="pp-head">
+    <div>
+      <span class="pp-num">02 / 08</span>
+      <h2>信任列：誰用過？</h2>
+      <p>Hero 的主張需要立刻有人背書（H01）。目前只有 4 個可公開的品牌名稱、沒有 logo 檔，因此三案都以字標處理，素材到位後可直接替換。</p>
+    </div>
+    <div class="pp-toggle" role="group" aria-label="切換信任列方案"><button type="button" data-opt="A">A</button><button type="button" data-opt="B">B</button><button type="button" data-opt="C">C</button></div>
+  </div>
+
+  <article class="opt" data-opt="A">
+    <div class="opt-title"><span class="pp-label">02 · A</span><h3>圓形字標牆（客戶指定參考樣式）</h3></div>
+    <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>Hero 下方</span></div>
+      <div class="m t2 t2a"><div class="m-wrap">
+        <p class="cap">我們服務過的夥伴</p>
+        <div class="ring">
+          <figure><div class="mono mono-1">思</div><figcaption>思凡自然農場</figcaption></figure>
+          <figure><div class="mono mono-2">兔</div><figcaption>兔耳生活有限公司</figcaption></figure>
+          <figure><div class="mono mono-3">農</div><figcaption>台灣休閒農場學會</figcaption></figure>
+          <figure><div class="mono mono-4">齊</div><figcaption>齊禾品牌顧問</figcaption></figure>
+          <figure class="todo"><div class="mono">logo<br>待補</div><figcaption class="ph">素材匯入後增加</figcaption></figure>
+          <figure class="todo"><div class="mono">logo<br>待補</div><figcaption class="ph">素材匯入後增加</figcaption></figure>
+          <figure class="todo"><div class="mono">logo<br>待補</div><figcaption class="ph">素材匯入後增加</figcaption></figure>
+          <figure class="todo"><div class="mono">logo<br>待補</div><figcaption class="ph">素材匯入後增加</figcaption></figure>
+        </div>
+      </div></div>
+    </div>
+    <dl class="pp-card">
+      <div><dt>概念</dt><dd>兩排圓形徽章，每個品牌一個圓。logo 到位前以品牌名首字做字標，四色輪替，避免看起來像空白。</dd></div>
+      <div><dt>參考來源</dt><dd>客戶 PDF p.9 提供的 act 網站圓形 logo 牆；B Lab 企業名錄的圓形徽章。</dd></div>
+      <div><dt>優點</dt><dd>最貼近客戶期待，交付風險最低；圓形能統一格式不一的 logo（H01 風險）。</dd></div>
+      <div><dt>風險</dt><dd>品牌少於 8 個時第二排會空；圓形字標若太久沒換成真 logo，會降低可信度。</dd></div>
+      <div><dt>對旅程的作用</dt><dd>回答「誰用過」，同一組圓形徽章延續到 07 客戶回饋，讓兩區形成呼應。</dd></div>
+    </dl>
+  </article>
+
+  <article class="opt" data-opt="B">
+    <div class="opt-title"><span class="pp-label">02 · B</span><h3>一行字體跑馬燈</h3></div>
+    <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>Hero 下方</span></div>
+      <div class="m t2 t2b"><div class="m-wrap">
+        <p class="cap">這些夥伴與我們一起走過</p>
+        <div class="viewport" tabindex="0" aria-label="合作夥伴名單（滑鼠移入或聚焦時暫停）">
+          <div class="track">
+            <ul>
+              <li>思凡自然農場<small>品牌主</small></li>
+              <li>兔耳生活有限公司<small>品牌主</small></li>
+              <li>台灣休閒農場學會<small>產業夥伴</small></li>
+              <li>齊禾品牌顧問<small>顧問</small></li>
+            </ul>
+            <ul aria-hidden="true">
+              <li>思凡自然農場<small>品牌主</small></li>
+              <li>兔耳生活有限公司<small>品牌主</small></li>
+              <li>台灣休閒農場學會<small>產業夥伴</small></li>
+              <li>齊禾品牌顧問<small>顧問</small></li>
+            </ul>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <dl class="pp-card">
+      <div><dt>概念</dt><dd>不等 logo，直接用粗黑體把夥伴名稱排成一條緩慢移動的字帶，名稱之間以小橋弧分隔。</dd></div>
+      <div><dt>參考來源</dt><dd>Patagonia、South Pole 的客戶／夥伴名稱帶；編輯型網站的文字跑馬燈。</dd></div>
+      <div><dt>優點</dt><dd>立即可上線，不受素材阻擋；中文字標本身就有質感，與 logo 混排也不突兀。</dd></div>
+      <div><dt>風險</dt><dd>只有 4 個名字時重複明顯（H01 建議少於 8 個用靜態）；動態需支援減少動態偏好（已處理：停止並換行）。</dd></div>
+      <div><dt>對旅程的作用</dt><dd>用最輕的高度完成背書，讓 Hero 與痛點之間不被打斷。</dd></div>
+    </dl>
+  </article>
+
+  <article class="opt" data-opt="C">
+    <div class="opt-title"><span class="pp-label">02 · C</span><h3>分層信任：夥伴 × 框架 × 舞台</h3></div>
+    <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>Hero 下方</span></div>
+      <div class="m t2 t2c"><div class="m-wrap">
+        <div class="layers">
+          <div class="layer">
+            <h3><b>01</b>合作夥伴</h3>
+            <div class="names">
+              <div class="name"><span class="mono mono-1">思</span><span>思凡自然農場<small>品牌主</small></span></div>
+              <div class="name"><span class="mono mono-2">兔</span><span>兔耳生活有限公司<small>品牌主</small></span></div>
+              <div class="name"><span class="mono mono-3">農</span><span>台灣休閒農場學會<small>產業夥伴</small></span></div>
+              <div class="name"><span class="mono mono-4">齊</span><span>齊禾品牌顧問<small>顧問</small></span></div>
+            </div>
+          </div>
+          <div class="layer">
+            <h3><b>02</b>我們轉譯的國際框架</h3>
+            <div class="fw"><span>ISO</span><span>GRI</span><span>TCFD</span><span>CBAM</span><span>生物多樣性</span></div>
+          </div>
+          <div class="layer">
+            <h3><b>03</b>國際舞台</h3>
+            <div class="stat"><span class="num">8+</span><b>企業登上國際論壇</b></div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <dl class="pp-card">
+      <div><dt>概念</dt><dd>小型顧問沒有大獎，就把信任拆成三層：誰合作過、我們懂哪些框架、走到哪個舞台。</dd></div>
+      <div><dt>參考來源</dt><dd>benchmark P9「信任訊號分層」；台達電 ESG 站的框架與評比標章列。</dd></div>
+      <div><dt>優點</dt><dd>P2 企業窗口最在意的「懂不懂 GRI／CBAM」第一時間被回答；不依賴 logo 數量。</dd></div>
+      <div><dt>風險</dt><dd>框架字樣容易被誤讀為「認證」，需標明是「轉譯」；資訊量較大，與 03 痛點第三卡內容重疊。</dd></div>
+      <div><dt>對旅程的作用</dt><dd>同時服務「誰用過」與「夠不夠專業」，適合以 P2／P5 為主的流程。</dd></div>
+    </dl>
+  </article>
+</section>
+
+<!-- =========================================================
+     03 PROBLEM
+     ========================================================= -->
+<section class="pp-section" id="s3" data-section>
+  <div class="pp-head">
+    <div>
+      <span class="pp-num">03 / 08</span>
+      <h2>我們在解決什麼：跟我有關嗎？</h2>
+      <p>從「誰用過」轉到「為什麼需要」。三張痛點卡文案依 H03 已更新（含「對國際接軌」）。主要角色：P1、P2。</p>
+    </div>
+    <div class="pp-toggle" role="group" aria-label="切換痛點方案"><button type="button" data-opt="A">A</button><button type="button" data-opt="B">B</button><button type="button" data-opt="C">C</button></div>
+  </div>
+
+  <article class="opt" data-opt="A">
+    <div class="opt-title"><span class="pp-label">03 · A</span><h3>三欄痛點卡＋解方深色帶</h3></div>
+    <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>#problem</span></div>
+      <div class="m p3a"><div class="m-wrap">
+        <p class="m-kicker">我們在解決什麼</p>
+        <h2 class="m-h2">從概念到行動，中間差了什麼？</h2>
+        <p class="m-lead">共好玟化同時面對三個層次的問題，協助品牌主、產業與整體環境找到永續的共同語言。</p>
+        <div class="cards">
+          <div class="card"><span class="n">01</span>
+            <svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+            <span class="lbl">對品牌主／消費者端</span><h3>有好產品，卻不知如何被看見</h3>
+            <p>很多人有好的服務與產品，卻不知道企業地圖長什麼樣子、該從哪個切入點進入。我們協助你釐清定位、整理永續敘事，提升你在市場上的競爭力。</p></div>
+          <div class="card"><span class="n">02</span>
+            <svg class="ico" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>
+            <span class="lbl">對產業端</span><h3>供應鏈資訊不透明</h3>
+            <p>具備及符合 ESG 採購標準的廠商沒有適合的平台被看見，我們協助建立一個供應鏈與企業可以對接的溝通平台。</p></div>
+          <div class="card"><span class="n">03</span>
+            <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg>
+            <span class="lbl">對國際接軌</span><h3>接軌國際趨勢</h3>
+            <p>ISO、GRI、TCFD、生物多樣性、CBAM…這麼多國際標準，在公司資源有限下，共好玟化扮演知識轉譯與溝通的角色，協助企業與國際 ESG 接軌。</p></div>
+        </div>
+        <div class="band">
+          <div><h3>成為永續生態圈的專業橋樑</h3><p>透過顧問輔導、永續白皮書服務、ESG共學坊與溝通平台，讓不同領域的永續價值能被企業理解、被市場看見。說清楚，才能被看見。</p></div>
+          <div class="pillars"><span>顧問輔導</span><span>永續白皮書</span><span>溝通平台</span></div>
+        </div>
+      </div></div>
+    </div>
+    <dl class="pp-card">
+      <div><dt>概念</dt><dd>保留現行結構但升級：卡片取消截斷、加大序號，解方從卡片下方獨立成一條深色帶，三支柱一目了然。</dd></div>
+      <div><dt>參考來源</dt><dd>Unilever「4 大議題」、IKEA「3 領域」的支柱式排版（benchmark P13）。</dd></div>
+      <div><dt>優點</dt><dd>開發成本最低（現有元件改樣式即可）；問題與解方在同一視線內完成。</dd></div>
+      <div><dt>風險</dt><dd>三欄卡是 ESG 網站最常見的版型，缺乏記憶點；深色帶與後面深色區塊相鄰時節奏會亂。</dd></div>
+      <div><dt>對旅程的作用</dt><dd>穩定、清楚地回答「跟我有關嗎」，並先預告三支柱，讓 06 分流有依據。</dd></div>
+    </dl>
+  </article>
+
+  <article class="opt" data-opt="B">
+    <div class="opt-title"><span class="pp-label">03 · B</span><h3>缺口圖：概念與行動之間斷掉的三段</h3></div>
+    <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>#problem</span></div>
+      <div class="m p3b"><div class="m-wrap">
+        <p class="m-kicker">我們在解決什麼</p>
+        <h2 class="m-h2">從概念到行動，中間差了什麼？</h2>
+        <p class="m-lead">共好玟化同時面對三個層次的問題，協助品牌主、產業與整體環境找到永續的共同語言。</p>
+        <div class="ends"><span><b>概念</b>好理念、好產品</span><span><b>行動</b>被企業理解與採用</span></div>
+        <div class="row">
+          <div class="gap" aria-hidden="true"><i>01</i></div>
+          <h3><small>對品牌主／消費者端</small>有好產品，卻不知如何被看見</h3>
+          <p>很多人有好的服務與產品，卻不知道企業地圖長什麼樣子、該從哪個切入點進入。我們協助你釐清定位、整理永續敘事。</p>
+        </div>
+        <div class="row">
+          <div class="gap" aria-hidden="true"><i>02</i></div>
+          <h3><small>對產業端</small>供應鏈資訊不透明</h3>
+          <p>具備及符合 ESG 採購標準的廠商沒有適合的平台被看見，我們協助建立一個供應鏈與企業可以對接的溝通平台。</p>
+        </div>
+        <div class="row">
+          <div class="gap" aria-hidden="true"><i>03</i></div>
+          <h3><small>對國際接軌</small>接軌國際趨勢</h3>
+          <p>ISO、GRI、TCFD、生物多樣性、CBAM…在公司資源有限下，共好玟化扮演知識轉譯與溝通的角色，協助企業與國際 ESG 接軌。</p>
+        </div>
+        <div class="solved">
+          <div class="line" aria-hidden="true"></div>
+          <h3>成為永續生態圈的專業橋樑</h3>
+          <p>讓不同領域的永續價值能被企業理解、被市場看見、也能找到理念相符的合作夥伴。說清楚，才能被看見。</p>
+          <div class="chips"><span class="chip">顧問輔導</span><span class="chip">永續白皮書</span><span class="chip">溝通平台</span></div>
+        </div>
+      </div></div>
+    </div>
+    <dl class="pp-card">
+      <div><dt>概念</dt><dd>把標題「中間差了什麼」畫出來：三條從「概念」到「行動」的線，每條中間都斷了一段（虛線圓圈）；最後一條是接通的橘黃漸層線，就是共好玟化。</dd></div>
+      <div><dt>參考來源</dt><dd>Interface「Climate Take Back」的問題→承諾敘事；South Pole 以缺口（gap）說明顧問價值的寫法。</dd></div>
+      <div><dt>優點</dt><dd>痛點與「橋」的品牌概念直接扣合，自然引出下一區的 Sayun 故事；比三欄卡有記憶點。</dd></div>
+      <div><dt>風險</dt><dd>縱向較長；若圖形做得太抽象，訪客可能看不懂斷線的意思，需靠「概念／行動」兩端標籤撐住。</dd></div>
+      <div><dt>對旅程的作用</dt><dd>把問題講成「斷掉的橋」，讓 04 品牌故事成為答案：「所以她決定親手把這座橋搭起來」。</dd></div>
+    </dl>
+  </article>
+
+  <article class="opt" data-opt="C">
+    <div class="opt-title"><span class="pp-label">03 · C</span><h3>自我辨識：你在哪一端？</h3></div>
+    <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>#problem</span></div>
+      <div class="m p3c"><div class="m-wrap">
+        <div class="grid">
+          <div>
+            <p class="m-kicker">我們在解決什麼</p>
+            <h2 class="m-h2">從概念到行動，中間差了什麼？</h2>
+            <p class="m-lead">共好玟化同時面對三個層次的問題，協助品牌主、產業與整體環境找到永續的共同語言。</p>
+            <p class="q">說清楚，才能被看見。</p>
+          </div>
+          <div>
+            <details name="p3c" open>
+              <summary><small>對品牌主／消費者端</small><b>有好產品，卻不知如何被看見</b></summary>
+              <div class="body"><p>很多人有好的服務與產品，卻不知道企業地圖長什麼樣子、該從哪個切入點進入。我們協助你釐清定位、整理永續敘事，提升你在市場上的競爭力。</p><a href="#s6">顧問輔導 →</a></div>
+            </details>
+            <details name="p3c">
+              <summary><small>對產業端</small><b>供應鏈資訊不透明</b></summary>
+              <div class="body"><p>具備及符合 ESG 採購標準的廠商沒有適合的平台被看見，我們協助建立一個供應鏈與企業可以對接的溝通平台。</p><a href="#s6">溝通平台 →</a></div>
+            </details>
+            <details name="p3c">
+              <summary><small>對國際接軌</small><b>接軌國際趨勢</b></summary>
+              <div class="body"><p>ISO、GRI、TCFD、生物多樣性、CBAM…這麼多國際標準，在公司資源有限下，共好玟化扮演知識轉譯與溝通的角色，協助企業與國際 ESG 接軌。</p><a href="#s6">永續白皮書 →</a></div>
+            </details>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <dl class="pp-card">
+      <div><dt>概念</dt><dd>左邊固定標題，右邊三個可展開的問題；訪客點開「自己那一端」，每個答案直接連到對應服務。</dd></div>
+      <div><dt>參考來源</dt><dd>Schneider Electric 的議題手風琴；Patagonia Activism 依議題展開的列表。原生 &lt;details&gt;，不需 JS。</dd></div>
+      <div><dt>優點</dt><dd>手機上最短；訪客主動選擇，參與感高；每個痛點都有下一步連結。</dd></div>
+      <div><dt>風險</dt><dd>預設只展開一則，另外兩則可能沒被讀到；對 SEO 與快速掃讀不如攤開的卡片。</dd></div>
+      <div><dt>對旅程的作用</dt><dd>把「跟我有關嗎」變成一個主動動作，適合以手機與短頁為主的流程。</dd></div>
+    </dl>
+  </article>
+</section>
+
+<!-- =========================================================
+     04 BRAND STORY
+     ========================================================= -->
+<section class="pp-section" id="s4" data-section>
+  <div class="pp-head">
+    <div>
+      <span class="pp-num">04 / 08</span>
+      <h2>品牌故事：為什麼是你們？</h2>
+      <p>痛點的答案是「橋」，故事解釋橋從哪來。文案依 H02 客戶版本；完整故事以彈窗呈現（無 JS 時改為頁內展開）。主要角色：P1、P3、P5。</p>
+    </div>
+    <div class="pp-toggle" role="group" aria-label="切換品牌故事方案"><button type="button" data-opt="A">A</button><button type="button" data-opt="B">B</button><button type="button" data-opt="C">C</button></div>
+  </div>
+
+  <article class="opt" data-opt="A">
+    <div class="opt-title"><span class="pp-label">04 · A</span><h3>創辦人肖像＋引言（編輯式）</h3></div>
+    <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>#story</span></div>
+      <div class="m s4a"><div class="m-wrap">
+        <div class="grid">
+          <div class="portrait" role="img" aria-label="創辦人照片位置（待補）">
+            <span class="tag">創辦人照片待補（G07）</span>
+            <img src="../../../public/brand/gungho-mark.svg" alt="">
+            <div class="cap"><b>Evvon（Sayun）</b><span>共好玟化 創辦人</span></div>
+          </div>
+          <div>
+            <p class="m-kicker">品牌故事</p>
+            <h2 class="m-h2">從一個泰雅族名字開始</h2>
+            <blockquote>Sayun，意思是<span>「橋樑」</span>。</blockquote>
+            <p class="summary">創辦人 Evvon 在擔任社工期間，一位宜蘭南澳的泰雅族牧師給了她「Sayun」這個名字，期許她成為連結不同群體與文化的溝通者。多年後，她看見一道缺口：企業握有資源、卻缺乏有效的策略；NPO 擁有解決社會問題的專業、卻缺乏與企業連結的橋。於是她決定親手把這座橋搭起來。</p>
+            <ol>
+              <li>從社工走向搭橋者，連結有資源卻缺策略的企業，與有專業卻缺連結的社會組織。</li>
+              <li>永續要從內而外長出來，先把價值寫進治理、長成與人的信任，環境的努力才不會淪為一次性。</li>
+              <li>相信人與人之間緊密的信任，是一切永續最深的根，也是社會韌性的起點。</li>
+              <li>永續不是「獲利」或「責任」的二選一，而是讓社會、環境與經濟一起加乘，這就是雙效益。</li>
+            </ol>
+            <details class="story-more">
+              <summary class="btn btn-primary">閱讀完整故事</summary>
+              <div class="full">
+  <p>創辦人吳玟樺 Evvon 在擔任社工期間，遇到了一位泰雅族的<strong>林慶台牧師</strong>，也就是電影<strong>賽德克巴萊</strong>的主角。</p>
+  <p>林牧師給了 Evvon 一個泰雅族名字——Sayun，意思是「橋樑」。有資源的人與沒有資源的人之間，需要有一座溝通橋樑。</p>
+  <p>這個名字，後來也成為共好玟化最核心的理念。</p>
+  <p>從社工到創業，Evvon 一直在尋找自己與環境互動的方式。一個機構能影響的人有限，但如果能從一個機構的影響力擴散到整個產業，改變就有機會真正發生。</p>
+  <p>如同品牌名稱「共好玟化」所承載的——共好，讓每一個加入的人，都能一起好。</p>
+  <p>共好玟化的價值主張是：永續是環境、社會、經濟三個效益共同構成的系統。</p>
+  <p>人與人之間的關係緊密，社會才有韌性；當社會有韌性，商業才能長久運作；當商業可行，我們才有能力照顧環境。</p>
+  <p>所以共好玟化將社會放在最前面是因為：永續的核心是「人」，人與人之間共好，才能真正發揮影響力。</p>
+</div>
+            </details>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <dl class="pp-card">
+      <div><dt>概念</dt><dd>像雜誌人物專訪：左邊真人肖像，右邊一句大引言「Sayun，意思是橋樑」，再接摘要與四則重點。</dd></div>
+      <div><dt>參考來源</dt><dd>Interface 創辦人 Ray Anderson 的起源故事頁；benchmark P7「起源故事與真人」。</dd></div>
+      <div><dt>優點</dt><dd>真人照片是 P1 小品牌「先信任人」的關鍵；四則重點完整保留客戶文案。</dd></div>
+      <div><dt>風險</dt><dd>依賴一張好的創辦人照片（目前沒有）；文字量大，是首頁最長的區塊。</dd></div>
+      <div><dt>對旅程的作用</dt><dd>回答「為什麼是你們」，用人建立信任；適合接在數字證據之前，讓證據有溫度。</dd></div>
+    </dl>
+  </article>
+
+  <article class="opt" data-opt="B">
+    <div class="opt-title"><span class="pp-label">04 · B</span><h3>名字的意思：Sayun ＝ 橋樑</h3></div>
+    <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>#story</span></div>
+      <div class="m s4b"><div class="m-wrap">
+        <p class="m-kicker">品牌故事 · 從一個泰雅族名字開始</p>
+        <p class="name" lang="en">Sayun</p>
+        <p class="eq">意思是「橋樑」。</p>
+        <p class="en" lang="en">Sayun means "Bridge"</p>
+        <svg class="arc" viewBox="0 0 900 90" fill="none" aria-hidden="true">
+          <path d="M20 80 C 260 0, 640 0, 880 80" stroke="#F25232" stroke-width="4" stroke-linecap="round"/>
+          <path d="M20 80 H880" stroke="rgba(255,255,255,.25)" stroke-width="2"/>
+          <circle cx="20" cy="80" r="8" fill="#FAB40A"/><circle cx="450" cy="20" r="8" fill="#F25232"/><circle cx="880" cy="80" r="8" fill="#FAB40A"/>
+        </svg>
+        <div class="steps">
+          <div><b>01 · 一個名字</b><h3>社工時期，牧師給的名字</h3><p>一位宜蘭南澳的泰雅族牧師給了她「Sayun」，期許她成為連結不同群體與文化的溝通者。</p></div>
+          <div><b>02 · 一道缺口</b><h3>企業有資源，NPO 有專業</h3><p>企業握有資源、卻缺乏有效的策略；NPO 擁有解決社會問題的專業、卻缺乏與企業連結的橋。</p></div>
+          <div><b>03 · 一座橋</b><h3>親手把這座橋搭起來</h3><p>從單一機構的服務，延伸到整個產業的影響力。共好，讓每一個加入的人，都能一起好。</p></div>
+        </div>
+        <div class="btn-row">
+          <details class="story-more">
+            <summary class="btn btn-ghost-light">閱讀完整故事</summary>
+            <div class="full">
+  <p>創辦人吳玟樺 Evvon 在擔任社工期間，遇到了一位泰雅族的<strong>林慶台牧師</strong>，也就是電影<strong>賽德克巴萊</strong>的主角。</p>
+  <p>林牧師給了 Evvon 一個泰雅族名字——Sayun，意思是「橋樑」。有資源的人與沒有資源的人之間，需要有一座溝通橋樑。</p>
+  <p>這個名字，後來也成為共好玟化最核心的理念。</p>
+  <p>從社工到創業，Evvon 一直在尋找自己與環境互動的方式。一個機構能影響的人有限，但如果能從一個機構的影響力擴散到整個產業，改變就有機會真正發生。</p>
+  <p>如同品牌名稱「共好玟化」所承載的——共好，讓每一個加入的人，都能一起好。</p>
+  <p>共好玟化的價值主張是：永續是環境、社會、經濟三個效益共同構成的系統。</p>
+  <p>人與人之間的關係緊密，社會才有韌性；當社會有韌性，商業才能長久運作；當商業可行，我們才有能力照顧環境。</p>
+  <p>所以共好玟化將社會放在最前面是因為：永續的核心是「人」，人與人之間共好，才能真正發揮影響力。</p>
+</div>
+          </details>
+        </div>
+      </div></div>
+    </div>
+    <dl class="pp-card">
+      <div><dt>概念</dt><dd>以字為主角：巨大的黃色「Sayun」，接一條和 Hero 同樣的橋弧，弧上三個點對應「名字 → 缺口 → 搭橋」三步。</dd></div>
+      <div><dt>參考來源</dt><dd>Patagonia「Our Core Values」的大字排版；B Lab 宣言頁的單字主視覺。</dd></div>
+      <div><dt>優點</dt><dd>不依賴照片就能有強烈記憶點；三步敘事比四則重點更容易讀完；深色區塊為全頁中段提供節奏。</dd></div>
+      <div><dt>風險</dt><dd>四則重點需移到完整故事或 /sustainability，客戶需同意摘要被拆成三步；英文版字長需重新測。</dd></div>
+      <div><dt>對旅程的作用</dt><dd>把 03 的「斷掉的橋」接起來，是全頁的情緒高點；第三步自然導向 05「真的有用嗎」。</dd></div>
+    </dl>
+  </article>
+
+  <article class="opt" data-opt="C">
+    <div class="opt-title"><span class="pp-label">04 · C</span><h3>從故事到價值主張：社會放在最前面</h3></div>
+    <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>#story</span></div>
+      <div class="m s4c"><div class="m-wrap">
+        <div class="grid">
+          <div>
+            <p class="m-kicker">品牌故事</p>
+            <h2 class="m-h2">從一個泰雅族名字開始</h2>
+            <p class="lead-q">Sayun，意思是「橋樑」。有資源的人與沒有資源的人之間，需要有一座溝通橋樑。</p>
+            <p>創辦人 Evvon 在擔任社工期間得到這個名字。從社工到創業，她一直在尋找自己與環境互動的方式：一個機構能影響的人有限，但如果能從一個機構的影響力擴散到整個產業，改變就有機會真正發生。</p>
+            <details class="story-more">
+              <summary class="btn btn-ghost">閱讀完整故事</summary>
+              <div class="full">
+  <p>創辦人吳玟樺 Evvon 在擔任社工期間，遇到了一位泰雅族的<strong>林慶台牧師</strong>，也就是電影<strong>賽德克巴萊</strong>的主角。</p>
+  <p>林牧師給了 Evvon 一個泰雅族名字——Sayun，意思是「橋樑」。有資源的人與沒有資源的人之間，需要有一座溝通橋樑。</p>
+  <p>這個名字，後來也成為共好玟化最核心的理念。</p>
+  <p>從社工到創業，Evvon 一直在尋找自己與環境互動的方式。一個機構能影響的人有限，但如果能從一個機構的影響力擴散到整個產業，改變就有機會真正發生。</p>
+  <p>如同品牌名稱「共好玟化」所承載的——共好，讓每一個加入的人，都能一起好。</p>
+  <p>共好玟化的價值主張是：永續是環境、社會、經濟三個效益共同構成的系統。</p>
+  <p>人與人之間的關係緊密，社會才有韌性；當社會有韌性，商業才能長久運作；當商業可行，我們才有能力照顧環境。</p>
+  <p>所以共好玟化將社會放在最前面是因為：永續的核心是「人」，人與人之間共好，才能真正發揮影響力。</p>
+</div>
+            </details>
+          </div>
+          <div>
+            <ol class="chain">
+              <li><span class="dot">人</span><div><b>人與人之間的關係緊密</b><span>永續的核心是「人」</span></div></li>
+              <li><span class="dot">社會</span><div><b>社會才有韌性</b><span>信任是社會韌性的起點</span></div></li>
+              <li><span class="dot">經濟</span><div><b>商業才能長久運作</b><span>當社會有韌性</span></div></li>
+              <li><span class="dot">環境</span><div><b>我們才有能力照顧環境</b><span>當商業可行</span></div></li>
+            </ol>
+            <p class="dual">永續不是「獲利」或「責任」的二選一，而是讓社會、環境與經濟一起加乘，這就是<b>雙效益</b>。</p>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <dl class="pp-card">
+      <div><dt>概念</dt><dd>故事只講到「為什麼」，右側用一條因果鏈畫出客戶最核心的主張：人 → 社會 → 經濟 → 環境，所以把社會放在最前面。</dd></div>
+      <div><dt>參考來源</dt><dd>Natura「Commitment to Life」的系統圖；IKEA「People &amp; Planet Positive」的價值鏈敘事。</dd></div>
+      <div><dt>優點</dt><dd>把抽象的雙效益理論變成首頁可掃讀的圖；最能說服重視方法的 P2、P3。</dd></div>
+      <div><dt>風險</dt><dd>與 /sustainability 的雙效益區（S03）重複；故事的人情味被方法論稀釋。</dd></div>
+      <div><dt>對旅程的作用</dt><dd>回答「為什麼是你們」的理性版本，適合以企業窗口為主的流程，並把人導向 /sustainability。</dd></div>
+    </dl>
+  </article>
+</section>
+
+<!-- =========================================================
+     05 EVIDENCE
+     ========================================================= -->
+<section class="pp-section" id="s5" data-section>
+  <div class="pp-head">
+    <div>
+      <span class="pp-num">05 / 08</span>
+      <h2>行動證據：真的有用嗎？</h2>
+      <p>從理念落到結果。數字只讀 <code>impact.metrics</code>（G06）。客戶已提出「數字一直重複」，若 Hero 已放數字，這區建議採故事優先。主要角色：P2、P5。</p>
+    </div>
+    <div class="pp-toggle" role="group" aria-label="切換行動證據方案"><button type="button" data-opt="A">A</button><button type="button" data-opt="B">B</button><button type="button" data-opt="C">C</button></div>
+  </div>
+
+  <article class="opt" data-opt="A">
+    <div class="opt-title"><span class="pp-label">05 · A</span><h3>數字卡＋一句故事＋註腳</h3></div>
+    <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>#evidence</span></div>
+      <div class="m e5a"><div class="m-wrap">
+        <div class="top">
+          <div><p class="m-kicker">永續行動證據</p><h2 class="m-h2">可量化的影響力，真實的合作成果</h2>
+          <p class="m-lead">透過永續白皮書輔導、ESG共學坊講師平台與顧問服務，共好玟化持續推動可衡量的永續成果。</p></div>
+          <span class="chip chip-g">數據持續更新中</span>
+        </div>
+        <div class="cards">
+          <div class="card"><span class="num">1,000萬</span><span class="unit">資源挹注</span><span class="chip">營業額助益</span>
+            <h3>永續白皮書帶來的經濟資源</h3><p>協助撰寫永續白皮書，讓一家品牌設計公司在一年內獲得政府補助、天使投資與銀行貸款，累計近 1000 萬的經濟資源挹注。</p><span class="ph note">註：統計期間與計算方式待客戶提供</span></div>
+          <div class="card"><span class="num">130+</span><span class="unit">跨產業合作</span><span class="chip">合作案例</span>
+            <h3>跨產業永續合作</h3><p>從國際論壇到企業採購清單、從跨國永續會議到聯名商品合作，持續透過ESG共學坊講師平台促成跨產業合作。</p><span class="ph note">註：單位（件／家／次）待客戶確認</span></div>
+          <div class="card"><span class="num">8+</span><span class="unit">國際論壇</span><span class="chip">顧問導向</span>
+            <h3>站上國際舞台</h3><p>一份永續白皮書，讓用海廢做錶的品牌站上國際青年論壇的舞台。迄今已協助 8 個企業登上國際論壇。</p><span class="ph note">註：統計至 2026 年</span></div>
+        </div>
+      </div></div>
+    </div>
+    <dl class="pp-card">
+      <div><dt>概念</dt><dd>現行成果卡的升級版：大數字＋單位＋標籤＋一句故事，底部固定一行小字註腳說明口徑。</dd></div>
+      <div><dt>參考來源</dt><dd>IKEA highlights 數字卡；benchmark P3「數字要有對照」、P4「每個數字都有出處」。</dd></div>
+      <div><dt>優點</dt><dd>掃讀最快，最符合企業窗口的閱讀習慣；註腳提升可信度。</dd></div>
+      <div><dt>風險</dt><dd>若 Hero 也放數字，同一頁出現兩次（G06 待確認事項）；註腳需要客戶補資料，否則只能先拿掉。</dd></div>
+      <div><dt>對旅程的作用</dt><dd>直接回答「真的有用嗎」。適合搭配不放數字的 Hero（01 · B）。</dd></div>
+    </dl>
+  </article>
+
+  <article class="opt" data-opt="B">
+    <div class="opt-title"><span class="pp-label">05 · B</span><h3>故事優先，數字退為標籤</h3></div>
+    <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>#evidence</span></div>
+      <div class="m e5b"><div class="m-wrap">
+        <p class="m-kicker">永續行動證據</p>
+        <h2 class="m-h2">可量化的影響力，真實的合作成果</h2>
+        <p class="m-lead">透過永續白皮書輔導、ESG共學坊講師平台與顧問服務，共好玟化持續推動可衡量的永續成果。</p>
+        <div class="story">
+          <div class="art art-1" aria-hidden="true">
+            <svg viewBox="0 0 120 90" fill="none" stroke="#CF3F1C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="30" y="8" width="48" height="66" rx="4" fill="#fff"/><path d="M40 24h28M40 34h28M40 44h18"/><path d="M70 60 l10 -14 l10 8 l14 -20" stroke="#F25232"/><circle cx="104" cy="34" r="4" fill="#F25232"/></svg>
+            <span class="chip"><b>1,000萬</b> 資源挹注</span>
+          </div>
+          <div><span class="chip">營業額助益</span><h3>永續白皮書帶來的經濟資源</h3><p>透過共好玟化協助撰寫永續白皮書，讓一家品牌設計公司在一年內獲得政府補助、天使投資與銀行貸款，累計近 1000 萬的經濟資源挹注。</p></div>
+        </div>
+        <div class="story">
+          <div class="art art-2" aria-hidden="true">
+            <svg viewBox="0 0 120 90" fill="none" stroke="#4D515B" stroke-width="3" stroke-linecap="round"><circle cx="30" cy="45" r="12" fill="#fff"/><circle cx="90" cy="22" r="10" fill="#fff"/><circle cx="90" cy="68" r="10" fill="#fff"/><circle cx="62" cy="45" r="8" fill="#FAB40A" stroke="#FAB40A"/><path d="M42 45h12M68 40l14 -12M68 50l14 12"/></svg>
+            <span class="chip"><b>130+</b> 跨產業合作</span>
+          </div>
+          <div><span class="chip">合作案例</span><h3>跨產業永續合作</h3><p>從國際論壇到企業採購清單、從跨國永續會議到聯名商品合作，共好玟化持續透過ESG共學坊講師平台促成跨產業合作。</p></div>
+        </div>
+        <div class="story">
+          <div class="art art-3" aria-hidden="true">
+            <svg viewBox="0 0 120 90" fill="none" stroke="#4D515B" stroke-width="3" stroke-linecap="round"><path d="M20 78h80"/><rect x="34" y="52" width="52" height="26" fill="#fff"/><circle cx="60" cy="30" r="14" fill="#fff"/><path d="M46 30h28M60 16c6 6 6 22 0 28M60 16c-6 6-6 22 0 28" stroke-width="2"/><path d="M60 52 v-8" stroke="#F25232"/></svg>
+            <span class="chip"><b>8+</b> 國際論壇</span>
+          </div>
+          <div><span class="chip">顧問導向</span><h3>站上國際舞台</h3><p>一份永續白皮書，讓用海廢做錶的品牌站上國際青年論壇的舞台。迄今已協助 8 個企業登上國際論壇，讓國際看見台灣的永續實踐者。</p></div>
+        </div>
+      </div></div>
+    </div>
+    <dl class="pp-card">
+      <div><dt>概念</dt><dd>三則故事左右交錯排列，每則配一張插畫卡，數字只以小標籤貼在插畫角落。讀的是「誰因此改變」，不是數字本身。</dd></div>
+      <div><dt>參考來源</dt><dd>Patagonia 的故事型影響力報導；Natura &amp;Co 網頁版年報的個案排版。</dd></div>
+      <div><dt>優點</dt><dd>解決客戶「數字一直重複」的意見；故事讓 P1 小品牌想像「我也可以」。插畫卡日後可換成真實案例照片。</dd></div>
+      <div><dt>風險</dt><dd>縱向最長；企業窗口想快速掃數字時效率較低。</dd></div>
+      <div><dt>對旅程的作用</dt><dd>把 04 的理念落到「真的有人因此被看見」，同時避免和 Hero 數字重複。</dd></div>
+    </dl>
+  </article>
+
+  <article class="opt" data-opt="C">
+    <div class="opt-title"><span class="pp-label">05 · C</span><h3>一條影響力路徑：從一份白皮書開始</h3></div>
+    <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>#evidence</span></div>
+      <div class="m e5c"><div class="m-wrap">
+        <p class="m-kicker">永續行動證據</p>
+        <h2 class="m-h2">可量化的影響力，真實的合作成果</h2>
+        <p class="m-lead">透過永續白皮書輔導、ESG共學坊講師平台與顧問服務，共好玟化持續推動可衡量的永續成果。</p>
+        <div class="path">
+          <div class="node"><span class="pin"><svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></svg></span><span class="src">一份永續白皮書</span><p>說清楚，才能被看見</p></div>
+          <div class="node"><span class="pin"><svg viewBox="0 0 24 24"><path d="M4 17l5-5 4 4 7-8"/><path d="M15 8h5v5"/></svg></span><span class="num">1,000萬</span><b>資源挹注</b><p>品牌設計公司一年內獲得政府補助、天使投資與銀行貸款</p></div>
+          <div class="node"><span class="pin"><svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M9 12h3l3-4M12 12l3 4"/></svg></span><span class="num">130+</span><b>跨產業合作</b><p>從企業採購清單到聯名商品，透過ESG共學坊講師平台促成</p></div>
+          <div class="node"><span class="pin"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg></span><span class="num">8+</span><b>國際論壇</b><p>用海廢做錶的品牌站上國際青年論壇的舞台</p></div>
+        </div>
+      </div></div>
+    </div>
+    <dl class="pp-card">
+      <div><dt>概念</dt><dd>把三個數字串成一條因果路徑：起點是「一份永續白皮書」，沿線依序抵達資源、合作、國際舞台。</dd></div>
+      <div><dt>參考來源</dt><dd>South Pole「報告 → 活動 → 諮詢」漏斗（benchmark P11）；Ørsted 的轉型進度線。</dd></div>
+      <div><dt>優點</dt><dd>數字不再是孤立的成績，而是服務的結果，同時替永續白皮書做了廣告；深色底節奏感強。</dd></div>
+      <div><dt>風險</dt><dd>暗示三個數字都來自白皮書，口徑上需客戶確認可以這樣串；與 Hero 數字仍重複。</dd></div>
+      <div><dt>對旅程的作用</dt><dd>從證據直接引出「我也想要一份白皮書」，適合把 P1 導向 Coffee Chat。</dd></div>
+    </dl>
+  </article>
+</section>
+
+<!-- =========================================================
+     06 WHO WE SERVE / FUTURE
+     ========================================================= -->
+<section class="pp-section" id="s6" data-section>
+  <div class="pp-head">
+    <div>
+      <span class="pp-num">06 / 08</span>
+      <h2>我們服務誰／未來：我屬於哪一種？</h2>
+      <p>證據之後給出分流，每個身分都要有明確的子頁入口。這是首頁作為「分流樞紐」最關鍵的一區。</p>
+    </div>
+    <div class="pp-toggle" role="group" aria-label="切換服務對象方案"><button type="button" data-opt="A">A</button><button type="button" data-opt="B">B</button><button type="button" data-opt="C">C</button></div>
+  </div>
+
+  <article class="opt" data-opt="A">
+    <div class="opt-title"><span class="pp-label">06 · A</span><h3>四道門：依身分分流</h3></div>
+    <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>#future</span></div>
+      <div class="m f6a"><div class="m-wrap">
+        <p class="m-kicker">服務與未來</p>
+        <h2 class="m-h2">我們服務誰？</h2>
+        <p class="m-lead">共好玟化服務兩大群體：有長期經營理念的品牌主，以及想找到永續供應鏈的大企業。</p>
+        <div class="grid">
+          <a class="door" href="#s8"><span class="who">我是品牌主</span><h3>有長期經營理念的品牌主</h3><p>你已經在做永續，或你的事業本身就具備社會與環境價值。無論是農業、設計、身心靈、文化創意，我們協助你把這些價值整理清楚。</p><span class="go">ESG 解決方案 <small>/consulting</small></span></a>
+          <a class="door" href="#s8"><span class="who">我是企業窗口</span><h3>想找到永續供應鏈的大企業</h3><p>除了符合規範的供應商，還需要真正呼應品牌精神、對應 ESG 指標的合作夥伴。我們整合了一個具備永續實踐力的夥伴網絡平台。</p><span class="go">共好生態圈 <small>/sustainability</small></span></a>
+          <a class="door" href="#s8"><span class="who">我是非營利組織</span><h3>非營利合作</h3><p>與非營利組織的策略合作方案。有專業卻缺連結的社會組織，我們幫你接上企業。</p><span class="go">非營利合作 <small>/consulting#ngo</small></span></a>
+          <a class="door class" href="#s8"><img src="../../../public/brand/coesg-class.svg" alt="ESG共學坊"><span class="who">我想學 ESG</span><h3>ESG共學坊講師平台</h3><p>串聯不同領域的永續實踐者，讓講師、品牌與企業在同一個場域交流碰撞，延伸出新的合作與可能。</p><span class="go">永續足跡 <small>/events</small></span></a>
+        </div>
+      </div></div>
+    </div>
+    <dl class="pp-card">
+      <div><dt>概念</dt><dd>四張等大的「門」，每張以「我是…」開頭，整張卡可點，底部標明會去哪一頁。ESG共學坊用自己的子品牌標誌。</dd></div>
+      <div><dt>參考來源</dt><dd>Unilever、Schneider 首頁的受眾入口卡；benchmark P13「3–4 個支柱」。</dd></div>
+      <div><dt>優點</dt><dd>補上旅程分析中的 P3 NPO 與 P4 學習者入口（現行只有三類）；分流目的最明確。</dd></div>
+      <div><dt>風險</dt><dd>NPO 卡的說明需客戶補一句正式文案；四卡在平板會變 2×2，高度需統一。</dd></div>
+      <div><dt>對旅程的作用</dt><dd>完成首頁「分流樞紐」的任務：每一種訪客都找到自己的下一頁。</dd></div>
+    </dl>
+  </article>
+
+  <article class="opt" data-opt="B">
+    <div class="opt-title"><span class="pp-label">06 · B</span><h3>參與階梯：從零成本到深度合作</h3></div>
+    <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>#future</span></div>
+      <div class="m f6b"><div class="m-wrap">
+        <p class="m-kicker">服務與未來</p>
+        <h2 class="m-h2">從哪一階開始都可以</h2>
+        <p class="m-lead">共好玟化服務有長期經營理念的品牌主，以及想找到永續供應鏈的大企業。依你想投入的程度，選一個入口。</p>
+        <div class="stairs">
+          <a class="step" href="#s8"><span class="lvl">STEP 1 · 讀</span><span class="meter" aria-label="投入程度 1/4"><i class="on"></i><i></i><i></i><i></i></span><h3>共好學習</h3><p>永續知識與實踐案例，從合作模式到人物專訪。</p><span class="go">/learning →</span></a>
+          <a class="step" href="#s8"><span class="lvl">STEP 2 · 聽</span><span class="meter" aria-label="投入程度 2/4"><i class="on"></i><i class="on"></i><i></i><i></i></span><h3>加入官方 LINE</h3><p>第一時間收到活動與永續白皮書消息。</p><span class="go">/join →</span></a>
+          <a class="step" href="#s8"><span class="lvl">STEP 3 · 學</span><span class="meter" aria-label="投入程度 3/4"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><h3>ESG共學坊</h3><p>跨產業交流與實務學習工作坊，讓講師、品牌與企業在同一個場域交流碰撞。</p><span class="go">/events →</span></a>
+          <a class="step" href="#s8"><span class="lvl">STEP 4 · 合作</span><span class="meter" aria-label="投入程度 4/4"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><h3>顧問輔導與會員</h3><p>量身打造的永續轉型路徑；持續性的專業支援，陪伴你的永續旅程。</p><span class="go">/consulting →</span></a>
+        </div>
+        <div class="ground" aria-hidden="true"></div>
+      </div></div>
+    </div>
+    <dl class="pp-card">
+      <div><dt>概念</dt><dd>不問「你是誰」，問「你想投入多少」。四階逐步升高的台階，從讀文章到顧問合作。</dd></div>
+      <div><dt>參考來源</dt><dd>Patagonia Action Works 的參與階梯（benchmark P12）。</dd></div>
+      <div><dt>優點</dt><dd>對價格敏感的 P1 與學習者 P4 很友善，總有一個低門檻入口；串起全站四個子頁。</dd></div>
+      <div><dt>風險</dt><dd>大企業 P2 不會從「讀文章」開始，可能找不到自己；「我們服務誰」的標題需改寫。</dd></div>
+      <div><dt>對旅程的作用</dt><dd>把分流變成漸進式承諾，讓還沒準備好預約的人也有下一步，降低跳出。</dd></div>
+    </dl>
+  </article>
+
+  <article class="opt" data-opt="C">
+    <div class="opt-title"><span class="pp-label">06 · C</span><h3>路線圖：現在、持續、三年願景</h3></div>
+    <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>#future</span></div>
+      <div class="m f6c"><div class="m-wrap">
+        <p class="m-kicker">服務與未來</p>
+        <h2 class="m-h2">我們服務誰？</h2>
+        <p class="m-lead">共好玟化服務兩大群體：有長期經營理念的品牌主，以及想找到永續供應鏈的大企業。</p>
+        <div class="groups"><span>有長期經營理念的品牌主</span><span>想找到永續供應鏈的大企業</span><span>ESG共學坊講師平台</span></div>
+        <ol class="road">
+          <li><span class="yr">現階段</span><h3>顧問輔導與ESG共學坊</h3><p>透過個案輔導與ESG共學坊活動，協助品牌主建立永續敘事，促成跨產業合作案例。</p><a href="#s8">ESG 解決方案 →</a></li>
+          <li><span class="yr">持續推進</span><h3>國際論壇與跨界合作</h3><p>協助企業登上國際論壇舞台，從台灣走向世界，讓在地的永續行動與視角帶入跨國對話。</p><a href="#s8">永續足跡 →</a></li>
+          <li><span class="yr">三年願景</span><h3>完整的供應鏈溝通平台</h3><p>成為更完整的供應鏈上下游溝通平台，讓每一次的對接都能有依據、有成果。</p><a href="#s8">共好生態圈 →</a></li>
+        </ol>
+      </div></div>
+    </div>
+    <dl class="pp-card">
+      <div><dt>概念</dt><dd>用辭典裡現成的 future.timeline 做一條路線圖：已走的段落是實線，三年願景是虛線節點，每個節點連到子頁。</dd></div>
+      <div><dt>參考來源</dt><dd>Interface「Mission Zero → Climate Take Back」時間線；Schneider 的「下一章」；benchmark P6。</dd></div>
+      <div><dt>優點</dt><dd>讓 P5 主辦單位與媒體看到方向與承諾；與 /events 的發展藍圖（E03）視覺一致。</dd></div>
+      <div><dt>風險</dt><dd>分流不如 A 明確，身分只以標籤出現；三年願景若沒有年份，承諾感偏弱。</dd></div>
+      <div><dt>對旅程的作用</dt><dd>把「我屬於哪一種」延伸為「我可以一起走到哪裡」，適合以企業與合辦夥伴為主的流程。</dd></div>
+    </dl>
+  </article>
+</section>
+
+<!-- =========================================================
+     07 TESTIMONIALS
+     ========================================================= -->
+<section class="pp-section" id="s7" data-section>
+  <div class="pp-head">
+    <div>
+      <span class="pp-num">07 / 08</span>
+      <h2>客戶回饋：別人怎麼說？</h2>
+      <p>客戶指定：以品牌 logo 為主，hover 看摘要、點擊開彈窗看完整回饋（H04）。三案都可用鍵盤操作，觸控裝置點擊即開。主要角色：全部。</p>
+    </div>
+    <div class="pp-toggle" role="group" aria-label="切換客戶回饋方案"><button type="button" data-opt="A">A</button><button type="button" data-opt="B">B</button><button type="button" data-opt="C">C</button></div>
+  </div>
+
+  <article class="opt" data-opt="A">
+    <div class="opt-title"><span class="pp-label">07 · A</span><h3>Logo 牆＋hover 浮卡＋點擊彈窗（依 H04）</h3></div>
+    <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>#testimonials · 試試滑過或點擊</span></div>
+      <div class="m q7 q7a"><div class="m-wrap">
+        <p class="m-kicker">合作夥伴怎麼說</p>
+        <h2 class="m-h2">客戶回饋</h2>
+        <p class="m-lead">來自品牌主、社會企業與產業夥伴的真實合作回饋。</p>
+        <div class="wall">
+          <div class="tile"><button type="button" data-t="0" aria-label="查看 思凡自然農場 的回饋"><span class="mono mono-1">思</span><b>思凡自然農場</b><span class="hint">點擊看完整回饋</span></button><div class="pop" aria-hidden="true">ESG 本質仍然是以人為核心，共好玟化提供的價值非常契合。<small>自然農園負責人</small></div></div>
+          <div class="tile"><button type="button" data-t="1" aria-label="查看 兔耳生活有限公司 的回饋"><span class="mono mono-2">兔</span><b>兔耳生活有限公司</b><span class="hint">點擊看完整回饋</span></button><div class="pop" aria-hidden="true">專業、溫暖、負責任，整個合作過程讓人感到安心。<small>品牌創辦人</small></div></div>
+          <div class="tile"><button type="button" data-t="2" aria-label="查看 台灣休閒農場學會 的回饋"><span class="mono mono-3">農</span><b>台灣休閒農場學會</b><span class="hint">點擊看完整回饋</span></button><div class="pop" aria-hidden="true">從零散被動的企業合作，轉變為更主動、有策略的窗口溝通。<small>產業合作夥伴</small></div></div>
+          <div class="tile"><button type="button" data-t="3" aria-label="查看 齊禾品牌顧問 的回饋"><span class="mono mono-4">齊</span><b>齊禾品牌顧問</b><span class="hint">點擊看完整回饋</span></button><div class="pop" aria-hidden="true">共好玟化是企業 ESG 優化的專家。<small>共同創辦人</small></div></div>
+        </div>
+        <div class="tfull"><blockquote><b>ESG 本質仍然是以人為核心，共好玟化提供的價值非常契合。</b><br>從創辦者的角度切入，協助你想清楚自己在做的事與永續的關聯。幫企業做報告的同時，也喚醒人對永續的初衷。<cite>思凡自然農場・自然農園負責人</cite></blockquote><blockquote><b>專業、溫暖、負責任，整個合作過程讓人感到安心。</b><br>讓複雜的永續內容變得不那麼有壓力。不同背景的人可以在同一個場域交流碰撞，延伸出新的合作與可能。<cite>兔耳生活有限公司・品牌創辦人</cite></blockquote><blockquote><b>從零散被動的企業合作，轉變為更主動、有策略的窗口溝通。</b><br>如同名字一樣的『共好』夥伴，共好玟化是知識整合與轉譯的角色。<cite>台灣休閒農場學會・產業合作夥伴</cite></blockquote><blockquote><b>共好玟化是企業 ESG 優化的專家。</b><br>能提出客戶想不到的視角，也能在客戶既有基礎上做更深入的延伸。整合環境、社會與經濟三大效益。<cite>齊禾品牌顧問・共同創辦人</cite></blockquote></div>
+      </div></div>
+    </div>
+    <dl class="pp-card">
+      <div><dt>概念</dt><dd>完全照客戶描述：四個大方格 logo；桌機滑過浮出一句重點，點擊開彈窗看引言、姓名、職稱；手機直接點開。</dd></div>
+      <div><dt>參考來源</dt><dd>客戶 PDF p.9 需求；B Lab 企業名錄的 hover 卡。</dd></div>
+      <div><dt>優點</dt><dd>與 02 · A 的圓形字標同一套語彙，logo 到位後兩區一起替換；版面安靜、可擴充到 8–12 個品牌。</dd></div>
+      <div><dt>風險</dt><dd>回饋內容預設隱藏，不互動的訪客讀不到任何一句話；hover 在觸控裝置不存在。</dd></div>
+      <div><dt>對旅程的作用</dt><dd>分流之後以第三方聲音收斂，讓訪客帶著「別人也這樣說」進入 CTA。</dd></div>
+    </dl>
+  </article>
+
+  <article class="opt" data-opt="B">
+    <div class="opt-title"><span class="pp-label">07 · B</span><h3>Logo 選擇器＋大引言聚光燈</h3></div>
+    <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>#testimonials · 點左側 logo 切換</span></div>
+      <div class="m q7 q7b"><div class="m-wrap">
+        <p class="m-kicker">合作夥伴怎麼說</p>
+        <h2 class="m-h2">客戶回饋</h2>
+        <div class="stage">
+          <div role="tablist" aria-label="選擇品牌" data-tabs>
+            <button role="tab" type="button" id="q7b-t0" aria-controls="q7b-p0" aria-selected="true"><span class="mono mono-1">思</span>思凡自然農場</button>
+            <button role="tab" type="button" id="q7b-t1" aria-controls="q7b-p1" aria-selected="false" tabindex="-1"><span class="mono mono-2">兔</span>兔耳生活有限公司</button>
+            <button role="tab" type="button" id="q7b-t2" aria-controls="q7b-p2" aria-selected="false" tabindex="-1"><span class="mono mono-3">農</span>台灣休閒農場學會</button>
+            <button role="tab" type="button" id="q7b-t3" aria-controls="q7b-p3" aria-selected="false" tabindex="-1"><span class="mono mono-4">齊</span>齊禾品牌顧問</button>
+          </div>
+          <div>
+            <div role="tabpanel" id="q7b-p0" aria-labelledby="q7b-t0"><p class="hl">ESG 本質仍然是以人為核心，共好玟化提供的價值非常契合。</p><p class="qt">從創辦者的角度切入，協助你想清楚自己在做的事與永續的關聯。幫企業做報告的同時，也喚醒人對永續的初衷。</p><div class="by"><span><b>思凡自然農場</b><span>自然農園負責人</span></span><span class="chip">ESG 報告</span></div></div>
+            <div role="tabpanel" id="q7b-p1" aria-labelledby="q7b-t1"><p class="hl">專業、溫暖、負責任，整個合作過程讓人感到安心。</p><p class="qt">讓複雜的永續內容變得不那麼有壓力。不同背景的人可以在同一個場域交流碰撞，延伸出新的合作與可能。</p><div class="by"><span><b>兔耳生活有限公司</b><span>品牌創辦人</span></span><span class="chip">品牌永續</span></div></div>
+            <div role="tabpanel" id="q7b-p2" aria-labelledby="q7b-t2"><p class="hl">從零散被動的企業合作，轉變為更主動、有策略的窗口溝通。</p><p class="qt">如同名字一樣的『共好』夥伴，共好玟化是知識整合與轉譯的角色。</p><div class="by"><span><b>台灣休閒農場學會</b><span>產業合作夥伴</span></span><span class="chip">供應鏈</span></div></div>
+            <div role="tabpanel" id="q7b-p3" aria-labelledby="q7b-t3"><p class="hl">共好玟化是企業 ESG 優化的專家。</p><p class="qt">能提出客戶想不到的視角，也能在客戶既有基礎上做更深入的延伸。整合環境、社會與經濟三大效益。</p><div class="by"><span><b>齊禾品牌顧問</b><span>共同創辦人</span></span><span class="chip">顧問輔導</span></div></div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <dl class="pp-card">
+      <div><dt>概念</dt><dd>logo 仍是主角，但排成一列選擇器；右側永遠有一則引言放大顯示，點哪個品牌就換哪一則。</dd></div>
+      <div><dt>參考來源</dt><dd>Interface、South Pole 的客戶故事切換器；無障礙 Tabs 模式（方向鍵可切換）。</dd></div>
+      <div><dt>優點</dt><dd>不互動也一定讀得到一則完整回饋，解決 A 案「全部藏起來」的問題；深色底讓引言很有份量。</dd></div>
+      <div><dt>風險</dt><dd>與客戶描述的「hover 出現 lightbox」不同，需說服；品牌超過 6 個時左側清單變長。</dd></div>
+      <div><dt>對旅程的作用</dt><dd>用一句放大的真實聲音收斂情緒，最適合緊接在 CTA 前。</dd></div>
+    </dl>
+  </article>
+
+  <article class="opt" data-opt="C">
+    <div class="opt-title"><span class="pp-label">07 · C</span><h3>翻牌牆：正面 logo，背面一句話</h3></div>
+    <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>#testimonials · 滑過或點擊翻面</span></div>
+      <div class="m q7 q7c"><div class="m-wrap">
+        <p class="m-kicker">合作夥伴怎麼說</p>
+        <h2 class="m-h2">客戶回饋</h2>
+        <p class="m-lead">來自品牌主、社會企業與產業夥伴的真實合作回饋。</p>
+        <div class="grid">
+          <div class="flip"><button type="button" aria-pressed="false" aria-label="翻面查看 思凡自然農場 的回饋"><span class="face front"><span class="mono mono-1">思</span><b>思凡自然農場</b><small>翻面看回饋 ↻</small></span><span class="face back"><span class="q">ESG 本質仍然是以人為核心，共好玟化提供的價值非常契合。</span><span><b>思凡自然農場</b>自然農園負責人</span></span></button></div>
+          <div class="flip"><button type="button" aria-pressed="false" aria-label="翻面查看 兔耳生活有限公司 的回饋"><span class="face front"><span class="mono mono-2">兔</span><b>兔耳生活有限公司</b><small>翻面看回饋 ↻</small></span><span class="face back"><span class="q">專業、溫暖、負責任，整個合作過程讓人感到安心。</span><span><b>兔耳生活有限公司</b>品牌創辦人</span></span></button></div>
+          <div class="flip"><button type="button" aria-pressed="false" aria-label="翻面查看 台灣休閒農場學會 的回饋"><span class="face front"><span class="mono mono-3">農</span><b>台灣休閒農場學會</b><small>翻面看回饋 ↻</small></span><span class="face back"><span class="q">從零散被動的企業合作，轉變為更主動、有策略的窗口溝通。</span><span><b>台灣休閒農場學會</b>產業合作夥伴</span></span></button></div>
+          <div class="flip"><button type="button" aria-pressed="false" aria-label="翻面查看 齊禾品牌顧問 的回饋"><span class="face front"><span class="mono mono-4">齊</span><b>齊禾品牌顧問</b><small>翻面看回饋 ↻</small></span><span class="face back"><span class="q">共好玟化是企業 ESG 優化的專家。</span><span><b>齊禾品牌顧問</b>共同創辦人</span></span></button></div>
+        </div>
+      </div></div>
+    </div>
+    <dl class="pp-card">
+      <div><dt>概念</dt><dd>每張卡正面是 logo，滑過（桌機）或點擊（手機）翻到背面的橘色卡，顯示一句重點與署名。不用彈窗。</dd></div>
+      <div><dt>參考來源</dt><dd>Patagonia Action Works 的組織卡；品牌網站常見的翻牌互動。</dd></div>
+      <div><dt>優點</dt><dd>互動有趣、不離開頁面；比彈窗輕，手機操作直覺。減少動態偏好時改為淡入。</dd></div>
+      <div><dt>風險</dt><dd>背面只放得下重點句，完整引言需另找位置；翻牌是較流行的手法，容易過時。</dd></div>
+      <div><dt>對旅程的作用</dt><dd>以輕互動維持注意力到頁尾，適合手機與短頁流程。</dd></div>
+    </dl>
+  </article>
+</section>
+
+<!-- =========================================================
+     08 FINAL CTA
+     ========================================================= -->
+<section class="pp-section" id="s8" data-section>
+  <div class="pp-head">
+    <div>
+      <span class="pp-num">08 / 08</span>
+      <h2>CTA：怎麼開始？</h2>
+      <p>首頁只保留這一個收尾 CTA（移除中段重複的 mid-CTA）。主要下一步：15 分鐘 Coffee Chat；次要：加入官方 LINE。</p>
+    </div>
+    <div class="pp-toggle" role="group" aria-label="切換 CTA 方案"><button type="button" data-opt="A">A</button><button type="button" data-opt="B">B</button><button type="button" data-opt="C">C</button></div>
+  </div>
+
+  <article class="opt" data-opt="A">
+    <div class="opt-title"><span class="pp-label">08 · A</span><h3>橋的終點：單一大 CTA</h3></div>
+    <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>#cta</span></div>
+      <div class="m c8a"><div class="m-wrap">
+        <svg class="arc" viewBox="0 0 1400 160" fill="none" aria-hidden="true"><path d="M0 150 C 400 -10, 1000 -10, 1400 150" stroke="#F25232" stroke-width="3" opacity=".7"/><path d="M0 150 C 400 30, 1000 30, 1400 150" stroke="#FAB40A" stroke-width="1.5" opacity=".45"/></svg>
+        <img src="../../../public/brand/gungho-mark-white.svg" alt="">
+        <h2>準備好讓市場看見你了嗎？</h2>
+        <p>預約一場 15 分鐘的 Coffee Chat，讓我們聊聊如何把你正在做的事，說清楚、被看見、被理解。</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="#s8">預約 15 分鐘 Coffee Chat</a>
+          <a class="btn btn-ghost-light" href="#s8">加入官方 LINE</a>
+        </div>
+      </div></div>
+    </div>
+    <dl class="pp-card">
+      <div><dt>概念</dt><dd>深色滿版，一句問句、一段說明、一個主按鈕。上方的雙弧線是 Hero 橋樑的終點，首尾呼應。</dd></div>
+      <div><dt>參考來源</dt><dd>Ørsted、B Lab 頁尾前的單一行動區；benchmark P1「單一主 CTA」。</dd></div>
+      <div><dt>優點</dt><dd>最清楚、最不會分心；與頁尾之間有明確分界。</dd></div>
+      <div><dt>風險</dt><dd>P4 學習者與 P2 企業窗口沒有專屬出口，只能靠 LINE 與頁尾導覽。</dd></div>
+      <div><dt>對旅程的作用</dt><dd>回答「怎麼開始」：只有一件事要做，降低決策成本。</dd></div>
+    </dl>
+  </article>
+
+  <article class="opt" data-opt="B">
+    <div class="opt-title"><span class="pp-label">08 · B</span><h3>Coffee Chat 票券：把 15 分鐘具體化</h3></div>
+    <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>#cta</span></div>
+      <div class="m c8b"><div class="m-wrap">
+        <div class="ticket">
+          <div class="stub"><span class="num">15</span><b>分鐘 Coffee Chat</b><span>免費・線上或面談</span></div>
+          <div class="body">
+            <h2>準備好讓市場看見你了嗎？</h2>
+            <ul class="three">
+              <li><b>說清楚</b>把你正在做的事整理成企業聽得懂的語言</li>
+              <li><b>被看見</b>找到該從哪個切入點進入企業地圖</li>
+              <li><b>被理解</b>與理念相符的夥伴精準對接</li>
+            </ul>
+            <div class="btn-row"><a class="btn btn-primary" href="#s8">預約 15 分鐘 Coffee Chat</a></div>
+            <p class="alt">還沒準備好？<a href="#s8">加入官方 LINE</a>，先收到活動與白皮書消息。</p>
+          </div>
+        </div>
+      </div></div>
+    </div>
+    <dl class="pp-card">
+      <div><dt>概念</dt><dd>把「15 分鐘」做成一張票券：左邊撕線票根，右邊是這 15 分鐘會聊什麼，降低「預約顧問」的心理門檻。</dd></div>
+      <div><dt>參考來源</dt><dd>South Pole「Talk to an expert」區塊；SaaS 網站把免費諮詢具體化的寫法。</dd></div>
+      <div><dt>優點</dt><dd>對價格敏感、需要先信任人的 P1 最有效；三點說明直接取自 CTA 文案「說清楚、被看見、被理解」。</dd></div>
+      <div><dt>風險</dt><dd>「免費・線上或面談」為示意，需客戶確認實際形式；淺色底與上一區淺色相鄰時收尾感較弱。</dd></div>
+      <div><dt>對旅程的作用</dt><dd>把行動變得具體、可預期，並提供 LINE 作為零摩擦的備案。</dd></div>
+    </dl>
+  </article>
+
+  <article class="opt" data-opt="C">
+    <div class="opt-title"><span class="pp-label">08 · C</span><h3>三個出口：依你是誰</h3></div>
+    <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>#cta</span></div>
+      <div class="m c8c"><div class="m-wrap">
+        <h2>準備好讓市場看見你了嗎？</h2>
+        <p>讓我們聊聊如何把你正在做的事，說清楚、被看見、被理解。</p>
+        <div class="exits">
+          <a class="exit main" href="#s8"><span class="who">品牌主・非營利組織</span><h3>預約 15 分鐘 Coffee Chat</h3><p>預約 Coffee Chat 或直接聯繫我們，先聊聊你正在做的事。</p><span class="go">立即預約 →</span></a>
+          <a class="exit" href="#s8"><span class="who">企業 ESG・採購</span><h3>ESG 解決方案</h3><p>量身打造的永續轉型路徑，從方案到表單。</p><span class="go">看方案 →</span></a>
+          <a class="exit" href="#s8"><span class="who">個人學習者</span><h3>加入官方 LINE</h3><p>第一時間收到 ESG共學坊與永續白皮書的消息。</p><span class="go">加入 LINE →</span></a>
+        </div>
+      </div></div>
+    </div>
+    <dl class="pp-card">
+      <div><dt>概念</dt><dd>品牌色滿版收尾，主要出口（Coffee Chat）用深色大卡突出，旁邊兩個依身分的次要出口。</dd></div>
+      <div><dt>參考來源</dt><dd>Patagonia 參與階梯的收尾；IKEA 永續頁底部的多入口區。</dd></div>
+      <div><dt>優點</dt><dd>每種身分都有合適的最後一步；與 06 · A 的四道門一致。</dd></div>
+      <div><dt>風險</dt><dd>三個選項會稀釋主 CTA 的點擊；若 06 已做分流，這裡重複一次。</dd></div>
+      <div><dt>對旅程的作用</dt><dd>適合沒有在 06 做明確分流的流程（例如 06 · C 路線圖）。</dd></div>
+    </dl>
+  </article>
+</section>
+
+<!-- =========================================================
+     09 CONNECTIONS
+     ========================================================= -->
+<section class="pp-section" id="s9" data-section>
+  <div class="pp-head">
+    <div>
+      <span class="pp-num">09</span>
+      <h2>區塊之間的串連</h2>
+      <p>八個區塊選好之後，決定它們讀起來像一個故事還是八張投影片的，是區塊之間的節奏與過場。</p>
+    </div>
+  </div>
+
+  <div class="cx">
+    <h3><small>9-1 · RHYTHM</small>視覺節奏：淺、深交替，兩個深色錨點</h3>
+    <p class="intro">原則：淺色區塊負責「閱讀」，深色區塊負責「情緒高點」。整頁最多 2–3 個深色區塊，且不相鄰；品牌橘滿版最多一次（Hero 或 CTA 擇一）。下圖是推薦流程的節奏：</p>
+    <div class="rhythm" aria-label="推薦流程的明暗節奏">
+      <div class="tone-paper"><b>01 A</b><span>Hero：一句話主張＋橋樑弧線</span><span>暖白</span></div>
+      <div class="tone-white"><b>02 A</b><span>信任列：圓形字標牆（矮）</span><span>白</span></div>
+      <div class="tone-paper"><b>03 B</b><span>痛點：缺口圖</span><span>暖白</span></div>
+      <div class="tone-dark"><b>04 B</b><span>品牌故事：Sayun＝橋樑 ← 情緒高點</span><span>深色錨點 1</span></div>
+      <div class="tone-white"><b>05 B</b><span>行動證據：故事優先</span><span>白</span></div>
+      <div class="tone-paper"><b>06 A</b><span>服務誰：四道門</span><span>暖白</span></div>
+      <div class="tone-white"><b>07 A</b><span>客戶回饋：logo 牆</span><span>白</span></div>
+      <div class="tone-dark"><b>08 A</b><span>CTA：橋的終點 ← 行動</span><span>深色錨點 2</span></div>
+    </div>
+
+    <h3><small>9-2 · DEVICES</small>四種串連手法</h3>
+    <div class="devices">
+      <div class="device">
+        <h4>① 橋樑線：一條線從 Hero 走到 CTA</h4>
+        <p>Hero 的橘色弧線在左側收成一條 2px 的細線，沿著頁面往下，每個區塊標題旁有一個節點；深色區塊的節點放大為實心。到 CTA 時線再展開成弧，象徵「橋搭好了」。手機版線改到區塊上方置中，只畫短段。</p>
+        <div class="bl-demo" aria-hidden="true">
+          <div class="rail"></div>
+          <div class="stack">
+            <div class="tone-paper">01 Hero</div><div class="tone-white">02 信任列</div><div class="tone-paper">03 痛點</div>
+            <div class="tone-dark big">04 品牌故事</div><div class="tone-white">05 證據</div><div class="tone-paper">06 服務誰</div><div class="tone-white">07 回饋</div>
+            <div class="tone-dark big">08 CTA</div>
+            <svg viewBox="0 0 300 40" preserveAspectRatio="none"><path d="M0 38 C 90 0, 210 0, 300 38" fill="none" stroke="#F25232" stroke-width="3"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="device">
+        <h4>② 章節標記：01–08 與一個問句</h4>
+        <p>每區塊左上角放 DM Sans 大號章節數字，旁邊是小字章名與這區要回答的問題。讀者隨時知道自己在第幾章，P2 掃讀時也能直接找到「05 證據」。</p>
+        <div class="ch-demo" aria-hidden="true">
+          <div class="ch"><b>03</b><span>我們在解決什麼<em>跟我有關嗎？</em></span></div>
+          <div class="ch dark"><b>04</b><span>品牌故事<em>為什麼是你們？</em></span></div>
+          <div class="ch"><b>05</b><span>永續行動證據<em>真的有用嗎？</em></span></div>
+        </div>
+      </div>
+      <div class="device">
+        <h4>③ 提問式結尾：每區最後一行，問下一區的問題</h4>
+        <p>每個區塊底部置中一行小問句＋向下的橋線，把讀者推到下一區。問句用訪客的口吻，不是我們的口號。</p>
+        <table class="kk">
+          <thead><tr><th>區塊結尾</th><th>問句（接到下一區）</th></tr></thead>
+          <tbody>
+            <tr><td>01 Hero</td><td>已經有人一起走過了 <span class="arrow">↓</span></td></tr>
+            <tr><td>02 信任列</td><td>他們原本卡在哪裡？<span class="arrow">↓</span></td></tr>
+            <tr><td>03 痛點</td><td>這座橋，是從一個名字開始的 <span class="arrow">↓</span></td></tr>
+            <tr><td>04 品牌故事</td><td>橋搭起來之後，發生了什麼？<span class="arrow">↓</span></td></tr>
+            <tr><td>05 證據</td><td>你會是哪一端？<span class="arrow">↓</span></td></tr>
+            <tr><td>06 服務誰</td><td>聽聽走過這座橋的人怎麼說 <span class="arrow">↓</span></td></tr>
+            <tr><td>07 回饋</td><td>換你了 <span class="arrow">↓</span></td></tr>
+          </tbody>
+        </table>
+        <div class="kick-demo" aria-hidden="true"><p>橋搭起來之後，發生了什麼？</p><span></span></div>
+      </div>
+      <div class="device">
+        <h4>④ 弧形分隔：淺轉深時用橋的曲線</h4>
+        <p>淺色區塊進入深色區塊時，不用直線切換，而是一道和 Hero 相同曲率的弧形邊界。只用在兩個深色錨點的入口，其餘維持直線，避免花俏。</p>
+        <div class="dv-demo" aria-hidden="true">
+          <div class="a"></div>
+          <svg viewBox="0 0 600 48" preserveAspectRatio="none"><path d="M0 48 C 180 0, 420 0, 600 48 Z" fill="#2B2E35"/><path d="M0 48 C 180 0, 420 0, 600 48" fill="none" stroke="#F25232" stroke-width="3"/></svg>
+          <div class="b">04 品牌故事（深色）</div>
+        </div>
+      </div>
+    </div>
+
+    <h3><small>9-3 · FLOWS</small>三種整頁流程</h3>
+    <p class="intro">每條流程都是從八個區塊各挑一案組合而成。色塊代表該案的底色，用來檢查明暗節奏。</p>
+    <div class="flows">
+      <article class="flow rec">
+        <header><span class="pp-label" style="background:var(--orange-strong)">推薦</span><h4>流程一「橋樑敘事」：把首頁讀成一個故事</h4></header>
+        <div class="seq">
+          <span class="tone-paper">1A<small>主張＋橋</small></span><span class="tone-white">2A<small>圓形字標</small></span><span class="tone-paper">3B<small>缺口圖</small></span><span class="tone-dark">4B<small>Sayun</small></span><span class="tone-white">5B<small>故事優先</small></span><span class="tone-paper">6A<small>四道門</small></span><span class="tone-white">7A<small>logo 牆</small></span><span class="tone-dark">8A<small>橋的終點</small></span>
+        </div>
+        <p><b>為什麼推薦：</b></p>
+        <ul>
+          <li><b>一個母題貫穿全頁</b>：Hero 的橋 → 痛點的「斷橋」→ 故事的「Sayun＝橋樑」→ CTA 的「橋的終點」，最能讓人記住「共好玟化＝橋樑」。</li>
+          <li><b>數字只出現一次的大小</b>：Hero 數字列低調，05 改故事優先，回應客戶「數字一直重複」（G06）。</li>
+          <li><b>分流完整</b>：06 · A 四道門補上 NPO 與學習者入口，完成首頁「分流樞紐」的任務。</li>
+          <li><b>符合客戶指定</b>：02 · A 與 07 · A 正是客戶要求的圓形 logo 列與 logo 牆＋彈窗，且兩者共用同一套字標，logo 到位後一次替換。</li>
+          <li><b>節奏</b>：淺–淺–淺–<b>深</b>–淺–淺–淺–<b>深</b>，兩個深色錨點分別落在情緒高點（故事）與行動（CTA）。</li>
+        </ul>
+      </article>
+      <article class="flow">
+        <header><span class="pp-label">備選</span><h4>流程二「證據先行」：給企業窗口與合辦單位</h4></header>
+        <div class="seq">
+          <span class="tone-orange">1C<small>數字先行</small></span><span class="tone-white">2C<small>分層信任</small></span><span class="tone-paper">3A<small>三欄＋解方</small></span><span class="tone-paper">4C<small>價值主張</small></span><span class="tone-white">5B<small>故事優先</small></span><span class="tone-dark">6C<small>路線圖</small></span><span class="tone-white">7A<small>logo 牆</small></span><span class="tone-orange">8C<small>三個出口</small></span>
+        </div>
+        <p>以 P2、P5 為主：第一屏就是成果，接著是框架與方法（雙效益），最後用路線圖談承諾。橘色在首尾各一次形成框架。代價是 P1 小品牌可能覺得「離我很遠」，品牌故事的人情味也較弱。若客戶近期主力是企業採購端，可考慮此案。</p>
+      </article>
+      <article class="flow">
+        <header><span class="pp-label">備選</span><h4>流程三「手機短頁」：最快找到入口</h4></header>
+        <div class="seq">
+          <span class="tone-dark">1B<small>雙側對話</small></span><span class="tone-paper">2B<small>字體帶</small></span><span class="tone-white">3C<small>手風琴</small></span><span class="tone-yellow">4A<small>創辦人</small></span><span class="tone-white">5A<small>數字卡</small></span><span class="tone-white">6B<small>參與階梯</small></span><span class="tone-paper">7C<small>翻牌</small></span><span class="tone-osoft">8B<small>票券</small></span>
+        </div>
+        <p>以 LINE 推播與手機進站的 P1、P4 為主：Hero 第一屏就分兩端，痛點收成手風琴，最後用參與階梯與 15 分鐘票券降低門檻。頁面最短，但深色只在開頭一次，後段節奏偏平，需要靠橋樑線與章節標記撐住；跑馬燈在只有 4 個名稱時會明顯重複。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- Shared content for dialogs -->
+<template id="tpl-story">
+  <p>創辦人吳玟樺 Evvon 在擔任社工期間，遇到了一位泰雅族的<strong>林慶台牧師</strong>，也就是電影<strong>賽德克巴萊</strong>的主角。</p>
+  <p>林牧師給了 Evvon 一個泰雅族名字——Sayun，意思是「橋樑」。有資源的人與沒有資源的人之間，需要有一座溝通橋樑。</p>
+  <p>這個名字，後來也成為共好玟化最核心的理念。</p>
+  <p>從社工到創業，Evvon 一直在尋找自己與環境互動的方式。一個機構能影響的人有限，但如果能從一個機構的影響力擴散到整個產業，改變就有機會真正發生。</p>
+  <p>如同品牌名稱「共好玟化」所承載的——共好，讓每一個加入的人，都能一起好。</p>
+  <p>共好玟化的價值主張是：永續是環境、社會、經濟三個效益共同構成的系統。</p>
+  <p>人與人之間的關係緊密，社會才有韌性；當社會有韌性，商業才能長久運作；當商業可行，我們才有能力照顧環境。</p>
+  <p>所以共好玟化將社會放在最前面是因為：永續的核心是「人」，人與人之間共好，才能真正發揮影響力。</p>
+</template>
+
+<dialog class="dlg" id="dlg" aria-labelledby="dlg-title">
+  <div class="dlg-in">
+    <button type="button" class="x" aria-label="關閉" data-close>×</button>
+    <h3 id="dlg-title"></h3>
+    <div id="dlg-body"></div>
+  </div>
+</dialog>
+
+<script>
+(function () {
+  var T = [
+    { mono: '思', cls: 'mono-1', name: '思凡自然農場', title: '自然農園負責人', tag: 'ESG 報告', hl: 'ESG 本質仍然是以人為核心，共好玟化提供的價值非常契合。', q: '從創辦者的角度切入，協助你想清楚自己在做的事與永續的關聯。幫企業做報告的同時，也喚醒人對永續的初衷。' },
+    { mono: '兔', cls: 'mono-2', name: '兔耳生活有限公司', title: '品牌創辦人', tag: '品牌永續', hl: '專業、溫暖、負責任，整個合作過程讓人感到安心。', q: '讓複雜的永續內容變得不那麼有壓力。不同背景的人可以在同一個場域交流碰撞，延伸出新的合作與可能。' },
+    { mono: '農', cls: 'mono-3', name: '台灣休閒農場學會', title: '產業合作夥伴', tag: '供應鏈', hl: '從零散被動的企業合作，轉變為更主動、有策略的窗口溝通。', q: '如同名字一樣的『共好』夥伴，共好玟化是知識整合與轉譯的角色。' },
+    { mono: '齊', cls: 'mono-4', name: '齊禾品牌顧問', title: '共同創辦人', tag: '顧問輔導', hl: '共好玟化是企業 ESG 優化的專家。', q: '能提出客戶想不到的視角，也能在客戶既有基礎上做更深入的延伸。整合環境、社會與經濟三大效益。' }
+  ];
+  var esc = function (s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; };
+
+  /* Dialog */
+  var dlg = document.getElementById('dlg');
+  var dTitle = document.getElementById('dlg-title');
+  var dBody = document.getElementById('dlg-body');
+  var lastFocus = null;
+  function openDlg(title, html) {
+    dTitle.textContent = title; dBody.innerHTML = html;
+    lastFocus = document.activeElement;
+    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+  }
+  dlg.addEventListener('close', function () { if (lastFocus) lastFocus.focus(); });
+  dlg.querySelector('[data-close]').addEventListener('click', function () { dlg.close(); });
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+
+  document.querySelectorAll('.story-more > summary').forEach(function (s) {
+    s.addEventListener('click', function (e) {
+      if (!dlg.showModal) return; // fall back to inline expand
+      e.preventDefault();
+      openDlg('從一個泰雅族名字開始', tpl.innerHTML);
+    });
+  });
+  document.querySelectorAll('.q7a [data-t]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var t = T[+b.dataset.t];
+      openDlg('客戶回饋', '<p class="hl">' + esc(t.hl) + '</p><p>' + esc(t.q) + '</p><div class="meta"><span class="mono ' + t.cls + '">' + t.mono + '</span><span><b>' + esc(t.name) + '</b><br>' + esc(t.title) + '・' + esc(t.tag) + '</span></div>');
+    });
+  });
+
+  /* 07B tabs */
+  document.querySelectorAll('[data-tabs]').forEach(function (list) {
+    var tabs = Array.prototype.slice.call(list.querySelectorAll('[role="tab"]'));
+    function select(i, focus) {
+      tabs.forEach(function (t, j) {
+        var on = i === j;
+        t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+      });
+      if (focus) tabs[i].focus();
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { select(i); });
+      t.addEventListener('keydown', function (e) {
+        var k = e.key, n = tabs.length;
+        if (k === 'ArrowDown' || k === 'ArrowRight') { e.preventDefault(); select((i + 1) % n, true); }
+        if (k === 'ArrowUp' || k === 'ArrowLeft') { e.preventDefault(); select((i - 1 + n) % n, true); }
+      });
+    });
+    select(0);
+  });
+
+  /* 07C flip */
+  document.querySelectorAll('.q7c .flip button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var f = b.parentElement.classList.toggle('is-flipped');
+      b.setAttribute('aria-pressed', f);
+    });
+  });
+
+  /* A/B/C toggles */
+  var showAll = false;
+  var sections = document.querySelectorAll('[data-section]');
+  function setOpt(sec, key) {
+    sec.dataset.current = key;
+    sec.querySelectorAll('.pp-toggle button').forEach(function (b) { b.setAttribute('aria-pressed', !showAll && b.dataset.opt === key); });
+    sec.querySelectorAll('.opt').forEach(function (o) { o.dataset.hidden = showAll ? 'false' : String(o.dataset.opt !== key); });
+  }
+  sections.forEach(function (sec) {
+    if (!sec.querySelector('.opt')) return;
+    setOpt(sec, 'A');
+    sec.querySelectorAll('.pp-toggle button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (showAll) { showAll = false; allBtn.setAttribute('aria-pressed', 'false'); allBtn.textContent = '三案全部展開'; sections.forEach(function (s) { if (s.querySelector('.opt')) setOpt(s, s === sec ? b.dataset.opt : s.dataset.current); }); }
+        else setOpt(sec, b.dataset.opt);
+      });
+    });
+  });
+  var allBtn = document.querySelector('.pp-all');
+  allBtn.addEventListener('click', function () {
+    showAll = !showAll;
+    allBtn.setAttribute('aria-pressed', showAll);
+    allBtn.textContent = showAll ? '回到單一方案' : '三案全部展開';
+    sections.forEach(function (s) { if (s.querySelector('.opt')) setOpt(s, s.dataset.current); });
+  });
+
+  /* Jump + active state */
+  var jumps = document.querySelectorAll('[data-jump]');
+  jumps.forEach(function (b) {
+    b.addEventListener('click', function () { document.getElementById(b.dataset.jump).scrollIntoView(); });
+  });
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) jumps.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.jump === en.target.id); });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    sections.forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>

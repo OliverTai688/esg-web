@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { Container } from "@/components/core/Container"
@@ -11,11 +12,11 @@ import { Menu, X, ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { getNavGroups, type NavGroup } from "@/lib/nav"
 import type { Locale } from "@/i18n/config"
-import type { Dictionary } from "@/i18n/dictionaries/zh"
+import type { Messages } from "@/i18n/messages"
 
 interface NavbarProps {
   locale: Locale
-  labels: Dictionary["nav"]
+  labels: Messages["nav"]
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -319,28 +320,32 @@ const Navbar = ({ locale, labels }: NavbarProps) => {
       className={cn(
         "sticky top-0 z-50 w-full transition-[background-color,box-shadow,border-color] duration-300",
         scrolled
-          ? "bg-white/80 backdrop-blur-2xl shadow-[0_1px_3px_rgba(0,0,0,0.04),0_4px_12px_rgba(0,0,0,0.03)] border-b border-border/40"
-          : "bg-white/70 backdrop-blur-xl border-b border-transparent"
+          ? "bg-background/90 backdrop-blur-xl shadow-[0_1px_0_rgba(31,32,34,0.06)] border-b border-border/60"
+          : "bg-background/80 backdrop-blur-lg border-b border-transparent"
       )}
     >
       {/* ── Scroll progress ── */}
       <div
-        className="absolute bottom-0 left-0 h-[1.5px] bg-gradient-to-r from-primary via-primary/80 to-primary/40 z-10 transition-[width] duration-100 ease-out"
+        className="absolute bottom-0 left-0 h-[1.5px] bg-gradient-to-r from-brand-orange to-brand-yellow z-10 transition-[width] duration-100 ease-out"
         style={{ width: `${scrollProgress * 100}%` }}
       />
 
-      <Container className="flex h-[60px] items-center justify-between">
+      <Container className="flex h-[68px] items-center justify-between">
         {/* ── Logo ── */}
         <Link
           href={`/${locale}`}
-          className="group flex items-center gap-1.5 shrink-0"
+          className="flex items-center shrink-0 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+          aria-label={locale === "zh" ? "共好玟化 首頁" : "Gung-Ho Culture home"}
         >
-          <span className="text-lg font-black tracking-tight text-foreground transition-colors duration-200 group-hover:text-foreground/80">
-            共好
-            <span className="text-primary transition-colors duration-200 group-hover:text-primary/80">
-              玟化
-            </span>
-          </span>
+          {/* CIS horizontal lock-up; clear space is kept by the header padding */}
+          <Image
+            src="/brand/gungho-horizontal.svg"
+            alt={locale === "zh" ? "共好玟化" : "Gung-Ho Culture"}
+            width={240}
+            height={95}
+            priority
+            className="h-10 w-auto"
+          />
         </Link>
 
         {/* ══════════════════════════════════════════════════════════════
@@ -402,7 +407,7 @@ const Navbar = ({ locale, labels }: NavbarProps) => {
         <button
           className="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg text-foreground hover:bg-muted/60 transition-colors"
           onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
+          aria-label={labels.menu}
           aria-expanded={mobileOpen}
         >
           <div className="relative w-5 h-5">
@@ -537,7 +542,7 @@ const Navbar = ({ locale, labels }: NavbarProps) => {
               <div className="mt-5 pt-4 border-t border-border/30 flex flex-col gap-3.5">
                 <div className="flex items-center justify-between px-3">
                   <span className="text-xs font-medium text-muted-foreground/70 uppercase tracking-wider">
-                    {locale === "zh" ? "語言" : "Language"}
+                    {labels.language}
                   </span>
                   <LocaleSwitcher locale={locale} />
                 </div>

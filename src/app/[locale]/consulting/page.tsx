@@ -1,335 +1,298 @@
-import { Container } from "@/components/core/Container"
-import { Section } from "@/components/core/Section"
-import { Heading } from "@/components/core/Heading"
-import { Button } from "@/components/ui/button"
-import { Card, CardTitle, CardDescription, CardHeader, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import Link from "next/link"
-import { Coffee, BookOpen, FileText, GraduationCap, Users, Handshake, Mail, Clock, ArrowRight, ChevronDown, MessageCircle, Crown, Check } from "lucide-react"
 import type { Metadata } from "next"
-import { getDictionary } from "@/i18n/getDictionary"
+import { ArrowRight, ArrowDown, Check, ChevronDown, Clock, Coffee, Mail, MessageCircle, Sparkles, HeartHandshake, Users } from "lucide-react"
+import { Container } from "@/components/core/Container"
+import { Button } from "@/components/ui/button"
+import { SectionHeader } from "@/components/site/SectionHeader"
+import { ChapterNav } from "@/components/site/ChapterNav"
+import { ContactForm } from "@/components/site/ContactForm"
+import { getMessages } from "@/i18n/messages"
 import type { Locale } from "@/i18n/config"
 import { site } from "@/lib/site"
+import { cn } from "@/lib/utils"
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
-  const typedLocale = locale as Locale
-  const t = await getDictionary(typedLocale)
-  return {
-    title: `${t.consultingPage.label} | 共好玟化 CO-ESG`,
-    description: t.consultingPage.description,
-  }
+  const t = await getMessages(locale as Locale)
+  return { title: t.consulting.meta.title, description: t.consulting.meta.description }
 }
-
-const serviceIcons = [Users, FileText, GraduationCap, BookOpen]
 
 export default async function ConsultingPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
-  const typedLocale = locale as Locale
-  const t = await getDictionary(typedLocale)
+  const t = await getMessages(locale as Locale)
+  const c = t.consulting
+  const nav = t.nav.consulting
+
+  const chapters = [
+    { id: "solutions", label: nav.solutions },
+    { id: "ngo", label: nav.ngo },
+    { id: "membership", label: nav.membership },
+    { id: "faq", label: nav.faq },
+    { id: "contact", label: nav.contact },
+  ]
 
   return (
-    <main className="flex min-h-screen flex-col">
-      {/* Hero Section */}
-      <Section padding="lg" withPattern>
-        <Container>
-          <div className="mx-auto max-w-3xl text-center">
-            <div className="size-20 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mx-auto mb-8">
-              <Coffee size={36} />
-            </div>
-            <Heading
-              level={1}
-              label={t.consultingPage.label}
-              title={t.consultingPage.title}
-              description={t.consultingPage.description}
-              align="center"
-              spacing="sm"
-            />
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
-              <Button variant="default" size="lg" className="rounded-full w-full sm:w-auto gap-2" asChild>
+    <>
+      {/* ── Hero: the Coffee Chat promise + "where do I start?" chooser ── */}
+      <section className="relative overflow-hidden">
+        <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(50%_70%_at_85%_10%,#FEF5DC_0%,transparent_70%)]" />
+        <Container className="relative grid gap-12 py-16 md:py-24 lg:grid-cols-[1.15fr_1fr] lg:items-center">
+          <div>
+            <p className="kicker-rule text-[13px] font-bold tracking-[0.12em] text-primary">{c.hero.kicker}</p>
+            <h1 className="mt-5 flex flex-wrap items-center gap-3 text-[2.25rem] font-black leading-[1.25] text-ink sm:text-5xl">
+              <span className="flex size-12 items-center justify-center rounded-2xl bg-orange-soft text-primary sm:size-14">
+                <Coffee className="size-6 sm:size-7" aria-hidden="true" />
+              </span>
+              {c.hero.title}
+            </h1>
+            <p className="mt-6 max-w-xl text-base leading-[1.9] text-muted-foreground sm:text-lg">{c.hero.description}</p>
+            <ul className="mt-6 flex flex-wrap gap-2">
+              {c.hero.promise.map((p) => (
+                <li key={p} className="flex items-center gap-1.5 rounded-full bg-card px-3.5 py-1.5 text-sm font-bold text-ink shadow-[0_1px_0_rgba(31,32,34,0.06)]">
+                  <Check className="size-4 text-primary" aria-hidden="true" />
+                  {p}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <Button size="lg" asChild>
                 <a href="#contact">
-                  <MessageCircle size={18} />
-                  {t.consultingPage.bookBtn}
+                  {c.hero.primaryCta}
+                  <ArrowDown />
                 </a>
               </Button>
-              <Button variant="outline" size="lg" className="rounded-full w-full sm:w-auto" asChild>
-                <Link href={`/${locale}`}>{t.consultingPage.back}</Link>
+              <Button size="lg" variant="line" asChild>
+                <a href={site.line.url} target="_blank" rel="noopener noreferrer">
+                  <MessageCircle />
+                  {c.hero.lineCta}
+                </a>
               </Button>
             </div>
           </div>
+          <nav aria-label={c.chooser.title} className="rounded-3xl bg-surface-dark p-6 text-white sm:p-8">
+            <p className="text-lg font-black">{c.chooser.title}</p>
+            <ul className="mt-5 space-y-2">
+              {c.chooser.options.map((o) => (
+                <li key={o.label}>
+                  <a href={`#${o.target}`} className="group flex items-center justify-between gap-4 rounded-xl border border-white/10 px-4 py-3.5 transition-colors hover:border-brand-yellow/60 hover:bg-white/[0.04]">
+                    <span>
+                      <span className="block text-[15px] font-bold">{o.label}</span>
+                      <span className="text-xs text-white/60">→ {o.hint}</span>
+                    </span>
+                    <ArrowRight className="size-4 shrink-0 text-brand-yellow transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </Container>
-      </Section>
+      </section>
 
-      {/* 企業 ESG 解決方案 */}
-      <Section id="solutions" background="muted" withTopo>
+      <ChapterNav chapters={chapters} label={c.label} />
+
+      {/* ── Solutions: one (highest) price per service ── */}
+      <section id="solutions" className="bg-card py-20 md:py-24">
         <Container>
-          <Heading
-            level={2}
-            label={t.consultingPage.solutions.label}
-            title={t.consultingPage.solutions.title}
-            description={t.consultingPage.solutions.description}
-            align="center"
-          />
-          <div className="grid gap-6 sm:grid-cols-2">
-            {t.consultingPage.solutions.items.map((service, idx) => {
-              const ServiceIcon = serviceIcons[idx] ?? Users
+          <SectionHeader kicker={c.solutions.label} title={c.solutions.title} description={c.solutions.description} />
+          <ul className="mt-10 grid gap-4 md:grid-cols-2">
+            {c.solutions.items.map((s) => (
+              <li key={s.key} className={cn("relative flex flex-col rounded-2xl p-7", s.highlight ? "bg-surface-dark text-white" : "border border-border bg-paper")}>
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <span className={cn("text-xs font-bold", s.highlight ? "text-white/60" : "text-muted-foreground")}>{s.unit}</span>
+                    <h3 className="mt-1 text-xl font-black">{s.title}</h3>
+                  </div>
+                  {s.highlight && <span className="shrink-0 rounded-full bg-brand-yellow px-2.5 py-1 text-xs font-bold text-ink">{s.highlight}</span>}
+                </div>
+                <p className={cn("mt-3 flex-1 text-sm leading-[1.9]", s.highlight ? "text-white/75" : "text-muted-foreground")}>{s.description}</p>
+                <div className={cn("mt-6 flex items-center justify-between gap-4 border-t pt-5", s.highlight ? "border-white/15" : "border-border")}>
+                  <span className={cn("font-display text-2xl font-bold", s.highlight ? "text-brand-yellow" : "text-ink")}>{s.price}</span>
+                  <Button size="sm" variant={s.highlight ? "inverse" : "outline"} asChild>
+                    <a href="#contact">
+                      {c.solutions.cta}
+                      <ArrowRight />
+                    </a>
+                  </Button>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-4 text-xs text-muted-foreground">{c.solutions.priceNote}</p>
+        </Container>
+      </section>
+
+      {/* ── NPO cooperation ── */}
+      <section id="ngo" className="py-20 md:py-24">
+        <Container>
+          <SectionHeader kicker={c.ngo.label} title={c.ngo.title} description={c.ngo.description} />
+          <div className="mt-10 grid gap-4 md:grid-cols-2">
+            {c.ngo.models.map((m, i) => {
+              const Icon = i === 0 ? HeartHandshake : Sparkles
               return (
-              <Card key={service.title} className="relative flex flex-row overflow-hidden">
-                {service.highlight && (
-                  <div className="absolute top-4 right-4">
-                    <Badge variant="default" className="text-xs">{service.highlight}</Badge>
-                  </div>
-                )}
-                <div className="flex shrink-0 items-center justify-center w-20 sm:w-24 bg-primary/5 border-r border-border/50">
-                  <div className="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-                    <ServiceIcon size={24} />
-                  </div>
-                </div>
-                <div className="flex flex-1 flex-col p-5 sm:p-6">
-                  <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
-                    <CardTitle className="text-base sm:text-lg">{service.title}</CardTitle>
-                    <Badge variant="secondary" className="shrink-0 font-mono text-xs">{service.price}</Badge>
-                  </div>
-                  <CardDescription className="text-sm leading-relaxed mb-4">{service.description}</CardDescription>
-                  <div className="mt-auto">
-                    <Button variant="outline" size="sm" className="rounded-full gap-1.5 text-xs" asChild>
-                      <a href="#contact">
-                        {t.consultingPage.bookBtn}
-                        <ArrowRight size={14} />
-                      </a>
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-              )
-            })}
-          </div>
-        </Container>
-      </Section>
-
-      {/* 非營利組織合作模式 */}
-      <Section id="ngo">
-        <Container>
-          <div className="mx-auto max-w-4xl">
-            <Heading
-              level={2}
-              label="NPO 合作"
-              title="非營利組織合作模式"
-              description="共好玟化與非營利組織攜手，透過專業顧問輔導與資源連結，讓社會影響力被更多企業看見。"
-              align="center"
-              spacing="sm"
-            />
-            {/* TODO: move hardcoded content to dictionary */}
-            <div className="mt-10 grid gap-8 md:grid-cols-2">
-              <div className="group rounded-2xl border bg-card p-8 transition-all hover:shadow-lg hover:border-primary/20">
-                <div className="size-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6 transition-colors group-hover:bg-primary/15">
-                  <Handshake size={28} />
-                </div>
-                <h3 className="text-xl font-bold mb-3">公益夥伴方案</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  針對非營利組織提供優惠合作方案，協助整理永續影響力數據，建立與企業 CSR / ESG 部門對接的溝通架構。
-                </p>
-                <div className="mt-6 pt-6 border-t border-border/50">
-                  <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li className="flex items-start gap-2">
-                      <span className="mt-1.5 size-1.5 rounded-full bg-primary shrink-0" />
-                      優惠合作方案
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="mt-1.5 size-1.5 rounded-full bg-primary shrink-0" />
-                      永續影響力數據整理
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="mt-1.5 size-1.5 rounded-full bg-primary shrink-0" />
-                      企業 ESG 部門對接
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className="group rounded-2xl border bg-card p-8 transition-all hover:shadow-lg hover:border-primary/20">
-                <div className="size-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6 transition-colors group-hover:bg-primary/15">
-                  <Users size={28} />
-                </div>
-                <h3 className="text-xl font-bold mb-3">跨界溝通</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  透過ESG共學坊平台與產業網絡，將非營利組織的社會價值轉譯為企業端可理解的永續語言，促成長期合作關係。
-                </p>
-                <div className="mt-6 pt-6 border-t border-border/50">
-                  <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li className="flex items-start gap-2">
-                      <span className="mt-1.5 size-1.5 rounded-full bg-primary shrink-0" />
-                      ESG共學坊平台資源
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="mt-1.5 size-1.5 rounded-full bg-primary shrink-0" />
-                      永續語言轉譯
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="mt-1.5 size-1.5 rounded-full bg-primary shrink-0" />
-                      長期合作關係促成
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* 會員機制 */}
-      <Section id="membership" withPattern>
-        <Container>
-          <Heading
-            level={2}
-            label={t.consultingPage.membershipSection.label}
-            title={t.consultingPage.membershipSection.title}
-            description={t.consultingPage.membershipSection.description}
-            align="center"
-          />
-          <div className="grid gap-6 md:grid-cols-3 max-w-5xl mx-auto">
-            {t.consultingPage.membershipSection.tiers.map((tier, idx) => (
-              <Card key={idx} className={`relative flex flex-col text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${idx === 1 ? "border-primary/30 shadow-md" : "border-transparent"}`}>
-                {idx === 1 && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <Badge variant="accent" className="text-[10px] px-3 py-0.5 shadow-sm">
-                      <Crown size={12} className="mr-1" />
-                      {locale === "zh" ? "推薦" : "Recommended"}
-                    </Badge>
-                  </div>
-                )}
-                <CardHeader className="pb-4">
-                  <CardTitle className="text-xl">{tier.title}</CardTitle>
-                  <p className="text-2xl font-black text-primary mt-2">{tier.price}</p>
-                </CardHeader>
-                <CardContent className="flex-1">
-                  <ul className="space-y-3 text-sm text-left">
-                    {tier.features.map((feature, fi) => (
-                      <li key={fi} className="flex items-start gap-2.5">
-                        <Check size={16} className="mt-0.5 shrink-0 text-primary" />
-                        <span className="text-muted-foreground">{feature}</span>
+                <div key={m.title} className="rounded-2xl border border-border bg-card p-7">
+                  <span className="flex size-11 items-center justify-center rounded-xl bg-orange-soft text-primary">
+                    <Icon className="size-5" aria-hidden="true" />
+                  </span>
+                  <h3 className="mt-5 text-xl font-black text-ink">{m.title}</h3>
+                  <p className="mt-3 text-sm leading-[1.9] text-muted-foreground">{m.description}</p>
+                  <ul className="mt-5 flex flex-wrap gap-2 border-t border-border pt-5">
+                    {m.features.map((f) => (
+                      <li key={f} className="rounded-full bg-sand px-3 py-1 text-xs font-bold text-ink">
+                        {f}
                       </li>
                     ))}
                   </ul>
-                </CardContent>
-              </Card>
+                </div>
+              )
+            })}
+          </div>
+          <div className="mt-10">
+            <h3 className="text-sm font-bold text-muted-foreground">{c.ngo.casesTitle}</h3>
+            <ul className="mt-4 grid gap-3 sm:grid-cols-3">
+              {c.ngo.cases.map((n) => (
+                <li key={n.name} className="flex items-center gap-4 rounded-2xl bg-sand p-5">
+                  <span aria-hidden="true" className="flex size-12 shrink-0 items-center justify-center rounded-full bg-card text-lg font-black text-[#A8321A]">
+                    {n.name.slice(0, 1)}
+                  </span>
+                  <span>
+                    <span className="block font-bold text-ink">{n.name}</span>
+                    <span className="text-xs text-muted-foreground">
+                      {n.type}・{n.focus}
+                    </span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-3 text-xs text-muted-foreground">{c.ngo.casesNote}</p>
+          </div>
+        </Container>
+      </section>
+
+      {/* ── Membership tiers + coming-soon waitlist ── */}
+      <section id="membership" className="bg-sand py-20 md:py-24">
+        <Container>
+          <SectionHeader kicker={c.membership.label} title={c.membership.title} description={c.membership.description} align="center" />
+          <ul className="mx-auto mt-12 grid max-w-5xl gap-4 md:grid-cols-3 md:items-stretch">
+            {c.membership.tiers.map((tier) => (
+              <li
+                key={tier.title}
+                className={cn(
+                  "relative flex flex-col rounded-3xl bg-card p-7",
+                  tier.recommended ? "shadow-[0_24px_60px_-28px_rgba(207,63,28,0.55)] ring-2 ring-primary md:-my-3 md:py-10" : "border border-border",
+                )}
+              >
+                {tier.recommended && (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-1 text-xs font-bold text-white">{c.membership.recommended}</span>
+                )}
+                <h3 className="text-lg font-black text-ink">{tier.title}</h3>
+                <p className="mt-2 font-display text-3xl font-bold text-ink">{tier.price}</p>
+                <p className="mt-2 text-sm font-bold text-primary">{tier.tagline}</p>
+                <ul className="mt-6 flex-1 space-y-3 border-t border-border pt-6">
+                  {tier.features.map((f) => (
+                    <li key={f} className="flex gap-2.5 text-sm text-ink/85">
+                      <Check className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-6 flex gap-2 rounded-xl bg-paper px-3.5 py-2.5 text-xs leading-relaxed text-muted-foreground">
+                  <Users className="mt-0.5 size-3.5 shrink-0" aria-hidden="true" />
+                  <span>
+                    <span className="font-bold text-ink">{c.membership.audienceLabel}｜</span>
+                    {tier.audience}
+                  </span>
+                </p>
+                <Button className="mt-5" variant={tier.recommended ? "default" : "outline"} asChild>
+                  <a href={site.line.url} target="_blank" rel="noopener noreferrer">
+                    {c.membership.tierCta}
+                  </a>
+                </Button>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mx-auto mt-10 grid max-w-5xl gap-6 rounded-3xl border-2 border-dashed border-ink/20 bg-card p-7 sm:p-9 md:grid-cols-[1fr_auto] md:items-center">
+            <div>
+              <p className="flex items-center gap-2 text-sm font-bold text-primary">
+                <span className="rounded-full bg-brand-yellow px-2.5 py-0.5 text-xs text-ink">{c.membership.comingSoon.badge}</span>
+                {c.membership.comingSoon.title}
+              </p>
+              {c.membership.comingSoon.body.map((p, i) => (
+                <p key={p.slice(0, 10)} className={cn("mt-3 leading-[1.85]", i === 0 ? "text-lg font-bold text-ink" : "text-sm text-muted-foreground")}>
+                  {p}
+                </p>
+              ))}
+            </div>
+            <Button size="lg" variant="line" asChild>
+              <a href={site.line.url} target="_blank" rel="noopener noreferrer">
+                <MessageCircle />
+                {c.membership.comingSoon.cta}
+              </a>
+            </Button>
+          </div>
+        </Container>
+      </section>
+
+      {/* ── FAQ ── */}
+      <section id="faq" className="py-20 md:py-24">
+        <Container className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <SectionHeader kicker={c.faq.label} title={c.faq.title} />
+            <p className="mt-6 text-sm text-muted-foreground">{c.faq.more}</p>
+            <a href={`mailto:${site.supportEmail}`} className="mt-1 inline-flex items-center gap-1.5 text-sm font-bold text-primary underline-offset-4 hover:underline">
+              <Mail className="size-4" aria-hidden="true" />
+              {c.faq.moreCta}（{site.supportEmail}）
+            </a>
+          </div>
+          <div className="divide-y divide-border border-y border-border">
+            {c.faq.items.map((f, i) => (
+              <details key={f.question} className="group" open={i === 0}>
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-base font-bold text-ink [&::-webkit-details-marker]:hidden">
+                  {f.question}
+                  <ChevronDown className="size-5 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" aria-hidden="true" />
+                </summary>
+                <p className="pb-6 pr-10 text-sm leading-[1.9] text-muted-foreground">{f.answer}</p>
+              </details>
             ))}
           </div>
         </Container>
-      </Section>
+      </section>
 
-      {/* 常見問題 FAQ */}
-      <Section id="faq" background="muted">
-        <Container>
-          <div className="mx-auto max-w-3xl">
-            <Heading
-              level={2}
-              label={t.consultingPage.faq.label}
-              title={t.consultingPage.faq.title}
-              align="center"
-            />
-            <div className="space-y-3">
-              {t.consultingPage.faq.items.map((faq) => (
-                <details
-                  key={faq.question}
-                  className="group rounded-xl border bg-card transition-all hover:shadow-md open:shadow-md open:border-primary/20"
-                >
-                  <summary className="flex cursor-pointer items-center gap-4 p-5 sm:p-6 font-semibold text-foreground list-none select-none">
-                    <span className="size-8 shrink-0 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                      <ChevronDown size={16} className="transition-transform duration-200 group-open:rotate-180" />
-                    </span>
-                    <span className="flex-1">{faq.question}</span>
-                  </summary>
-                  <div className="px-5 sm:px-6 pb-5 sm:pb-6 pl-[4.25rem] sm:pl-[4.75rem]">
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {faq.answer}
-                    </p>
-                  </div>
-                </details>
-              ))}
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* 聯絡表單區 */}
-      <Section id="contact" withPattern>
-        <Container>
-          <div className="mx-auto max-w-2xl">
-            <Heading
-              level={2}
-              label={t.consultingPage.label}
-              title={t.consultingPage.contact.title}
-              description={t.consultingPage.contact.description}
-              align="center"
-            />
-            {/* Interim: with no backend yet, submitting opens the visitor's mail app with the
-                fields filled in. Replace with a real submit handler in B01 part B. */}
-            <Card className="p-6 sm:p-8">
-              <form
-                className="space-y-5"
-                action={`mailto:${site.supportEmail}?subject=${encodeURIComponent(t.consultingPage.contact.title)}`}
-                method="post"
-                encType="text/plain"
-              >
-                <div className="grid gap-5 sm:grid-cols-2">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium" htmlFor="name">
-                      {t.contactForm.name}
-                    </label>
-                    <Input id="name" name="name" autoComplete="name" placeholder={t.contactForm.namePlaceholder} required />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium" htmlFor="email">
-                      {t.contactForm.email}
-                    </label>
-                    <Input id="email" name="email" type="email" autoComplete="email" placeholder={t.contactForm.emailPlaceholder} required />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium" htmlFor="org">
-                    {t.contactForm.org}
-                  </label>
-                  <Input id="org" name="organization" autoComplete="organization" placeholder={t.contactForm.orgPlaceholder} />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium" htmlFor="message">
-                    {t.contactForm.message}
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={4}
-                    placeholder={t.contactForm.messagePlaceholder}
-                    className="flex w-full rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-                  />
-                </div>
-                <Button type="submit" size="lg" className="w-full rounded-full">
-                  {t.contactForm.submit}
-                </Button>
-              </form>
-            </Card>
-
-            {/* Contact info */}
-            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <div className="size-8 rounded-lg bg-muted flex items-center justify-center">
-                  <Mail size={14} />
-                </div>
-                <a href={`mailto:${site.supportEmail}`} className="underline-offset-4 hover:text-primary hover:underline">
+      {/* ── Contact: form + LINE alternative ── */}
+      <section id="contact" className="bg-surface-dark py-20 text-white md:py-24">
+        <Container className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
+          <div>
+            <p className="kicker-rule text-[13px] font-bold tracking-[0.12em] text-brand-yellow">{c.contact.label}</p>
+            <h2 className="mt-4 text-3xl font-black leading-[1.3] sm:text-4xl">{c.contact.title}</h2>
+            <p className="mt-4 leading-[1.9] text-white/75">{c.contact.description}</p>
+            <ul className="mt-8 space-y-3 text-sm text-white/80">
+              <li className="flex items-center gap-3">
+                <Mail className="size-4 text-brand-yellow" aria-hidden="true" />
+                <a href={`mailto:${site.supportEmail}`} className="underline-offset-4 hover:underline">
                   {site.supportEmail}
                 </a>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="size-8 rounded-lg bg-muted flex items-center justify-center">
-                  <Clock size={14} />
-                </div>
-                <span>{t.consultingPage.contact.hours}</span>
-              </div>
+              </li>
+              <li className="flex items-center gap-3">
+                <Clock className="size-4 text-brand-yellow" aria-hidden="true" />
+                {c.contact.hours}
+              </li>
+            </ul>
+            <div className="mt-10 rounded-2xl border border-white/15 p-6">
+              <p className="font-bold">{c.contact.altTitle}</p>
+              <p className="mt-1 text-sm text-white/70">{c.contact.altBody}</p>
+              <Button className="mt-4" variant="line" asChild>
+                <a href={site.line.url} target="_blank" rel="noopener noreferrer">
+                  <MessageCircle />
+                  {t.footer.lineCta}
+                </a>
+              </Button>
             </div>
           </div>
+          <div className="rounded-3xl bg-card p-6 text-ink sm:p-8">
+            <ContactForm labels={t.contactForm} to={site.supportEmail} />
+          </div>
         </Container>
-      </Section>
-    </main>
+      </section>
+
+    </>
   )
 }
