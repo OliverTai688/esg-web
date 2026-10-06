@@ -4,6 +4,7 @@ import { i18n, type Locale } from "@/i18n/config"
 import { getDictionary } from "@/i18n/getDictionary"
 import { Navbar } from "@/components/domain/Navbar"
 import { Footer } from "@/components/domain/Footer"
+import { site } from "@/lib/site"
 import "../globals.css";
 
 const localeMap: Record<string, string> = { zh: "zh_TW", en: "en_US" }
@@ -23,7 +24,7 @@ export async function generateMetadata({
       : "CO-ESG | Professional Bridge for Sustainable Brands"
 
   return {
-    metadataBase: new URL("https://coesg.tw"),
+    metadataBase: new URL(site.url),
     title: {
       template: "%s | 共好玟化 CO-ESG",
       default: defaultTitle,
@@ -91,11 +92,25 @@ export default async function LocaleLayout({
               "@context": "https://schema.org",
               "@type": "Organization",
               name: "共好玟化 CO-ESG",
-              url: "https://coesg.tw",
+              legalName: site.legalName.zh,
+              alternateName: site.legalName.en,
+              url: site.url,
               description: "永續品牌的專業橋樑",
+              taxID: site.taxId,
+              foundingDate: String(site.foundingYear),
+              founder: { "@type": "Person", name: site.founder.zh },
+              email: site.email,
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "南京東路4段50號11樓",
+                addressLocality: "松山區",
+                addressRegion: "臺北市",
+                addressCountry: "TW",
+              },
+              sameAs: [site.line.url],
               contactPoint: {
                 "@type": "ContactPoint",
-                email: "90223501gungho@gmail.com",
+                email: site.supportEmail,
                 contactType: "customer service",
               },
             }),

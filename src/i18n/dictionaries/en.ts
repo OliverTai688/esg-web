@@ -256,6 +256,18 @@ const en: Dictionary = {
     brandAccent: "-ESG",
     tagline: "Professional Bridge for Sustainable Brands",
     copyright: "© 2026 CO-ESG. All Rights Reserved.",
+    lineCta: "Add us on LINE",
+    navTitle: "Site Map",
+    company: {
+      title: "Company",
+      name: "Company",
+      taxId: "Tax ID",
+      founder: "Founder",
+      founded: "Founded",
+      address: "Address",
+      website: "Website",
+      email: "Email",
+    },
   },
   sustainabilityPage: {
     label: "Sustainability",

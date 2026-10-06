@@ -257,6 +257,18 @@ const zh = {
     brandAccent: "玟化",
     tagline: "CO-ESG ｜ 永續品牌的專業橋樑",
     copyright: "© 2026 共好玟化 CO-ESG. All Rights Reserved.",
+    lineCta: "加入官方 LINE",
+    navTitle: "網站導覽",
+    company: {
+      title: "公司資訊",
+      name: "公司名稱",
+      taxId: "統一編號",
+      founder: "創辦人",
+      founded: "成立年份",
+      address: "公司地址",
+      website: "官方網站",
+      email: "電子信箱",
+    },
   },
   // Sub-pages
   sustainabilityPage: {

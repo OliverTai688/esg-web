@@ -20,11 +20,12 @@ import {
 } from "lucide-react"
 import type { Metadata } from "next"
 import { getDictionary } from "@/i18n/getDictionary"
+import { site } from "@/lib/site"
 import type { Locale } from "@/i18n/config"
 import { AnimatedGradientBackground } from "@/components/core/AnimatedGradientBackground"
 
-const LINE_URL = "https://line.me/R/ti/p/@381iutjm"
-const LINE_ID = "@381iutjm"
+const LINE_URL = site.line.url
+const LINE_ID = site.line.id
 
 const benefitIcons = [Newspaper, CalendarCheck, Handshake, Gift]
 const communityIcons = [Users, Building2, Calendar, Globe]

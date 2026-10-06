@@ -30,7 +30,7 @@
 
 **A. 立即可做（Phase 1）**
 
-1. 新增 `src/lib/site.ts` 集中站台常數：客服信箱 `pt@coesg.tw`、公司信箱 `gungho90223501@coesg.tw`、官方 LINE 網址與 ID、官網網址、服務時間。
+1. （`src/lib/site.ts` 已在 G04 建立）新增 `src/lib/site.ts` 集中站台常數：客服信箱 `pt@coesg.tw`、公司信箱 `gungho90223501@coesg.tw`、官方 LINE 網址與 ID、官網網址、服務時間。
 2. `consulting/page.tsx:384` 與 `layout.tsx:98` 的舊 Gmail 改為引用常數（客服用 `pt@coesg.tw`），並改成 `mailto:` 連結。
 3. （合作洽詢 Hero 與方案卡按鈕已在 C01 完成）把上面列的無作用按鈕接上去處：合作洽詢 Hero 與方案卡按鈕捲到 `#contact`；`CTASection` 增加 `primaryHref`／`secondaryHref` props 並由各頁傳入。
 
