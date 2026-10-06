@@ -64,7 +64,7 @@ const ProblemSolutionSection = ({
                 </div>
                 <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-accent/70 mb-3">{point.label}</span>
                 <h4 className="text-xl font-bold text-foreground mb-4 tracking-tight">{point.title}</h4>
-                <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3 group-hover:line-clamp-none transition-all duration-500">
+                <p className="text-muted-foreground text-sm leading-relaxed">
                   {point.description}
                 </p>
               </div>

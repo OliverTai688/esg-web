@@ -17,7 +17,6 @@ import {
   MapPin,
   Search,
   Factory,
-  TreePine,
   Globe,
   TrendingUp,
   ArrowRight,
@@ -93,7 +92,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         painPoints={[
           { icon: Search, ...t.problem.painPoints[0] },
           { icon: Factory, ...t.problem.painPoints[1] },
-          { icon: TreePine, ...t.problem.painPoints[2] },
+          { icon: Globe, ...t.problem.painPoints[2] },
         ]}
         solutionTitle={t.problem.solutionTitle}
         solutionDescription={t.problem.solutionDescription}

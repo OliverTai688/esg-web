@@ -113,13 +113,13 @@ const en: Dictionary = {
         label: "For Industry",
         title: "Opaque supply chain information",
         description:
-          "Sustainability data in supply chains is not transparent. Companies don't know which suppliers meet ESG procurement standards, and suppliers don't know how to be discovered. We help build sustainability frameworks that connect to enterprise demand.",
+          "Suppliers that meet ESG procurement standards have no suitable platform to be seen on. We help build a communication platform where supply chains and enterprises can connect.",
       },
       {
-        label: "For the Ecosystem",
-        title: "No effective bridge between large and small enterprises",
+        label: "For Global Alignment",
+        title: "Keeping up with international trends",
         description:
-          "There's no effective bridge between large and small enterprises. CO-ESG plays the role of knowledge translator and communicator, enabling both sides to dialogue on equal footing and build value-driven long-term partnerships.",
+          "ISO, GRI, TCFD, biodiversity, CBAM… with so many international standards and limited company resources, CO-ESG acts as knowledge translator and communicator, helping companies align with global ESG.",
       },
     ],
     solutionTitle: "Becoming the Professional Bridge for the Sustainability Ecosystem",
