@@ -20,7 +20,7 @@ import {
   Building2,
   BookOpen,
   Users,
-  Link2,
+  GraduationCap,
   TrendingUp,
   Quote,
   UserCheck,
@@ -54,7 +54,7 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
   const s = t.sustainabilityPage
 
   const problemIcons = [MessageSquareX, FileX2, Unplug]
-  const serviceIcons = [Building2, BookOpen, Users, Link2]
+  const serviceIcons = [Building2, BookOpen, GraduationCap, Users]
   const metricIcons = [TrendingUp, Handshake, Globe]
 
   return (
