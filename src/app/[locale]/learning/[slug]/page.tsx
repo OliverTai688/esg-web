@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { ArticleView } from "@/components/site/ArticleView"
 import { getMessages } from "@/i18n/messages"
+import { site } from "@/lib/site"
 import { i18n, type Locale } from "@/i18n/config"
 import { getAllPosts, getAllSlugs, getPostBySlug, getRelatedPosts } from "@/lib/posts"
 
@@ -18,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     title: post.title,
     description: post.excerpt,
     alternates: { canonical: `/${locale}/learning/${slug}` },
-    openGraph: { type: "article", title: post.title, description: post.excerpt, publishedTime: post.date, authors: [post.author] },
+    openGraph: { type: "article", title: post.title, description: post.excerpt, publishedTime: post.date, authors: [post.author], images: [site.ogImage] },
   }
 }
 

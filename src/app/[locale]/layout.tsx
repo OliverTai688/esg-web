@@ -31,7 +31,9 @@ export async function generateMetadata({
       siteName: "共好玟化 CO-ESG",
       locale: localeMap[typedLocale] ?? "zh_TW",
       type: "website",
+      images: [site.ogImage],
     },
+    twitter: { card: "summary_large_image", images: [site.ogImage.url] },
     alternates: {
       languages: { zh: "/zh", en: "/en" },
     },
