@@ -79,10 +79,6 @@ export default async function EventsPage({
       >
         <Container className="relative z-10">
           <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
-            <Badge className="mb-8 bg-white/15 text-primary-foreground border-white/20 backdrop-blur-sm text-sm px-4 py-1.5">
-              {t.eventsPage.hero.badge}
-            </Badge>
-
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-primary-foreground leading-[1.1] mb-6">
               {t.eventsPage.title}
             </h1>

@@ -399,13 +399,11 @@ const zh = {
     description: "從ESG共學坊的跨產業連結到國際論壇，共好玟化持續舉辦高品質的永續活動，串連理念相符的夥伴。",
     back: "返回首頁",
     hero: {
-      badge: "2026 活動季",
       primaryCta: "立即報名",
       secondaryCta: "瀏覽所有活動",
       stats: [
-        { value: "50+", label: "場活動舉辦" },
-        { value: "500+", label: "累計參與者" },
-        { value: "30+", label: "合作品牌" },
+        { value: "150+", label: "場活動舉辦" },
+        { value: "50+", label: "合作品牌" },
       ],
     },
     upcoming: {
@@ -599,8 +597,8 @@ const zh = {
       description: "每一個數字背後，都是真實的連結與改變。",
       metrics: [
         { value: "500+", label: "社群夥伴" },
-        { value: "30+", label: "合作品牌" },
-        { value: "50+", label: "場活動舉辦" },
+        { value: "50+", label: "合作品牌" },
+        { value: "150+", label: "場活動舉辦" },
         { value: "8+", label: "國際論壇曝光" },
       ],
     },

@@ -389,13 +389,11 @@ const en: Dictionary = {
     description: "From cross-industry connections at ESG Co-Learning to international forums, CO-ESG hosts high-quality sustainability events connecting like-minded partners.",
     back: "Back to Home",
     hero: {
-      badge: "2026 Event Season",
       primaryCta: "Register Now",
       secondaryCta: "Browse All Events",
       stats: [
-        { value: "50+", label: "Events Hosted" },
-        { value: "500+", label: "Total Participants" },
-        { value: "30+", label: "Partner Brands" },
+        { value: "150+", label: "Events Hosted" },
+        { value: "50+", label: "Partner Brands" },
       ],
     },
     upcoming: {
@@ -586,8 +584,8 @@ const en: Dictionary = {
       description: "Behind every number is a real connection and a real change.",
       metrics: [
         { value: "500+", label: "Community Partners" },
-        { value: "30+", label: "Partner Brands" },
-        { value: "50+", label: "Events Hosted" },
+        { value: "50+", label: "Partner Brands" },
+        { value: "150+", label: "Events Hosted" },
         { value: "8+", label: "International Forums" },
       ],
     },
