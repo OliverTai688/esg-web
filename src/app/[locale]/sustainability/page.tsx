@@ -10,6 +10,7 @@ import Link from "next/link"
 import type { Metadata } from "next"
 import { getDictionary } from "@/i18n/getDictionary"
 import { formatImpactMetric } from "@/lib/utils"
+import { consultants } from "@/data/team"
 import type { Locale } from "@/i18n/config"
 import {
   ArrowRight,
@@ -310,7 +311,7 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
             align="center"
           />
 
-          <EcosystemNetwork roles={s.ecosystem.roles} />
+          <EcosystemNetwork roles={s.ecosystem.roles} consultants={consultants} />
         </Container>
       </Section>
 

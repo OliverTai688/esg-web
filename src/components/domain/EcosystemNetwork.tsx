@@ -1,11 +1,13 @@
 "use client"
 
 import * as React from "react"
+import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { UserCheck, Link2, Building2, Globe, ArrowUpRight } from "lucide-react"
 import { ParticleNetwork } from "./ParticleNetwork"
 import { AnimatedGradientBackground } from "@/components/core/AnimatedGradientBackground"
+import type { Consultant } from "@/data/team"
 
 interface EcosystemRole {
   title: string
@@ -14,14 +16,26 @@ interface EcosystemRole {
 
 interface EcosystemNetworkProps {
   roles: readonly EcosystemRole[]
+  /** Shown as avatars on the first role, the consultant team. */
+  consultants?: readonly Consultant[]
   className?: string
 }
 
-// One icon per role, index-aligned with `roles`. Real team photos and partner
-// logos replace these once the client assets are prepared (task S06-B).
+// One icon per role, index-aligned with `roles`. The first role (the consultant
+// team) shows the consultants' photos instead when they are provided.
 const ROLE_ICONS = [UserCheck, Link2, Building2, Globe]
 
-export const EcosystemNetwork = ({ roles, className }: EcosystemNetworkProps) => {
+// Registered ESG共學坊 logo (CLASS). Keep clear space of at least a tenth of its width around it.
+const HubLogo = ({ width }: { width: number }) => (
+  <Image
+    src="/brand/coesg-class.svg"
+    alt="ESG共學坊"
+    width={width}
+    height={Math.round(width * (94.5 / 312))}
+  />
+)
+
+export const EcosystemNetwork = ({ roles, consultants, className }: EcosystemNetworkProps) => {
   const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null)
   const [hubCoords, setHubCoords] = React.useState<{ x: number; y: number } | null>(null)
   const containerRef = React.useRef<HTMLDivElement>(null)
@@ -92,13 +106,8 @@ export const EcosystemNetwork = ({ roles, className }: EcosystemNetworkProps) =>
           >
             <div className="relative group">
               <div className="absolute inset-0 bg-primary/25 blur-3xl rounded-full scale-150" />
-              <div className="relative px-8 py-4 rounded-2xl bg-white/40 backdrop-blur-xl border border-white/40 shadow-2xl flex flex-col items-center gap-1">
-                <span className="text-xs font-black tracking-[0.4em] text-primary/60 uppercase">Ecosystem</span>
-                <div className="flex items-center gap-2">
-                  <span className="text-3xl font-black tracking-tighter text-primary">CO</span>
-                  <div className="w-1.5 h-6 bg-accent rounded-full rotate-12" />
-                  <span className="text-3xl font-black tracking-tighter text-foreground">ESG</span>
-                </div>
+              <div className="relative px-8 py-6 rounded-2xl bg-white/90 backdrop-blur-xl border border-white/60 shadow-2xl">
+                <HubLogo width={200} />
               </div>
             </div>
           </motion.div>
@@ -134,9 +143,31 @@ export const EcosystemNetwork = ({ roles, className }: EcosystemNetworkProps) =>
                   )}
                 >
                   <div className="flex justify-between items-end">
-                    <div className="mb-2 flex size-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                      <RoleIcon size={24} />
-                    </div>
+                    {i === 0 && consultants && consultants.length > 0 ? (
+                      <ul className="mb-2 flex -space-x-2.5">
+                        {consultants.map((person) => (
+                          <li key={person.photo} className="group/avatar relative hover:z-10" title={`${person.name}｜${person.organization} ${person.role}`}>
+                            <Image
+                              src={person.photo}
+                              alt={person.name}
+                              width={44}
+                              height={44}
+                              className="size-11 rounded-full border-2 border-white bg-muted object-cover object-top shadow-sm outline-none transition-transform duration-200 group-hover/avatar:scale-110"
+                            />
+                            <span
+                              aria-hidden="true"
+                              className="pointer-events-none absolute bottom-full left-1/2 mb-2 hidden -translate-x-1/2 whitespace-nowrap rounded-md bg-foreground px-2 py-1 text-xs font-medium text-background shadow-md group-hover/avatar:block"
+                            >
+                              {person.name}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <div className="mb-2 flex size-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                        <RoleIcon size={24} />
+                      </div>
+                    )}
                     
                     <motion.div
                       animate={{ opacity: isHovered ? 1 : 0, scale: isHovered ? 1 : 0.8 }}
@@ -179,11 +210,9 @@ export const EcosystemNetwork = ({ roles, className }: EcosystemNetworkProps) =>
           transition={{ delay: 0.5 }}
           className="mt-16 flex justify-center lg:hidden"
         >
-           <div className="relative px-8 py-3 rounded-full bg-white/40 backdrop-blur-xl border border-white/40 shadow-xl flex items-center gap-3">
-              <span className="text-lg font-black tracking-tight text-primary">CO</span>
-              <div className="w-1 h-4 bg-accent rounded-full rotate-12" />
-              <span className="text-lg font-black tracking-tight text-foreground">ESG</span>
-            </div>
+          <div className="relative px-7 py-5 rounded-2xl bg-white/90 backdrop-blur-xl border border-white/60 shadow-xl">
+            <HubLogo width={168} />
+          </div>
         </motion.div>
       </div>
     </div>

@@ -48,7 +48,7 @@
 | [S03](S03-dual-benefit-theory.md) | 雙效益理論取代終端機區塊 | 新區塊 | M | 2 | — |
 | [S04](S04-services-restructure.md) | 服務卡重整（**已完成**） | 文案 | S | 1 | — |
 | [S05](S05-impact-quant-qual.md) | 成果分量化與質化 | 結構 | S–M | 2 | 質化內容 |
-| [S06](S06-ecosystem-diagram.md) | 生態圈：註冊 logo、供應鏈對接、7 位顧問（**文字部分已完成**） | 文案 + 素材 | M | 1（文字）／3（圖） | logo、照片 |
+| [S06](S06-ecosystem-diagram.md) | 生態圈：註冊 logo、供應鏈對接、7 位顧問（**已完成**，頭像授權待確認） | 文案 + 素材 | M | 1（文字）／3（圖） | logo、照片 |
 
 ### 永續足跡 `/events`
 
