@@ -2,7 +2,7 @@
 
 | 項目 | 內容 |
 |---|---|
-| 狀態 | **已完成（2026-10-06）**：返回鈕依文章分類回到對應的主題區塊（`src/lib/learning-sections.ts`），找不到對應區塊時回 `/learning` 頂部；分類頁同步。`html` 加上 `scroll-padding-top: 60px`，全站錨點不再被 header 遮住。已在瀏覽器重現原問題並確認修正 |
+| 狀態 | **已完成（2026-10-06）**：返回鈕依文章分類回到對應的主題區塊（`src/lib/learning-sections.ts`），找不到對應區塊時回 `/learning` 頂部；分類頁同步。`html` 加上 `scroll-padding-top: 60px`，全站錨點不再被 header 遮住。已在瀏覽器確認修正後的行為（原問題是讀程式碼判定的，沒有另外在舊版重現） |
 | 階段 | Phase 1（Bug） |
 | 類型 | Bug 修正（TSX） |
 | 規模 | S |
