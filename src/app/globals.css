@@ -12,7 +12,7 @@
      70% — warm paper + white surfaces, ink text
      20% — dark cool-grey surfaces (replaces the old full-bleed green)
      10% — orange (CTA, links, key numbers) + yellow (tags, highlights)
-   Contrast (WCAG AA): primary #CF3F1C with white 4.7:1; ink on paper 15.6:1;
+   Contrast (WCAG AA): primary #C0391A with white 5.5:1, on sand 4.7:1; ink on paper 15.6:1;
    yellow is never used as text on light surfaces.
    ESG共學坊 references keep their own CLASS green via [data-brand="coesg"].
    ═══════════════════════════════════════════════════════════════════════ */
@@ -94,8 +94,8 @@
   --popover: #FFFFFF;
   --popover-foreground: #1F2022;
 
-  /* Primary: orange-strong — buttons, links, focus (white text 4.7:1) */
-  --primary: #CF3F1C;
+  /* Primary: orange-strong — buttons, links, focus (white text 5.5:1) */
+  --primary: #C0391A;
   --primary-foreground: #FFFFFF;
 
   /* Secondary: warm sand surface */
@@ -124,7 +124,7 @@
 
   --border: #E9E3DA;
   --input: #DCD5CB;
-  --ring: #CF3F1C;
+  --ring: #C0391A;
 
   --radius: 0.75rem;
 
@@ -136,12 +136,12 @@
 
   --sidebar: #FFFFFF;
   --sidebar-foreground: #1F2022;
-  --sidebar-primary: #CF3F1C;
+  --sidebar-primary: #C0391A;
   --sidebar-primary-foreground: #FFFFFF;
   --sidebar-accent: #F4EEE6;
   --sidebar-accent-foreground: #1F2022;
   --sidebar-border: #E9E3DA;
-  --sidebar-ring: #CF3F1C;
+  --sidebar-ring: #C0391A;
 }
 
 /* ESG共學坊 sub-brand scope */

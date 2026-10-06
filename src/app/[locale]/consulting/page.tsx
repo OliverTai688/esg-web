@@ -95,7 +95,7 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
           <SectionHeader kicker={c.solutions.label} title={c.solutions.title} description={c.solutions.description} />
           <ul className="mt-10 grid gap-4 md:grid-cols-2">
             {c.solutions.items.map((s) => (
-              <li key={s.key} className={cn("relative flex flex-col rounded-2xl p-7", s.highlight ? "bg-surface-dark text-white" : "border border-border bg-paper")}>
+              <li key={s.key} className={cn("relative flex min-w-0 flex-col rounded-2xl p-6 sm:p-7", s.highlight ? "bg-surface-dark text-white" : "border border-border bg-paper")}>
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <span className={cn("text-xs font-bold", s.highlight ? "text-white/60" : "text-muted-foreground")}>{s.unit}</span>
@@ -104,7 +104,7 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
                   {s.highlight && <span className="shrink-0 rounded-full bg-brand-yellow px-2.5 py-1 text-xs font-bold text-ink">{s.highlight}</span>}
                 </div>
                 <p className={cn("mt-3 flex-1 text-sm leading-[1.9]", s.highlight ? "text-white/75" : "text-muted-foreground")}>{s.description}</p>
-                <div className={cn("mt-6 flex items-center justify-between gap-4 border-t pt-5", s.highlight ? "border-white/15" : "border-border")}>
+                <div className={cn("mt-6 flex flex-wrap items-center justify-between gap-4 border-t pt-5", s.highlight ? "border-white/15" : "border-border")}>
                   <span className={cn("font-display text-2xl font-bold", s.highlight ? "text-brand-yellow" : "text-ink")}>{s.price}</span>
                   <Button size="sm" variant={s.highlight ? "inverse" : "outline"} asChild>
                     <a href="#contact">
@@ -177,7 +177,7 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
                 key={tier.title}
                 className={cn(
                   "relative flex flex-col rounded-3xl bg-card p-7",
-                  tier.recommended ? "shadow-[0_24px_60px_-28px_rgba(207,63,28,0.55)] ring-2 ring-primary md:-my-3 md:py-10" : "border border-border",
+                  tier.recommended ? "shadow-[0_24px_60px_-28px_rgba(192,57,26,0.55)] ring-2 ring-primary md:-my-3 md:py-10" : "border border-border",
                 )}
               >
                 {tier.recommended && (

@@ -48,7 +48,7 @@ export function ChapterNav({ chapters, label }: { chapters: readonly Chapter[]; 
                 active === c.id ? "bg-ink text-white" : "text-muted-foreground hover:bg-ink/[0.05] hover:text-ink",
               )}
             >
-              <span className={cn("font-display text-[11px] tabular-nums", active === c.id ? "text-brand-yellow" : "text-muted-foreground/70")}>
+              <span className={cn("font-display text-[11px] tabular-nums", active === c.id ? "text-brand-yellow" : "text-muted-foreground")}>
                 {String(i + 1).padStart(2, "0")}
               </span>
               {c.label}

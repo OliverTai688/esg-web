@@ -35,7 +35,8 @@ export default async function LearningPage({ params }: { params: Promise<{ local
   const counts = new Map(getCategories(posts).map((c) => [c.slug, c.count]))
   const label = (slug: string, fallback: string) => categoryLabel(slug, fallback, l)
   const summaries = posts.map((p) => ({ ...toSummary(p), category: label(p.categorySlug, p.category) }))
-  const [featured] = summaries
+  // Feature the newest article rather than a platform announcement
+  const featured = summaries.find((p) => p.categorySlug !== "announcements") ?? summaries[0]
   const categories = getCategories(posts).map((c) => ({ ...c, name: label(c.slug, c.name) }))
 
   return (

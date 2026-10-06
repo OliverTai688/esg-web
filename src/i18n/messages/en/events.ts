@@ -79,7 +79,7 @@ const events = {
         entries: [
           { date: "2022.05", text: "Gung-Ho Culture is founded (registered capital NT$50,000) to drive social impact through sustainability and ESG knowledge." },
           { date: "2023.05", text: "Launches civic-week sustainability talks at Sanying and Nangang Community Colleges." },
-          { date: "2023.10", text: "Completes its first Sustainability White Paper, partnering with Qihe Design to produce a white paper on eggshell-paper egg trays for Qinyi Eggs." },
+          { date: "2023.10", text: "Completes its first Sustainability White Paper, partnering with 齊禾設計 (Qihe Design) to produce a white paper on eggshell-paper egg trays for 勤億蛋品." },
           { date: "2023.11", text: "Launches CO-ESG Academy as an in-person club at Wanhua Community College; the same month, completes its first capital increase (NT$50,000 → NT$1 million)." },
         ],
       },
@@ -90,10 +90,10 @@ const events = {
         intro: "CO-ESG Academy moved from in-person to an online platform, our services extended into agriculture and business, and our impact began to reach from Taiwan to the wider world.",
         entries: [
           { date: "2024.03", text: "The CO-ESG Academy platform launches, taking the in-person club online as a learning platform." },
-          { date: "2024.06", text: "Enters agricultural sustainability with courses at Lühe Farm, training more than 30 small-farm brands and generating over NT$500,000 in single-day market sales." },
+          { date: "2024.06", text: "Enters agricultural sustainability with courses at 綠合農場, training more than 30 small-farm brands and generating over NT$500,000 in single-day market sales." },
           { date: "2024.11", text: "Invited as Strategy Director by 13+ start-up programmes to lead sustainable brand development workshops; Sustainability White Paper services scale up in parallel." },
           { date: "2025", text: "Surpasses 100 talks, 30+ workshops and 500+ participants trained, serving more than 10 cities and counties across Taiwan, including the country's three largest leisure farms." },
-          { date: "Spring–Summer 2025", text: "Partners with the Taiwan Leisure Farming Association to launch Taiwan's first ESG Sustainable Agri-Innovator certification course." },
+          { date: "Spring–Summer 2025", text: "Partners with the 台灣休閒農業學會 to launch Taiwan's first ESG Sustainable Agri-Innovator certification course." },
           { date: "2025.05", text: "Co-organises a talk on strengthening charitable impact, and exhibits as a sustainability advisor at Secutech Taipei." },
           { date: "2025.07", text: "Completes a second, larger capital increase (NT$1 million → NT$4 million), the largest to date." },
           { date: "2025.08", text: "Invited for the first time to an international SDGs forum (Global Youth Leadership Programme SDGs Forum, Taipei).", href: "https://www.youthsdgs.org/" },
@@ -166,18 +166,18 @@ const events = {
     items: [
       {
         title: "Sustainable products on corporate procurement lists",
-        partners: "Star Sprout Social Enterprise × Sifan Natural Farm",
-        description: "Through the CO-ESG Academy speaker platform, Gung-Ho Culture connected Star Sprout Social Enterprise with Sifan Natural Farm, bringing high-quality sustainable products and gifts with genuine social value into corporate gift procurement.",
+        partners: "星芽社會企業 × 思凡自然農場",
+        description: "Through the CO-ESG Academy speaker platform, Gung-Ho Culture connected 星芽社會企業 with 思凡自然農場, bringing high-quality sustainable products and gifts with genuine social value into corporate gift procurement.",
       },
       {
         title: "A story of functional socks and prints",
-        partners: "RAFAC Functional Socks × Chuchu Print Studio",
-        description: "Two brands with shared values began a conversation: RAFAC's functional craftsmanship met Chuchu Print Studio's print aesthetics. Gung-Ho Culture brokered a co-branded product, showing that everyday items can carry the spirit of design, nature and sustainability.",
+        partners: "RAFAC Functional Socks × 處處花版",
+        description: "Two brands with shared values began a conversation: RAFAC's functional craftsmanship met 處處花版's print aesthetics. Gung-Ho Culture brokered a co-branded product, showing that everyday items can carry the spirit of design, nature and sustainability.",
       },
       {
         title: "One small island, one conversation across borders",
-        partners: "Chinese Youth Growth Foundation × Daqing Travel",
-        description: "Connected through the CO-ESG Academy speaker platform, the Chairman of the Chinese Youth Growth Foundation hosted, with Daqing Travel as co-organiser, the 2026 SDGs Impact Developers Conference – Penghu, turning connections made on the platform into action with international resonance.",
+        partners: "中華少年成長基金會 × 大慶旅遊",
+        description: "Connected through the CO-ESG Academy speaker platform, the Chairman of the 中華少年成長基金會 hosted, with 大慶旅遊 as co-organiser, the 2026 SDGs Impact Developers Conference – Penghu, turning connections made on the platform into action with international resonance.",
       },
     ],
   },

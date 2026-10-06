@@ -135,8 +135,8 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
           <p className="kicker-rule mb-8 text-[13px] font-bold tracking-[0.12em] text-primary">{s.vision.label}</p>
           <div className="grid gap-5 lg:grid-cols-2">
             <div className="rounded-3xl bg-primary p-8 text-white sm:p-10">
-              <p className="font-display text-xs font-bold tracking-[0.25em] text-white/80">VISION</p>
-              <h2 className="mt-2 text-lg font-bold text-white/90">{s.vision.visionLabel}</h2>
+              <p className="font-display text-xs font-bold tracking-[0.25em] text-white">VISION</p>
+              <h2 className="mt-2 text-lg font-bold text-white">{s.vision.visionLabel}</h2>
               <p className="mt-5 text-2xl font-black leading-[1.55] sm:text-[1.75rem]">{s.vision.visionText}</p>
             </div>
             <div className="rounded-3xl bg-surface-dark p-8 text-white sm:p-10">

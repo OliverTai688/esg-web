@@ -115,7 +115,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               const Icon = PAIN_ICONS[i]
               return (
                 <li key={p.title} className="relative flex flex-col rounded-2xl border border-border bg-card p-6 sm:p-7">
-                  <span aria-hidden="true" className="absolute right-6 top-5 font-display text-4xl font-bold text-sand">0{i + 1}</span>
+                  <span aria-hidden="true" data-n={`0${i + 1}`} className="absolute right-6 top-5 font-display text-4xl font-bold text-sand after:content-[attr(data-n)]" />
                   <span className="flex size-11 items-center justify-center rounded-xl bg-orange-soft text-primary">
                     <Icon className="size-5" aria-hidden="true" />
                   </span>
@@ -151,7 +151,9 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <div>
               <p lang="tay" className="font-display text-7xl font-bold leading-none text-brand-yellow sm:text-8xl">Sayun</p>
               <h2 className="mt-5 text-2xl font-black sm:text-3xl">{h.story.headline}</h2>
-              <p className="mt-2 font-display text-sm tracking-[0.15em] text-white/60">{h.story.nameMeaning}</p>
+              {h.story.nameMeaning !== h.story.headline && locale !== "en" && (
+                <p className="mt-2 font-display text-sm tracking-[0.15em] text-white/60">{h.story.nameMeaning}</p>
+              )}
               <BridgeArc tone="dark" className="mt-10 max-w-sm" />
               <ol className="mt-6 flex flex-wrap items-center gap-2 text-sm font-bold">
                 {h.story.chain.map((c, i) => (

@@ -58,9 +58,9 @@ const consulting = {
     casesTitle: "Non-profit and charitable organisations we have worked with",
     casesNote: "Case studies are being prepared and will be published progressively.",
     cases: [
-      { name: "Aici Foundation", type: "Social welfare foundation", focus: "Workshops and Sustainability White Paper case study" },
-      { name: "Taitung Friends of Rehabilitation", type: "Disability services", focus: "Sustainability advisory outcomes" },
-      { name: "Tian Cheng Hospital", type: "Healthcare provider", focus: "Workshops and feedback" },
+      { name: "愛慈基金會", type: "Social welfare foundation", focus: "Workshops and Sustainability White Paper case study" },
+      { name: "台東康復之友", type: "Disability services", focus: "Sustainability advisory outcomes" },
+      { name: "天成醫院", type: "Healthcare provider", focus: "Workshops and feedback" },
     ],
   },
   membership: {

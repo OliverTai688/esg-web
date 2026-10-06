@@ -59,7 +59,7 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
         </svg>
         <Container className="relative py-20 md:py-28">
           <p className="kicker-rule mb-6 text-[13px] font-bold tracking-[0.12em] text-brand-yellow">{e.hero.kicker}</p>
-          <h1 className="max-w-3xl text-[2.25rem] font-black leading-[1.25] sm:text-5xl lg:text-6xl">{e.hero.title}</h1>
+          <h1 className="max-w-4xl text-[2.25rem] font-black leading-[1.25] sm:text-5xl lg:text-[3.5rem]">{e.hero.title}</h1>
           <p className="mt-6 max-w-2xl text-base leading-[1.9] text-white/75 sm:text-lg">{e.hero.description}</p>
           <dl className="mt-10 grid max-w-2xl grid-cols-2 gap-px overflow-hidden rounded-2xl bg-white/10 sm:grid-cols-4">
             {t.impact.track.map((s) => (
