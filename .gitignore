@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# raw client assets downloaded from Drive (not for version control)
+/assets-raw/
