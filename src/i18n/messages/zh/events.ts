@@ -1,5 +1,5 @@
 // /events copy. Client text from docs/tasks/sitemap-rev1/E01–E04.
-// Terminology follows G01; 「ESG 共學坊」 is written without the space.
+// terminology follows G01 (see scripts/check-terms.mjs).
 const events = {
   meta: {
     title: "永續足跡",

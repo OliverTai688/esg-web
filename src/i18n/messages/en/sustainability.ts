@@ -1,5 +1,5 @@
 // /sustainability copy. Client text from docs/tasks/sitemap-rev1/S01–S06;
-// terminology follows G01 (Sustainability White Paper / CO-ESG Academy / no "matchmaking").
+// terminology follows G01 (see scripts/check-terms.mjs).
 const sustainability = {
   meta: {
     title: "Sustainability",

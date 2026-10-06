@@ -1,5 +1,5 @@
 // /sustainability copy. Client text from docs/tasks/sitemap-rev1/S01–S06;
-// terminology follows G01 (永續白皮書 / ESG共學坊 / no 媒合).
+// terminology follows G01 (see scripts/check-terms.mjs).
 const sustainability = {
   meta: {
     title: "共好永續力",
