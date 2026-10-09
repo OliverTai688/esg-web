@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>永續足跡 · S7 合作案例 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<link rel="stylesheet" href="_events.css">
+<style>
+.case { display: flex; flex-direction: column; gap: 8px; background: var(--paper); border: 0; }
+.case .duo { --bg: var(--paper); margin-bottom: 12px; }
+.duo.turn { rotate: 90deg; } .duo.flip { scale: -1 1; }
+.who { font: 700 13px/1.6 var(--font-sans); color: var(--ink-2); }
+.tablist.long button { height: auto; min-height: 44px; padding: 8px 16px; line-height: 1.4; }
+</style>
+</head>
+<body data-budget="260">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>永續足跡 · S7 合作案例</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s6-roadmap.html">← 上一區</a><a href="s8-cta.html">下一區 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">永續足跡 · S7</span>
+  <h1>別人和你們一起做出了什麼？</h1>
+  <p>現況：可見 414 字，三段故事全文攤開；圖片位置是寫著夥伴名稱的色塊。本區在主線中的角色：兩個半圓合成一個圓、中心一個橘色小圓＝兩個夥伴的一步合在一起，共好玟化在中間。客戶要求（E04）：不放任何數字；案例照片尚未取得授權（G07），先以形狀代替，版面要能換成照片。三則故事原文都在 HTML 裡。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>三張合成圓的卡：誰 × 誰一眼看到，故事各自展開</h2><span class="tag">橫向滑軌 SnapRail（桌機三欄）＋展開全文 ReadMore</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec white">
+      <p class="eyebrow">合作案例</p>
+      <h2 class="h2">真實的合作成果</h2>
+      <p class="lead">每一個案例背後，都是理念的碰撞與價值的實現。</p>
+      <div class="rail mt">
+        <div class="card case"><span class="duo" aria-hidden="true"><i class="half"></i><i class="half r c-grey"></i></span><h3 class="h3">永續商品走進企業採購清單</h3><p class="who">星芽社會企業 × 思凡自然農場</p><details class="more"><summary>讀這個故事</summary><div>透過共好玟化ESG共學坊講師平台，促成星芽社會企業與思凡自然農場的合作連結，將兼具社會價值與品質的永續產品與禮品，連結企業禮贈品採購。</div></details></div>
+        <div class="card case"><span class="duo turn" aria-hidden="true"><i class="half"></i><i class="half r c-grey"></i></span><h3 class="h3">機能襪與印花的故事</h3><p class="who">RAFAC 機能襪 × 處處花版</p><details class="more"><summary>讀這個故事</summary><div>兩個有共同理念的品牌互相對話，RAFAC 機能襪的機能工藝，遇上處處花版的印花美學，透過共好玟化促成聯名商品合作，讓日常生活用品也能承載設計與自然的永續精神。</div></details></div>
+        <div class="card case"><span class="duo flip" aria-hidden="true"><i class="half"></i><i class="half r c-grey"></i></span><h3 class="h3">一座小島，一場跨越國界的對話</h3><p class="who">中華少年成長基金會 × 大慶旅遊</p><details class="more"><summary>讀這個故事</summary><div>透過共好玟化ESG共學坊講師平台串聯，由中華少年成長基金會董事長主辦，偕同大慶旅遊合辦 2026 SDGs Impact Developers Conference – Penghu，將講師平台裡的連結，轉化為一場有國際迴響的行動。</div></details></div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>主線最清楚：每張卡就是「兩個半圓合成一個圓」，三個合成圓並排；捲入時兩個半圓從兩側滑向中心（本頁唯一自有的捲動動畫）。</li><li>掃讀層回答了案例最重要的問題——誰和誰、做成了什麼（三個標題＋六個夥伴名稱全部可見）。</li><li>故事點一次就在原地展開，原生 <code>&lt;details&gt;</code>，全文在 HTML 裡。</li><li>合成圓的位置之後可以直接換成照片（裁成圓形），版面不變。</li><li>沒有任何數字，也不需要額外的標籤字。</li></ul></div>
+    <div><h3>風險</h3><ul><li>不操作的話一段故事都讀不到；三個展開鈕各開各的，桌機卡片高度會不齊（卡片靠上對齊）。</li><li>手機是滑軌：第三張在畫面外，靠「下一張露出一截」提示。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：壓在交界上的承諾卡；卡角的橘色圓變成每個合成圓中心的橘色小圓。</li><li>本區 → CTA：三個合好的圓之後，<code>CtaBand</code> 的兩段弧在火焰上合龍——「下一個合起來的是你」。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>三則故事分頁，一次讀一則全文</h2><span class="tag">分頁 Tabs</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec white">
+      <p class="eyebrow">合作案例</p>
+      <h2 class="h2">真實的合作成果</h2>
+      <p class="lead">每一個案例背後，都是理念的碰撞與價值的實現。</p>
+      <div class="tabs mt" data-tabs>
+        <div class="tablist long"><button aria-selected="true">永續商品走進企業採購清單</button><button aria-selected="false">機能襪與印花的故事</button><button aria-selected="false">一座小島，一場跨越國界的對話</button></div>
+        <div class="panel desk-row"><span class="duo" style="--s:64px" aria-hidden="true"><i class="half"></i><i class="half r c-grey"></i></span><div><p class="who">星芽社會企業 × 思凡自然農場</p><p class="small" style="font-size:16px;color:var(--ink)">透過共好玟化ESG共學坊講師平台，促成星芽社會企業與思凡自然農場的合作連結，將兼具社會價值與品質的永續產品與禮品，連結企業禮贈品採購。</p></div></div>
+        <div class="panel desk-row" hidden><span class="duo turn" style="--s:64px" aria-hidden="true"><i class="half"></i><i class="half r c-grey"></i></span><div><p class="who">RAFAC 機能襪 × 處處花版</p><p class="small" style="font-size:16px;color:var(--ink)">兩個有共同理念的品牌互相對話，RAFAC 機能襪的機能工藝，遇上處處花版的印花美學，透過共好玟化促成聯名商品合作，讓日常生活用品也能承載設計與自然的永續精神。</p></div></div>
+        <div class="panel desk-row" hidden><span class="duo flip" style="--s:64px" aria-hidden="true"><i class="half"></i><i class="half r c-grey"></i></span><div><p class="who">中華少年成長基金會 × 大慶旅遊</p><p class="small" style="font-size:16px;color:var(--ink)">透過共好玟化ESG共學坊講師平台串聯，由中華少年成長基金會董事長主辦，偕同大慶旅遊合辦 2026 SDGs Impact Developers Conference – Penghu，將講師平台裡的連結，轉化為一場有國際迴響的行動。</p></div></div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>不操作就讀得到一則完整的故事。</li><li>區塊高度固定。</li></ul></div>
+    <div><h3>風險</h3><ul><li>夥伴名稱只看得到一組（2／6）；案例的說服力來自「有誰」，卻被藏在分頁後面。</li><li>三個標題太長（最長 14 字），手機上籤列要滑三屏；改成「案例一／二／三」又失去標題。</li><li>上一段（發展藍圖）才剛用分頁，連續兩段同一個元件。</li><li>一次只有一個圓，合成圓的意思（很多人一起）變弱。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：分頁接分頁。</li><li>本區 → CTA：只有一個圓交給 CTA，接力成立但力道小。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>三列展開，第一則預設打開</h2><span class="tag">可展開列 FoldList</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec white"><div class="two">
+      <div>
+        <p class="eyebrow">合作案例</p>
+        <h2 class="h2">真實的合作成果</h2>
+        <p class="lead">每一個案例背後，都是理念的碰撞與價值的實現。</p>
+        <span class="duo mt hide-s" style="--s:84px;--bg:#fff" aria-hidden="true"><i class="half"></i><i class="half r c-grey"></i></span>
+      </div>
+      <div class="fold">
+        <details name="c" open><summary><span><b class="t">永續商品走進企業採購清單</b><span class="meta">星芽社會企業 × 思凡自然農場</span></span></summary><div class="body">透過共好玟化ESG共學坊講師平台，促成星芽社會企業與思凡自然農場的合作連結，將兼具社會價值與品質的永續產品與禮品，連結企業禮贈品採購。</div></details>
+        <details name="c"><summary><span><b class="t">機能襪與印花的故事</b><span class="meta">RAFAC 機能襪 × 處處花版</span></span></summary><div class="body">兩個有共同理念的品牌互相對話，RAFAC 機能襪的機能工藝，遇上處處花版的印花美學，透過共好玟化促成聯名商品合作，讓日常生活用品也能承載設計與自然的永續精神。</div></details>
+        <details name="c"><summary><span><b class="t">一座小島，一場跨越國界的對話</b><span class="meta">中華少年成長基金會 × 大慶旅遊</span></span></summary><div class="body">透過共好玟化ESG共學坊講師平台串聯，由中華少年成長基金會董事長主辦，偕同大慶旅遊合辦 2026 SDGs Impact Developers Conference – Penghu，將講師平台裡的連結，轉化為一場有國際迴響的行動。</div></details>
+      </div>
+    </div></div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>三個標題、六個夥伴名稱都在掃讀層，而且第一則故事全文可見。</li><li>手機上不需要橫向滑動。</li></ul></div>
+    <div><h3>風險</h3><ul><li>這是本頁第三次出現同一個「左標題右展開列」版型（學習地圖、這裡），案例讀起來像 FAQ，不像故事。</li><li>形狀只剩左欄一個裝飾圓（手機上隱藏），三則案例沒有各自的圓；之後也沒有放照片的位置。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：承諾卡壓在交界上。</li><li>本區 → CTA：靜默轉場。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

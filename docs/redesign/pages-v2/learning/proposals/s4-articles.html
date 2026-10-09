@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>共好學習 · S4 全部文章 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<style>
+.mock { container-type: inline-size; }
+.g { width: 28px; height: 28px; flex: none; }
+.head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 24px; }
+
+.chips { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin: 24px -20px 0; padding: 0 20px; }
+.chips button { flex: none; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); font: 700 14px/1 var(--font-sans); color: var(--ink); cursor: pointer; }
+.chips button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+.chips b { font: 700 12px/1 var(--font-display); margin-left: 4px; opacity: .7; }
+.rows { list-style: none; margin: 20px 0 0; padding: 0; display: grid; gap: 10px; }
+@container (min-width: 760px) { .rows { grid-template-columns: 1fr 1fr; } }
+.row { display: flex; align-items: center; gap: 14px; min-height: 76px; padding: 14px 18px; border-radius: 16px; background: var(--card); color: var(--ink); text-decoration: none; }
+.row strong { display: block; font: 700 16px/1.5 var(--font-sans); }
+.row span { font-size: 13px; color: var(--ink-2); }
+.more > summary { list-style: none; display: flex; justify-content: center; align-items: center; min-height: 48px; margin-top: 16px; border-radius: 999px; border: 1.5px solid rgba(31,32,34,.25); font: 700 15px/1 var(--font-sans); cursor: pointer; }
+.more > summary::-webkit-details-marker { display: none; }
+.more[open] > summary { display: none; }
+/* Phones: four rows first */
+@container (max-width: 759px) { .rows .d-only { display: none; } }
+
+.pc { display: flex; flex-direction: column; gap: 10px; padding: 22px; border-radius: 18px; background: var(--card); color: var(--ink); text-decoration: none; }
+.pc .h3 { font-size: 17px; line-height: 1.5; }
+
+.s4c summary { gap: 12px; }
+.s4c summary b { margin-left: auto; font: 700 13px/1 var(--font-display); color: var(--ink-2); }
+.s4c .fold summary::after { margin-left: 0; }
+.s4c .body a { display: block; padding: 8px 0; font-weight: 700; color: var(--ink); text-decoration: none; }
+</style>
+</head>
+<body data-budget="260">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <path id="pt" d="M0-8A28.3 28.3 0 0 1 0-48 28.3 28.3 0 0 1 0-8Z"/>
+  <g id="fl" fill="#F6DC93"><use href="#pt" transform="rotate(30)"/><use href="#pt" transform="rotate(90)"/><use href="#pt" transform="rotate(150)"/><use href="#pt" transform="rotate(210)"/><use href="#pt" transform="rotate(270)"/><use href="#pt" transform="rotate(330)"/></g>
+</defs></svg>
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>共好學習 · S4 全部文章</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s3-featured.html">← 上一區</a><a href="s5-cta.html">下一區 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">共好學習 · S4</span>
+  <h1>還有哪些文章？怎麼篩？</h1>
+  <p>現況：可見 1,384 字——16 張卡片連摘要一次攤開，是全頁字數的四分之三。本區在主線中的角色：花瓣排成列——每一列文章前面是它的小花徽（六瓣花裡亮著的那一片就是它的主題）。上一區交接過來的形狀：跨在交界上的橘色花瓣。</p>
+  <p>內容型態是「很多筆要篩選的內容」。摘要不在列表出現（它在精選區、文章頁導言與搜尋結果裡）。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>篩選籤＋精簡列＋顯示更多</h2><span class="tag">篩選籤＋「顯示更多」（手機 4 列、桌機 6 列）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec sand">
+      <div class="head">
+        <div><p class="eyebrow">全部文章</p><h2 class="h2">依主題篩選，或一路往下讀</h2></div>
+        <a class="link" href="#">依時間看最新文章</a>
+      </div>
+      <div class="chips" role="group" aria-label="依主題篩選">
+        <button aria-pressed="true">全部<b>16</b></button><button aria-pressed="false">創新策略<b>2</b></button><button aria-pressed="false">市場競爭力<b>2</b></button><button aria-pressed="false">永續責任<b>5</b></button><button aria-pressed="false">合作模式<b>2</b></button><button aria-pressed="false">溝通與換位思考<b>3</b></button><button aria-pressed="false">人物專訪<b>1</b></button><button aria-pressed="false">ESG共學坊公告<b>1</b></button>
+      </div>
+      <ul class="rows">
+        <li><a class="row" href="#"><svg class="g" viewBox="-50 -50 100 100"><use href="#fl"/><circle r="9" fill="#F25232"/></svg><div><strong>訂閱 3 步驟</strong><span>ESG共學坊公告 · 1 分鐘</span></div></a></li>
+        <li><a class="row" href="#"><svg class="g" viewBox="-50 -50 100 100"><use href="#fl"/><use href="#pt" fill="#F25232" transform="rotate(330)"/></svg><div><strong>從父親的塑膠建材到我的永續革命：彭欣惠的接班與新生</strong><span>人物專訪 · 1 分鐘</span></div></a></li>
+        <li><a class="row" href="#"><svg class="g" viewBox="-50 -50 100 100"><use href="#fl"/><use href="#pt" fill="#F25232" transform="rotate(30)"/></svg><div><strong>核心策略指引：九宮格模型助力創新與問題解決</strong><span>創新策略 · 1 分鐘</span></div></a></li>
+        <li><a class="row" href="#"><svg class="g" viewBox="-50 -50 100 100"><use href="#fl"/><use href="#pt" fill="#F25232" transform="rotate(90)"/></svg><div><strong>數據驅動的決策：推動永續策略實現的第一步</strong><span>市場競爭力 · 1 分鐘</span></div></a></li>
+        <li class="d-only"><a class="row" href="#"><svg class="g" viewBox="-50 -50 100 100"><use href="#fl"/><use href="#pt" fill="#F25232" transform="rotate(90)"/></svg><div><strong>透過市場數據洞察趨勢，提升永續產品競爭力</strong><span>市場競爭力 · 1 分鐘</span></div></a></li>
+        <li class="d-only"><a class="row" href="#"><svg class="g" viewBox="-50 -50 100 100"><use href="#fl"/><use href="#pt" fill="#F25232" transform="rotate(30)"/></svg><div><strong>擴大影響力：聯合利華的永續成功策略</strong><span>創新策略 · 1 分鐘</span></div></a></li>
+      </ul>
+      <details class="more"><summary>顯示更多（還有 10 篇）</summary>
+        <ul class="rows">
+          <li><a class="row" href="#"><div><strong>透過對話創造價值：搭建企業與社會的溝通橋樑</strong><span>溝通與換位思考 · 1 分鐘</span></div></a></li>
+          <li><a class="row" href="#"><div><strong>換位思考：提升問卷設計的有效性</strong><span>溝通與換位思考 · 1 分鐘</span></div></a></li>
+          <li><a class="row" href="#"><div><strong>…其餘 8 篇</strong></div></a></li>
+        </ul>
+      </details>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>1,384 → 約 240 字：一列只有標題、主題、閱讀時間。</li><li>篩選籤顯示每個主題的篇數，也收得下「ESG共學坊公告」這個不在花上的分類。</li><li>小花徽讓每列不靠顏色也看得出主題（旁邊仍有主題名文字）。</li><li>所有列都在 HTML 裡；沒被顯示的加 <code>hidden</code>。</li></ul></div>
+    <div><h3>風險</h3><ul><li>預算很緊（八顆籤就 47 字）：標題特別長的文章排在前六列時要留意。</li><li>沒有摘要，只靠標題判斷要不要點——標題必須寫得夠清楚（目前 16 篇都可以）。</li><li>手機 4 列／桌機 6 列靠 CSS 切換，量測腳本會算 6 列。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>S3 → 本區：跨界的橘花瓣變成每列前面的小花徽（亮橘色的那一片）。</li><li>本區 → 收尾：沙色 → 米白，<code>CtaBand</code> 的兩段弧接手；右上「依時間看最新文章」是本區唯一往外的連結。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>主題分頁＋含摘要的卡片</h2><span class="tag">分頁 Tabs（七個分頁）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec sand">
+      <p class="eyebrow">全部文章</p>
+      <div class="tabs" data-tabs style="margin-top:22px">
+        <div class="tablist" role="tablist" aria-label="主題">
+          <button aria-selected="true">創新策略</button><button aria-selected="false">市場競爭力</button><button aria-selected="false">永續責任</button><button aria-selected="false">合作模式</button><button aria-selected="false">溝通與換位思考</button><button aria-selected="false">人物專訪</button><button aria-selected="false">ESG共學坊公告</button>
+        </div>
+        <div class="panel grid c2">
+          <a class="pc" href="#"><span class="h3">核心策略指引：九宮格模型助力創新與問題解決</span><span class="small">運用商業模式九宮格框架，提供結構化思考方式，幫助企業聚焦核心要素，提高效率與效益。</span><span class="small">2024.10.08 · 1 分鐘</span></a>
+          <a class="pc" href="#"><span class="h3">擴大影響力：聯合利華的永續成功策略</span><span class="small">探討如何透過尋找可複製模式與號召更多人參與，擴大組織的永續影響力。</span><span class="small">2024.10.08 · 1 分鐘</span></a>
+        </div>
+        <div class="panel grid c2" hidden>
+          <a class="pc" href="#"><span class="h3">數據驅動的決策：推動永續策略實現的第一步</span><span class="small">企業如何透過問卷調查與數據量化分析，為永續策略建立扎實基礎，提升市場競爭力。</span></a>
+          <a class="pc" href="#"><span class="h3">透過市場數據洞察趨勢，提升永續產品競爭力</span><span class="small">以展場鋼架製造商為例，探討如何運用數據策略來強化永續產品的市場地位。</span></a>
+        </div>
+        <div class="panel" hidden>永續責任 5 篇</div><div class="panel" hidden>合作模式 2 篇</div><div class="panel" hidden>溝通與換位思考 3 篇</div><div class="panel" hidden>人物專訪 1 篇</div><div class="panel" hidden>ESG共學坊公告 1 篇</div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>保留摘要，判斷要不要讀的資訊最完整。</li><li>可以直接用共用的 <code>Tabs</code> 元件，鍵盤操作現成。</li></ul></div>
+    <div><h3>風險</h3><ul><li>沒有「全部」：想一路讀下去的人得點七次；與 S2 的花瓣分頁做的是同一件事，等於同一頁有兩個主題分頁。</li><li>「永續責任」有 5 篇，含摘要約 330 字，一個分頁就超過區塊上限。</li><li>名稱叫「全部文章」，卻一次只看得到一個主題。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>S3 → 本區：花瓣沒有被接住，卡片上沒有形狀。</li><li>本區 → 收尾：沒有往 <code>/insights</code> 的出口（要另外加）。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>依主題分組，一次展開一組</h2><span class="tag">可展開列 FoldList（七組）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec sand s4c">
+      <div class="head"><div><p class="eyebrow">全部文章</p><h2 class="h2">16 篇文章，分成七組</h2></div><a class="link" href="#">依時間看最新文章</a></div>
+      <div class="fold" style="margin-top:24px">
+        <details name="s4c" open><summary><svg class="g" viewBox="-50 -50 100 100" aria-hidden="true"><use href="#fl"/><use href="#pt" fill="#F25232" transform="rotate(30)"/></svg>創新策略<b>2</b></summary><div class="body"><a href="#">核心策略指引：九宮格模型助力創新與問題解決</a><a href="#">擴大影響力：聯合利華的永續成功策略</a></div></details>
+        <details name="s4c"><summary><svg class="g" viewBox="-50 -50 100 100" aria-hidden="true"><use href="#fl"/><use href="#pt" fill="#F25232" transform="rotate(90)"/></svg>市場競爭力<b>2</b></summary><div class="body"><a href="#">數據驅動的決策：推動永續策略實現的第一步</a><a href="#">透過市場數據洞察趨勢，提升永續產品競爭力</a></div></details>
+        <details name="s4c"><summary><svg class="g" viewBox="-50 -50 100 100" aria-hidden="true"><use href="#fl"/><use href="#pt" fill="#F25232" transform="rotate(150)"/></svg>永續責任<b>5</b></summary><div class="body"><a href="#">聚焦重大性議題：有限資源下的最優選擇</a><a href="#">透過 SDGs 打造永續競爭優勢</a><a href="#">從永續報告書中洞察企業未來承諾</a><a href="#">ESG 實務工作者需求與挑戰調查結果報告</a><a href="#">從碳足跡到碳手印：塑造更永續的明天</a></div></details>
+        <details name="s4c"><summary><svg class="g" viewBox="-50 -50 100 100" aria-hidden="true"><use href="#fl"/><use href="#pt" fill="#F25232" transform="rotate(210)"/></svg>合作模式<b>2</b></summary><div class="body"><a href="#">公益與企業共贏：提升社會價值與經濟效益</a><a href="#">從贊助到夥伴：企業與非營利組織的雙贏策略</a></div></details>
+        <details name="s4c"><summary><svg class="g" viewBox="-50 -50 100 100" aria-hidden="true"><use href="#fl"/><use href="#pt" fill="#F25232" transform="rotate(270)"/></svg>溝通與換位思考<b>3</b></summary><div class="body"><a href="#">透過對話創造價值：搭建企業與社會的溝通橋樑</a><a href="#">換位思考：提升問卷設計的有效性</a><a href="#">從內部落實到外部溝通：強化永續理念的傳播</a></div></details>
+        <details name="s4c"><summary><svg class="g" viewBox="-50 -50 100 100" aria-hidden="true"><use href="#fl"/><use href="#pt" fill="#F25232" transform="rotate(330)"/></svg>人物專訪<b>1</b></summary><div class="body"><a href="#">從父親的塑膠建材到我的永續革命：彭欣惠的接班與新生</a></div></details>
+        <details name="s4c"><summary><svg class="g" viewBox="-50 -50 100 100" aria-hidden="true"><use href="#fl"/><circle r="9" fill="#F25232"/></svg>ESG共學坊公告<b>1</b></summary><div class="body"><a href="#">訂閱 3 步驟</a></div></details>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>字數最少（約 110 字）；原生 <code>&lt;details&gt;</code>，沒有 JavaScript 也能用。</li><li>16 篇標題全部在 HTML 裡，頁內搜尋會自動展開。</li></ul></div>
+    <div><h3>風險</h3><ul><li>和 S2 重複：S2 已經是「選主題 → 看那個主題的文章」。兩段連著做同一件事，這一段就沒有存在的理由。</li><li>預設只看得到兩篇文章，「全部文章」變成要點七次才看完。</li><li>跨主題依新舊排序的瀏覽方式消失。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>S3 → 本區：花瓣變成每組標題前的花徽，接得上。</li><li>本區 → 收尾：摺起來的清單很矮，直接碰到 CTA，頁面後半段像是提早結束。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

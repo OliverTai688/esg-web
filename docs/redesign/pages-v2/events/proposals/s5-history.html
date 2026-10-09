@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>永續足跡 · S5 我們走過的路 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<link rel="stylesheet" href="_events.css">
+<style>
+.pre { height: 70px; background: #F4EEE6; }
+.arch { border-radius: 50% 50% 0 0 / clamp(40px, 7cqw, 90px) clamp(40px, 7cqw, 90px) 0 0; margin-top: -70px; padding-top: 96px !important; position: relative; }
+.arch::after { content: ""; position: absolute; left: 12%; bottom: 0; width: clamp(48px, 12cqw, 88px); aspect-ratio: 1; border-radius: 50%; background: var(--yellow); translate: 0 50%; }
+.post { height: 60px; background: var(--paper); }
+.phase { font: 900 20px/1.4 var(--font-sans); margin: 14px 0 4px; }
+.yr { --s: var(--d, 120px); font: 700 calc(var(--d, 120px) * .3)/1 var(--font-display); --c: var(--yellow); }
+.entries { margin: 0; padding: 0; list-style: none; display: grid; gap: 18px; }
+.entries li { display: grid; gap: 8px; justify-items: start; font-size: 15px; line-height: 1.85; color: rgba(255,255,255,.88); }
+.past { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin-top: 32px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.15); min-height: 44px; color: #fff; text-decoration: none; font-size: 14px; }
+.ms { display: flex; flex-direction: column; gap: 10px; }
+.tablist button small { font: 500 12px/1 var(--font-sans); opacity: .75; margin-left: 6px; }
+</style>
+</head>
+<body data-budget="260">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>永續足跡 · S5 我們走過的路</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s4-services.html">← 上一區</a><a href="s6-roadmap.html">下一區 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">永續足跡 · S5</span>
+  <h1>你們做過什麼、夠不夠格？</h1>
+  <p>現況：可見 1,079 字（全站最重），兩個時期 15 筆全文攤開，底下再接已結束活動。本區是全頁唯一的深色段與大聲時刻：圓隨年份變大＝累積。客戶文案（E03）一字不刪：兩個時期的名稱、標語、導言與 15 筆條目都在 HTML 裡；時間軸由 2022.05 開始。已結束活動併入本區底部（不再是 <code>#past</code>）。A、B 兩案為控制檔案大小只完整放第一個時期。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>依時期分頁，條目做成可展開列</h2><span class="tag">分頁 Tabs（2 個時期）＋可展開列</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="pre"></div>
+    <div class="sec dark arch">
+      <p class="eyebrow">我們走過的路</p>
+      <h2 class="h2">一步一步，走出來的路</h2>
+      <p class="lead">從走入社區的一場場講座，到登上 30 國齊聚的國際舞台——這是共好玟化一步步累積的軌跡。</p>
+      <div class="tabs mt" data-tabs>
+        <div class="tablist"><button aria-selected="true">探索扎根期<small>2022–2023</small></button><button aria-selected="false">規模擴張期<small>2024–至今</small></button></div>
+        <div class="panel">
+          <p class="phase">走入社區，廣播種子</p>
+          <p class="small">帶著創辦人十餘年社工與非營利管理的底蘊，我們以「走入社區、廣播種子」為起點，在資源有限的情況下，優先建立品牌知名度與社群基礎。</p>
+          <div class="fold mt-s">
+            <details name="h"><summary><span class="date">2022.05</span>共好玟化成立</summary><div class="body">共好玟化正式成立（資本額 5 萬元），以永續與 ESG 知識推動社會影響力。</div></details>
+            <details name="h"><summary><span class="date">2023.05</span>進駐社區大學</summary><div class="body">進駐三鶯、南港社區大學，開設公民週永續講座。</div></details>
+            <details name="h"><summary><span class="date">2023.10</span>首份永續白皮書</summary><div class="body">完成首份永續白皮書——與齊禾設計合作，為勤億蛋品打造蛋殼紙托白皮書。</div></details>
+            <details name="h"><summary><span class="date">2023.11</span>ESG共學坊實體社團</summary><div class="body">於萬華社區大學開設「ESG共學坊」實體社團；同月完成首次增資（5 萬 → 100 萬元）。</div></details>
+          </div>
+        </div>
+        <div class="panel" hidden><p class="phase">打破地理，走向國際</p><p class="small">ESG共學坊從實體升級為線上平台，服務版圖向農業與企業延伸，影響力從台灣逐步走向國際。（11 筆條目，結構同上）</p></div>
+      </div>
+      <a class="past arrow" href="#"><span class="muted">已結束活動</span><b>問卷設計實作工作坊</b><span class="muted">2024.12.22・已結束</span></a>
+    </div>
+    <div class="post"></div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>完全照客戶的結構：兩個時期各有名稱、年份、標語、導言。</li><li>掃讀層是一份有日期的目錄。</li></ul></div>
+    <div><h3>風險</h3><ul><li>條目原文沒有標題，每一列的短標題（15 個）都要新寫——替客戶的每一筆大事記下標，最容易改到原意。</li><li>深讀層要點兩層（先選時期、再展開條目）；第二個時期 11 列，仍然是一面牆。</li><li>大聲時刻變成一張表：沒有形狀，音量與上一段的學習地圖相同。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：深色段拱形上緣（T4）。</li><li>本區 → 發展藍圖：跨界黃圓交給藍圖（T1），但本區內沒有圓，接力沒有起點。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>五個里程碑圓的滑軌，完整足跡依時期展開</h2><span class="tag">橫向滑軌 SnapRail＋展開全文 ReadMore</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="pre"></div>
+    <div class="sec dark arch">
+      <p class="eyebrow">我們走過的路</p>
+      <h2 class="h2">一步一步，走出來的路</h2>
+      <p class="lead">從走入社區的一場場講座，到登上 30 國齊聚的國際舞台——這是共好玟化一步步累積的軌跡。</p>
+      <div class="rail mt">
+        <div class="ms"><span class="step yr" style="--d:64px">2022</span><b class="t">成立</b><span class="small">以永續與 ESG 知識推動社會影響力</span></div>
+        <div class="ms"><span class="step yr" style="--d:76px">2023</span><b class="t">走入社區</b><span class="small">社區大學講座、首份永續白皮書</span></div>
+        <div class="ms"><span class="step yr" style="--d:88px">2024</span><b class="t">平台上線</b><span class="small">ESG共學坊成為線上學習平台</span></div>
+        <div class="ms"><span class="step yr" style="--d:100px">2025</span><b class="t">走遍全台</b><span class="small">逾 100 場講座，首次登上國際 SDGs 論壇</span></div>
+        <div class="ms"><span class="step yr" style="--d:112px">2026</span><b class="t">國際舞台</b><span class="small">合辦澎湖與曼谷大會，30 國齊聚</span></div>
+      </div>
+      <details class="more mt-s"><summary>探索扎根期 2022–2023：4 個足跡</summary><div>
+        <p><b>走入社區，廣播種子</b>　帶著創辦人十餘年社工與非營利管理的底蘊，我們以「走入社區、廣播種子」為起點，在資源有限的情況下，優先建立品牌知名度與社群基礎。</p>
+        <p>2022.05　共好玟化正式成立（資本額 5 萬元），以永續與 ESG 知識推動社會影響力。</p>
+        <p>2023.05　進駐三鶯、南港社區大學，開設公民週永續講座。</p>
+        <p>2023.10　完成首份永續白皮書——與齊禾設計合作，為勤億蛋品打造蛋殼紙托白皮書。</p>
+        <p>2023.11　於萬華社區大學開設「ESG共學坊」實體社團；同月完成首次增資（5 萬 → 100 萬元）。</p>
+      </div></details>
+      <details class="more"><summary>規模擴張期 2024–至今：11 個足跡</summary><div><p><b>打破地理，走向國際</b>（11 筆條目，結構同上）</p></div></details>
+      <a class="past arrow" href="#"><span class="muted">已結束活動</span><b>問卷設計實作工作坊</b><span class="muted">2024.12.22・已結束</span></a>
+    </div>
+    <div class="post"></div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>掃讀層最強：五個逐年變大的圓＋五句話，三秒看懂「從成立到國際」。</li><li>主角形狀清楚（圓變大＝累積）。</li></ul></div>
+    <div><h3>風險</h3><ul><li>五句摘要是新寫的（把 15 筆濃縮成 5 句），等於替客戶重寫大事記；客戶原文反而全部收合。</li><li>完整足跡一展開就是 11 筆的牆，現況的問題只是被蓋住。</li><li>桌機五張卡放得下，滑軌只在手機有作用；手機上第 4、5 個圓（最有說服力的 2025、2026）在畫面外。</li><li>字數貼著上限（約 250）。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：拱形上緣（T4）。</li><li>本區 → 發展藍圖：2026 的大圓 → 跨界黃圓 → 藍圖的近程 2026，接力最順。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>依年份分頁：年份圓逐年變大，一次讀一年的原文</h2><span class="tag">分頁 Tabs（5 個年份）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="pre"></div>
+    <div class="sec dark arch">
+      <p class="eyebrow">我們走過的路</p>
+      <h2 class="h2">一步一步，走出來的路</h2>
+      <p class="lead">從走入社區的一場場講座，到登上 30 國齊聚的國際舞台——這是共好玟化一步步累積的軌跡。</p>
+      <div class="tabs mt" data-tabs>
+        <div class="tablist"><button aria-selected="true">2022<small>成立</small></button><button aria-selected="false">2023<small>走入社區</small></button><button aria-selected="false">2024<small>平台上線</small></button><button aria-selected="false">2025<small>走遍全台</small></button><button aria-selected="false">2026<small>國際舞台</small></button></div>
+        <div class="panel two">
+          <div><span class="step yr" style="--d:clamp(84px,22cqw,120px)" aria-hidden="true">2022</span><p class="phase">探索扎根期 <span class="meta">2022–2023</span></p><p class="t">走入社區，廣播種子</p><p class="small mt-s">帶著創辦人十餘年社工與非營利管理的底蘊，我們以「走入社區、廣播種子」為起點，在資源有限的情況下，優先建立品牌知名度與社群基礎。</p></div>
+          <ol class="entries"><li><span class="date">2022.05</span>共好玟化正式成立（資本額 5 萬元），以永續與 ESG 知識推動社會影響力。</li></ol>
+        </div>
+        <div class="panel two" hidden>
+          <div><span class="step yr" style="--d:clamp(96px,26cqw,145px)" aria-hidden="true">2023</span><p class="phase">探索扎根期 <span class="meta">2022–2023</span></p><p class="t">走入社區，廣播種子</p><p class="small mt-s">帶著創辦人十餘年社工與非營利管理的底蘊，我們以「走入社區、廣播種子」為起點，在資源有限的情況下，優先建立品牌知名度與社群基礎。</p></div>
+          <ol class="entries"><li><span class="date">2023.05</span>進駐三鶯、南港社區大學，開設公民週永續講座。</li><li><span class="date">2023.10</span>完成首份永續白皮書——與齊禾設計合作，為勤億蛋品打造蛋殼紙托白皮書。</li><li><span class="date">2023.11</span>於萬華社區大學開設「ESG共學坊」實體社團；同月完成首次增資（5 萬 → 100 萬元）。</li></ol>
+        </div>
+        <div class="panel two" hidden>
+          <div><span class="step yr" style="--d:clamp(108px,30cqw,170px)" aria-hidden="true">2024</span><p class="phase">規模擴張期 <span class="meta">2024–至今</span></p><p class="t">打破地理，走向國際</p><p class="small mt-s">ESG共學坊從實體升級為線上平台，服務版圖向農業與企業延伸，影響力從台灣逐步走向國際。</p></div>
+          <ol class="entries"><li><span class="date">2024.03</span>「ESG共學坊」平台上線，實體社團升級為線上學習平台。</li><li><span class="date">2024.06</span>綠合農場課程，正式跨入農業永續服務；協助逾 30 位小農品牌培力，創造市集單日營業額逾 50 萬元。</li><li><span class="date">2024.11</span>以策略總監身份，受 13+ 新創計畫邀請主持永續品牌發展工作坊；永續白皮書服務同步規模化。</li></ol>
+        </div>
+        <div class="panel two" hidden>
+          <div><span class="step yr" style="--d:clamp(120px,34cqw,195px)" aria-hidden="true">2025</span><p class="phase">規模擴張期 <span class="meta">2024–至今</span></p><p class="t">打破地理，走向國際</p><p class="small mt-s">ESG共學坊從實體升級為線上平台，服務版圖向農業與企業延伸，影響力從台灣逐步走向國際。</p></div>
+          <ol class="entries"><li><span class="date">2025</span>累計逾 100 場講座、30 場以上工作坊、培力逾 500 人，服務遍及全台 10 多個縣市，並涵蓋全台前三大觀光休閒農場。</li><li><span class="date">2025 春夏</span>與台灣休閒農業學會合作，推出全台首創「ESG 永續農創師」認證課程。</li><li><span class="date">2025.05</span>協辦「強化公益影響力」講座；以永續顧問身份參展 Secutech 台北國際安全科技應用展。</li><li><span class="date">2025.07</span>完成第二次大幅增資（100 萬 → 400 萬元），為迄今最大規模。</li><li><span class="date">2025.08</span>首次受邀登上國際 SDGs 論壇（Global Youth Leadership Programme SDGs Forum 台北場）。 <a class="link" href="#">論壇網站</a></li><li><span class="date">2025.08–10</span>受台北市政府邀請，擔任「台北友善店家」主題課程講師（初階、進階）。</li></ol>
+        </div>
+        <div class="panel two" hidden>
+          <div><span class="step yr" style="--d:clamp(132px,38cqw,220px)" aria-hidden="true">2026</span><p class="phase">規模擴張期 <span class="meta">2024–至今</span></p><p class="t">打破地理，走向國際</p><p class="small mt-s">ESG共學坊從實體升級為線上平台，服務版圖向農業與企業延伸，影響力從台灣逐步走向國際。</p></div>
+          <ol class="entries"><li><span class="date">2026.04</span>以合辦夥伴身份投入「SDGs Impact Developers Conference」澎湖大會，與來自 30 國的青年行動者齊聚，正式以合辦角色站上國際舞台。 <a class="link" href="#">論壇網站</a></li><li><span class="date">2026.05–06</span>以合辦夥伴身份參與「UN-SDGs Impact Developers Conference」曼谷大會（5/29–6/1），於曼谷東南大學與聯合國亞太經社會（UN ESCAP）會議中心舉行；逾 140 位青年領袖、企業代表與國際專家、來自 30 多國的代表齊聚，共好玟化的國際影響力延伸至聯合國殿堂。 <a class="link" href="#">論壇網站</a></li></ol>
+        </div>
+      </div>
+      <a class="past arrow" href="#"><span class="muted">已結束活動</span><b>問卷設計實作工作坊</b><span class="muted">2024.12.22・已結束</span></a>
+    </div>
+    <div class="post"></div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>主線最清楚：往後點一年，圓就大一圈——累積是被「點出來」的。籤列（2022 成立 → 2026 國際舞台）本身就是三秒版的故事。</li><li>客戶原文一字不改、不必替條目下標；每一年 1–6 筆，任何一頁都不是牆。</li><li>深讀層只點一次，沒有第二層展開。時期的名稱、標語、導言跟著每個年份出現。</li><li>五個籤在分頁籤適用的 2–5 組之內，用共用的 <code>Tabs</code>，所有內容都在 HTML 裡。</li></ul></div>
+    <div><h3>風險</h3><ul><li>預設停在 2022（客戶要求由成立年開始），最有說服力的 2025、2026 要點過去才看得到：以籤列上的短註與 Hero 的累計數字補足。</li><li>兩個時期不再是第一層結構，而是每頁的標題列；五個短註是新寫的（每個 ≤ 4 字）。</li><li>手機上五個籤要橫向滑動。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：拱形上緣（T4，本頁唯一一次）。</li><li>本區 → 發展藍圖：跨在下緣的黃圓把「2026」交給藍圖的「近程 2026」（T1）。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

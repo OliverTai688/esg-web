@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>共好學習 · S1 Hero 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<style>
+/* The mock is a container so the 375px toggle switches layouts, not just width */
+.mock { container-type: inline-size; }
+.hero { display: grid; gap: 40px; align-items: center; }
+@container (min-width: 760px) { .hero { grid-template-columns: 1.1fr 1fr; gap: 56px; } }
+.by { font-size: 13px; color: var(--ink-2); margin: 22px 0 0; }
+
+/* A · sprout: two petals growing from one point (also an open book) */
+.sprout { position: relative; width: min(100%, 400px); margin-inline: auto; display: grid; grid-template-columns: 1fr 1fr; padding-bottom: 26px; }
+@container (max-width: 759px) { .sprout { width: 240px; } }
+.leaf { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; font: 700 13px/1.4 var(--font-sans); color: var(--ink); }
+.leaf.l { border-radius: 0 100% 0 100%; background: var(--yellow); }
+.leaf.r { border-radius: 100% 0 100% 0; background: var(--orange); }
+.leaf .num { font-size: clamp(30px, 9cqw, 52px); }
+.sprout::after { content: ""; position: absolute; left: 50%; bottom: 0; width: 26px; height: 26px; translate: -50% 0; border-radius: 50%; background: var(--grey); }
+
+/* B · topic jump list inside the hero */
+.jump { list-style: none; margin: 26px 0 0; padding: 0; display: grid; gap: 8px; }
+@container (min-width: 760px) { .jump { grid-template-columns: repeat(3, 1fr); } }
+.jump a { display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 16px; border-radius: 14px; background: var(--card); border: 1px solid var(--line); font: 700 15px/1.3 var(--font-sans); color: var(--ink); text-decoration: none; }
+.jump a::before { content: ""; width: 14px; height: 14px; flex: none; border-radius: 0 100% 0 100%; background: var(--yellow); }
+.jump b { margin-left: auto; font: 700 13px/1 var(--font-display); color: var(--ink-2); }
+
+/* C · lead story as the hero */
+.lead-card { margin-top: 26px; padding: 26px 24px 30px; border-radius: 0 72px 0 72px; background: var(--yellow); }
+.lead-card .h3 { font-size: clamp(20px, 3.4cqw, 28px); line-height: 1.45; margin-top: 10px; }
+.lead-card .small { color: var(--ink); margin-top: 10px; }
+.lead-card .chip { background: var(--ink); color: #fff; }
+</style>
+</head>
+<body data-budget="140">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>共好學習 · S1 Hero</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s2-topics.html">下一區 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">共好學習 · S1</span>
+  <h1>這裡是誰寫的、有什麼可以讀？</h1>
+  <p>現況：可見 53 字，只有小標、標題與一句說明，沒有主視覺、沒有按鈕；下一屏是六張說明卡。本區在主線中的角色：花還沒開——只看到「芽」。交接給下一區的形狀：花瓣（S2 會把它展開成六片）。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>芽：兩片花瓣＋一顆主按鈕</h2><span class="tag">形狀本身說話；單一錨點按鈕</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec"><div class="hero">
+      <div>
+        <p class="eyebrow">共好學習</p>
+        <h1 class="h1">永續知識與實踐案例</h1>
+        <p class="lead">從企業合作模式到創新策略，從人物專訪到ESG共學坊公告，持續學習永續的各種面向。</p>
+        <div class="btns"><a class="btn btn-primary" href="#topics">選一個主題</a></div>
+        <p class="by">撰文：共好玟化・ESG共學坊</p>
+      </div>
+      <div class="sprout">
+        <div class="leaf l"><span class="num">16</span>篇文章</div>
+        <div class="leaf r"><span class="num">6</span>個主題</div>
+      </div>
+    </div></div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>兩片花瓣同時是「芽」與「打開的書」，不用圖示就說了「學習」。</li><li>兩個數字放在花瓣上，三秒知道這裡有多少東西。</li><li>只有一顆按鈕，往下就是六瓣花，動線最短。</li></ul></div>
+    <div><h3>風險</h3><ul><li>Hero 本身不提供任何一篇文章的入口，要多捲一屏。</li><li>數字會隨文章增加而變：必須由程式計算，不能寫死。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>本區 → S2：兩片花瓣（芽）在下一區長成六片（花開）；按鈕「選一個主題」就是 S2 的動作。</li><li>花瓣的黃與橘在 S2 沿用：黃＝主題，橘＝被選中的那一片。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>主題直達列：Hero 就是目錄</h2><span class="tag">六個連結的清單（把 S2 併進 Hero）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec">
+      <p class="eyebrow">共好學習</p>
+      <h1 class="h1">永續知識與實踐案例</h1>
+      <p class="lead">從企業合作模式到創新策略，從人物專訪到ESG共學坊公告，持續學習永續的各種面向。</p>
+      <ul class="jump">
+        <li><a href="#innovation">創新策略<b>2</b></a></li>
+        <li><a href="#market">市場競爭力<b>2</b></a></li>
+        <li><a href="#responsibility">永續責任<b>5</b></a></li>
+        <li><a href="#collaboration">合作模式<b>2</b></a></li>
+        <li><a href="#communication">溝通與換位思考<b>3</b></a></li>
+        <li><a href="#interviews">人物專訪<b>1</b></a></li>
+      </ul>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>第一屏就能選主題，少一次捲動。</li><li>沒有主視覺要畫，實作最快。</li></ul></div>
+    <div><h3>風險</h3><ul><li>六個入口等於六顆按鈕，違反「Hero 一顆主按鈕」；手機上六列把第一屏佔滿。</li><li>沒有形狀主視覺：這一頁就看不出是「橋的有機端」，主線斷在第一屏。</li><li>S2 變成重複的區塊（或被取消，章節只剩兩個）。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>本區 → S2：沒有形狀可交接；清單前的小花瓣只是項目符號。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>頭條式：Hero 直接放最新一篇</h2><span class="tag">主打文章卡（把 S3 併進 Hero）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec"><div class="hero">
+      <div>
+        <p class="eyebrow">共好學習</p>
+        <h1 class="h1">永續知識與實踐案例</h1>
+        <div class="btns"><a class="btn btn-primary" href="#">讀這一篇</a><a class="btn btn-ghost" href="#topics">依主題找</a></div>
+      </div>
+      <a class="lead-card" href="#" style="display:block;text-decoration:none;color:var(--ink)">
+        <span class="chip">人物專訪</span>
+        <h2 class="h3">從父親的塑膠建材到我的永續革命：彭欣惠的接班與新生</h2>
+        <p class="small">彭欣惠接掌家族塑膠建材事業，將父親的技術創新轉化為永續推廣，在 ESG 的路上找到新方向。</p>
+        <p class="small">2024.10.19 · 1 分鐘閱讀</p>
+      </a>
+    </div></div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>主要下一步（讀下一篇）在第一屏就能完成。</li><li>大花瓣托著文章，形狀與內容合一。</li></ul></div>
+    <div><h3>風險</h3><ul><li>從搜尋進來的人還不知道「這是誰的網站」，就先被丟一篇專訪。</li><li>與 <code>/insights</code> 的頭條長得一樣，兩頁的差異變小。</li><li>「一片大花瓣」是 S3 的狀態；提前用掉，S3 就沒有自己的形狀。</li><li>說明句被拿掉才擠得進預算（108 字），「這頁給我什麼」只剩標題回答。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>本區 → S2：大花瓣 → 六瓣花，尺寸由大變小，節奏倒過來（先高潮後鋪陳）。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

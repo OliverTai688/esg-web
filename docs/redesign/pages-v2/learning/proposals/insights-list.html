@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>最新文章 · 列表 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<style>
+.mock { container-type: inline-size; }
+.sec { padding-block: 48px; }
+.d { font: 700 15px/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.rows { list-style: none; margin: 0; padding: 0; }
+.rows a { display: flex; align-items: baseline; gap: 14px; min-height: 56px; padding: 14px 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; font: 700 16px/1.5 var(--font-sans); }
+.rows .chip { align-self: center; flex: none; }
+.rows .d { flex: none; width: 3.2em; }
+
+/* A · hero: one petal per month on a line */
+.hero { display: grid; gap: 32px; align-items: end; }
+@container (min-width: 760px) { .hero { grid-template-columns: 1.1fr 1fr; } }
+.line { display: flex; align-items: flex-end; justify-content: center; gap: 10px; padding-bottom: 8px; border-bottom: 2px dashed rgba(31,32,34,.2); }
+.line i { width: var(--m); height: var(--m); border-radius: 0 100% 0 100%; background: var(--yellow); }
+.line i:last-child { background: var(--orange); }
+.lead-story { display: grid; gap: 8px 32px; padding: 26px 0; color: var(--ink); text-decoration: none; }
+@container (min-width: 760px) { .lead-story { grid-template-columns: 180px 1fr; } }
+.lead-story .big { font: 700 clamp(48px, 9cqw, 76px)/1 var(--font-display); }
+.lead-story .h3 { font-size: clamp(22px, 3.4cqw, 30px); margin-top: 8px; }
+.s-n3 summary .d { color: var(--orange-strong); width: 5em; }
+.s-n3 summary b { font: 700 13px/1 var(--font-display); color: var(--ink-2); }
+.s-n3 .rows a { min-height: 48px; padding: 10px 0; font-size: 15px; }
+.dome { border-radius: 50% 50% 0 0 / clamp(36px, 7cqw, 90px) clamp(36px, 7cqw, 90px) 0 0; padding-top: clamp(64px, 10cqw, 110px); text-align: center; }
+.petals { list-style: none; margin: 28px auto 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 520px; }
+@container (min-width: 760px) { .petals { grid-template-columns: repeat(6, 1fr); max-width: none; } }
+.petals a { display: flex; align-items: center; justify-content: center; aspect-ratio: 1; padding: 10px; border-radius: 0 100% 0 100%; background: var(--yellow); font: 700 13px/1.35 var(--font-sans); color: var(--ink); text-decoration: none; text-align: center; }
+.petals li:nth-child(even) a { border-radius: 100% 0 100% 0; }
+
+/* C · list beside a sticky side column */
+.s-c { display: grid; gap: 32px; }
+@container (min-width: 760px) { .s-c { grid-template-columns: 1fr 240px; gap: 56px; } }
+.side { display: grid; gap: 10px; align-content: start; }
+.side a { display: flex; align-items: center; min-height: 52px; padding: 0 18px; border-radius: 14px; background: var(--card); border: 1px solid var(--line); font: 700 15px/1.3 var(--font-sans); color: var(--ink); text-decoration: none; }
+</style>
+</head>
+<!-- Whole-page budget for /insights is 850; the closing CtaBand takes up to 90. Every section still has to stay ≤ 260. -->
+<body data-budget="760">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>最新文章 · 列表</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s5-cta.html">← 共好學習</a><a href="article-chrome.html">文章頁 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">最新文章 · N1–N4</span>
+  <h1>最近發了什麼？更早的在哪？想依題目讀怎麼辦？</h1>
+  <p>現況：可見 1,358 字，其中列表 1,279 字（16 篇含摘要）；和 <code>/learning</code> 的差別只有年份標題。本頁在主線中的角色：同一批花瓣，不繞圓心、改沿時間排開。必須一眼和 <code>/learning</code> 分得出來：這裡最大的字是日期。徽章算的是 Hero＋列表整段（上限 760＝全頁 850 扣掉收尾）；每個區塊另有 260 的上限。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>頭條＋近期四篇 → 依月份展開 → 六片花瓣回主題</h2><span class="tag">大日期頭條＋可展開列 FoldList（月份）＋花瓣連結</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec"><div class="hero">
+      <div>
+        <p class="eyebrow">最新文章</p>
+        <h1 class="h1">永續觀點與產業洞察</h1>
+        <p class="lead">從趨勢分析到合作案例，持續分享永續實踐的第一手觀察與思考。</p>
+        <div class="btns"><a class="btn btn-primary" href="#">讀最新一篇</a><a class="btn btn-ghost" href="#">依主題閱讀</a></div>
+      </div>
+      <div>
+        <div class="line" aria-hidden="true"><i style="--m:34px"></i><i style="--m:34px"></i><i style="--m:74px"></i><i style="--m:104px"></i><i style="--m:34px"></i></div>
+        <p class="small" style="margin-top:10px;text-align:center">最近更新 <span class="d">2024.11.11</span></p>
+      </div>
+    </div></div>
+    <div class="sec white">
+      <p class="eyebrow">最新</p>
+      <a class="lead-story" href="#">
+        <div><div class="d">2024</div><div class="big">11.11</div></div>
+        <div><span class="chip">公告</span><h2 class="h3">訂閱 3 步驟</h2><p class="lead">加入ESG共學坊的三個簡單步驟：LINE 註冊、系統登入、信用卡綁定，輕鬆開啟永續學習之旅。</p></div>
+      </a>
+      <ul class="rows">
+        <li><a href="#"><span class="d">10.19</span><span class="chip">專訪</span>從父親的塑膠建材到我的永續革命：彭欣惠的接班與新生</a></li>
+        <li><a href="#"><span class="d">10.08</span><span class="chip">觀點</span>核心策略指引：九宮格模型助力創新與問題解決</a></li>
+        <li><a href="#"><span class="d">10.08</span><span class="chip">觀點</span>數據驅動的決策：推動永續策略實現的第一步</a></li>
+        <li><a href="#"><span class="d">10.08</span><span class="chip">觀點</span>透過市場數據洞察趨勢，提升永續產品競爭力</a></li>
+      </ul>
+    </div>
+    <div class="sec s-n3">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:end"><div><p class="eyebrow">依月份</p><h2 class="h2">全部 16 篇，按月份收好</h2></div><a class="link" href="#">RSS 訂閱</a></div>
+      <div class="fold" style="margin-top:24px">
+        <details name="m"><summary><span class="d">2024.11</span><b>1 篇</b></summary><ul class="rows"><li><a href="#"><span class="d">11.11</span>訂閱 3 步驟</a></li></ul></details>
+        <details name="m"><summary><span class="d">2024.10</span><b>8 篇</b></summary><ul class="rows"><li><a href="#"><span class="d">10.19</span>從父親的塑膠建材到我的永續革命：彭欣惠的接班與新生</a></li><li><a href="#"><span class="d">10.08</span>核心策略指引：九宮格模型助力創新與問題解決</a></li><li><a href="#"><span class="d">10.08</span>數據驅動的決策：推動永續策略實現的第一步</a></li><li><a href="#"><span class="d">10.08</span>透過市場數據洞察趨勢，提升永續產品競爭力</a></li><li><a href="#"><span class="d">10.08</span>擴大影響力：聯合利華的永續成功策略</a></li><li><a href="#"><span class="d">10.02</span>透過對話創造價值：搭建企業與社會的溝通橋樑</a></li><li><a href="#"><span class="d">10.02</span>換位思考：提升問卷設計的有效性</a></li><li><a href="#"><span class="d">10.02</span>從內部落實到外部溝通：強化永續理念的傳播</a></li></ul></details>
+        <details name="m"><summary><span class="d">2024.09</span><b>5 篇</b></summary><ul class="rows"><li><a href="#"><span class="d">09.27</span>公益與企業共贏：提升社會價值與經濟效益</a></li><li><a href="#"><span class="d">09.27</span>從贊助到夥伴：企業與非營利組織的雙贏策略</a></li><li><a href="#"><span class="d">09.26</span>聚焦重大性議題：有限資源下的最優選擇</a></li><li><a href="#"><span class="d">09.26</span>透過 SDGs 打造永續競爭優勢</a></li><li><a href="#"><span class="d">09.26</span>從永續報告書中洞察企業未來承諾</a></li></ul></details>
+        <details name="m"><summary><span class="d">2024.06</span><b>1 篇</b></summary><ul class="rows"><li><a href="#"><span class="d">06.26</span>ESG 實務工作者需求與挑戰調查結果報告</a></li></ul></details>
+        <details name="m"><summary><span class="d">2024.03</span><b>1 篇</b></summary><ul class="rows"><li><a href="#"><span class="d">03.25</span>從碳足跡到碳手印：塑造更永續的明天</a></li></ul></details>
+      </div>
+    </div>
+    <div style="background:var(--paper)"><div class="sec sand dome">
+      <p class="eyebrow">依主題延伸</p>
+      <h2 class="h2">同一批文章，換成依主題讀</h2>
+      <ul class="petals"><li><a href="#">創新策略</a></li><li><a href="#">市場競爭力</a></li><li><a href="#">永續責任</a></li><li><a href="#">合作模式</a></li><li><a href="#">溝通與<br>換位思考</a></li><li><a href="#">人物專訪</a></li></ul>
+    </div></div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>三層閱讀清楚：頭條（3 秒）→ 近期四篇（20 秒）→ 月份（主動展開）。</li><li>日期是每一列最大的字，和 <code>/learning</code>（主題最大）一眼分得出來。</li><li>16 篇標題都在 HTML 裡（原生 <code>&lt;details&gt;</code>），文章再多，頁面長度也不變。</li><li>最後一段把人送回主題：六片花瓣各自連到 <code>/learning</code> 的那個主題。</li></ul></div>
+    <div><h3>風險</h3><ul><li>近期五篇在月份列裡會再出現一次（月份列是完整索引，接受重複）。</li><li>月份全部收合時，那一段在桌機上偏矮。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>Hero → 最新：時間線最後一片橘花瓣落在交界上（T1），頭條的大日期接在它下面。</li><li>依月份 → 依主題延伸：沙色圓頂（T4）；線收回成花，六片花瓣捲入時聚攏。</li><li>→ 收尾：<code>CtaBand</code>（媒體與合作邀約＋LINE）。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>月份分頁籤</h2><span class="tag">分頁 Tabs（一個月一頁）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec">
+      <p class="eyebrow">最新文章</p>
+      <h1 class="h1">永續觀點與產業洞察</h1>
+      <p class="lead">從趨勢分析到合作案例，持續分享永續實踐的第一手觀察與思考。</p>
+      <div class="tabs" data-tabs style="margin-top:28px">
+        <div class="tablist" role="tablist" aria-label="月份"><button aria-selected="true">2024.11</button><button aria-selected="false">2024.10</button><button aria-selected="false">2024.09</button><button aria-selected="false">2024.06</button><button aria-selected="false">2024.03</button></div>
+        <div class="panel"><ul class="rows"><li><a href="#"><span class="d">11.11</span><span class="chip">公告</span>訂閱 3 步驟</a></li></ul></div>
+        <div class="panel" hidden><ul class="rows"><li><a href="#"><span class="d">10.19</span>從父親的塑膠建材到我的永續革命：彭欣惠的接班與新生</a></li><li><a href="#"><span class="d">10.08</span>核心策略指引：九宮格模型助力創新與問題解決</a></li><li><a href="#">…其餘 6 篇</a></li></ul></div>
+        <div class="panel" hidden>2024.09 的 5 篇</div><div class="panel" hidden>2024.06 的 1 篇</div><div class="panel" hidden>2024.03 的 1 篇</div>
+      </div>
+      <p style="margin:24px 0 0"><a class="link" href="#">依主題閱讀</a></p>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>字數最少；用共用 <code>Tabs</code> 即可。</li></ul></div>
+    <div><h3>風險</h3><ul><li>預設分頁是最新的月份——目前只有一篇公告，新聞室第一眼只看到「訂閱 3 步驟」。</li><li>月份會一直增加：一年後有十幾顆籤，要再加年份這一層。</li><li>「最新」不等於「這個月」：10 月的 8 篇被藏在第二個分頁。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>整頁只有一段，沒有交界可設計；回主題只剩一個文字連結。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>單一清單＋顯示更多＋側欄</h2><span class="tag">「顯示更多」＋固定側欄（現況瘦身）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec">
+      <p class="eyebrow">最新文章</p>
+      <h1 class="h1">永續觀點與產業洞察</h1>
+      <div class="s-c" style="margin-top:28px">
+        <div>
+          <ul class="rows">
+            <li><a href="#"><span class="d">11.11</span><span class="chip">公告</span>訂閱 3 步驟</a></li>
+            <li><a href="#"><span class="d">10.19</span><span class="chip">專訪</span>從父親的塑膠建材到我的永續革命：彭欣惠的接班與新生</a></li>
+            <li><a href="#"><span class="d">10.08</span><span class="chip">觀點</span>核心策略指引：九宮格模型助力創新與問題解決</a></li>
+            <li><a href="#"><span class="d">10.08</span><span class="chip">觀點</span>數據驅動的決策：推動永續策略實現的第一步</a></li>
+            <li><a href="#"><span class="d">10.08</span><span class="chip">觀點</span>透過市場數據洞察趨勢，提升永續產品競爭力</a></li>
+            <li><a href="#"><span class="d">10.08</span><span class="chip">觀點</span>擴大影響力：聯合利華的永續成功策略</a></li>
+          </ul>
+          <div class="btns"><a class="btn btn-ghost" href="#">顯示更多（還有 10 篇）</a></div>
+        </div>
+        <div class="side"><a href="#">依主題閱讀</a><a href="#">RSS 訂閱</a><a href="#">媒體與合作邀約</a></div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>最接近現況，改動最小；一條清單最好理解。</li></ul></div>
+    <div><h3>風險</h3><ul><li>和 <code>/learning</code> 的 S4（篩選籤＋列＋顯示更多）幾乎一樣，兩頁又分不出來。</li><li>沒有頭條，日期不夠大聲；沒有月份，找半年前的文章要一直按「顯示更多」。</li><li>側欄三個入口互相搶，手機上掉到清單最下面。</li><li>沒有任何形狀：這一頁看不出屬於知識區。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>清單 → 收尾：媒體邀約已在側欄，<code>CtaBand</code> 會重複。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

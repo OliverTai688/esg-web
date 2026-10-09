@@ -1,0 +1,69 @@
+/* Helpers shared by the nine /events proposal files (s1–s9). Layout rules use
+   container queries on .mock, so the "375px" toggle really re-flows each option. */
+.mock { container-type: inline-size; }
+.two { display: grid; gap: 28px; }
+.cols3 { display: grid; gap: 14px; }
+@container (min-width: 760px) {
+  .two { grid-template-columns: 1fr 1.25fr; gap: 56px; align-items: start; }
+  .two.even { grid-template-columns: 1fr 1fr; }
+  .cols3 { grid-template-columns: repeat(3, 1fr); }
+  .desk-row { display: flex; align-items: center; gap: 28px; }
+}
+.h2 { font-size: clamp(24px, 6cqw, 40px); }
+.h1 { font-size: clamp(28px, 7.4cqw, 48px); }
+.mt { margin-top: 28px; }
+.mt-s { margin-top: 14px; }
+.muted { color: var(--ink-2); }
+.dark .muted { color: rgba(255,255,255,.7); }
+
+/* The page's protagonist: a step. Dashed = not taken yet, solid = taken. */
+.step { --s: 56px; width: var(--s); height: var(--s); flex: none; border-radius: 50%; background: var(--c, var(--orange)); display: grid; place-items: center; font: 700 15px/1.1 var(--font-display); color: var(--t, var(--ink)); text-align: center; }
+.step.dash { background: transparent; border: 2.5px dashed rgba(31,32,34,.38); }
+.dark .step.dash { border-color: rgba(255,255,255,.45); color: #fff; }
+.step.sm { --s: 44px; font-size: 13px; }
+.step.xl { --s: clamp(132px, 38cqw, 220px); font: 900 clamp(15px, 4.4cqw, 20px)/1.4 var(--font-sans); padding: 18px; }
+.dots { display: flex; gap: 6px; }
+.dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--c, var(--orange)); }
+.half { width: var(--s, 48px); height: calc(var(--s, 48px) * 2); background: var(--c, var(--yellow)); border-radius: var(--s, 48px) 0 0 var(--s, 48px); }
+.half.r { border-radius: 0 var(--s, 48px) var(--s, 48px) 0; }
+.duo { display: flex; position: relative; width: fit-content; }
+.duo::after { content: ""; position: absolute; inset: 50% auto auto 50%; width: 22%; aspect-ratio: 1; translate: -50% -50%; border-radius: 50%; background: var(--orange); box-shadow: 0 0 0 4px var(--bg, #fff); }
+
+/* Learning-map level colours (always paired with the level name in text) */
+.lv-blue { --c: #2F6FB3; --t: #fff; } .lv-green { --c: #23843A; --t: #fff; } .lv-yellow { --c: #FAB40A; --t: #1F2022; } .lv-red { --c: #C2391B; --t: #fff; }
+.lvtag { display: inline-flex; align-items: center; gap: 6px; font: 700 12px/1 var(--font-sans); color: var(--ink-2); }
+.lvtag::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--c); }
+
+/* Rows, list items, stats */
+.rows { border-block: 1px solid var(--line); }
+.rows > * + * { border-top: 1px solid var(--line); }
+.dark .rows, .dark .rows > * + * { border-color: rgba(255,255,255,.15); }
+.row { display: flex; align-items: center; gap: 14px; min-height: 64px; padding: 12px 0; color: inherit; text-decoration: none; }
+.row .grow { flex: 1; min-width: 0; }
+.row b, .t { font: 700 16px/1.45 var(--font-sans); display: block; }
+.meta { font: 500 13px/1.5 var(--font-sans); color: var(--ink-2); }
+.dark .meta { color: rgba(255,255,255,.7); }
+.price { font: 700 15px/1 var(--font-display); white-space: nowrap; }
+.arrow::after { content: "→"; font: 700 16px/1 var(--font-display); color: var(--orange-strong); }
+.dark .arrow::after { color: var(--yellow); }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); border-block: 1px solid var(--line); padding: 14px 0; text-align: center; }
+.stats b { display: block; font: 700 clamp(18px, 5.4cqw, 26px)/1.1 var(--font-display); }
+.stats span { font-size: 12px; color: var(--ink-2); }
+.bul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; font-size: 14.5px; line-height: 1.8; }
+.bul li { padding-left: 20px; position: relative; }
+.bul li::before { content: ""; position: absolute; left: 0; top: .78em; width: 10px; height: 2px; background: var(--orange); }
+.date { font: 700 13px/1 var(--font-display); background: var(--orange-soft); color: #A8321A; padding: 6px 10px; border-radius: 999px; white-space: nowrap; }
+.dark .date { background: rgba(250,180,10,.16); color: var(--yellow); }
+
+/* ReadMore (native details), as src/components/ux/Fold.tsx */
+details.more > summary { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font: 700 14px/1.4 var(--font-sans); color: var(--orange-strong); cursor: pointer; list-style: none; }
+details.more > summary::-webkit-details-marker { display: none; }
+details.more > summary::after { content: "⌄"; }
+details.more[open] > summary::after { content: "⌃"; }
+details.more > div { font-size: 14.5px; line-height: 1.9; color: var(--ink-2); padding-bottom: 6px; }
+.dark details.more > summary { color: var(--yellow); }
+.dark details.more > div { color: rgba(255,255,255,.78); }
+.fold summary .step { margin: -4px 0; }
+.rail > .card { scroll-snap-align: start; }
+@container (max-width: 759px) { .rail > * { width: 82% !important; } .hide-s { display: none !important; } }
+@container (min-width: 760px) { .hide-l { display: none !important; } }

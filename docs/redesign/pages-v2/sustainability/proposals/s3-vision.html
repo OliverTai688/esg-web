@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>共好永續力 · S3 願景與使命 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<style>
+.mock { container-type: inline-size; }
+.vm { display: grid; gap: 28px; margin-top: 26px; }
+@container (min-width: 760px) { .vm { grid-template-columns: 1fr 1fr; gap: 56px; } }
+.vm .k { display: flex; align-items: center; gap: 10px; font: 700 12px/1 var(--font-display); letter-spacing: .22em; color: var(--orange-strong); margin: 0; }
+.vm .k b { font: 700 15px/1 var(--font-sans); letter-spacing: 0; color: var(--ink); }
+.vision { font: 900 clamp(21px, 2.6cqw, 28px)/1.6 var(--font-sans); margin: 14px 0 0; }
+.mission { font: 700 16px/1.9 var(--font-sans); margin: 14px 0 0; color: var(--ink); }
+.sub { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 16px; margin: 52px 0 0; }
+.sub b { font: 700 13px/1.4 var(--font-sans); letter-spacing: .12em; color: var(--orange-strong); }
+.sub h3 { font: 900 20px/1.4 var(--font-sans); margin: 0; }
+/* A: five voussoirs on an arch; each stone is a tab */
+.vroot { position: relative; max-width: 620px; margin: 18px auto 0; }
+.varch.tablist { display: block; overflow: visible; position: relative; aspect-ratio: 1/.66; }
+.varch.tablist button { position: absolute; translate: -50% -50%; width: clamp(58px, 15cqw, 84px); aspect-ratio: 1; min-height: 0; padding: 0; border-radius: 14px; background: #fff; box-shadow: inset 0 0 0 2px var(--orange); color: var(--ink); font-size: clamp(14px, 2.4cqw, 17px); font-weight: 900; }
+.varch.tablist button[aria-selected="true"] { background: var(--orange); color: var(--ink); box-shadow: none; }
+.vroot > .panel { position: absolute; left: 50%; bottom: 4%; translate: -50% 0; width: min(58%, 320px); margin: 0; text-align: center; }
+.vroot > .panel b { display: block; font: 900 clamp(22px, 4cqw, 32px)/1.3 var(--font-sans); }
+.vroot > .panel span { display: block; margin-top: 6px; font-size: 14px; line-height: 1.7; color: var(--ink-2); }
+/* B / C */
+.vlist { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; } .vlist b { margin-right: 10px; }
+.vcard { background: #fff; border-radius: 18px 18px 0 0; padding: 22px 18px; height: 100%; border-top: 6px solid var(--orange); }
+.vcard i { font: 700 13px/1 var(--font-display); color: var(--orange-strong); font-style: normal; }
+.more summary { display: inline-flex; align-items: center; min-height: 44px; font: 700 14px/1 var(--font-sans); color: var(--orange-strong); cursor: pointer; list-style: none; }
+.more summary::after { content: " ＋"; } .more[open] summary::after { content: " －"; }
+</style>
+</head>
+<body data-budget="260">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>共好永續力 · S3 願景與使命</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s2-who-we-are.html">← 上一區</a><a href="s4-approach.html">下一區 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">共好永續力 · S3</span>
+  <h1>你們相信什麼？要往哪裡去？</h1>
+  <p>現況：願景與使命（144 字）＋核心價值（154 字）是兩個區塊，合計 298 字；核心價值從選單到不了。客戶要求「願景、使命要明顯」。本區在主線中的角色：<b>起拱</b>——五個信念是五塊拱石，一塊一塊往上砌。上一區交接過來的形狀：跨在交界上的橘色基石。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>願景、使命全文並排；五個價值＝拱上的五塊拱石</h2><span class="tag">UX 元件：形狀分頁（拱石就是分頁籤）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec sand">
+      <p class="eyebrow">願景與使命</p>
+      <div class="vm">
+        <div><p class="k">VISION <b>願景</b></p><p class="vision">成為推動企業與社會永續轉型的催化劑，激發個人與組織的專業價值，共創更美好的未來。</p></div>
+        <div><p class="k">MISSION <b>使命</b></p><p class="mission">致力成為企業與個人在永續發展領域的長期夥伴，透過教育、顧問服務與技術支持，加速邁向永續目標。我們不僅提供知識與工具，更激發行動力，促使各界在自身領域中推動永續轉型。</p></div>
+      </div>
+      <div class="sub"><b>核心價值</b><h3>我們的合作，建立在五個共同信念之上</h3></div>
+      <div class="vroot" data-tabs>
+        <div class="tablist varch">
+          <button aria-selected="true" style="left:11%;top:68.5%">對話</button>
+          <button aria-selected="false" style="left:25.9%;top:30.5%">價值</button>
+          <button aria-selected="false" style="left:50%;top:16%">分享</button>
+          <button aria-selected="false" style="left:74.1%;top:30.5%">成長</button>
+          <button aria-selected="false" style="left:89%;top:68.5%">影響力</button>
+        </div>
+        <div class="panel"><b>對話</b><span>從理解開始，每一份永續策略都生於真誠的對話。</span></div>
+        <div class="panel" hidden><b>價值</b><span>點亮每個組織獨特的專業價值，而非套用同一份模板。</span></div>
+        <div class="panel" hidden><b>分享</b><span>知識在流動中增值，我們相信開放共學的力量。</span></div>
+        <div class="panel" hidden><b>成長</b><span>陪客戶累積能力，讓永續成為內部長出來的習慣。</span></div>
+        <div class="panel" hidden><b>影響力</b><span>一切努力，都指向可被看見、可被衡量的真實改變。</span></div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>願景與使命一字不收、放在最上面最大（客戶要求）。</li><li>五個價值從「五張一樣的卡片」變成一道拱：名稱全部看得到，句子一次讀一句；「影響力」落在拱的另一端——一切努力指向的地方。</li><li>可見約 195 字（合併前 298）。</li></ul></div>
+    <div><h3>風險</h3><ul><li>要自己做一個分頁元件（<code>role="tablist"</code>、←／→ 鍵），不能直接用共用的 <code>Tabs</code>。</li><li>375px 時拱內只剩約 190px 放句子：每句不超過 24 字才排得下（目前最長 24 字）。英文句子較長，面板要移到拱下方。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：橋墩的基石成為第一塊拱石「對話」（預設選中、實心橘）。</li><li>本區 → 我們怎麼做：五塊分開的拱石在下一段連成一道完整的弧（靜默交界，底色沙 → 米白）。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>三個分頁：願景／使命／核心價值</h2><span class="tag">UX 元件：分頁 Tabs</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec sand">
+      <p class="eyebrow">願景與使命</p>
+      <div class="tabs" data-tabs style="margin-top:22px">
+        <div class="tablist"><button aria-selected="true">願景</button><button aria-selected="false">使命</button><button aria-selected="false">核心價值</button></div>
+        <div class="panel"><p class="vision" style="max-width:24em">成為推動企業與社會永續轉型的催化劑，激發個人與組織的專業價值，共創更美好的未來。</p></div>
+        <div class="panel" hidden><p class="mission" style="max-width:34em">致力成為企業與個人在永續發展領域的長期夥伴，透過教育、顧問服務與技術支持，加速邁向永續目標。我們不僅提供知識與工具，更激發行動力，促使各界在自身領域中推動永續轉型。</p></div>
+        <div class="panel" hidden><h3 class="h3">我們的合作，建立在五個共同信念之上</h3><ul class="vlist" style="margin-top:14px"><li><b>對話</b>從理解開始，每一份永續策略都生於真誠的對話。</li><li><b>價值</b>點亮每個組織獨特的專業價值，而非套用同一份模板。</li><li><b>分享</b>知識在流動中增值，我們相信開放共學的力量。</li><li><b>成長</b>陪客戶累積能力，讓永續成為內部長出來的習慣。</li><li><b>影響力</b>一切努力，都指向可被看見、可被衡量的真實改變。</li></ul></div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>字最少（約 55）；直接用共用元件。</li></ul></div>
+    <div><h3>風險</h3><ul><li><b>使命被藏在第二個分頁</b>：直接違反客戶「願景、使命要明顯」的要求。</li><li>願景、使命、價值不是互斥選項，是同一個信念的三層。</li><li>沒有形狀，主線在這一段斷掉。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：基石沒有東西可以接。</li><li>本區 → 我們怎麼做：靠留白。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>願景一句大字，使命展開；五個價值橫向滑軌</h2><span class="tag">UX 元件：展開全文 ReadMore＋橫向滑軌 SnapRail</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec sand">
+      <p class="eyebrow">願景與使命</p>
+      <p class="vision" style="max-width:26em"><span class="vh">願景</span>成為推動企業與社會永續轉型的催化劑，激發個人與組織的專業價值，共創更美好的未來。</p>
+      <p class="mission" style="max-width:36em"><b>使命　</b>致力成為企業與個人在永續發展領域的長期夥伴，透過教育、顧問服務與技術支持，加速邁向永續目標。</p>
+      <details class="more"><summary>讀完整使命</summary><p class="small">我們不僅提供知識與工具，更激發行動力，促使各界在自身領域中推動永續轉型。</p></details>
+      <div class="sub" style="margin-top:34px"><b>核心價值</b><h3>我們的合作，建立在五個共同信念之上</h3></div>
+      <div class="rail" style="margin-top:18px">
+        <div class="vcard"><i>01</i><h3 class="h3">對話</h3><p class="small">從理解開始，每一份永續策略都生於真誠的對話。</p></div>
+        <div class="vcard"><i>02</i><h3 class="h3">價值</h3><p class="small">點亮每個組織獨特的專業價值，而非套用同一份模板。</p></div>
+        <div class="vcard"><i>03</i><h3 class="h3">分享</h3><p class="small">知識在流動中增值，我們相信開放共學的力量。</p></div>
+        <div class="vcard"><i>04</i><h3 class="h3">成長</h3><p class="small">陪客戶累積能力，讓永續成為內部長出來的習慣。</p></div>
+        <div class="vcard"><i>05</i><h3 class="h3">影響力</h3><p class="small">一切努力，都指向可被看見、可被衡量的真實改變。</p></div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>手機滑軌一次一張半，五句話都讀得到、不用點。</li><li>都是共用元件。</li></ul></div>
+    <div><h3>風險</h3><ul><li>可見約 250 字，貼著上限；滑軌裡的字仍然算可見，只是被推到畫面外。</li><li>使命被切成兩半，後半句要點開。</li><li>五張拱頂卡片排成一列是「五個門」，不是「一道拱」；門的意象要留給服務項目。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：基石接到第一張卡的橘色頂邊。</li><li>本區 → 我們怎麼做：滑軌的最後一張被裁切，視線停在右邊，不是往下。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

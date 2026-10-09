@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>共好永續力 · S8 共好生態圈 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<style>
+.mock { container-type: inline-size; }
+.center { text-align: center; } .center .lead { margin-inline: auto; } .center .eyebrow { justify-content: center; }
+/* Ring of four arcs around the ESG共學坊 logo; roles sit at its four corners */
+.hub { display: grid; gap: 14px; margin-top: 34px; }
+.ring { position: relative; width: min(64cqw, 250px); aspect-ratio: 1; margin-inline: auto; }
+.ring svg { width: 100%; height: 100%; display: block; } .ring img { position: absolute; inset: 0; margin: auto; width: 58%; }
+.role { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; align-items: center; }
+.role i { width: 18px; height: 18px; background: var(--c); border-radius: 100% 0 0 0; rotate: var(--r, 0deg); }
+.role b { font: 900 17px/1.4 var(--font-sans); } .role span { grid-column: 2; font-size: 14px; line-height: 1.7; color: var(--ink-2); }
+@container (min-width: 760px) {
+  .hub { grid-template-columns: 1fr auto 1fr; grid-template-rows: auto auto; gap: 44px 48px; align-items: center; }
+  .hub .ring { grid-column: 2; grid-row: 1 / 3; width: 250px; }
+  .hub .role:nth-of-type(odd) { grid-column: 1; text-align: right; grid-template-columns: 1fr auto; } .hub .role:nth-of-type(odd) i { grid-column: 2; grid-row: 1; } .hub .role:nth-of-type(odd) span { grid-column: 1; }
+  .hub .role:nth-of-type(even) { grid-column: 3; }
+}
+.team { margin-top: 40px; } .team > p { font: 700 13px/1.4 var(--font-sans); letter-spacing: .12em; color: var(--ink-2); margin: 0 0 10px; }
+.team .tablist button { display: inline-flex; align-items: center; gap: 8px; padding: 0 14px 0 5px; }
+.team .tablist img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
+.team .panel { margin-top: 12px; font-size: 14.5px; color: var(--ink-2); } .team .panel b { color: var(--ink); margin-right: 8px; }
+/* B */
+.rtabs.tablist { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; overflow: visible; max-width: 420px; margin-inline: auto; }
+.rtabs.tablist button { min-height: 84px; border-radius: 0; font-size: 15px; background: #fff; box-shadow: inset 0 0 0 1.5px var(--line); }
+.rtabs.tablist button:nth-child(1) { border-top-left-radius: 84px; } .rtabs.tablist button:nth-child(2) { border-top-right-radius: 84px; }
+.rtabs.tablist button:nth-child(3) { border-bottom-left-radius: 84px; } .rtabs.tablist button:nth-child(4) { border-bottom-right-radius: 84px; }
+.rtabs.tablist button[aria-selected="true"] { background: var(--orange); color: var(--ink); box-shadow: none; }
+.pcard { background: #fff; border-radius: 16px; padding: 16px; display: flex; gap: 12px; align-items: center; height: 100%; } .pcard img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; flex: none; }
+.pcard b { display: block; } .pcard span { display: block; font-size: 12.5px; line-height: 1.55; color: var(--ink-2); }
+.fold summary i { width: 16px; height: 16px; background: var(--c); border-radius: 100% 0 0 0; rotate: var(--r, 0deg); flex: none; }
+</style>
+</head>
+<body data-budget="260">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>共好永續力 · S8 共好生態圈</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s7-impact.html">← 上一區</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">共好永續力 · S8</span>
+  <h1>我會加入什麼樣的網絡？</h1>
+  <p>現況：可見 180 字，字數不是問題；問題是七位顧問的單位與職稱只放在 <code>title</code> 屬性（手機看不到），四張卡與虛線連接線和全站的形狀文法無關。首頁「尋找永續夥伴的企業」那道門連到這裡（<code>#ecosystem</code> 不能改）。本區在主線中的角色：<b>拱閉合成環</b>。上一區交接過來的形狀：跨在交界上的橘色圓。之後接共用的 <code>CtaBand</code>。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>四段弧圍成環，四種角色常駐；顧問用頭像分頁</h2><span class="tag">UX 元件：形狀圖解＋分頁 Tabs（頭像籤）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec">
+      <div class="center"><p class="eyebrow">共好生態圈</p><h2 class="h2">串連顧問、供應鏈、企業與國際網絡</h2><p class="lead">以ESG共學坊為中心，形成互相賦能的永續共同體。</p></div>
+      <div class="hub">
+        <div class="ring"><svg viewBox="0 0 200 200" aria-hidden="true" fill="none" stroke-width="16"><circle cx="100" cy="100" r="90" stroke="#F25232" pathLength="360" stroke-dasharray="82 278" stroke-dashoffset="-184"/><circle cx="100" cy="100" r="90" stroke="#FAB40A" pathLength="360" stroke-dasharray="82 278" stroke-dashoffset="-274"/><circle cx="100" cy="100" r="90" stroke="#8A8E97" pathLength="360" stroke-dasharray="82 278" stroke-dashoffset="-4"/><circle cx="100" cy="100" r="90" stroke="#4D515B" pathLength="360" stroke-dasharray="82 278" stroke-dashoffset="-94"/></svg><img src="../../../../../public/brand/coesg-class.svg" alt="ESG共學坊"></div>
+        <div class="role" style="--c:#F25232"><i></i><b>永續顧問團隊</b><span>資深 ESG 顧問與品牌策略師，提供一對一專業輔導。</span></div>
+        <div class="role" style="--c:#FAB40A;--r:90deg"><i></i><b>供應鏈對接</b><span>擁有優質供應商，並可精準對接。</span></div>
+        <div class="role" style="--c:#4D515B;--r:270deg"><i></i><b>企業合作夥伴</b><span>跨產業品牌與企業，共同打造永續商業模式。</span></div>
+        <div class="role" style="--c:#8A8E97;--r:180deg"><i></i><b>國際連結網絡</b><span>與全球永續組織接軌，引進國際最新趨勢與資源。</span></div>
+      </div>
+      <div class="team tabs" data-tabs>
+        <p>顧問團隊</p>
+        <div class="tablist">
+          <button aria-selected="true"><img src="../../../../../public/team/consultant-01.jpg" alt="">吳玟樺</button><button aria-selected="false"><img src="../../../../../public/team/consultant-02.jpg" alt="">蕭冠宇</button><button aria-selected="false"><img src="../../../../../public/team/consultant-03.jpg" alt="">王欽泉</button><button aria-selected="false"><img src="../../../../../public/team/consultant-04.jpg" alt="">朱建毓</button><button aria-selected="false"><img src="../../../../../public/team/consultant-05.jpg" alt="">劉建成</button><button aria-selected="false"><img src="../../../../../public/team/consultant-06.jpg" alt="">吳宗曄</button><button aria-selected="false"><img src="../../../../../public/team/consultant-07.jpg" alt="">陳宜均</button>
+        </div>
+        <div class="panel"><b>創辦人</b>共好玟化組織發展顧問有限公司・ESG共學坊</div>
+        <div class="panel" hidden><b>永續長</b>中華徵信所企業股份有限公司</div>
+        <div class="panel" hidden><b>首席策略合夥人</b>鑫判科技股份有限公司</div>
+        <div class="panel" hidden><b>共同創辦人</b>樂活永續股份有限公司</div>
+        <div class="panel" hidden><b>設計總監</b>齊禾設計有限公司</div>
+        <div class="panel" hidden><b>執行長</b>樂活永續股份有限公司</div>
+        <div class="panel" hidden><b>創辦人</b>綠策院有限公司</div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>環由四段弧組成、每段對一種角色（角色前的四分圓轉到對應的角落）：全頁的拱在這裡閉合，CtaBand 的小拱是它的回聲。</li><li>七位顧問的單位與職稱第一次在手機上讀得到：點頭像看一位，字數只增加一行。可見約 200 字（現況 180）。</li><li>四種角色的說明都短（14–22 字），不需要收合。</li></ul></div>
+    <div><h3>風險</h3><ul><li>頭像籤列在手機要橫向滑動（七顆）。</li><li>六位外部顧問的姓名與單位露出，客戶尚未確認同意（S06 待確認）；露出程度比現在的 <code>title</code> 屬性高。</li><li>英文版沒有顧問單位的正式英文名稱。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：交界上的橘色圓，放大成環。</li><li>本區 → CtaBand：環打開成兩段小弧，在火焰上合龍（共用元件，捲動動畫 ★2）。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>環的四個四分圓就是分頁籤；顧問卡橫向滑軌</h2><span class="tag">UX 元件：形狀分頁＋橫向滑軌 SnapRail</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec">
+      <div class="center"><p class="eyebrow">共好生態圈</p><h2 class="h2">串連顧問、供應鏈、企業與國際網絡</h2><p class="lead">以ESG共學坊為中心，形成互相賦能的永續共同體。</p></div>
+      <div data-tabs style="margin-top:30px">
+        <div class="tablist rtabs"><button aria-selected="true">永續顧問團隊</button><button aria-selected="false">供應鏈對接</button><button aria-selected="false">企業合作夥伴</button><button aria-selected="false">國際連結網絡</button></div>
+        <div class="panel center"><p class="small">資深 ESG 顧問與品牌策略師，提供一對一專業輔導。</p></div>
+        <div class="panel center" hidden><p class="small">擁有優質供應商，並可精準對接。</p></div>
+        <div class="panel center" hidden><p class="small">跨產業品牌與企業，共同打造永續商業模式。</p></div>
+        <div class="panel center" hidden><p class="small">與全球永續組織接軌，引進國際最新趨勢與資源。</p></div>
+      </div>
+      <div class="team"><p>顧問團隊</p><div class="rail">
+        <div class="pcard"><img src="../../../../../public/team/consultant-01.jpg" alt=""><div><b>吳玟樺</b><span>共好玟化・ESG共學坊 創辦人</span></div></div>
+        <div class="pcard"><img src="../../../../../public/team/consultant-02.jpg" alt=""><div><b>蕭冠宇</b><span>中華徵信所 永續長</span></div></div>
+        <div class="pcard"><img src="../../../../../public/team/consultant-03.jpg" alt=""><div><b>王欽泉</b><span>鑫判科技 首席策略合夥人</span></div></div>
+        <div class="pcard"><img src="../../../../../public/team/consultant-04.jpg" alt=""><div><b>朱建毓</b><span>樂活永續 共同創辦人</span></div></div>
+        <div class="pcard"><img src="../../../../../public/team/consultant-05.jpg" alt=""><div><b>劉建成</b><span>齊禾設計 設計總監</span></div></div>
+        <div class="pcard"><img src="../../../../../public/team/consultant-06.jpg" alt=""><div><b>吳宗曄</b><span>樂活永續 執行長</span></div></div>
+        <div class="pcard"><img src="../../../../../public/team/consultant-07.jpg" alt=""><div><b>陳宜均</b><span>綠策院 創辦人</span></div></div>
+      </div></div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>四個四分圓拼成一個圓，本身就是互動；七張顧問卡不用點就看得到單位與職稱。</li></ul></div>
+    <div><h3>風險</h3><ul><li><b>中央放不下 ESG共學坊 的註冊標誌</b>：S06 明確要求中央是客戶的 CLASS 標誌，四分圓拼滿之後沒有位置。</li><li>四分圓拼圓是首頁「痛點」的概念高點，首頁決策已限定全站只用一次。</li><li>四句角色說明都很短，藏起來省不到字，反而多一次點擊；顧問卡的單位用了簡稱，不是客戶提供的全名。可見約 180 字。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：橘色圓 → 實心圓，可接。</li><li>本區 → CtaBand：滑軌在最後，視線停在右邊。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>標誌在上，四列可展開；顧問名單進面板</h2><span class="tag">UX 元件：可展開列 FoldList＋彈出面板 Sheet</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec">
+      <div class="center"><p class="eyebrow">共好生態圈</p><h2 class="h2">串連顧問、供應鏈、企業與國際網絡</h2><p class="lead">以ESG共學坊為中心，形成互相賦能的永續共同體。</p>
+        <img src="../../../../../public/brand/coesg-class.svg" alt="ESG共學坊" style="width:180px;margin-top:24px"></div>
+      <div class="fold" style="max-width:640px;margin:26px auto 0">
+        <details name="r"><summary><i style="--c:#F25232"></i>永續顧問團隊</summary><div class="body">資深 ESG 顧問與品牌策略師，提供一對一專業輔導。</div></details>
+        <details name="r"><summary><i style="--c:#FAB40A;--r:90deg"></i>供應鏈對接</summary><div class="body">擁有優質供應商，並可精準對接。</div></details>
+        <details name="r"><summary><i style="--c:#4D515B;--r:270deg"></i>企業合作夥伴</summary><div class="body">跨產業品牌與企業，共同打造永續商業模式。</div></details>
+        <details name="r"><summary><i style="--c:#8A8E97;--r:180deg"></i>國際連結網絡</summary><div class="body">與全球永續組織接軌，引進國際最新趨勢與資源。</div></details>
+      </div>
+      <div class="btns" style="justify-content:center"><a class="btn btn-ghost" href="#">認識七位顧問</a></div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>字最少（約 80）；手機最單純。</li></ul></div>
+    <div><h3>風險</h3><ul><li>生態圈變成一張清單：「串連」「圍繞一個中心」的關係看不出來，客戶原本要的是一張圖（S06）。</li><li>四句說明合計不到 80 字，收合是多此一舉。</li><li>七位顧問的臉是這一段最具體的信任訊號，卻被收進面板。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：橘色圓沒有東西可以接。</li><li>本區 → CtaBand：外框按鈕之後緊接 CTA 的兩顆按鈕，行動太密。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

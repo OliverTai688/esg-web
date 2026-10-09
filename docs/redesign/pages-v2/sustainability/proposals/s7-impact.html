@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>共好永續力 · S7 實際成果 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<style>
+.mock { container-type: inline-size; }
+.top { height: clamp(30px, 6cqw, 80px); background: #F4EEE6; border-radius: 50% 50% 0 0 / 100% 100% 0 0; margin-top: 30px; }
+.story { font: 900 clamp(21px, 2.7cqw, 30px)/1.55 var(--font-sans); margin: 14px 0 0; max-width: 28em; text-wrap: balance; }
+/* Before → after: two banks joined by a low arch */
+.cross { margin-top: 30px; }
+.cross svg { display: block; width: 100%; }
+.banks { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: -4px; }
+@container (min-width: 760px) { .banks { gap: 22%; } }
+.banks p { margin: 0; padding: 16px; border-radius: 0 0 16px 16px; font-size: 14.5px; line-height: 1.75; }
+.banks p:first-child { background: #fff; color: var(--ink-2); border-top: 5px solid #8A8E97; }
+.banks p:last-child { background: #fff; font-weight: 700; border-top: 5px solid var(--orange); }
+.nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 0; }
+.nums div { border-top: 5px solid var(--c); padding-top: 12px; } .nums dt { font: 700 13px/1.5 var(--font-sans); } .nums dd { margin: 4px 0 0; }
+.nums .num { font-size: clamp(28px, 7cqw, 52px); }
+.more summary { display: inline-flex; align-items: center; min-height: 44px; font: 700 14px/1 var(--font-sans); color: var(--orange-strong); cursor: pointer; list-style: none; }
+.more summary::after { content: " ＋"; } .more[open] summary::after { content: " －"; }
+.more ol { margin: 4px 0 0; padding-left: 1.4em; font-size: 13px; line-height: 1.8; color: var(--ink-2); }
+.qual { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; } @container (min-width: 760px) { .qual { grid-template-columns: repeat(3, 1fr); } }
+.qual li { background: #fff; border-radius: 16px; padding: 18px; } .qual b { display: block; font: 900 17px/1.4 var(--font-sans); } .qual span { display: block; margin-top: 6px; font-size: 14px; line-height: 1.75; color: var(--ink-2); }
+.split { display: grid; gap: 34px; margin-top: 36px; } @container (min-width: 760px) { .split { grid-template-columns: 1.2fr 1fr; gap: 56px; } }
+.split h3 { font: 700 13px/1.4 var(--font-sans); letter-spacing: .12em; color: var(--ink-2); margin: 0 0 14px; }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; }
+.pills button { min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1.5px solid rgba(31,32,34,.25); background: none; font: 700 14px/1 var(--font-sans); cursor: pointer; }
+</style>
+</head>
+<body data-budget="260">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>共好永續力 · S7 實際成果</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s6-services.html">← 上一區</a><a href="s8-ecosystem.html">下一區 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">共好永續力 · S7</span>
+  <h1>真的有用嗎？</h1>
+  <p>現況：可見 339 字，深色底（全頁第二個深色段）；選單叫「共好實踐」、區塊小標卻是「實際成果」。客戶指定順序（S05）：故事引言 → 量化三個數字 → 質化成果。本區在主線中的角色：<b>橋面通車</b>——從「有數據之前」走到「有數據之後」。上一區交接過來的形狀：服務項目的拱門圓頂 → 本段沙色的拱形上緣。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>一道低拱連接前與後；量化／質化兩個分頁</h2><span class="tag">UX 元件：形狀圖解＋分頁 Tabs＋展開全文 ReadMore（註腳）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="top"></div>
+    <div class="sec sand" style="padding-top:16px">
+      <p class="eyebrow">實際成果</p>
+      <h2 class="story">一份永續白皮書，讓一個用海洋廢棄物製成手錶的品牌，站上國際青年論壇的舞台。</h2>
+      <p class="lead">透過永續說出自己的故事，是走向國際的第一步。</p>
+      <div class="cross">
+        <svg viewBox="0 0 800 96" aria-hidden="true"><path d="M70 92 C 220 -14, 580 -14, 730 92" fill="none" stroke="#F25232" stroke-width="14" stroke-linecap="round"/><circle cx="70" cy="86" r="10" fill="#8A8E97"/><circle cx="730" cy="86" r="10" fill="#F25232"/></svg>
+        <div class="banks"><p>有數據之前，這支手錶是一個有意義來源的美麗產品，</p><p>有數據之後，它是買家可以寫進報告、合作夥伴可以圍繞它建立關係的證據。</p></div>
+      </div>
+      <div class="tabs" data-tabs style="margin-top:40px">
+        <div class="tablist"><button aria-selected="true">量化成果</button><button aria-selected="false">質化成果</button></div>
+        <div class="panel">
+          <dl class="nums"><div style="--c:#F25232"><dt>資源挹注</dt><dd class="num">1,000萬</dd></div><div style="--c:#FAB40A"><dt>跨產業合作</dt><dd class="num">130+</dd></div><div style="--c:#8A8E97"><dt>國際論壇</dt><dd class="num">8+</dd></div></dl>
+          <details class="more" style="margin-top:8px"><summary>數字怎麼算</summary><ol><li>一家品牌設計公司在永續白皮書完成後一年內取得的政府補助、天使投資與銀行貸款</li><li>透過顧問輔導與ESG共學坊講師平台促成的合作</li><li>協助企業與夥伴登上的國際論壇舞台</li></ol></details>
+        </div>
+        <div class="panel" hidden><ul class="qual"><li><b>被國際看見</b><span>海廢手錶品牌透過永續白皮書整理數據與故事，站上國際青年論壇舞台。</span></li><li><b>從被動到主動</b><span>產業夥伴從零散被動的企業合作，轉變為更主動、有策略的窗口溝通。</span></li><li><b>喚醒初衷</b><span>品牌主在做報告的同時，重新想清楚自己在做的事與永續的關聯。</span></li></ul></div>
+      </div>
+    </div>
+    <div class="seam" style="--x:78%"><i class="geo geo-disc c-orange" style="--s:36px"></i></div>
+    <div class="sec" style="padding-block:30px"><p class="small">↓ 共好生態圈（米白）</p></div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>客戶的故事（主標＋前／後兩句）一字不動、全部常駐；「前 → 後」被畫成一座橋，這個故事就是全頁主線的縮影。</li><li>客戶說「實際成果分成量化和質化」：兩者同一層級、互斥，正是分頁籤的用途。數字預設可見，三段註腳收進一列。</li><li>可見約 170 字（現況 339，−50%）；改為淺色，深色留給「我們的不同」。</li></ul></div>
+    <div><h3>風險</h3><ul><li>三則質化成果要點一下才看得到。</li><li>375px 時前／後兩張卡並排各約 160px 寬，後句 33 字會排到 5 行；需要實測，不行就直排。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：沙色段以拱形上緣切入白色（交界 6，T4 第 2 次）。</li><li>本區 → 共好生態圈：低拱右端的橘色圓落在交界上，被生態圈的環接住（交界 7，T1）。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>數字與質化標題同時常駐，質化說明逐列展開</h2><span class="tag">UX 元件：可展開列 FoldList</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec sand">
+      <p class="eyebrow">實際成果</p>
+      <h2 class="story">一份永續白皮書，讓一個用海洋廢棄物製成手錶的品牌，站上國際青年論壇的舞台。</h2>
+      <p class="lead">透過永續說出自己的故事，是走向國際的第一步。</p>
+      <div class="banks" style="margin-top:24px"><p>有數據之前，這支手錶是一個有意義來源的美麗產品，</p><p>有數據之後，它是買家可以寫進報告、合作夥伴可以圍繞它建立關係的證據。</p></div>
+      <div class="split">
+        <div><h3>量化成果</h3><dl class="nums"><div style="--c:#F25232"><dt>資源挹注</dt><dd class="num">1,000萬</dd></div><div style="--c:#FAB40A"><dt>跨產業合作</dt><dd class="num">130+</dd></div><div style="--c:#8A8E97"><dt>國際論壇</dt><dd class="num">8+</dd></div></dl>
+          <details class="more" style="margin-top:8px"><summary>數字怎麼算</summary><ol><li>一家品牌設計公司在永續白皮書完成後一年內取得的政府補助、天使投資與銀行貸款</li><li>透過顧問輔導與ESG共學坊講師平台促成的合作</li><li>協助企業與夥伴登上的國際論壇舞台</li></ol></details></div>
+        <div><h3>質化成果</h3><div class="fold">
+          <details name="q"><summary>被國際看見</summary><div class="body">海廢手錶品牌透過永續白皮書整理數據與故事，站上國際青年論壇舞台。</div></details>
+          <details name="q"><summary>從被動到主動</summary><div class="body">產業夥伴從零散被動的企業合作，轉變為更主動、有策略的窗口溝通。</div></details>
+          <details name="q"><summary>喚醒初衷</summary><div class="body">品牌主在做報告的同時，重新想清楚自己在做的事與永續的關聯。</div></details></div></div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>量化與質化的標題一次看完，不用切換；可見約 175 字。</li><li>不需要 JavaScript。</li></ul></div>
+    <div><h3>風險</h3><ul><li>又一組可展開列（全頁第四組），而且質化的三個標題（被國際看見…）單獨看不出內容，價值在說明裡。</li><li>桌機兩欄：左邊三個大數字、右邊三條細線，視覺重量不平衡。</li><li>前／後兩張卡沒有形狀連接，主線在這一段沒有畫面。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：弧切邊界仍可用。</li><li>本區 → 共好生態圈：沒有可以接力的形狀。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>三個數字當主角，故事與質化成果進面板</h2><span class="tag">UX 元件：彈出面板 Sheet</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec sand">
+      <p class="eyebrow">實際成果</p>
+      <h2 class="h2">數字會說話，故事也會</h2>
+      <dl class="nums" style="margin-top:30px"><div style="--c:#F25232"><dt>資源挹注</dt><dd class="num">1,000萬</dd></div><div style="--c:#FAB40A"><dt>跨產業合作</dt><dd class="num">130+</dd></div><div style="--c:#8A8E97"><dt>國際論壇</dt><dd class="num">8+</dd></div></dl>
+      <ul class="pills"><li><button type="button">海廢手錶的故事</button></li><li><button type="button">被國際看見</button></li><li><button type="button">從被動到主動</button></li><li><button type="button">喚醒初衷</button></li></ul>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>字最少（約 60）；數字最大。</li></ul></div>
+    <div><h3>風險</h3><ul><li><b>違反 S05</b>：客戶指定「區塊開頭是海廢手錶的故事」，這裡把故事藏進面板，還另寫了一個客戶沒給的標題。</li><li>面板內容不在初始 HTML；故事是全頁最容易被引用的一段。</li><li>數字與首頁「證據」區塊長得一樣：訪客在這一頁沒有得到新的東西。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：弧切邊界仍可用。</li><li>本區 → 共好生態圈：四顆外框按鈕收尾，像四個行動。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

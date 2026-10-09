@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>合作洽詢 · S4 會員方案 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<style>
+.mock { container-type: inline-size; }
+.price { font: 700 26px/1.2 var(--font-display); color: var(--ink); margin: 4px 0 0; }
+.tagline { font: 700 14px/1.6 var(--font-sans); color: var(--orange-strong); margin: 6px 0 0; }
+.who { font-size: 13px; line-height: 1.7; color: var(--ink-2); margin: 10px 0 0; }
+.who b { color: var(--ink); }
+.feat { margin: 0; padding: 0 0 6px 1.1em; font-size: 14px; line-height: 1.9; }
+.badge { display: inline-flex; align-items: center; min-height: 24px; padding: 0 10px; border-radius: 999px; background: var(--orange-strong); color: #fff; font: 700 12px/1 var(--font-sans); }
+.more { margin-top: 12px; border-top: 1px solid var(--line); }
+.more summary { display: flex; align-items: center; justify-content: space-between; min-height: 44px; font: 700 13px/1 var(--font-sans); color: var(--orange-strong); cursor: pointer; list-style: none; }
+.more summary::-webkit-details-marker { display: none; }
+.more summary::after { content: "＋"; }
+.more[open] summary::after { content: "－"; }
+
+/* Coming-soon band (same in A and B): a ring that is not closed yet */
+.soon { display: grid; gap: 18px; align-items: center; background: #fff; border-radius: 28px; padding: 24px 22px; margin-top: 28px; }
+@container (min-width: 760px) { .soon { grid-template-columns: auto 1fr auto; gap: 28px; padding: 28px 32px; } }
+.soon .ring { width: 72px; height: 72px; border-radius: 50%; border: 6px dashed var(--orange); }
+.soon .chip { background: var(--yellow); margin-right: 8px; }
+
+/* A — the quarter grows */
+.tiers { display: grid; gap: 14px; margin-top: 28px; }
+@container (min-width: 760px) { .tiers { grid-template-columns: repeat(3, 1fr); } }
+.tier { background: #fff; border-radius: 24px; padding: 22px 22px 8px; }
+.tier.rec { box-shadow: inset 0 0 0 2px var(--orange-strong); }
+.tier .top { display: flex; align-items: center; justify-content: space-between; min-height: 48px; }
+.tier .geo { --s: 44px; }
+.tier .geo-half { height: 22px; }
+
+/* C — rows */
+.fold summary .geo { --s: 22px; }
+.fold summary .geo-half { height: 11px; }
+.fold summary b { margin-left: auto; font: 700 15px/1 var(--font-display); }
+.fold summary::after { margin-left: 14px; }
+</style>
+</head>
+<body data-budget="250">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>合作洽詢 · S4 會員方案</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s3-ngo.html">← 上一區</a><a href="s5-faq.html">下一區 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">合作洽詢 · S4</span>
+  <h1>我想先小額開始，有哪些階段？</h1>
+  <p>現況：可見 354 字，是全頁最重的區塊；三張卡各有四項條列與同一顆 LINE 按鈕（重複三次），下方的籌備中橫幅再加兩段文字。這是連續第三個價格卡區塊。</p>
+  <p>本區在主線中的角色：<b>四分圓長大</b>——四分圓 → 半圓 → 圓（基礎 → 進階 → 策略）；籌備中的共好生態圈會員是還沒閉合的虛線環。文案為客戶原文（C04），一個字都不刪。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>三個階段並排，內含項目收在卡內</h2><span class="tag">形狀本身（成長）＋卡內展開 details</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec sand">
+      <p class="eyebrow">會員方案</p>
+      <h2 class="h2">選擇適合你的共好夥伴方案</h2>
+      <div class="tiers">
+        <div class="tier"><div class="top"><span class="geo geo-quarter c-yellow"></span></div><h3 class="h3">基礎夥伴</h3><p class="price">免費</p><p class="tagline">先連上，開始接觸永續</p><p class="who"><b>適合｜</b>任何想開始的個人</p>
+          <details class="more"><summary>內含 3 項</summary><ul class="feat"><li>加入 LINE 永續社群</li><li>永續趨勢週報</li><li>活動與課程優先通知</li></ul></details></div>
+        <div class="tier rec"><div class="top"><span class="geo geo-half c-orange"></span><span class="badge">推薦</span></div><h3 class="h3">進階夥伴</h3><p class="price">NT$300／月</p><p class="tagline">持續學，把永續變成內部能力</p><p class="who"><b>適合｜</b>永續實務工作者、想打底的小團隊</p>
+          <details class="more"><summary>內含 4 項</summary><ul class="feat"><li>ESG共學坊每月課程與回放</li><li>講師影片與教材下載</li><li>夥伴交流社群</li><li>課程與工作坊優惠</li></ul></details></div>
+        <div class="tier"><div class="top"><span class="geo geo-disc c-orange"></span></div><h3 class="h3">策略夥伴</h3><p class="price">專案報價</p><p class="tagline">深度共創，把永續做進你的商業</p><p class="who"><b>適合｜</b>要做白皮書／供應鏈輔導的企業，專案制</p>
+          <details class="more"><summary>內含 4 項</summary><ul class="feat"><li>一對一顧問諮詢</li><li>永續白皮書策略服務</li><li>國際接軌策略</li><li>供應鏈對接優先</li></ul></details></div>
+      </div>
+      <div class="btns" style="margin-top:18px"><a class="btn btn-line" href="#">透過 LINE 洽詢</a></div>
+      <div class="soon"><span class="ring" aria-hidden="true"></span>
+        <div><p class="h3"><span class="chip">即將推出</span>共好生態圈會員</p><p class="small" style="margin-top:8px">不只是學永續，而是進入一條被驗證的永續供應鏈——取得永續認證、被買方看見、與夥伴共同接案。</p><p class="small">我們正在籌備中。想成為創始夥伴、搶先取得名額與優惠嗎？</p></div>
+        <a class="btn btn-ghost" href="#">加入候補</a></div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>買方要比的三件事（價格、定位、適合誰）三個方案同時可見；內含項目點一下就開，仍在 HTML 裡。</li><li>四分圓 → 半圓 → 圓把「階段」畫出來，籌備中的方案是還沒閉合的虛線環：四個形狀就是一條成長路線。</li><li>同一顆 LINE 按鈕只出現一次，不再重複三次。</li></ul></div>
+    <div><h3>風險</h3><ul><li>三個獨立的展開：想比較內含項目的人要點三次（可接受：比的是價格與對象）。</li><li>手機上三張卡加籌備中卡約兩屏半，是本頁最長的一區。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>非營利合作 → 本區：沙色段拱形頂部（T4）。</li><li>本區 → 常見問題：籌備中卡片一半壓在沙色、一半壓在米白（T7 重疊），虛線環捲入時轉到定位。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>一次看一個方案的全部</h2><span class="tag">分頁 Tabs（價格寫在籤上）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec sand">
+      <p class="eyebrow">會員方案</p>
+      <h2 class="h2">選擇適合你的共好夥伴方案</h2>
+      <p class="lead">從免費加入社群，到深度共創，依你的階段選擇。</p>
+      <div class="tabs" data-tabs style="margin-top:24px">
+        <div class="tablist"><button aria-selected="false">基礎夥伴・免費</button><button aria-selected="true">進階夥伴・NT$300／月</button><button aria-selected="false">策略夥伴・專案報價</button></div>
+        <div class="panel card" hidden><p class="tagline" style="margin:0 0 10px">先連上，開始接觸永續</p><ul class="feat"><li>加入 LINE 永續社群</li><li>永續趨勢週報</li><li>活動與課程優先通知</li></ul><p class="who"><b>適合｜</b>任何想開始的個人</p></div>
+        <div class="panel card"><span class="badge">推薦</span><p class="tagline" style="margin:10px 0">持續學，把永續變成內部能力</p><ul class="feat"><li>ESG共學坊每月課程與回放</li><li>講師影片與教材下載</li><li>夥伴交流社群</li><li>課程與工作坊優惠</li></ul><p class="who"><b>適合｜</b>永續實務工作者、想打底的小團隊</p></div>
+        <div class="panel card" hidden><p class="tagline" style="margin:0 0 10px">深度共創，把永續做進你的商業</p><ul class="feat"><li>一對一顧問諮詢</li><li>永續白皮書策略服務</li><li>國際接軌策略</li><li>供應鏈對接優先</li></ul><p class="who"><b>適合｜</b>要做白皮書／供應鏈輔導的企業，專案制</p></div>
+      </div>
+      <div class="btns" style="margin-top:18px"><a class="btn btn-line" href="#">透過 LINE 洽詢</a></div>
+      <div class="soon"><span class="ring" aria-hidden="true"></span>
+        <div><p class="h3"><span class="chip">即將推出</span>共好生態圈會員</p><p class="small" style="margin-top:8px">不只是學永續，而是進入一條被驗證的永續供應鏈——取得永續認證、被買方看見、與夥伴共同接案。</p><p class="small">我們正在籌備中。想成為創始夥伴、搶先取得名額與優惠嗎？</p></div>
+        <a class="btn btn-ghost" href="#">加入候補</a></div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>目前分頁的定位、條列、對象全部可見，不需要第二次點擊。</li><li>手機上最短：一張卡的高度。</li></ul></div>
+    <div><h3>風險</h3><ul><li>方案的本質是比較，分頁籤一次只給一個：另外兩個方案的定位與對象看不到。</li><li>這是全頁第二個分頁籤（S2 是主要互動），會搶走 S2 的獨特性。</li><li>籤上放價格後，三個籤在 375px 一定要橫向滑動。</li><li>「成長」沒有被畫出來，形狀主線在這一區是空的。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>本區 → 常見問題：籌備中卡片同 A 可以重疊交界。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>四列價目，點開才讀</h2><span class="tag">可展開列 FoldList（籌備中是第四列）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec sand">
+      <p class="eyebrow">會員方案</p>
+      <h2 class="h2">選擇適合你的共好夥伴方案</h2>
+      <p class="lead">從免費加入社群，到深度共創，依你的階段選擇。</p>
+      <div class="fold" style="margin-top:24px">
+        <details name="s4c"><summary><span class="geo geo-quarter c-yellow"></span>基礎夥伴<b>免費</b></summary><div class="body"><p class="tagline" style="margin:0 0 6px">先連上，開始接觸永續</p><ul class="feat"><li>加入 LINE 永續社群</li><li>永續趨勢週報</li><li>活動與課程優先通知</li></ul><p class="who"><b>適合｜</b>任何想開始的個人</p></div></details>
+        <details name="s4c"><summary><span class="geo geo-half c-orange"></span>進階夥伴<b>NT$300／月</b></summary><div class="body"><p class="tagline" style="margin:0 0 6px">持續學，把永續變成內部能力</p><ul class="feat"><li>ESG共學坊每月課程與回放</li><li>講師影片與教材下載</li><li>夥伴交流社群</li><li>課程與工作坊優惠</li></ul><p class="who"><b>適合｜</b>永續實務工作者、想打底的小團隊</p></div></details>
+        <details name="s4c"><summary><span class="geo geo-disc c-orange"></span>策略夥伴<b>專案報價</b></summary><div class="body"><p class="tagline" style="margin:0 0 6px">深度共創，把永續做進你的商業</p><ul class="feat"><li>一對一顧問諮詢</li><li>永續白皮書策略服務</li><li>國際接軌策略</li><li>供應鏈對接優先</li></ul><p class="who"><b>適合｜</b>要做白皮書／供應鏈輔導的企業，專案制</p></div></details>
+        <details name="s4c"><summary><span class="geo geo-ring c-orange"></span>共好生態圈會員<b>即將推出</b></summary><div class="body">不只是學永續，而是進入一條被驗證的永續供應鏈——取得永續認證、被買方看見、與夥伴共同接案。我們正在籌備中。想成為創始夥伴、搶先取得名額與優惠嗎？<a class="link" href="#">加入候補</a></div></details>
+      </div>
+      <div class="btns"><a class="btn btn-line" href="#">透過 LINE 洽詢</a></div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>字數最少；四個方案的名稱與價格排成一張乾淨的清單，形狀從四分圓長到環。</li></ul></div>
+    <div><h3>風險</h3><ul><li>「適合誰」被收起來——那正是選方案時最需要的一句。</li><li>全頁第三個手風琴；會員方案變成一張表，沒有任何一個方案被推薦得出來。</li><li>籌備中的方案和現有方案排在同一張清單，容易被當成現在就能買。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>本區 → 常見問題：兩個手風琴相鄰，交界幾乎看不出來。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

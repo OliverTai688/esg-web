@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>永續足跡 · S3 永續學習地圖 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<link rel="stylesheet" href="_events.css">
+<style>
+.flow { font: 700 15px/1.4 var(--font-display); margin: 12px 0 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 14px 0 0; padding: 0; list-style: none; }
+.ask { background: #F4EEE6; border-radius: 22px 22px 0 0; padding: 22px; margin: 36px -20px -56px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; }
+@container (min-width: 760px) { .ask { margin: 48px 0 -80px; padding: 24px 32px; } }
+.ask b { font: 700 15px/1.5 var(--font-sans); flex: 1 1 14em; }
+/* B: eight discs as the tab list */
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px 8px; justify-items: center; margin-top: 26px; }
+@container (min-width: 760px) { .steps { grid-template-columns: repeat(8, 1fr); } }
+.steps button.step, .steps button.step[aria-selected="true"] { border: 0; padding: 0; background: var(--c); color: var(--t); opacity: .45; }
+.steps button.step[aria-selected="true"] { opacity: 1; box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--ink); }
+/* C: the path — a dotted line behind the row discs */
+.path { position: relative; border-block: 0; }
+.path::before { content: ""; position: absolute; left: 21px; top: 30px; bottom: 30px; border-left: 3px dotted rgba(31,32,34,.22); }
+.path summary .step { position: relative; box-shadow: 0 0 0 5px #fff; }
+.path .body { padding-left: 58px; }
+.sub { font: 700 14.5px/1.6 var(--font-sans); color: var(--orange-strong); margin: 0 0 6px; }
+</style>
+</head>
+<body data-budget="260">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>永續足跡 · S3 永續學習地圖</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s2-upcoming.html">← 上一區</a><a href="s4-services.html">下一區 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">永續足跡 · S3</span>
+  <h1>我要從哪裡開始學？</h1>
+  <p>現況：可見 1,013 字（全站第二重）。8 張卡把主題、副標、說明、適合對象一次攤開。本區在主線中的角色：八個層次色的圓＝八步，可以從任何一步開始。客戶文案（E02）一字不刪：導言、8 個模組的四個欄位、兩個延伸課程連結都在 HTML 裡；層次色一定附層次名稱。A、B 兩案為控制檔案大小，只完整放前幾個模組，其餘模組結構相同。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>依層次分頁：四個籤，每頁兩個主題</h2><span class="tag">分頁 Tabs＋「適合誰」展開</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec white">
+      <p class="eyebrow">永續學習地圖</p>
+      <h2 class="h2">找到最適合你的永續起點</h2>
+      <p class="flow">探索 → 實作 → 整合</p>
+      <details class="more"><summary>關於學習地圖</summary><div>（客戶導言全文，見 C 案）</div></details>
+      <div class="tabs mt-s" data-tabs>
+        <div class="tablist"><button aria-selected="true">共識與整合</button><button aria-selected="false">探索</button><button aria-selected="false">實作</button><button aria-selected="false">進階</button></div>
+        <div class="panel grid c2">
+          <div class="card"><span class="lvtag lv-blue">主題一</span><h3 class="h3 mt-s">永續共識與組織對話</h3><p class="sub">跨部門永續共識營</p><p class="small">永續轉型從組織內部開始。這個工作坊幫助不同部門的夥伴建立共同語言，讓永續不再只是某個部門的任務。</p><details class="more"><summary>適合誰</summary><div>剛起步的組織、想推動內部文化轉變的管理者、跨部門協作需求者</div></details></div>
+          <div class="card"><span class="lvtag lv-blue">主題八</span><h3 class="h3 mt-s">影響力整合與成果展現</h3><p class="sub">數據蒐集 × 影響力報告 × 永續白皮書</p><p class="small">整合你在各主題的學習成果，透過問卷設計、數據分析與報告撰寫，完成屬於自己組織的永續影響力文件。</p><details class="more"><summary>適合誰</summary><div>已有一定永續基礎、想產出具體成果的學習者</div></details></div>
+        </div>
+        <div class="panel" hidden><p class="small">主題二 讀懂永續，掌握趨勢、主題三 說出影響力（結構同上）</p></div>
+        <div class="panel" hidden><p class="small">主題四 永續品牌策略、主題五 商業模式創新（結構同上）</p></div>
+        <div class="panel" hidden><p class="small">主題六 碳管理與環境韌性、主題七 認證攻略與市場對接（結構同上）</p></div>
+      </div>
+      <div class="ask"><b>想為團隊規劃主題組合？</b><a class="link" href="#">洽詢客製課程</a><details class="more"><summary>延伸課程</summary><div>ESG 永續思維品牌與社會影響力策略班（預錄課程）／ESG 永續農創師課程</div></details></div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>籤列本身就是層次圖例，省掉一塊說明。</li><li>每頁兩張卡，說明全文可見。</li></ul></div>
+    <div><h3>風險</h3><ul><li>掃讀層只看得到 2／8 個主題名稱；「我要從哪裡開始」得把四個籤都點過才比得出來。</li><li>主題一與主題八被放在同一頁（同為「共識與整合」），起點與終點並排，失去路徑的順序。</li><li>分頁裡還要再展開「適合誰」，深讀層要點兩層。</li><li>層次與顏色的對應仍待客戶確認（E02）；把它做成第一層導覽，改動成本最高。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：靜默轉場。</li><li>本區 → 持續服務：底部的沙色洽詢條長進下一段的沙色底（色塊延伸）。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>八個圓當步驟器：點一個圓，看一個主題的全部</h2><span class="tag">自製分頁（圓形籤）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec white">
+      <p class="eyebrow">永續學習地圖</p>
+      <h2 class="h2">找到最適合你的永續起點</h2>
+      <p class="flow">探索 → 實作 → 整合</p>
+      <details class="more"><summary>關於學習地圖</summary><div>（客戶導言全文，見 C 案）</div></details>
+      <ul class="legend"><li class="lvtag lv-blue">共識與整合</li><li class="lvtag lv-green">探索</li><li class="lvtag lv-yellow">實作</li><li class="lvtag lv-red">進階</li></ul>
+      <div data-tabs>
+        <div class="tablist steps" style="overflow:visible">
+          <button class="step lv-blue" aria-selected="true">01</button><button class="step lv-green" aria-selected="false">02</button><button class="step lv-green" aria-selected="false">03</button><button class="step lv-yellow" aria-selected="false">04</button><button class="step lv-yellow" aria-selected="false">05</button><button class="step lv-red" aria-selected="false">06</button><button class="step lv-red" aria-selected="false">07</button><button class="step lv-blue" aria-selected="false">08</button>
+        </div>
+        <div class="panel card"><span class="lvtag lv-blue">主題一</span><h3 class="h3 mt-s">永續共識與組織對話</h3><p class="sub">跨部門永續共識營</p><p class="small">永續轉型從組織內部開始。這個工作坊幫助不同部門的夥伴建立共同語言，讓永續不再只是某個部門的任務。</p><p class="small mt-s"><b>適合｜</b>剛起步的組織、想推動內部文化轉變的管理者、跨部門協作需求者</p></div>
+        <div class="panel card" hidden><span class="lvtag lv-green">主題二</span><h3 class="h3 mt-s">讀懂永續，掌握趨勢</h3><p class="sub">永續知能與 ESG 管理基礎</p><p class="small">從氣候變遷到法規趨勢，了解 ESG 如何影響你的行業，找到屬於你的永續切入點與風險因應策略。</p><p class="small mt-s"><b>適合｜</b>想建立永續基礎概念的各行業從業者、管理階層、業主</p></div>
+        <div class="panel card" hidden><p class="small">主題三 說出影響力（結構同上）</p></div>
+        <div class="panel card" hidden><p class="small">主題四 永續品牌策略（結構同上）</p></div><div class="panel card" hidden><p class="small">主題五 商業模式創新</p></div><div class="panel card" hidden><p class="small">主題六 碳管理與環境韌性</p></div><div class="panel card" hidden><p class="small">主題七 認證攻略與市場對接</p></div><div class="panel card" hidden><p class="small">主題八 影響力整合與成果展現</p></div>
+      </div>
+      <div class="ask"><b>想為團隊規劃主題組合？</b><a class="link" href="#">洽詢客製課程</a><details class="more"><summary>延伸課程</summary><div>ESG 永續思維品牌與社會影響力策略班（預錄課程）／ESG 永續農創師課程</div></details></div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>主線最強：八個圓一字排開就是「八步」，層次用顏色一眼分出來。</li><li>選到的主題四個欄位全部可見，不需要第二層展開。</li></ul></div>
+    <div><h3>風險</h3><ul><li>掃讀層只有 01–08 的數字，看不到主題名稱：要點八次才知道八個主題是什麼，等於把目錄藏起來。</li><li>八個籤超過分頁籤適用的 2–5 組；要另做一套圓形籤元件（鍵盤、焦點、aria 都要重做）。</li><li>沒有 JavaScript 時只看得到主題一。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：三個小虛線圓 → 八個實心圓，接得最漂亮。</li><li>本區 → 持續服務：同 A。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>一條路八個圓：八個主題名稱全部可見，逐列展開</h2><span class="tag">可展開列 FoldList（一次開一列）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec white"><div class="two">
+      <div>
+        <p class="eyebrow">永續學習地圖</p>
+        <h2 class="h2">找到最適合你的永續起點</h2>
+        <p class="flow">探索 → 實作 → 整合</p>
+        <details class="more"><summary>關於學習地圖</summary><div>無論你是剛接觸 ESG 的新手，還是已有基礎想深化實力的實踐者，都能從這裡找到最適合你的起點。每個主題模組獨立完整，可依需求單獨選修；完整走過全程，則能建立系統性的永續實戰能力。</div></details>
+      </div>
+      <div class="fold path">
+        <details name="m" open><summary><i class="step sm lv-blue">01</i><span><span class="meta">共識與整合</span><b class="t">永續共識與組織對話</b></span></summary><div class="body"><p class="sub">主題一｜跨部門永續共識營</p>永續轉型從組織內部開始。這個工作坊幫助不同部門的夥伴建立共同語言，讓永續不再只是某個部門的任務。<br><b>適合｜</b>剛起步的組織、想推動內部文化轉變的管理者、跨部門協作需求者</div></details>
+        <details name="m"><summary><i class="step sm lv-green">02</i><span><span class="meta">探索</span><b class="t">讀懂永續，掌握趨勢</b></span></summary><div class="body"><p class="sub">主題二｜永續知能與 ESG 管理基礎</p>從氣候變遷到法規趨勢，了解 ESG 如何影響你的行業，找到屬於你的永續切入點與風險因應策略。<br><b>適合｜</b>想建立永續基礎概念的各行業從業者、管理階層、業主</div></details>
+        <details name="m"><summary><i class="step sm lv-green">03</i><span><span class="meta">探索</span><b class="t">說出影響力</b></span></summary><div class="body"><p class="sub">主題三｜永續報告書與 SROI 衡量</p>學會用國際通用語言（GRI、SROI）描述你的組織影響力，讓利害關係人看見你的價值，不只是說故事，而是有憑據的說。<br><b>適合｜</b>想製作永續報告、影響力報告或提案書的人</div></details>
+        <details name="m"><summary><i class="step sm lv-yellow">04</i><span><span class="meta">實作</span><b class="t">永續品牌策略</b></span></summary><div class="body"><p class="sub">主題四｜品牌定位 × SDGs × 使用者設計</p>把永續轉化為品牌競爭力。從市場定位到服務設計，學習如何讓你的品牌在永續浪潮中被看見、被選擇。<br><b>適合｜</b>品牌經營者、行銷人員、想強化品牌差異化的業主</div></details>
+        <details name="m"><summary><i class="step sm lv-yellow">05</i><span><span class="meta">實作</span><b class="t">商業模式創新</b></span></summary><div class="body"><p class="sub">主題五｜循環經濟 × 服務化 × 永續變現</p>不只做好事，也要做成好生意。這個模組帶你重新設計商業模式，從資源循環到服務創新，找到永續的獲利路徑。<br><b>適合｜</b>創業者、想升級商業模式的經營者、產品開發人員</div></details>
+        <details name="m"><summary><i class="step sm lv-red">06</i><span><span class="meta">進階</span><b class="t">碳管理與環境韌性</b></span></summary><div class="body"><p class="sub">主題六｜碳盤查 × 減碳策略 × 氣候風險</p>從盤查到行動，建立組織的碳管理能力，同時利用自然解方強化面對氣候衝擊的韌性。<br><b>適合｜</b>有減碳目標或供應鏈壓力的組織、想進行碳足跡評估的業主</div></details>
+        <details name="m"><summary><i class="step sm lv-red">07</i><span><span class="meta">進階</span><b class="t">認證攻略與市場對接</b></span></summary><div class="body"><p class="sub">主題七｜永續認證 × 綠色供應鏈 × 企業合作提案</p>了解各類永續認證的申請路徑，對接企業 ESG 採購需求，設計讓品牌進入供應鏈的合作提案。<br><b>適合｜</b>想拓展 B2B 合作、進入綠色採購市場的業者</div></details>
+        <details name="m"><summary><i class="step sm lv-blue">08</i><span><span class="meta">共識與整合</span><b class="t">影響力整合與成果展現</b></span></summary><div class="body"><p class="sub">主題八｜數據蒐集 × 影響力報告 × 永續白皮書</p>整合你在各主題的學習成果，透過問卷設計、數據分析與報告撰寫，完成屬於自己組織的永續影響力文件。<br><b>適合｜</b>已有一定永續基礎、想產出具體成果的學習者</div></details>
+      </div>
+    </div>
+    <div class="ask"><b>想為團隊規劃主題組合？</b><a class="link" href="#">洽詢客製課程</a><details class="more"><summary>延伸課程</summary><div>ESG 永續思維品牌與社會影響力策略班（預錄課程）／ESG 永續農創師課程</div></details></div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>掃讀層＝完整目錄：八個主題名稱、順序、層次三秒看完；這正是「找起點」需要的比較。</li><li>深讀層只要點一次；一次只開一列，高度穩定。第一列預設展開，示範每一列裡有什麼。</li><li>原生 <code>&lt;details&gt;</code>：沒有 JavaScript 也能用，頁內搜尋會自動展開。</li><li>層次只是每列的標示，不是導覽結構：客戶之後調整層次對應，只改資料。</li></ul></div>
+    <div><h3>風險</h3><ul><li>八列在手機上約 520px 高，比分頁版長（但少於一屏半）。</li><li>黃色層次圓上的數字要用墨色才有對比。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：靜默轉場；虛線圓 → 實心層次圓。</li><li>本區 → 持續服務：沙色洽詢條貼齊交界（色塊延伸）；路徑的點線在這裡結束，下一段的小圓列接著走。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

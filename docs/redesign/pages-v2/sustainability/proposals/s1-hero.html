@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>共好永續力 · S1 Hero 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<style>
+.mock { container-type: inline-size; }
+.hero { display: grid; gap: 36px; align-items: center; }
+@container (min-width: 760px) { .hero.two { grid-template-columns: 1.05fr 1fr; gap: 48px; } }
+.h1 .sep { color: rgba(31,32,34,.22); margin: 0 .3em; font-weight: 400; }
+.h1 em { font-style: normal; color: var(--orange-strong); }
+.sub { font: 700 18px/1.8 var(--font-sans); margin: 20px 0 0; max-width: 30em; }
+.arch { width: 100%; max-width: 520px; margin-inline: auto; display: block; }
+.map { display: grid; grid-template-columns: repeat(4, 1fr); max-width: 520px; margin: 10px auto 0; padding: 0; list-style: none; text-align: center; font: 700 13px/1.4 var(--font-sans); }
+.map li:first-child { text-align: left; } .map li:last-child { text-align: right; }
+.more summary { display: inline-flex; align-items: center; min-height: 44px; font: 700 14px/1 var(--font-sans); color: var(--orange-strong); cursor: pointer; list-style: none; }
+.more summary::after { content: " ＋"; } .more[open] summary::after { content: " －"; }
+.more p { margin: 4px 0 0; max-width: 34em; }
+/* C: centred under one arch, the arch is the page map */
+.under { text-align: center; position: relative; padding-top: min(34cqw, 250px); }
+.under > svg { position: absolute; inset: 0 0 auto; width: 100%; max-width: 760px; margin-inline: auto; }
+.under .sub { margin-inline: auto; }
+.under .btns { justify-content: center; }
+.stops { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; margin: 26px 0 0; padding: 0; list-style: none; }
+.stops a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px; border-radius: 999px; background: #fff; border: 1px solid var(--line); font: 700 14px/1 var(--font-sans); color: var(--ink); text-decoration: none; }
+.stops i { width: 12px; height: 12px; background: var(--orange); border-radius: 100% 0 0 0; }
+</style>
+</head>
+<body data-budget="140">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>共好永續力 · S1 Hero</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s2-who-we-are.html">下一區 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">共好永續力 · S1</span>
+  <h1>你們是誰？這一頁會給我什麼？</h1>
+  <p>現況：可見 136 字、深色底（規則：Hero 用淺色，全頁深色只能一次）、沒有形狀主視覺。本區在主線中的角色：<b>整道拱第一次出現</b>，而且看得出它是一塊一塊砌起來的。沒有上一區；下一區接「橋墩＝人」。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>淺色兩欄，文案全部常駐</h2><span class="tag">UX 元件：無（靜態）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec"><div class="hero two">
+      <div>
+        <p class="eyebrow">共好永續力</p>
+        <h1 class="h1">陪跑<span class="sep" aria-hidden="true">｜</span>連結<span class="sep" aria-hidden="true">｜</span><em>創造影響力</em></h1>
+        <p class="sub">我們相信，永續不該只是一份報告，而是一種能被實踐、被分享、被持續滋養的影響力。</p>
+        <p class="small" style="margin-top:12px;max-width:36em">共好玟化陪伴企業、社會組織與公益機構，從「永續藍圖」走向「真正的永續影響力」，建立具備共學、共創與生態圈精神的永續循環。</p>
+        <div class="btns"><a class="btn btn-primary" href="#">預約 15 分鐘 Coffee Chat</a><a class="btn btn-ghost" href="#">了解我們的方法</a></div>
+      </div>
+      <svg class="arch" viewBox="0 0 520 290" aria-hidden="true"><path d="M40 270 A220 220 0 0 1 480 270" fill="none" stroke="#F25232" stroke-width="40" stroke-linecap="round"/><line x1="20" x2="500" y1="282" y2="282" stroke="#1F2022" stroke-opacity=".18" stroke-width="2" stroke-dasharray="2 10"/></svg>
+    </div></div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>客戶的 Hero 文案一字不動、全部看得到。</li><li>最容易實作。</li></ul></div>
+    <div><h3>風險</h3><ul><li>136 字貼著上限（140）；手機第一屏幾乎都是字，拱被推到第二屏。</li><li>一條實心弧和首頁 Hero 的拱太像，看不出「這一頁在講結構」。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>本區 → 我們是誰：只有章節膠囊，沒有形狀上的交接。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>拱石拱＝這一頁的讀法；說明段收合</h2><span class="tag">UX 元件：展開全文 ReadMore＋形狀圖解</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec"><div class="hero two">
+      <div>
+        <p class="eyebrow">共好永續力</p>
+        <h1 class="h1">陪跑<span class="sep" aria-hidden="true">｜</span>連結<span class="sep" aria-hidden="true">｜</span><em>創造影響力</em></h1>
+        <p class="sub">我們相信，永續不該只是一份報告，而是一種能被實踐、被分享、被持續滋養的影響力。</p>
+        <details class="more"><summary>我們陪誰、怎麼陪</summary><p class="small">共好玟化陪伴企業、社會組織與公益機構，從「永續藍圖」走向「真正的永續影響力」，建立具備共學、共創與生態圈精神的永續循環。</p></details>
+        <div class="btns" style="margin-top:18px"><a class="btn btn-primary" href="#">預約 15 分鐘 Coffee Chat</a><a class="btn btn-ghost" href="#">了解我們的方法</a></div>
+      </div>
+      <figure style="margin:0">
+        <svg class="arch" viewBox="0 0 520 290" aria-hidden="true">
+          <line x1="20" x2="500" y1="282" y2="282" stroke="#1F2022" stroke-opacity=".18" stroke-width="2" stroke-dasharray="2 10"/>
+          <!-- seven voussoirs; the middle one is left open for the keystone flame -->
+          <path d="M40 270 A220 220 0 0 1 480 270" fill="none" stroke="#F25232" stroke-width="44" pathLength="100" stroke-dasharray="12.6 1.9 12.6 1.9 12.6 16.4 12.6 1.9 12.6 1.9 12.6 100"/>
+          <rect x="14" y="246" width="52" height="30" fill="#4D515B"/><rect x="454" y="246" width="52" height="30" fill="#4D515B"/>
+          <image href="../../_shared/mark.svg" x="228" y="12" width="64" height="82"/>
+        </svg>
+        <ul class="map"><li>人</li><li>信念</li><li>方法</li><li>成果</li></ul>
+      </figure>
+    </div></div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>可見字數降到約 90；手機第一屏放得下標題、一句話、按鈕，拱緊接在下。</li><li>拱拆成拱石、兩座橋墩與拱心火焰：一眼看出「這頁在講橋的結構」。四個標籤就是全頁主線（人 → 信念 → 方法 → 成果）。</li><li>說明段仍在 HTML 裡（原生 details），搜尋得到。</li></ul></div>
+    <div><h3>風險</h3><ul><li>Hero 裡出現展開鈕不常見：要做成一行小字連結，不能像第三顆按鈕。</li><li>拱石拱與首頁花瓣拱同構，靠「石塊 vs 花瓣」「灰色橋墩」區分。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>本區 → 我們是誰：左腳的灰色橋墩預告下一段「人＝橋墩」；四個標籤依序對應後面的章節。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>置中、文字站在拱下；拱上的站點就是章節入口</h2><span class="tag">UX 元件：形狀導覽（四個站點連到章節）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec"><div class="under">
+      <svg viewBox="0 0 760 300" aria-hidden="true"><path d="M30 300 A350 350 0 0 1 730 300" fill="none" stroke="#F25232" stroke-width="26" stroke-linecap="round"/><image href="../../_shared/mark.svg" x="352" y="-6" width="56" height="72"/></svg>
+      <p class="eyebrow">共好永續力</p>
+      <h1 class="h1">陪跑<span class="sep" aria-hidden="true">｜</span>連結<span class="sep" aria-hidden="true">｜</span><em>創造影響力</em></h1>
+      <p class="sub">我們相信，永續不該只是一份報告，而是一種能被實踐、被分享、被持續滋養的影響力。</p>
+      <div class="btns"><a class="btn btn-primary" href="#">預約 15 分鐘 Coffee Chat</a></div>
+      <ul class="stops"><li><a href="#"><i></i>人</a></li><li><a href="#"><i></i>信念</a></li><li><a href="#"><i></i>方法</a></li><li><a href="#"><i></i>成果</a></li></ul>
+      <p class="vh">共好玟化陪伴企業、社會組織與公益機構，從「永續藍圖」走向「真正的永續影響力」，建立具備共學、共創與生態圈精神的永續循環。</p>
+    </div></div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>字最少（約 75）；拱直接罩住標題，舞台感最強。</li><li>四個站點可以點，Hero 就能分流。</li></ul></div>
+    <div><h3>風險</h3><ul><li>四個站點連結＋主按鈕＝五個可點目標，違反「Hero 不放第三顆按鈕」；而且正下方就是章節膠囊，功能重複。</li><li>文字站在拱下與首頁收尾 <code>CtaArcs</code>、共用 <code>CtaBand</code> 同構：一頁的開頭和結尾長得一樣。</li><li>說明段只剩螢幕閱讀器讀得到，等於對一般訪客刪掉客戶文案。</li><li>375px 時拱的高度吃掉半屏。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>本區 → 我們是誰：站點與膠囊重複，交接反而變吵。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+/* Proposal chrome + mock primitives shared by every pages-v2 proposal file.
+   Link order: _tokens.css, _geo.css, _proposal.css. Keep each proposal's own
+   <style> to what is unique to its three options. */
+
+html { scroll-padding-top: 56px; }
+.wrap { width: 100%; max-width: 1200px; margin-inline: auto; padding-inline: 16px; }
+@media (min-width: 860px) { .wrap { padding-inline: 40px; } }
+.vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ── Chrome (not part of the design) ── */
+.pp-bar .pp-sep { flex: 1; }
+.pp-bar a { color: #fff; opacity: .75; text-decoration: none; font-size: 12px; }
+.pp-bar a:hover { opacity: 1; text-decoration: underline; }
+.pp-intro { padding-block: 36px 28px; }
+.pp-intro h1 { font: 900 clamp(26px, 4.4vw, 40px)/1.25 var(--font-sans); margin: 12px 0 8px; }
+.pp-intro p { color: var(--ink-2); max-width: 72ch; margin: 0 0 6px; font-size: 15px; }
+.opt { border-top: 1px solid var(--line); }
+.opt[hidden] { display: none; }
+.opt-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding-block: 36px 18px; }
+.opt-head h2 { font: 700 clamp(18px, 2.4vw, 22px)/1.4 var(--font-sans); margin: 0; }
+.opt-head .tag { font: 500 13px/1.4 var(--font-sans); color: var(--ink-2); }
+/* Filled in by _proposal.js: characters visible before any interaction / folded */
+.opt-head .density { margin-left: auto; font: 700 12px/1 var(--font-display); background: #111; color: #fff; padding: 7px 10px; border-radius: 999px; }
+.opt-head .density[data-over="true"] { background: #B42318; }
+.mock { position: relative; overflow: clip; isolation: isolate; box-shadow: 0 0 0 1px var(--line); background: var(--paper); margin-inline: auto; transition: max-width .3s; }
+body[data-device="phone"] .mock { max-width: 375px; }
+.pp-card { padding-block: 24px 64px; }
+.pp-card .in { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 20px; display: grid; gap: 18px 36px; }
+@media (min-width: 860px) { .pp-card .in { grid-template-columns: 1fr 1fr; padding: 28px 32px; } }
+.pp-card h3 { font: 700 13px/1.4 var(--font-sans); letter-spacing: .1em; color: var(--orange-strong); margin: 0 0 6px; }
+.pp-card p, .pp-card li { font-size: 14.5px; line-height: 1.75; margin: 0; }
+.pp-card ul { margin: 0; padding-left: 1.2em; }
+.pp-card .wide { grid-column: 1 / -1; }
+
+/* ── Mock primitives (mirror the real components) ── */
+.sec { padding: 56px 20px; }
+@media (min-width: 860px) { .sec { padding: 80px 56px; } }
+body[data-device="phone"] .sec { padding: 56px 20px; }
+.sec.dark { background: var(--surface-dark); color: #fff; }
+.sec.sand { background: #F4EEE6; }
+.sec.white { background: #fff; }
+.eyebrow { display: inline-flex; align-items: center; font: 700 13px/1.4 var(--font-sans); letter-spacing: .12em; color: var(--orange-strong); margin: 0; }
+.eyebrow::before { content: ""; width: 28px; height: 2px; margin-right: 12px; background: linear-gradient(90deg, var(--orange) 70%, var(--yellow) 70%); }
+.dark .eyebrow { color: var(--yellow); }
+.h1 { font: 900 clamp(30px, 5vw, 50px)/1.28 var(--font-sans); margin: 18px 0 0; text-wrap: balance; }
+.h2 { font: 900 clamp(26px, 3.6vw, 42px)/1.28 var(--font-sans); margin: 14px 0 0; text-wrap: balance; }
+.h3 { font: 900 19px/1.4 var(--font-sans); margin: 0; }
+.lead { font-size: 17px; line-height: 1.85; color: var(--ink-2); margin: 14px 0 0; max-width: 34em; }
+.dark .lead { color: rgba(255,255,255,.78); }
+.small { font-size: 14px; line-height: 1.8; color: var(--ink-2); margin: 0; }
+.dark .small { color: rgba(255,255,255,.75); }
+.num { font: 700 44px/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 24px; border-radius: 999px; font: 700 15px/1.3 var(--font-sans); text-decoration: none; border: 1.5px solid transparent; cursor: pointer; }
+.btn-primary { background: var(--orange-strong); color: #fff; }
+.btn-ghost { border-color: rgba(31,32,34,.25); color: var(--ink); background: transparent; }
+.dark .btn-ghost { border-color: rgba(255,255,255,.4); color: #fff; }
+.btn-line { background: #06C755; color: #073B1A; }
+.btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.link { font: 700 14px/1.4 var(--font-sans); color: var(--orange-strong); text-decoration: none; }
+.link::after { content: " →"; }
+.dark .link { color: var(--yellow); }
+.chip { display: inline-flex; align-items: center; min-height: 30px; padding: 0 12px; border-radius: 999px; background: var(--yellow-soft); font: 700 12px/1 var(--font-sans); color: var(--ink); }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 22px; }
+.dark .card { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.15); }
+.grid { display: grid; gap: 16px; }
+@media (min-width: 860px) { .grid.c2 { grid-template-columns: 1fr 1fr; } .grid.c3 { grid-template-columns: repeat(3, 1fr); } .grid.c4 { grid-template-columns: repeat(4, 1fr); } }
+body[data-device="phone"] .grid { grid-template-columns: 1fr !important; }
+
+/* Tabs: <div class="tabs" data-tabs><div class="tablist"><button aria-selected="true">…</button>…</div><div class="panel">…</div><div class="panel" hidden>…</div></div> */
+.tablist { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+.tablist button { flex: none; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 0; background: rgba(31,32,34,.06); font: 700 14px/1 var(--font-sans); color: var(--ink); cursor: pointer; }
+.tablist button[aria-selected="true"] { background: var(--ink); color: #fff; }
+.dark .tablist button { background: rgba(255,255,255,.1); color: #fff; }
+.dark .tablist button[aria-selected="true"] { background: var(--yellow); color: var(--ink); }
+.panel { margin-top: 22px; }
+
+/* Fold rows (native details) */
+.fold { border-block: 1px solid var(--line); }
+.fold details + details { border-top: 1px solid var(--line); }
+.fold summary { display: flex; align-items: center; gap: 14px; min-height: 56px; padding: 14px 0; font: 700 16px/1.5 var(--font-sans); cursor: pointer; list-style: none; }
+.fold summary::-webkit-details-marker { display: none; }
+.fold summary::after { content: "＋"; margin-left: auto; color: var(--ink-2); }
+.fold details[open] summary::after { content: "－"; }
+.fold .body { padding: 0 0 20px; font-size: 14.5px; line-height: 1.9; color: var(--ink-2); }
+.dark .fold, .dark .fold details + details { border-color: rgba(255,255,255,.15); }
+.dark .fold .body { color: rgba(255,255,255,.78); }
+
+/* Snap rail */
+.rail { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 6px; }
+.rail > * { flex: none; width: 82%; scroll-snap-align: start; }
+@media (min-width: 860px) { .rail > * { width: 31.5%; } }
+body[data-device="phone"] .rail > * { width: 82%; }

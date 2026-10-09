@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>合作洽詢 · S6 聯絡表單 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<style>
+.mock { container-type: inline-size; }
+.form { display: grid; gap: 16px; background: #fff; color: var(--ink); border-radius: 26px; padding: 22px 20px; }
+@container (min-width: 760px) { .form { padding: 30px; } .form .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; } }
+.form .two { display: grid; gap: 16px; }
+.form label, .form legend { display: block; font: 700 14px/1.4 var(--font-sans); margin: 0 0 8px; padding: 0; }
+.form input, .form textarea { width: 100%; min-height: 48px; border: 1px solid #DCD5CB; border-radius: 12px; padding: 10px 14px; font: inherit; }
+.form fieldset { border: 0; margin: 0; padding: 0; }
+.topics { display: flex; flex-wrap: wrap; gap: 8px; }
+.topics span { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line); font: 500 14px/1 var(--font-sans); }
+.topics span.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+.form .btn { width: 100%; border: 0; }
+.form .hint { font-size: 12px; line-height: 1.7; color: var(--ink-2); margin: 0; }
+.meta { margin: 22px 0 0; padding: 0; list-style: none; font-size: 14px; line-height: 2; }
+.eqs { display: flex; align-items: center; gap: 12px; margin-top: 26px; }
+.eqs .geo { --s: clamp(44px, 12cqw, 64px); }
+.eqs .op { font: 900 22px/1 var(--font-display); opacity: .6; }
+
+/* A — the dark keystone block on paper (not full-bleed) */
+.key { background: var(--surface-dark); color: #fff; border-radius: 32px; padding: 30px 18px 18px; display: grid; gap: 28px; }
+@container (min-width: 760px) { .key { grid-template-columns: .85fr 1.15fr; gap: 44px; padding: 48px; align-items: start; } }
+.key .eyebrow { color: var(--yellow); }
+.key .lead { color: rgba(255,255,255,.78); }
+.key .meta a { color: #fff; }
+.key .alt { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 22px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.15); font-weight: 700; }
+
+/* B — two equal ways in */
+.ways { display: grid; gap: 16px; margin-top: 28px; }
+@container (min-width: 760px) { .ways { grid-template-columns: .7fr 1.3fr; align-items: start; } }
+.linecard { background: #fff; border-radius: 26px; padding: 26px 22px; }
+.qr { width: 120px; aspect-ratio: 1; margin-top: 16px; border-radius: 12px; background: repeating-conic-gradient(var(--ink) 0 25%, #fff 0 50%) 0 0 / 16px 16px; }
+
+/* C — two steps */
+.step { font: 700 12px/1 var(--font-display); color: var(--ink-2); }
+.big { display: grid; gap: 8px; }
+@container (min-width: 760px) { .big { grid-template-columns: 1fr 1fr; } }
+.big span { display: flex; align-items: center; min-height: 52px; padding: 0 18px; border-radius: 14px; border: 1px solid var(--line); font: 700 15px/1.3 var(--font-sans); }
+.big span.on { border-color: var(--orange-strong); box-shadow: inset 0 0 0 1px var(--orange-strong); }
+</style>
+</head>
+<body data-budget="170">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>合作洽詢 · S6 聯絡表單</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s5-faq.html">← 上一區</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">合作洽詢 · S6</span>
+  <h1>我準備好了，怎麼送出？</h1>
+  <p>現況：可見 180 字；滿版深色段緊貼同色的頁尾，表單看起來像放在頁尾裡。方向選項的點擊高度只有 36px。表單沒有後端：送出會開啟訪客的郵件軟體（B01，維持不變），LINE 是零摩擦的替代路徑。</p>
+  <p>本區在主線中的角色：<b>花瓣 ＋ 方塊 ＝ 四分圓</b>——Hero 的等式在這裡解開，全頁唯一的大聲時刻。本區就是收尾，不另加 CtaBand。別頁有 12 處連到 <code>#contact</code>。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>米白底上的深色合龍塊</h2><span class="tag">表單卡＋形狀重組（不需要額外互動）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec" style="padding-inline:12px">
+      <div class="key">
+        <div>
+          <p class="eyebrow">聯絡表單</p>
+          <h2 class="h2">預約合作諮詢</h2>
+          <p class="lead">填寫以下表單，我們將盡快與您聯繫安排 Coffee Chat。</p>
+          <div class="eqs" aria-hidden="true"><span class="geo geo-petal c-yellow"></span><span class="op">＋</span><span class="geo geo-block" style="--c:#8A8E97"></span><span class="op">＝</span><span class="geo geo-quarter c-orange"></span></div>
+          <ul class="meta"><li><a href="#">pt@coesg.tw</a></li><li>週一至週五 09:00–18:00</li></ul>
+          <p class="alt">想更快一點？<a class="btn btn-line" href="#">加入官方 LINE</a></p>
+        </div>
+        <div class="form">
+          <div class="two"><div><label>您的姓名 *</label><input placeholder="請輸入姓名"></div><div><label>電子郵件 *</label><input placeholder="example@email.com"></div></div>
+          <div><label>所屬單位</label><input placeholder="企業名稱或組織名稱"></div>
+          <fieldset><legend>想聊的方向</legend><div class="topics"><span class="on">永續品牌顧問輔導</span><span>永續白皮書</span><span>課程／工作坊</span><span>非營利合作</span><span>其他</span></div></fieldset>
+          <div><label>您的需求或訊息</label><textarea rows="3" placeholder="請簡單描述您的合作需求或想聊的主題..."></textarea></div>
+          <button class="btn btn-primary" type="button">送出預約</button>
+          <p class="hint">按下送出後，會開啟您的郵件軟體並帶入內容，寄出即完成。</p>
+        </div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>深色只出現這一次，而且是一塊「物件」：四周的米白把它和同色的頁尾分開，白色表單卡是全頁對比最強的地方。</li><li>等式在標題旁解開：虛線框變成實心橘色四分圓，整頁的主線在送出按鈕旁收尾。</li><li>LINE 就在表單旁（手機上在表單上方），不想寫信的人不用離開這一屏。</li></ul></div>
+    <div><h3>風險</h3><ul><li>深色底上的方塊不能用品牌冷灰（對比不足），改用較淺的冷灰 <code>#8A8E97</code>（首頁證據區已使用）。</li><li>手機上深色塊左右只留 12px，圓角要夠大才讀得出它不是滿版。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>常見問題 → 本區：花瓣與方塊捲入時從兩側靠攏、四分圓就位（T9，本頁第二處捲動動畫）。</li><li>本區 → 頁尾：深色塊下方留一段米白，再接頁尾。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>兩條路並排：LINE 或表單</h2><span class="tag">兩張等重的卡片（淺色）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec sand">
+      <p class="eyebrow">聯絡表單</p>
+      <h2 class="h2">預約合作諮詢</h2>
+      <p class="lead">填寫以下表單，我們將盡快與您聯繫安排 Coffee Chat。</p>
+      <div class="ways">
+        <div class="linecard"><h3 class="h3">想更快一點？</h3><div class="qr" aria-hidden="true"></div><p class="small" style="margin-top:12px">@381iutjm</p><div class="btns" style="margin-top:14px"><a class="btn btn-line" href="#">加入官方 LINE</a></div><p class="small" style="margin-top:18px"><a href="#">pt@coesg.tw</a></p></div>
+        <div class="form">
+          <div class="two"><div><label>您的姓名 *</label><input></div><div><label>電子郵件 *</label><input></div></div>
+          <div><label>所屬單位</label><input></div>
+          <fieldset><legend>想聊的方向</legend><div class="topics"><span class="on">永續品牌顧問輔導</span><span>永續白皮書</span><span>課程／工作坊</span><span>非營利合作</span><span>其他</span></div></fieldset>
+          <div><label>您的需求或訊息</label><textarea rows="3"></textarea></div>
+          <button class="btn btn-primary" type="button">送出預約</button>
+          <p class="hint">按下送出後，會開啟您的郵件軟體並帶入內容，寄出即完成。</p>
+        </div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>表單會開啟郵件軟體，對沒有設定郵件軟體的人等於沒反應；把 LINE 提升成等重的一條路，漏接最少。</li><li>淺色底上，花瓣、方塊、四分圓都能用原本的角色顏色。</li><li>桌機可以直接掃 QR。</li></ul></div>
+    <div><h3>風險</h3><ul><li>全頁沒有大聲時刻：沙色在 S4 已經用過，收尾和前面的區塊一樣重。</li><li>兩張等重的卡片＝兩個主要行動，違反「每頁只有一個主要行動」；綠色與橘色兩顆大按鈕並排。</li><li>等式沒有位置：主線在最後一段沒有收尾。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>常見問題 → 本區：米白接沙色，和 S3 → S4 的交界重複。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>兩步驟：先選方向，再留資料</h2><span class="tag">分步表單（第二步收合）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec">
+      <p class="eyebrow">聯絡表單</p>
+      <h2 class="h2">預約合作諮詢</h2>
+      <p class="lead">填寫以下表單，我們將盡快與您聯繫安排 Coffee Chat。</p>
+      <div class="form" style="margin-top:26px;box-shadow:0 0 0 1px var(--line)">
+        <p class="step">1 / 2</p>
+        <fieldset><legend>想聊的方向</legend><div class="big"><span class="on">永續品牌顧問輔導</span><span>永續白皮書</span><span>課程／工作坊</span><span>非營利合作</span><span>其他</span></div></fieldset>
+        <button class="btn btn-primary" type="button">下一步</button>
+        <div hidden>您的姓名 * 電子郵件 * 所屬單位 您的需求或訊息 送出預約 按下送出後，會開啟您的郵件軟體並帶入內容，寄出即完成。</div>
+      </div>
+      <p class="small" style="margin-top:18px">想更快一點？<a href="#">加入官方 LINE</a>　<a href="#">pt@coesg.tw</a></p>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>第一眼只有五個大選項，可見字數最少，手機上很好按。</li><li>S2 選過起點的人，第一步已經選好，直接按下一步。</li></ul></div>
+    <div><h3>風險</h3><ul><li>表單只有五個欄位，拆成兩步是多一次點擊，不是少一點負擔；看不到全部欄位的人不知道要留什麼資料。</li><li>分步需要 JavaScript；沒有的時候第二步要整個攤開，版面跳動。</li><li>送出按鈕與「會開啟郵件軟體」的說明都在第二步，訪客到最後才知道不是站內送出。</li><li>沒有深色、沒有等式：收尾的音量和 FAQ 一樣。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>S2 → 本區：起點帶到表單的想法是對的（A 也採用），但不需要為此把表單拆開。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>合作洽詢 · S1 Hero 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<style>
+/* Layouts switch on the mock's own width so the 375px toggle is honest */
+.mock { container-type: inline-size; }
+.hero { display: grid; gap: 40px; align-items: center; }
+@container (min-width: 760px) { .hero.split { grid-template-columns: 1.1fr 1fr; gap: 56px; } }
+.op { font: 900 28px/1 var(--font-display); color: var(--ink-2); }
+.cap { font: 700 12px/1.4 var(--font-sans); color: var(--ink); margin-top: 10px; text-align: center; }
+
+/* A — the unsolved equation */
+.eq { display: flex; align-items: flex-start; justify-content: center; gap: clamp(8px, 2.4cqw, 22px); }
+.eq > div { display: flex; flex-direction: column; align-items: center; width: clamp(72px, 22cqw, 120px); }
+.eq .geo { --s: clamp(64px, 19cqw, 112px); }
+.eq .op { align-self: center; margin-bottom: 28px; }
+.slot { border: 3px dashed var(--orange); background: transparent; border-radius: 100% 0 0 0; }
+
+/* B — chooser in the first screen */
+.pick { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; }
+.pick a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 999px; background: #fff; border: 1px solid var(--line); font: 700 14px/1 var(--font-sans); color: var(--ink); text-decoration: none; }
+.pick .geo { --s: 14px; }
+.gap { display: flex; align-items: flex-end; justify-content: space-between; border-bottom: 2px dashed rgba(31,32,34,.2); padding-bottom: 0; max-width: 420px; margin-inline: auto; }
+.gap .geo { --s: clamp(72px, 24cqw, 120px); }
+
+/* C — a quarter of the clock */
+.center { text-align: center; }
+.center .lead, .center .h1 { margin-inline: auto; }
+.center .btns { justify-content: center; }
+.dial { position: relative; width: clamp(150px, 44cqw, 220px); aspect-ratio: 1; margin: 0 auto 28px; border-radius: 50%; border: 3px solid var(--line); background: #fff; }
+.dial i { position: absolute; left: 50%; bottom: 50%; width: 50%; height: 50%; background: var(--orange); border-radius: 0 100% 0 0; }
+.dial b { position: absolute; inset: 0; display: grid; place-items: center; font: 800 clamp(34px, 9cqw, 48px)/1 var(--font-display); color: var(--ink); padding-top: 46%; }
+.facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 18px 0 0; padding: 0; list-style: none; }
+</style>
+</head>
+<body data-budget="110">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>合作洽詢 · S1 Hero</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s2-solutions.html">下一區 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">合作洽詢 · S1</span>
+  <h1>這一頁能幫我做什麼？要花多少時間？</h1>
+  <p>現況：可見 196 字（上限 140）、7 個連結；承諾與「五選一起點」同時搶第一屏，右側是深色卡片（Hero 不該用深色）。客戶在 C01 要求刪除的三個承諾標籤被換了字放回來。</p>
+  <p>本區在主線中的角色：等式第一次出現——<b>花瓣 ＋ 方塊 ＝ ？</b>，等號右邊還是空的。本區交給下一區的形狀：花瓣（落在交界上，被第一個起點接住）。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>還沒解開的等式</h2><span class="tag">形狀本身（不需要互動）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec hero split">
+      <div>
+        <p class="eyebrow">合作洽詢</p>
+        <h1 class="h1">預約 15 分鐘 Coffee Chat</h1>
+        <p class="lead">讓我們聊聊如何點亮你的專業價值。無論你是品牌主、供應鏈夥伴、還是永續產業的參與者，我們都期待與你對話。</p>
+        <div class="btns"><a class="btn btn-primary" href="#">預約諮詢時段 ↓</a><a class="btn btn-ghost" href="#">用 LINE 直接問</a></div>
+      </div>
+      <div class="eq">
+        <div><span class="geo geo-petal c-yellow"></span><p class="cap">有理念的品牌</p></div>
+        <span class="op" aria-hidden="true">＋</span>
+        <div><span class="geo geo-block c-grey"></span><p class="cap">找夥伴的企業</p></div>
+        <span class="op" aria-hidden="true">＝</span>
+        <div><span class="geo slot"></span><p class="cap">先聊 15 分鐘</p></div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>一屏只講一件事：約 15 分鐘。兩顆按鈕＝本頁的主要與次要下一步。</li><li>等式用三個形狀說完「誰和誰、在這裡接起來」，空的虛線框留了懸念，答案在表單。</li><li>四分圓剛好是鐘面的 15 分鐘：形狀本身就是承諾。</li></ul></div>
+    <div><h3>風險</h3><ul><li>五選一不在首屏：還沒準備好預約的人要往下捲一屏（章節膠囊第一顆就是它）。</li><li>等式需要三個短標籤才讀得懂，標籤不能再長。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>本區 → 服務項目：等式裡的黃花瓣落在交界線上，成為第一個分頁籤的記號（T1 形狀接力）。</li><li>本區 → 聯絡表單：同一道等式在表單解開，虛線框變成實心橘色。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>起點就在第一屏</h2><span class="tag">錨點連結列（跳到下一區對應的分頁籤）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec hero split">
+      <div>
+        <p class="eyebrow">合作洽詢</p>
+        <h1 class="h1">預約 15 分鐘 Coffee Chat</h1>
+        <p class="small" style="margin-top:22px;font-weight:700;color:var(--ink)">不確定從哪裡開始？</p>
+        <ul class="pick">
+          <li><a href="#"><span class="geo geo-petal c-yellow"></span>品牌定位</a></li>
+          <li><a href="#"><span class="geo geo-petal c-yellow"></span>對外文件</a></li>
+          <li><a href="#"><span class="geo geo-block c-grey"></span>團隊學習</a></li>
+          <li><a href="#"><span class="geo geo-petal c-orange"></span>非營利組織</a></li>
+          <li><a href="#"><span class="geo geo-quarter c-orange"></span>小額開始</a></li>
+        </ul>
+        <div class="btns"><a class="btn btn-primary" href="#">預約諮詢時段 ↓</a></div>
+      </div>
+      <div>
+        <div class="gap"><span class="geo geo-petal c-yellow"></span><span class="geo geo-block c-grey"></span></div>
+        <p class="cap">兩端之間，還差 15 分鐘</p>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>五個起點不用捲動就看得到，字數比現況少一半以上。</li><li>每個起點帶著自己的形狀記號，和下一區的分頁籤一致。</li></ul></div>
+    <div><h3>風險</h3><ul><li>首屏有六個可點的東西，主按鈕被五顆膠囊稀釋——和現況同一個毛病。</li><li>膠囊跳到下一區後還要再看一次同樣五個分頁籤：同一個選擇做兩次。</li><li>少了一句說明，從搜尋進站的人不知道「Coffee Chat」是什麼。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>本區 → 服務項目：膠囊就是分頁籤的預告，但兩區長得太像，交界不明顯。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>鐘面上的四分之一</h2><span class="tag">置中單欄＋承諾標籤</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec center">
+      <div class="dial" aria-hidden="true"><i></i><b>15</b></div>
+      <p class="eyebrow">合作洽詢</p>
+      <h1 class="h1">預約 15 分鐘 Coffee Chat</h1>
+      <p class="lead">讓我們聊聊如何點亮你的專業價值。</p>
+      <ul class="facts"><li class="chip">免費</li><li class="chip">線上 15 分鐘</li><li class="chip">不推銷，只給下一步建議</li></ul>
+      <div class="btns"><a class="btn btn-primary" href="#">預約諮詢時段 ↓</a><a class="btn btn-ghost" href="#">用 LINE 直接問</a></div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>字數最少；鐘面的四分之一＝15 分鐘，一眼就懂。</li><li>置中單欄在手機上不用重排。</li></ul></div>
+    <div><h3>風險</h3><ul><li>只有四分圓，沒有花瓣與方塊：看不出「兩端在這裡接起來」，主線斷在第一屏。</li><li>三個承諾標籤正是客戶在 C01 要求刪除的東西。</li><li>說明被截成半句，客戶原文的後半（對象是誰）不見了。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>本區 → 服務項目：沒有可以交給下一區的形狀，只能靠留白。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>共好永續力 · S4 我們怎麼做 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<style>
+.mock { container-type: inline-size; }
+.span { display: block; width: 100%; margin-top: 30px; }
+.steps { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 16px; margin: 8px 0 0; padding: 0; list-style: none; }
+@container (min-width: 760px) { .steps { grid-template-columns: repeat(4, 1fr); gap: 24px; } }
+.steps li { border-top: 5px solid var(--c); padding-top: 12px; }
+.steps b { display: block; font: 900 21px/1.3 var(--font-sans); }
+.steps i { display: block; font: 700 13px/1.5 var(--font-display); font-style: normal; color: var(--ink-2); }
+.steps span { display: block; margin-top: 6px; font-size: 14px; line-height: 1.7; color: var(--ink-2); }
+.cols { display: grid; gap: 34px; margin-top: 44px; }
+@container (min-width: 760px) { .cols { grid-template-columns: 1.15fr 1fr; gap: 56px; align-items: start; } }
+.cols > div > p:first-child { font: 700 15px/1.6 var(--font-sans); margin: 0 0 12px; }
+.fold summary em { font: 700 13px/1 var(--font-sans); font-style: normal; color: var(--orange-strong); flex: none; }
+.codes { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 4px; padding: 0; list-style: none; }
+.codes li { display: inline-flex; align-items: center; height: 34px; padding: 0 12px; background: var(--ink); color: var(--yellow); font: 700 14px/1 var(--font-display); border-radius: 8px; }
+.sdg { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; } .sdg b { display: block; color: var(--ink); }
+/* A */
+.piers { display: grid; gap: 14px; } @container (min-width: 760px) { .piers { grid-template-columns: repeat(3, 1fr); } }
+.pier { background: #fff; border-top: 6px solid var(--orange); padding: 18px; } .pier em { font: 700 12px/1 var(--font-sans); font-style: normal; color: var(--orange-strong); }
+/* C */
+.scard { background: #fff; border-radius: 18px; padding: 20px; height: 100%; } .scard i { font: 700 12px/1 var(--font-display); font-style: normal; color: var(--orange-strong); }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.pills button { min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1.5px solid rgba(31,32,34,.25); background: none; font: 700 14px/1 var(--font-sans); cursor: pointer; }
+</style>
+</head>
+<body data-budget="260">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>共好永續力 · S4 我們怎麼做</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s3-vision.html">← 上一區</a><a href="s5-difference.html">下一區 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">共好永續力 · S4</span>
+  <h1>你們的方法是什麼？有對齊國際標準嗎？</h1>
+  <p>現況：我們怎麼做（343 字：IOOI 四張卡＋三支柱三張卡）＋對齊的全球目標（181 字）兩個區塊，合計 524 字，SDGs 從選單到不了。本區在主線中的角色：<b>拱一段一段完成</b>——投入 → 產出 → 成果 → 影響力。上一區交接過來的形狀：五塊分開的拱石。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>三個分頁：IOOI 模型／三大支柱／全球目標</h2><span class="tag">UX 元件：分頁 Tabs</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec">
+      <p class="eyebrow">我們怎麼做</p>
+      <h2 class="h2">從藍圖到影響力</h2>
+      <div class="tabs" data-tabs style="margin-top:24px">
+        <div class="tablist"><button aria-selected="true">IOOI 模型</button><button aria-selected="false">三大支柱</button><button aria-selected="false">全球目標</button></div>
+        <div class="panel">
+          <p class="small" style="font-size:16px;max-width:36em">我們以 IOOI 模型作為核心框架，協助組織把每一分投入，一路推進到真實的社會影響：</p>
+          <ol class="steps" style="margin-top:20px">
+            <li style="--c:#8A8E97"><b>投入</b><i>Input</i><span>盤點組織的人力、資源與既有行動</span></li>
+            <li style="--c:#FAB40A"><b>產出</b><i>Output</i><span>課程、白皮書、活動等具體成果</span></li>
+            <li style="--c:#F25232"><b>成果</b><i>Outcome</i><span>利害關係人行為與能力的改變</span></li>
+            <li style="--c:#C0391A"><b>影響力</b><i>Impact</i><span>長期、可被衡量的社會與環境改變</span></li>
+          </ol>
+        </div>
+        <div class="panel" hidden><p class="small" style="font-size:16px">在這個框架下，我們透過三大支柱展開服務：</p><div class="piers" style="margin-top:16px">
+          <div class="pier"><em>支柱一</em><h3 class="h3">永續教育與課程</h3><p class="small">協助企業內部建立永續識能，推動永續教育與影響力思維，讓永續成為組織的共同語言。</p></div>
+          <div class="pier"><em>支柱二</em><h3 class="h3">影響力顧問專案</h3><p class="small">提供系統性引導，協助企業釐清永續願景、制定策略、產出永續白皮書，並對應 ESG 評估標準與政府法規。</p></div>
+          <div class="pier"><em>支柱三</em><h3 class="h3">永續生態圈建立</h3><p class="small">定期舉辦ESG共學坊、搭建互動交流平台，推動企業間經驗分享，形成相互滋養的永續生態網絡。</p></div></div></div>
+        <div class="panel" hidden><h3 class="h3">每一項服務，都呼應聯合國永續發展目標</h3><ul class="sdg small" style="margin-top:14px">
+          <li><b>SDG 4.7　優質教育</b>促進所有人習得推動永續發展所需的知識與技能，包括永續生活模式、人權與文化對永續發展的貢獻。</li>
+          <li><b>SDG 12.6　責任消費及生產</b>協助更多企業採用永續發展作法，將永續資訊融入企業營運與採購計畫，讓報告不只是形式。</li>
+          <li><b>SDG 17.17　多元夥伴關係</b>持續與政府、企業及非營利組織建立合作夥伴關係，共同開展合作項目。</li></ul></div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>可見約 160 字；三組內容各有一頁，直接用共用元件。</li></ul></div>
+    <div><h3>風險</h3><ul><li>「三大支柱」是客戶整套論述的骨架，預設被藏在第二個分頁，三秒掃不到支柱名稱。</li><li>三組內容不是互斥的選項，而是「框架 → 在框架下怎麼展開 → 對齊什麼」的因果順序；分頁把順序拆掉。</li><li>沒有拱：主線在「方法」這一段沒有畫面。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：五塊拱石沒有被接住。</li><li>本區 → 我們的不同：靠深色段的弧切邊界。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>一道弧分四段（IOOI 常駐）＋三座橋墩逐列展開＋SDG 收合</h2><span class="tag">UX 元件：形狀圖解＋可展開列 FoldList＋展開全文 ReadMore</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec">
+      <p class="eyebrow">我們怎麼做</p>
+      <h2 class="h2">從藍圖到影響力</h2>
+      <p class="lead">我們以 IOOI 模型作為核心框架，協助組織把每一分投入，一路推進到真實的社會影響：</p>
+      <svg class="span" viewBox="0 0 800 130" aria-hidden="true" fill="none" stroke-width="22">
+        <path d="M14 118 C 200 -20, 600 -20, 786 118" pathLength="100" stroke="#8A8E97" stroke-dasharray="23.8 76.2"/>
+        <path d="M14 118 C 200 -20, 600 -20, 786 118" pathLength="100" stroke="#FAB40A" stroke-dasharray="23.8 76.2" stroke-dashoffset="-25.4"/>
+        <path d="M14 118 C 200 -20, 600 -20, 786 118" pathLength="100" stroke="#F25232" stroke-dasharray="23.8 76.2" stroke-dashoffset="-50.8"/>
+        <path d="M14 118 C 200 -20, 600 -20, 786 118" pathLength="100" stroke="#C0391A" stroke-dasharray="23.8 76.2" stroke-dashoffset="-76.2"/>
+      </svg>
+      <ol class="steps">
+        <li style="--c:#8A8E97"><b>投入</b><i>Input</i><span>盤點組織的人力、資源與既有行動</span></li>
+        <li style="--c:#FAB40A"><b>產出</b><i>Output</i><span>課程、白皮書、活動等具體成果</span></li>
+        <li style="--c:#F25232"><b>成果</b><i>Outcome</i><span>利害關係人行為與能力的改變</span></li>
+        <li style="--c:#C0391A"><b>影響力</b><i>Impact</i><span>長期、可被衡量的社會與環境改變</span></li>
+      </ol>
+      <div class="cols">
+        <div><p>在這個框架下，我們透過三大支柱展開服務：</p>
+          <div class="fold">
+            <details name="p"><summary><em>支柱一</em>永續教育與課程</summary><div class="body">協助企業內部建立永續識能，推動永續教育與影響力思維，讓永續成為組織的共同語言。</div></details>
+            <details name="p"><summary><em>支柱二</em>影響力顧問專案</summary><div class="body">提供系統性引導，協助企業釐清永續願景、制定策略、產出永續白皮書，並對應 ESG 評估標準與政府法規。</div></details>
+            <details name="p"><summary><em>支柱三</em>永續生態圈建立</summary><div class="body">定期舉辦ESG共學坊、搭建互動交流平台，推動企業間經驗分享，形成相互滋養的永續生態網絡。</div></details>
+          </div></div>
+        <div><p>對齊的全球目標</p>
+          <ul class="codes"><li>4.7</li><li>12.6</li><li>17.17</li></ul>
+          <div class="fold" style="border:0"><details><summary>每一項服務，都呼應聯合國永續發展目標</summary><div class="body"><ul class="sdg">
+            <li><b>SDG 4.7　優質教育</b>促進所有人習得推動永續發展所需的知識與技能，包括永續生活模式、人權與文化對永續發展的貢獻。</li>
+            <li><b>SDG 12.6　責任消費及生產</b>協助更多企業採用永續發展作法，將永續資訊融入企業營運與採購計畫，讓報告不只是形式。</li>
+            <li><b>SDG 17.17　多元夥伴關係</b>持續與政府、企業及非營利組織建立合作夥伴關係，共同開展合作項目。</li></ul></div></details></div></div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>IOOI 是一個「先後」流程，用一道由冷灰到深橘的弧表達，比四張卡加箭頭直接；四步的一句說明都短（13–15 字），留在掃讀層。</li><li>三大支柱的名稱常駐、說明逐列展開（同名互斥），是「多筆標題＋一段說明」的標準解法。</li><li>SDG 編號看得到，三段說明收在一列裡。可見約 230 字（合併前 524）。</li></ul></div>
+    <div><h3>風險</h3><ul><li>一個區塊裡有三層資訊（弧、支柱、SDG），桌機要用兩欄把後兩者壓在同一屏。</li><li>弧在 375px 只剩 335px 寬，四段要夠粗（≥ 14px）才分得出顏色。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：上一段五塊分開的拱石，在這裡連成一道弧。</li><li>本區 → 我們的不同：弧的最後一段是最深的橘，下方緊接深色段的拱形頂部（交界 4，T4）。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>IOOI 四張卡橫向滑軌；支柱與 SDG 點開看面板</h2><span class="tag">UX 元件：橫向滑軌 SnapRail＋彈出面板 Sheet</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec">
+      <p class="eyebrow">我們怎麼做</p>
+      <h2 class="h2">從藍圖到影響力</h2>
+      <p class="lead">我們以 IOOI 模型作為核心框架，協助組織把每一分投入，一路推進到真實的社會影響：</p>
+      <div class="rail" style="margin-top:24px">
+        <div class="scard"><i>STEP 1</i><h3 class="h3" style="margin-top:22px">投入 <small>Input</small></h3><p class="small">盤點組織的人力、資源與既有行動</p></div>
+        <div class="scard"><i>STEP 2</i><h3 class="h3" style="margin-top:22px">產出 <small>Output</small></h3><p class="small">課程、白皮書、活動等具體成果</p></div>
+        <div class="scard"><i>STEP 3</i><h3 class="h3" style="margin-top:22px">成果 <small>Outcome</small></h3><p class="small">利害關係人行為與能力的改變</p></div>
+        <div class="scard"><i>STEP 4</i><h3 class="h3" style="margin-top:22px">影響力 <small>Impact</small></h3><p class="small">長期、可被衡量的社會與環境改變</p></div>
+      </div>
+      <p class="small" style="margin:30px 0 10px;font-weight:700;color:var(--ink)">在這個框架下，我們透過三大支柱展開服務：</p>
+      <ul class="pills"><li><button type="button">永續教育與課程</button></li><li><button type="button">影響力顧問專案</button></li><li><button type="button">永續生態圈建立</button></li></ul>
+      <p class="small" style="margin:24px 0 10px;font-weight:700;color:var(--ink)">對齊的全球目標</p>
+      <ul class="pills"><li><button type="button">SDG 4.7 優質教育</button></li><li><button type="button">SDG 12.6 責任消費及生產</button></li><li><button type="button">SDG 17.17 多元夥伴關係</button></li></ul>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>手機上滑軌很順，一次看一步。</li><li>支柱與 SDG 的名稱都看得到。</li></ul></div>
+    <div><h3>風險</h3><ul><li><b>六個面板的內容都不在初始 HTML</b>：三大支柱與 SDG 的說明是客戶新提供的品牌論述，不能對搜尋引擎消失。</li><li>IOOI 是四步連續的流程，滑軌一次只看得到一步半，「一路推進」的感覺被切斷；桌機還是得四張並排，等於現況。</li><li>六顆外框按鈕看起來像行動按鈕，和主要行動搶視線。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：沒有拱，接不上拱石。</li><li>本區 → 我們的不同：靠弧切邊界。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

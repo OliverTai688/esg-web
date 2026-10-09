@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>合作洽詢 · S5 常見問題 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<style>
+.mock { container-type: inline-size; }
+.cols { display: grid; gap: 28px; }
+@container (min-width: 760px) { .cols { grid-template-columns: .8fr 1.2fr; gap: 56px; } }
+.ask { font-size: 14px; color: var(--ink-2); margin: 22px 0 0; }
+.ask a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; }
+
+/* C — question cards that open a sheet */
+.qs { display: grid; gap: 10px; margin-top: 26px; }
+@container (min-width: 760px) { .qs { grid-template-columns: 1fr 1fr; } }
+.qs button { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 60px; padding: 12px 18px; border-radius: 16px; border: 1px solid var(--line); background: #fff; font: 700 15px/1.5 var(--font-sans); color: var(--ink); text-align: left; cursor: pointer; }
+.qs button::after { content: "↗"; color: var(--ink-2); }
+</style>
+</head>
+<body data-budget="100">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>合作洽詢 · S5 常見問題</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s4-membership.html">← 上一區</a><a href="s6-contact.html">下一區 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">合作洽詢 · S5</span>
+  <h1>送出之前，我還有什麼不確定的？</h1>
+  <p>現況：可見 144 字、收合 262 字；第一題預設打開。小標寫「FAQ」、標題寫「常見問題」、選單寫「常見問答」，三個名字。</p>
+  <p>本區在主線中的角色：<b>空白</b>——不放形狀，是全頁最安靜的一段，讓下一段的合龍有對比。五題的答案是客戶文案，要留在 HTML 裡給搜尋引擎讀。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>五個問題一欄，一次開一個</h2><span class="tag">可展開列 FoldList（原生 details，同名互斥）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec">
+      <div class="cols">
+        <div>
+          <p class="eyebrow">常見問題</p>
+          <h2 class="h2">預約之前，你可能想知道</h2>
+          <p class="ask">還有其他問題？<a href="#">寫信給我們</a></p>
+        </div>
+        <div class="fold">
+          <details name="s5a"><summary>什麼是 Coffee Chat？</summary><div class="body">15 分鐘免費線上諮詢，就像喝杯咖啡聊聊天。我們聽你的現況，幫你找最適合的下一步——要不要走，由你決定。</div></details>
+          <details name="s5a"><summary>誰適合使用共好玟化的服務？</summary><div class="body">我們的客戶涵蓋農業品牌、設計公司、社會企業、非營利組織，以及想尋找永續供應鏈的大型企業。只要你正在做有意義的事，希望被更多人看見，我們都歡迎你來聊聊。</div></details>
+          <details name="s5a"><summary>永續白皮書需要多長時間完成？</summary><div class="body">依品牌規模與資料完整度，通常需要 4 至 8 週。過程中我們會進行深度訪談、資料整理與內容撰寫，確保白皮書真實反映品牌的永續實踐。</div></details>
+          <details name="s5a"><summary>如何開始合作？</summary><div class="body">最簡單的方式是預約一場 Coffee Chat，讓我們了解你的需求。之後我們會提供客製化的合作建議與報價，確認後即可啟動專案。</div></details>
+          <details name="s5a"><summary>ESG共學坊訂閱包含什麼？</summary><div class="body">ESG共學坊是跨產業的永續學習與交流平台，訂閱會員可參加定期舉辦的工作坊、講座與產業交流活動，並獲得會員專屬的永續資源與人脈網絡。</div></details>
+        </div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>五個問題就是掃讀層；答案在 HTML 裡，頁內搜尋會自動展開，沒有 JavaScript 也能用。</li><li>全部收合：這頁只有這一區是手風琴（S2、S3、S4 都選了別的型態），不會和別區混淆。</li><li>沒有形狀、沒有卡片，音量最低。</li></ul></div>
+    <div><h3>風險</h3><ul><li>第一題（Coffee Chat 是什麼）不再預設打開，承諾要靠標題與 Hero 傳達。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>會員方案 → 本區：籌備中卡片壓在交界上，本區上方多留一段空白接住它。</li><li>本區 → 聯絡表單：安靜之後，花瓣與方塊從兩側靠攏（T9）。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>先分三類，再展開</h2><span class="tag">分頁 Tabs＋可展開列</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec">
+      <p class="eyebrow">常見問題</p>
+      <h2 class="h2">預約之前，你可能想知道</h2>
+      <div class="tabs" data-tabs style="margin-top:24px">
+        <div class="tablist"><button aria-selected="true">開始之前</button><button aria-selected="false">適合誰</button><button aria-selected="false">方案細節</button></div>
+        <div class="panel fold">
+          <details><summary>什麼是 Coffee Chat？</summary><div class="body">15 分鐘免費線上諮詢，就像喝杯咖啡聊聊天。我們聽你的現況，幫你找最適合的下一步——要不要走，由你決定。</div></details>
+          <details><summary>如何開始合作？</summary><div class="body">最簡單的方式是預約一場 Coffee Chat，讓我們了解你的需求。之後我們會提供客製化的合作建議與報價，確認後即可啟動專案。</div></details>
+        </div>
+        <div class="panel fold" hidden>
+          <details><summary>誰適合使用共好玟化的服務？</summary><div class="body">我們的客戶涵蓋農業品牌、設計公司、社會企業、非營利組織，以及想尋找永續供應鏈的大型企業。只要你正在做有意義的事，希望被更多人看見，我們都歡迎你來聊聊。</div></details>
+        </div>
+        <div class="panel fold" hidden>
+          <details><summary>永續白皮書需要多長時間完成？</summary><div class="body">依品牌規模與資料完整度，通常需要 4 至 8 週。過程中我們會進行深度訪談、資料整理與內容撰寫，確保白皮書真實反映品牌的永續實踐。</div></details>
+          <details><summary>ESG共學坊訂閱包含什麼？</summary><div class="body">ESG共學坊是跨產業的永續學習與交流平台，訂閱會員可參加定期舉辦的工作坊、講座與產業交流活動，並獲得會員專屬的永續資源與人脈網絡。</div></details>
+        </div>
+      </div>
+      <p class="ask">還有其他問題？<a href="#">寫信給我們</a></p>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>可見字數最少；題目變多時（例如 C03、L02 之後）分類才有用。</li></ul></div>
+    <div><h3>風險</h3><ul><li>只有五題就分三類：有一類只有一題，訪客要點兩層才讀到答案。</li><li>三題藏在別的分頁，掃讀時看不到——「誰適合」正是很多人的第一個疑問。</li><li>全頁第二組分頁籤。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>本區 → 聯絡表單：分頁籤列讓這一區變吵，合龍前的安靜不見了。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>問題卡，答案開在面板裡</h2><span class="tag">彈出面板 Sheet</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec">
+      <p class="eyebrow">常見問題</p>
+      <h2 class="h2">預約之前，你可能想知道</h2>
+      <div class="qs">
+        <button type="button">什麼是 Coffee Chat？</button>
+        <button type="button">誰適合使用共好玟化的服務？</button>
+        <button type="button">永續白皮書需要多長時間完成？</button>
+        <button type="button">如何開始合作？</button>
+        <button type="button">ESG共學坊訂閱包含什麼？</button>
+      </div>
+      <div hidden>（面板內容，例）15 分鐘免費線上諮詢，就像喝杯咖啡聊聊天。我們聽你的現況，幫你找最適合的下一步——要不要走，由你決定。</div>
+      <p class="ask">還有其他問題？<a href="#">寫信給我們</a></p>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>答案在面板裡有完整的閱讀寬度；手機上是底部面板，不會把頁面撐長。</li><li>桌機兩欄的問題卡比一欄的列表短。</li></ul></div>
+    <div><h3>風險</h3><ul><li>面板內容不在初始 HTML：FAQ 是搜尋引擎最會讀的內容，也是客戶文案，不該放進 Sheet（`00-cross-page-plan.md` 第六節）。</li><li>一題一個對話框，連看三題要開關三次；沒有 JavaScript 時完全讀不到答案。</li><li>五張卡片的音量高於列表，和「最安靜的一段」相反。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>本區 → 聯絡表單：卡片格與表單卡相鄰，兩區都是「卡片」，對比不足。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

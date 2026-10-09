@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>合作洽詢 · S2 服務項目 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<style>
+.mock { container-type: inline-size; }
+.tablist button { display: inline-flex; align-items: center; gap: 8px; }
+.tablist .geo, .fold summary .geo { --s: 14px; }
+.tablist button[aria-selected="true"] .c-grey { --c: #fff; }
+.price { font: 700 26px/1.2 var(--font-display); color: var(--ink); font-variant-numeric: tabular-nums; }
+.unit { font: 700 12px/1.4 var(--font-sans); color: var(--ink-2); }
+.note { font-size: 12px; color: var(--ink-2); margin: 18px 0 0; }
+.say { font: 700 15px/1.6 var(--font-sans); color: var(--ink-2); margin: 0; }
+
+/* A — tabs: one starting point, one offer */
+.stage { display: grid; gap: 20px; grid-template-columns: minmax(0, 1fr); }
+@container (min-width: 760px) { .stage { grid-template-columns: .8fr 1.2fr; gap: 40px; align-items: start; } }
+.offer { position: relative; overflow: hidden; background: var(--paper); border-radius: 22px; padding: 24px 22px; }
+.offer + .offer { margin-top: 12px; }
+.offer > .geo { position: absolute; right: -14px; top: -14px; --s: 64px; }
+.offer .row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); }
+.offer .btn { min-height: 44px; }
+
+/* B — fold rows */
+.fold .body .price { display: block; margin-bottom: 6px; }
+
+/* C — rail of price cards */
+.pcard { background: var(--paper); border-radius: 22px; padding: 22px; }
+.pcard details { margin-top: 12px; border-top: 1px solid var(--line); }
+.pcard summary { min-height: 44px; display: flex; align-items: center; font: 700 13px/1 var(--font-sans); color: var(--orange-strong); cursor: pointer; }
+.doors { display: grid; gap: 10px; margin-top: 18px; }
+@container (min-width: 760px) { .doors { grid-template-columns: 1fr 1fr; } }
+.doors a { display: flex; align-items: center; justify-content: space-between; min-height: 52px; padding: 0 18px; border-radius: 16px; border: 1px solid var(--line); font: 700 15px/1.3 var(--font-sans); color: var(--ink); text-decoration: none; }
+</style>
+</head>
+<body data-budget="230">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>合作洽詢 · S2 服務項目</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s1-hero.html">← 上一區</a><a href="s3-ngo.html">下一區 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">合作洽詢 · S2</span>
+  <h1>我該從哪一個服務開始？要多少錢？</h1>
+  <p>現況：可見 334 字，四張價格卡一次攤開；Hero 的五個起點有三個都跳到這裡，訪客還是得自己找。本區之後又是兩個長得很像的價格區。</p>
+  <p>本區在主線中的角色：<b>認出自己是哪一項</b>——每個起點帶一個記號（花瓣＝品牌與非營利、方塊＝團隊、小四分圓＝先小額開始）。上一區交接過來的形狀：黃花瓣。價格依 C02 每項只放一個（最高）價。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>起點＝分頁籤：選哪個，就只出現那個方案</h2><span class="tag">分頁 Tabs（五個分頁都在 HTML 裡）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec white">
+      <div class="stage">
+        <div>
+          <p class="eyebrow">服務項目</p>
+          <h2 class="h2">不確定從哪裡開始？</h2>
+          <p class="lead">從講座到培訓工作坊，從一對一顧問到永續白皮書撰寫，選擇最適合你的永續起步方式。</p>
+        </div>
+        <div class="tabs" data-tabs>
+          <div class="tablist">
+            <button aria-selected="true"><span class="geo geo-petal c-yellow"></span>品牌定位</button>
+            <button aria-selected="false"><span class="geo geo-petal c-yellow"></span>對外文件</button>
+            <button aria-selected="false"><span class="geo geo-block c-grey"></span>團隊學習</button>
+            <button aria-selected="false"><span class="geo geo-petal c-orange"></span>非營利組織</button>
+            <button aria-selected="false"><span class="geo geo-quarter c-orange"></span>小額開始</button>
+          </div>
+          <div class="panel">
+            <p class="say">「我想把品牌的永續價值說清楚」</p>
+            <div class="offer" style="margin-top:14px"><span class="geo geo-petal c-yellow"></span>
+              <span class="unit">一對一・最受歡迎</span><h3 class="h3">永續品牌顧問輔導</h3>
+              <p class="small" style="margin-top:8px">一對一顧問服務，協助品牌釐清永續定位、整理 ESG 敘事架構，找到與企業對話的切入點。</p>
+              <div class="row"><span class="price">NT$6,000 / 次</span><a class="btn btn-primary" href="#">預約諮詢</a></div>
+            </div>
+          </div>
+          <div class="panel" hidden>
+            <p class="say">「我需要一份對外的永續文件」</p>
+            <div class="offer" style="margin-top:14px"><span class="geo geo-petal c-yellow"></span>
+              <span class="unit">4–8 週</span><h3 class="h3">永續白皮書精華版</h3>
+              <p class="small" style="margin-top:8px">為品牌量身打造的永續白皮書，整合 ESG 數據與故事，成為對外溝通、爭取資源的有力文件。</p>
+              <div class="row"><span class="price">NT$100,000</span><a class="btn btn-primary" href="#">預約諮詢</a></div>
+            </div>
+          </div>
+          <div class="panel" hidden>
+            <p class="say">「我想讓團隊學會 ESG」</p>
+            <div class="offer" style="margin-top:14px"><span class="geo geo-block c-grey"></span>
+              <span class="unit">系統化培訓</span><h3 class="h3">永續商創師培訓</h3>
+              <p class="small" style="margin-top:8px">系統化培訓課程，從永續概念到商業實踐，培養具備 ESG 思維的永續商業人才。</p>
+              <div class="row"><span class="price">NT$25,000</span></div>
+            </div>
+            <div class="offer"><span class="geo geo-block c-grey"></span>
+              <span class="unit">實戰工作坊</span><h3 class="h3">永續品牌初階工作坊</h3>
+              <p class="small" style="margin-top:8px">實戰工作坊，帶領品牌主快速理解永續框架，找到自身品牌與 ESG 的連結點。</p>
+              <div class="row"><span class="price">NT$6,000</span><a class="btn btn-primary" href="#">預約諮詢</a></div>
+            </div>
+          </div>
+          <div class="panel" hidden>
+            <p class="say">「我們是非營利組織」</p>
+            <div class="offer" style="margin-top:14px"><span class="geo geo-petal c-orange"></span>
+              <span class="unit">優惠合作方案</span><h3 class="h3">非營利合作</h3>
+              <p class="small" style="margin-top:8px">公益夥伴方案與跨界溝通兩種模式，把社會影響力整理成企業讀得懂的永續語言。</p>
+              <div class="row"><a class="link" href="#">看兩種合作模式</a><a class="btn btn-primary" href="#">預約諮詢</a></div>
+            </div>
+          </div>
+          <div class="panel" hidden>
+            <p class="say">「我想先小額開始」</p>
+            <div class="offer" style="margin-top:14px"><span class="geo geo-quarter c-orange"></span>
+              <span class="unit">免費加入，進階 NT$300／月</span><h3 class="h3">會員方案</h3>
+              <p class="small" style="margin-top:8px">從免費加入社群，到深度共創，依你的階段選擇。</p>
+              <div class="row"><a class="link" href="#">看三個方案</a></div>
+            </div>
+          </div>
+          <p class="note">價格為單項服務參考價，實際依需求與規模報價。</p>
+        </div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>一次只看一個方案：名稱、價格、一句說明、按鈕，買方要的三件事都在同一張卡。</li><li>五個起點地位相同、長得一樣；非營利與會員兩個起點給一句話再往下帶，不再跳到「同一個畫面」。</li><li>「預約諮詢」把選好的方向帶到表單（表單的「想聊的方向」正好是同樣的順序）。</li></ul></div>
+    <div><h3>風險</h3><ul><li>四個價格不能同時比較——但四項服務本來就不是互相替代的方案。</li><li>手機上五個分頁籤要橫向滑動，第五個必須露出一截。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>Hero → 本區：交界上的黃花瓣＝第一個分頁籤的記號。</li><li>本區 → 非營利合作／會員方案：第四、第五個分頁各有一條往下的連結，兩個後續區塊因此有了「被帶過來」的理由。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>五句話，點開就是答案</h2><span class="tag">可展開列 FoldList（一次開一個）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec white">
+      <div class="stage">
+        <div>
+          <p class="eyebrow">服務項目</p>
+          <h2 class="h2">不確定從哪裡開始？</h2>
+          <p class="lead">從講座到培訓工作坊，從一對一顧問到永續白皮書撰寫，選擇最適合你的永續起步方式。</p>
+        </div>
+        <div>
+          <div class="fold">
+            <details name="s2b" open><summary><span class="geo geo-petal c-yellow"></span>我想把品牌的永續價值說清楚</summary><div class="body"><span class="price">NT$6,000 / 次</span><b>永續品牌顧問輔導</b>・一對一<br>一對一顧問服務，協助品牌釐清永續定位、整理 ESG 敘事架構，找到與企業對話的切入點。<br><a class="link" href="#">預約諮詢</a></div></details>
+            <details name="s2b"><summary><span class="geo geo-petal c-yellow"></span>我需要一份對外的永續文件</summary><div class="body"><span class="price">NT$100,000</span><b>永續白皮書精華版</b>・4–8 週<br>為品牌量身打造的永續白皮書，整合 ESG 數據與故事，成為對外溝通、爭取資源的有力文件。</div></details>
+            <details name="s2b"><summary><span class="geo geo-block c-grey"></span>我想讓團隊學會 ESG</summary><div class="body"><span class="price">NT$25,000</span><b>永續商創師培訓</b>・系統化培訓<br>系統化培訓課程，從永續概念到商業實踐，培養具備 ESG 思維的永續商業人才。<br><span class="price" style="margin-top:12px">NT$6,000</span><b>永續品牌初階工作坊</b>・實戰工作坊<br>實戰工作坊，帶領品牌主快速理解永續框架，找到自身品牌與 ESG 的連結點。</div></details>
+            <details name="s2b"><summary><span class="geo geo-petal c-orange"></span>我們是非營利組織</summary><div class="body">公益夥伴方案與跨界溝通兩種模式。<a class="link" href="#">看兩種合作模式</a></div></details>
+            <details name="s2b"><summary><span class="geo geo-quarter c-orange"></span>我想先小額開始</summary><div class="body">從免費加入社群，到深度共創，依你的階段選擇。<a class="link" href="#">看三個方案</a></div></details>
+          </div>
+          <p class="note">價格為單項服務參考價，實際依需求與規模報價。</p>
+        </div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>五句第一人稱的話直接可見，訪客用自己的語言找到入口；答案就開在手指下方。</li><li>原生 <code>details</code>，沒有 JavaScript 也能用。</li></ul></div>
+    <div><h3>風險</h3><ul><li>和 S5 常見問題用同一種元件、同一種長相：這頁會有兩個手風琴，主要互動和 FAQ 分不出輕重。</li><li>價格藏在答案裡，掃讀時看不到任何一個數字。</li><li>形狀只剩列首的小記號，主線很弱。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>Hero → 本區：花瓣可以接到第一列，但第一列以外的記號太小，接力感不足。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>價目滑軌＋兩扇門</h2><span class="tag">橫向滑軌 SnapRail＋卡內展開</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec white">
+      <p class="eyebrow">服務項目</p>
+      <h2 class="h2">企業 ESG 解決方案</h2>
+      <p class="lead">從講座到培訓工作坊，從一對一顧問到永續白皮書撰寫，選擇最適合你的永續起步方式。</p>
+      <div class="rail" style="margin-top:26px">
+        <div class="pcard"><span class="unit">一對一・最受歡迎</span><h3 class="h3">永續品牌顧問輔導</h3><p class="price" style="margin:10px 0 0">NT$6,000 / 次</p><details><summary>看內容</summary><p class="small">一對一顧問服務，協助品牌釐清永續定位、整理 ESG 敘事架構，找到與企業對話的切入點。</p></details></div>
+        <div class="pcard"><span class="unit">4–8 週</span><h3 class="h3">永續白皮書精華版</h3><p class="price" style="margin:10px 0 0">NT$100,000</p><details><summary>看內容</summary><p class="small">為品牌量身打造的永續白皮書，整合 ESG 數據與故事，成為對外溝通、爭取資源的有力文件。</p></details></div>
+        <div class="pcard"><span class="unit">系統化培訓</span><h3 class="h3">永續商創師培訓</h3><p class="price" style="margin:10px 0 0">NT$25,000</p><details><summary>看內容</summary><p class="small">系統化培訓課程，從永續概念到商業實踐，培養具備 ESG 思維的永續商業人才。</p></details></div>
+        <div class="pcard"><span class="unit">實戰工作坊</span><h3 class="h3">永續品牌初階工作坊</h3><p class="price" style="margin:10px 0 0">NT$6,000</p><details><summary>看內容</summary><p class="small">實戰工作坊，帶領品牌主快速理解永續框架，找到自身品牌與 ESG 的連結點。</p></details></div>
+      </div>
+      <div class="doors"><a href="#">我們是非營利組織 <span aria-hidden="true">↓</span></a><a href="#">我想先小額開始 <span aria-hidden="true">↓</span></a></div>
+      <p class="note">價格為單項服務參考價，實際依需求與規模報價。</p>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>四個價格在桌機同時可見，適合「直接要報價」的訪客。</li><li>每張卡只有名稱與價格，說明收在卡內。</li></ul></div>
+    <div><h3>風險</h3><ul><li>還是一張價目表：沒有回答「我該選哪一個」，Hero 拿掉的五選一等於消失。</li><li>手機一次只看到一張半，第四張要滑三次；四張卡沒有先後關係，滑軌的順序沒有意義。</li><li>沒有形狀、沒有起點的概念，主線在這一區是空的。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>本區 → 非營利合作／會員方案：兩扇門只是兩條連結，後面兩區仍然像價目表的延續。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

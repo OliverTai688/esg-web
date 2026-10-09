@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{頁面} · S{n} {區塊名} 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<style>
+/* Only what is unique to this section's three options */
+</style>
+</head>
+<!-- data-budget = this section's visible-character budget from 01-page-plan.md -->
+<body data-budget="260">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>{頁面} · S{n} {區塊名}</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s{n-1}-….html">← 上一區</a><a href="s{n+1}-….html">下一區 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">{頁面} · S{n}</span>
+  <h1>{這一區要回答訪客的哪一個問題}</h1>
+  <p>現況：可見 {N} 字、{問題}。本區在頁面主線中的角色：{…}。上一區交接過來的形狀：{…}。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>{方案名}</h2><span class="tag">{UX 元件：例如 分頁 Tabs／可展開列／橫向滑軌／彈出面板}</span></div>
+  <div class="wrap"><div class="mock">
+    <!-- The section as it would ship, with the real copy. Use .sec, .eyebrow, .h2, .lead, .tabs, .fold, .rail, .geo-* -->
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>…</li></ul></div>
+    <div><h3>風險</h3><ul><li>…</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：…</li><li>本區 → 下一區：…</li></ul></div>
+  </div></div>
+</section>
+<!-- B and C follow the same structure -->
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

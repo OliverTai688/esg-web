@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>加入我們 · 整頁提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<style>
+.mock { container-type: inline-size; }
+.split { display: grid; gap: 36px; align-items: center; }
+@container (min-width: 760px) { .split { grid-template-columns: 1.1fr .9fr; gap: 56px; } }
+.tip { font: 700 14px/1 var(--font-sans); color: var(--ink-2); align-self: center; }
+.qr { width: 44%; aspect-ratio: 1; border: 10px solid #fff; border-radius: 12px; background: repeating-conic-gradient(var(--ink) 0 25%, #fff 0 50%) 0 0 / 14px 14px; }
+.id { font: 700 20px/1.3 var(--font-display); margin: 4px 0 0; }
+.cap { font-size: 12px; color: var(--ink-2); margin: 0; }
+.nums { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; margin: 28px 0 6px; }
+@container (min-width: 760px) { .nums { grid-template-columns: repeat(4, auto); justify-content: start; gap: 28px; } }
+.nums dd { margin: 0; font: 700 22px/1.2 var(--font-display); }
+.nums dt { font-size: 12px; color: var(--ink-2); }
+.nums div { display: flex; flex-direction: column-reverse; }
+
+/* The ring of petals (the home hero arch, closed) */
+.pring { position: relative; width: min(100%, 340px); aspect-ratio: 1; margin-inline: auto; display: grid; place-items: center; }
+.pring i { position: absolute; left: 50%; top: 50%; width: 13%; height: 13%; margin: -6.5%; border-radius: 0 100% 0 100%; background: var(--yellow); transform: rotate(calc(var(--i) * 30deg)) translateY(-335%) rotate(-45deg); }
+.pring i:nth-child(odd) { background: var(--orange); }
+.pring .cap { position: absolute; bottom: 20%; }
+
+/* A — one ring cut in four */
+.four { position: relative; display: grid; gap: 12px; margin-top: 28px; }
+@container (min-width: 760px) { .four { grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--line); border-radius: 26px; overflow: hidden; } .four > div:nth-child(odd) { border-right: 1px solid var(--line); padding-right: 84px; } .four > div:nth-child(even) { padding-left: 84px; } .four > div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .four::after { content: ""; position: absolute; left: 50%; top: 50%; width: 132px; height: 132px; margin: -66px; border-radius: 50%; border: 22px solid var(--orange); border-right-color: var(--yellow); border-bottom-color: var(--grey); border-left-color: var(--yellow); background: #fff; } }
+.four > div { background: var(--paper); padding: 24px 22px; border-radius: 20px; }
+@container (min-width: 760px) { .four > div { border-radius: 0; padding-block: 30px; } }
+.steps { display: grid; gap: 4px; margin: 24px 0 0; padding: 0; list-style: none; }
+@container (min-width: 760px) { .steps { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+.steps details summary { display: flex; align-items: center; gap: 12px; min-height: 48px; font: 700 16px/1.4 var(--font-sans); cursor: pointer; list-style: none; }
+.steps summary::-webkit-details-marker { display: none; }
+.steps .geo { --s: 26px; border-width: 5px; }
+.steps .a1 { border-color: var(--orange) var(--line) var(--line) var(--line); }
+.steps .a2 { border-color: var(--orange) var(--orange) var(--line) var(--line); }
+.end { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; background: #F4EEE6; border-radius: 32px; padding: 32px 22px; margin-top: 32px; }
+.end .geo-ring { --s: 56px; border-width: 9px; }
+
+/* B — sticky LINE card */
+.stick { background: #fff; border-radius: 32px; padding: 26px 22px; text-align: center; }
+@container (min-width: 760px) { .stick { position: sticky; top: 72px; } .split.b { align-items: start; grid-template-columns: .8fr 1.2fr; } }
+.stick .btn { width: 100%; margin-top: 16px; }
+.line3 { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 20px 0 0; padding: 0; list-style: none; font: 700 14px/1.6 var(--font-sans); }
+.line3 b { font-family: var(--font-display); color: var(--orange-strong); margin-right: 6px; }
+</style>
+</head>
+<body data-budget="400">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>加入我們 · 整頁</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">加入我們 · 整頁</span>
+  <h1>加入會得到什麼？怎麼加入？</h1>
+  <p>現況：可見 478 字（上限 400）、3 個區塊、8 張卡；QR 放在深色卡片裡；最後一屏沒有 LINE 按鈕。數字只能來自 <code>t.impact</code>。</p>
+  <p>主線：<b>一個圈，一個動作</b>。首頁的拱在這裡閉合成環，環的中心是入口。單一目標：加入官方 LINE；頁面短，所以整頁做成一個提案。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>一個環，三個狀態</h2><span class="tag">形狀本身＋步驟說明展開 details</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec split">
+      <div>
+        <p class="eyebrow">LINE 官方帳號</p>
+        <h1 class="h1">成為改變的一份子</h1>
+        <p class="lead">加入共好玟化的永續社群，與來自不同領域的實踐者一起，讓好的事被看見、被理解、被連結。</p>
+        <div class="btns"><a class="btn btn-line" href="#">加入 LINE 官方帳號</a><span class="tip">一分鐘完成</span></div>
+        <dl class="nums"><div><dt>場講座</dt><dd>100+</dd></div><div><dt>場工作坊</dt><dd>30+</dd></div><div><dt>人次培力</dt><dd>500+</dd></div><div><dt>個縣市</dt><dd>10+</dd></div></dl>
+        <p class="cap">累計至 2025 年</p>
+      </div>
+      <div style="text-align:center">
+        <div class="pring"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i><i style="--i:6"></i><i style="--i:7"></i><i style="--i:8"></i><i style="--i:9"></i><i style="--i:10"></i><i style="--i:11"></i><span class="qr" role="img" aria-label="QR Code"></span></div>
+        <p class="cap" style="margin-top:8px">LINE ID</p><p class="id">@381iutjm</p>
+      </div>
+    </div>
+    <div class="sec white">
+      <p class="eyebrow">加入好處</p>
+      <h2 class="h2">加入後，你會收到什麼？</h2>
+      <div class="four">
+        <div><h3 class="h3">永續趨勢週報</h3><p class="small" style="margin-top:6px">國內外 ESG 政策更新、產業動態與市場趨勢，每週精選推送。</p></div>
+        <div><h3 class="h3">活動與課程優先通知</h3><p class="small" style="margin-top:6px">ESG共學坊工作坊、國際論壇等活動搶先報名，把握每一次學習與交流的機會。</p></div>
+        <div><h3 class="h3">跨產業合作機會</h3><p class="small" style="margin-top:6px">與農業、設計、科技、社會企業等不同領域的永續實踐者交流，創造跨界合作的可能。</p></div>
+        <div><h3 class="h3">專屬資源與優惠</h3><p class="small" style="margin-top:6px">會員專屬的永續白皮書摘要、顧問諮詢優惠與合作夥伴的獨家折扣。</p></div>
+      </div>
+    </div>
+    <div class="sec">
+      <p class="eyebrow">如何加入</p>
+      <h2 class="h2">三步驟，成為共好夥伴</h2>
+      <ol class="steps">
+        <li><details><summary><span class="geo geo-ring a1"></span>掃碼加入</summary><p class="small">掃描 QR Code 或點擊按鈕，加入共好玟化 LINE 官方帳號。</p></details></li>
+        <li><details><summary><span class="geo geo-ring a2"></span>接收資訊</summary><p class="small">開始接收永續趨勢、活動通知與合作機會等第一手訊息。</p></details></li>
+        <li><details><summary><span class="geo geo-ring c-orange"></span>參與互動</summary><p class="small">報名活動、回覆訊息、加入討論，成為永續生態圈的一份子。</p></details></li>
+      </ol>
+      <div class="end"><span class="geo geo-ring c-orange"></span><a class="btn btn-line" href="#">加入 LINE 官方帳號</a><p class="small">還在評估？<a class="link" href="#">先看看我們辦過的活動</a></p></div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>環貫穿三段：花瓣圍成一圈（入口）→ 切成四段（四個好處）→ 一段一段閉合（三步驟）。首頁的拱在這裡變成完整的圈。</li><li>桌機第一屏就能掃 QR；手機第一屏是按鈕。收尾再給一次同一顆按鈕。</li><li>四個好處的說明都看得到（這是加入的理由）；被收合的只有重複按鈕文字的步驟說明。</li></ul></div>
+    <div><h3>風險</h3><ul><li>四格中心的環只在桌機成立；手機改成每張卡一段弧。</li><li>花瓣環要用 SVG 算座標（首頁已有）。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>Hero → 加入好處：花瓣環最下面的一片落在交界（T1）。</li><li>加入好處 → 如何加入：大環縮成三個小環（T10）；收尾的環捲入時描邊（本頁唯一的捲動動畫）。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>LINE 卡固定在左，右邊慢慢讀</h2><span class="tag">黏著卡片＋可展開列 FoldList</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec split b">
+      <div class="stick"><div class="qr" style="margin-inline:auto;width:150px" role="img" aria-label="QR Code"></div><p class="cap" style="margin-top:12px">LINE ID</p><p class="id">@381iutjm</p><a class="btn btn-line" href="#">加入 LINE 官方帳號</a><p class="cap" style="margin-top:10px">一分鐘完成</p></div>
+      <div>
+        <p class="eyebrow">LINE 官方帳號</p>
+        <h1 class="h1">成為改變的一份子</h1>
+        <p class="lead">加入共好玟化的永續社群，與來自不同領域的實踐者一起，讓好的事被看見、被理解、被連結。</p>
+        <dl class="nums"><div><dt>場講座</dt><dd>100+</dd></div><div><dt>場工作坊</dt><dd>30+</dd></div><div><dt>人次培力</dt><dd>500+</dd></div><div><dt>個縣市</dt><dd>10+</dd></div></dl>
+        <p class="cap">累計至 2025 年</p>
+        <h2 class="h3" style="margin-top:36px">加入後，你會收到什麼？</h2>
+        <div class="fold" style="margin-top:12px">
+          <details name="jb"><summary>永續趨勢週報</summary><div class="body">國內外 ESG 政策更新、產業動態與市場趨勢，每週精選推送。</div></details>
+          <details name="jb"><summary>活動與課程優先通知</summary><div class="body">ESG共學坊工作坊、國際論壇等活動搶先報名，把握每一次學習與交流的機會。</div></details>
+          <details name="jb"><summary>跨產業合作機會</summary><div class="body">與農業、設計、科技、社會企業等不同領域的永續實踐者交流，創造跨界合作的可能。</div></details>
+          <details name="jb"><summary>專屬資源與優惠</summary><div class="body">會員專屬的永續白皮書摘要、顧問諮詢優惠與合作夥伴的獨家折扣。</div></details>
+        </div>
+        <ol class="line3"><li><b>01</b>掃碼加入</li><li><b>02</b>接收資訊</li><li><b>03</b>參與互動</li></ol>
+        <p class="small" style="margin-top:20px">還在評估？<a class="link" href="#">先看看我們辦過的活動</a></p>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>字數最少；桌機上 LINE 卡全程跟著捲動，行動永遠在視線內。</li><li>整頁只有一個區塊，最短。</li></ul></div>
+    <div><h3>風險</h3><ul><li>手機沒有左右欄：卡片排在最上面時，訪客還不知道這是什麼就先看到 QR（手機上掃不了自己螢幕上的 QR）；排在下面則黏著失效。</li><li>好處的說明被收合——加入的理由要點四次才讀完。</li><li>沒有環：這一頁的主角形狀沒有出現，和其他內容頁看不出差別。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>只有一個區塊，沒有交界；收尾沒有 LINE 卡（卡片在最上面），頁面結束在一條次要連結。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>Hero 下面三個分頁籤</h2><span class="tag">分頁 Tabs</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec" style="text-align:center">
+      <p class="eyebrow">LINE 官方帳號</p>
+      <h1 class="h1">成為改變的一份子</h1>
+      <p class="lead" style="margin-inline:auto">加入共好玟化的永續社群，與來自不同領域的實踐者一起，讓好的事被看見、被理解、被連結。</p>
+      <div class="btns" style="justify-content:center"><a class="btn btn-line" href="#">加入 LINE 官方帳號</a></div>
+    </div>
+    <div class="sec white" style="padding-top:32px">
+      <div class="tabs" data-tabs>
+        <div class="tablist"><button aria-selected="true">加入好處</button><button aria-selected="false">如何加入</button><button aria-selected="false">這個社群</button></div>
+        <div class="panel grid c2">
+          <div class="card"><h3 class="h3">永續趨勢週報</h3><p class="small">國內外 ESG 政策更新、產業動態與市場趨勢，每週精選推送。</p></div>
+          <div class="card"><h3 class="h3">活動與課程優先通知</h3><p class="small">ESG共學坊工作坊、國際論壇等活動搶先報名，把握每一次學習與交流的機會。</p></div>
+          <div class="card"><h3 class="h3">跨產業合作機會</h3><p class="small">與農業、設計、科技、社會企業等不同領域的永續實踐者交流，創造跨界合作的可能。</p></div>
+          <div class="card"><h3 class="h3">專屬資源與優惠</h3><p class="small">會員專屬的永續白皮書摘要、顧問諮詢優惠與合作夥伴的獨家折扣。</p></div>
+        </div>
+        <div class="panel grid c3" hidden>
+          <div class="card"><h3 class="h3">掃碼加入</h3><p class="small">掃描 QR Code 或點擊按鈕，加入共好玟化 LINE 官方帳號。</p></div>
+          <div class="card"><h3 class="h3">接收資訊</h3><p class="small">開始接收永續趨勢、活動通知與合作機會等第一手訊息。</p></div>
+          <div class="card"><h3 class="h3">參與互動</h3><p class="small">報名活動、回覆訊息、加入討論，成為永續生態圈的一份子。</p></div>
+        </div>
+        <div class="panel" hidden><dl class="nums"><div><dt>場講座</dt><dd>100+</dd></div><div><dt>場工作坊</dt><dd>30+</dd></div><div><dt>人次培力</dt><dd>500+</dd></div><div><dt>個縣市</dt><dd>10+</dd></div></dl><p class="cap">累計至 2025 年</p></div>
+      </div>
+      <div class="end"><div class="qr" style="width:120px" role="img" aria-label="QR Code"></div><p class="id">@381iutjm</p><a class="btn btn-line" href="#">加入 LINE 官方帳號</a></div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>頁面只有兩屏；三種內容各自完整，不互相擠。</li></ul></div>
+    <div><h3>風險</h3><ul><li>這頁的目標是「一分鐘內加入」，分頁籤卻邀請訪客去逛三個分頁：多了互動，少了行動。</li><li>數字（社群的規模）是信任的來源，被藏在第三個分頁。</li><li>三個分頁不是同一層級的內容，不符合分頁籤的使用條件。</li><li>沒有環。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>Hero → 分頁籤：置中的 Hero 沒有主視覺，交界只靠底色。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

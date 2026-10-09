@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>共好永續力 · S2 我們是誰 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<style>
+.mock { container-type: inline-size; }
+.two { display: grid; gap: 32px; }
+@container (min-width: 760px) { .two { grid-template-columns: 300px 1fr; gap: 64px; align-items: start; } }
+/* Pier: arch-topped door for the portrait, standing on a yellow block */
+.door { position: relative; width: 132px; flex: none; }
+.door img { display: block; width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 999px 999px 0 0; position: relative; }
+.door::before { content: ""; position: absolute; right: -12px; bottom: -12px; width: 56px; height: 56px; background: var(--yellow); }
+@container (min-width: 760px) { .door { width: 220px; } .door::before { width: 84px; height: 84px; right: -18px; bottom: -18px; } }
+.who { display: flex; gap: 22px; align-items: flex-end; }
+@container (min-width: 760px) { .who { display: block; } .who .cap { margin-top: 34px; } }
+.cap b { display: block; font: 900 18px/1.4 var(--font-sans); } .cap span { font-size: 13px; color: var(--ink-2); }
+.facts { display: flex; gap: 28px; margin: 24px 0 0; } .facts dd { margin: 0; font-size: 12px; color: var(--ink-2); } .facts .num { font-size: 30px; display: block; color: var(--ink); }
+/* Credentials as the pier's four foundation stones */
+.stones { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; margin: 10px 0 0; padding: 0; list-style: none; max-width: 520px; }
+.stones li { display: flex; align-items: center; min-height: 52px; padding: 8px 14px; background: var(--orange-soft); font: 700 14px/1.4 var(--font-sans); color: #A8321A; }
+.stones li:nth-child(4n+1), .stones li:nth-child(4n) { background: #FBE0D8; }
+.more summary { display: inline-flex; align-items: center; min-height: 44px; font: 700 14px/1 var(--font-sans); color: var(--orange-strong); cursor: pointer; list-style: none; }
+.more summary::after { content: " ＋"; } .more[open] summary::after { content: " －"; }
+.more p { margin: 6px 0 12px; max-width: 40em; font-size: 15px; line-height: 1.95; color: var(--ink-2); }
+/* C */
+.band { display: grid; gap: 24px; align-items: center; }
+@container (min-width: 760px) { .band { grid-template-columns: auto 1fr auto; gap: 40px; } }
+.sheet { margin-top: 22px; border-radius: 22px 22px 0 0; background: #fff; box-shadow: 0 -12px 40px rgba(31,32,34,.18); padding: 22px; }
+.sheet p { font-size: 15px; line-height: 1.9; color: var(--ink-2); margin: 10px 0 0; }
+</style>
+</head>
+<body data-budget="260">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>共好永續力 · S2 我們是誰</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s1-hero.html">← 上一區</a><a href="s3-vision.html">下一區 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">共好永續力 · S2</span>
+  <h1>這群人是誰？憑什麼做這件事？</h1>
+  <p>現況：可見 284 字，兩段客戶長文常駐，資格標籤排在最下面。本區在主線中的角色：<b>橋墩</b>——拱站在人身上。上一區交接過來的形狀：Hero 拱腳下的灰色橋墩。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>拱形門框＋四塊基石，長文收合</h2><span class="tag">UX 元件：展開全文 ReadMore</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec white"><div class="two">
+      <div>
+        <div class="who">
+          <div class="door"><img src="../../../../../public/team/consultant-01.jpg" alt="Evvon（Sayun）"></div>
+          <p class="cap"><b>Evvon（Sayun）</b><span>共好玟化 創辦人</span></p>
+        </div>
+        <dl class="facts"><div><dd class="num">2022</dd><dd>成立</dd></div><div><dd class="num">15+</dd><dd>年實戰經驗</dd></div></dl>
+      </div>
+      <div>
+        <p class="eyebrow">我們是誰</p>
+        <h2 class="h2">社會工作 × 永續管理 × 國際認證</h2>
+        <p class="lead">共好玟化組織發展顧問有限公司成立於 2022 年，由一群跨領域專業者共同組成。</p>
+        <details class="more"><summary>讀完整介紹</summary>
+          <p>我們的創辦人吳玟樺（Evvon），擁有 15 年以上社會永續、醫療與公益機構的專案實戰經驗，並具備跨域專業資格。</p>
+          <p>社會工作 × 永續管理 × 國際認證——這份跨域積累，是共好玟化最深的底氣。我們不只提供永續的「理論」，更陪企業把承諾化為「行動」：從釐清願景、制定策略，到產出真正有靈魂的永續白皮書，我們始終站在客戶身邊一起跑。</p>
+        </details>
+        <p class="small" style="margin-top:14px;font-weight:700">創辦人專業資格</p>
+        <ul class="stones"><li>社會工作師執照</li><li>企業永續管理師</li><li>PMP 國際專案管理師</li><li>ICF 國際教練認證</li></ul>
+      </div>
+    </div></div>
+    <div class="seam" style="--x:16%"><i class="geo geo-block c-orange" style="--s:44px"></i></div>
+    <div class="sec sand" style="padding-block:30px"><p class="small">↓ 願景與使命（沙色）</p></div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>可見約 145 字（−50%）。三秒掃得到：人、兩個數字、四項資格。</li><li>資格從最下面的小膠囊變成「橋墩的四塊基石」，客戶原稿的紅色粗體重點真的變成重點。</li><li>兩段原文完整留在 details 裡，瀏覽器的頁內搜尋會自動展開。</li></ul></div>
+    <div><h3>風險</h3><ul><li>常駐的一句只交代公司，創辦人的 15 年經驗要靠數字「15+」與展開才讀得到。</li><li>照片是 300×300 裁切，門框在桌機不能超過 220px 寬。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：Hero 拱腳的橋墩放大成門框。</li><li>本區 → 願景與使命：一塊橘色基石跨在交界上，成為下一段五塊拱石的第一塊（交界 2，T1）。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>三個分頁：公司／創辦人／專業資格</h2><span class="tag">UX 元件：分頁 Tabs</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec white">
+      <p class="eyebrow">我們是誰</p>
+      <h2 class="h2">社會工作 × 永續管理 × 國際認證</h2>
+      <div class="tabs" data-tabs style="margin-top:24px">
+        <div class="tablist"><button aria-selected="true">公司</button><button aria-selected="false">創辦人</button><button aria-selected="false">專業資格</button></div>
+        <div class="panel"><div class="two" style="grid-template-columns:auto 1fr;gap:24px;align-items:center">
+          <dl class="facts" style="margin:0;flex-direction:column;gap:10px"><div><dd class="num">2022</dd><dd>成立</dd></div><div><dd class="num">15+</dd><dd>年實戰經驗</dd></div></dl>
+          <div><p class="small" style="font-size:16px;color:var(--ink)">共好玟化組織發展顧問有限公司成立於 2022 年，由一群跨領域專業者共同組成。</p>
+          <p class="small" style="margin-top:10px">社會工作 × 永續管理 × 國際認證——這份跨域積累，是共好玟化最深的底氣。我們不只提供永續的「理論」，更陪企業把承諾化為「行動」：從釐清願景、制定策略，到產出真正有靈魂的永續白皮書，我們始終站在客戶身邊一起跑。</p></div>
+        </div></div>
+        <div class="panel" hidden><div class="who"><div class="door"><img src="../../../../../public/team/consultant-01.jpg" alt=""></div><div><p class="cap"><b>Evvon（Sayun）</b><span>共好玟化 創辦人</span></p><p class="small" style="margin-top:10px">我們的創辦人吳玟樺（Evvon），擁有 15 年以上社會永續、醫療與公益機構的專案實戰經驗，並具備跨域專業資格。</p></div></div></div>
+        <div class="panel" hidden><p class="small" style="font-weight:700">創辦人專業資格</p><ul class="stones"><li>社會工作師執照</li><li>企業永續管理師</li><li>PMP 國際專案管理師</li><li>ICF 國際教練認證</li></ul></div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>每個分頁都短；公司、人、資格三件事分得很清楚。</li><li>全部內容都在 HTML 裡。</li></ul></div>
+    <div><h3>風險</h3><ul><li>三組內容不是互斥的選項，而是同一個答案的三個部分：訪客要點三次才拼得出「這群人是誰」。</li><li>創辦人的臉與四項資格（最強的信任訊號）預設被藏起來。</li><li>沒有形狀：看不出「橋墩」。</li><li>預設分頁可見 180 字，比 A 多。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：沒有形狀交接。</li><li>本區 → 願景與使命：靠留白。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>一行事實帶＋彈出面板放完整介紹</h2><span class="tag">UX 元件：彈出面板 Sheet（手機底部面板）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec white">
+      <p class="eyebrow">我們是誰</p>
+      <h2 class="h2">社會工作 × 永續管理 × 國際認證</h2>
+      <div class="band" style="margin-top:28px">
+        <div class="who"><div class="door" style="width:104px"><img src="../../../../../public/team/consultant-01.jpg" alt=""></div><p class="cap"><b>Evvon（Sayun）</b><span>共好玟化 創辦人</span></p></div>
+        <dl class="facts" style="margin:0"><div><dd class="num">2022</dd><dd>成立</dd></div><div><dd class="num">15+</dd><dd>年實戰經驗</dd></div><div><dd class="num">4</dd><dd>項專業資格</dd></div></dl>
+        <a class="btn btn-ghost" href="#">認識創辦人與團隊</a>
+      </div>
+      <div class="sheet" aria-hidden="true"><b>（點擊後的面板，內容不在初始 HTML）</b><p>共好玟化組織發展顧問有限公司成立於 2022 年……創辦人專業資格：社會工作師執照、企業永續管理師、PMP 國際專案管理師、ICF 國際教練認證。</p></div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>最短（約 70 字），一行讀完。</li><li>手機底部面板閱讀長文的體驗好。</li></ul></div>
+    <div><h3>風險</h3><ul><li><b>面板內容不在初始 HTML</b>：公司介紹與四項資格對搜尋引擎等於不存在；這是本頁最需要被搜尋到的一段（訪客搜「共好玟化 創辦人」）。</li><li>四項資格縮成一個數字「4」：客戶標成紅色粗體的內容被藏到第二層。</li><li>又多一顆按鈕，稀釋 Hero 的主要行動。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：橋墩縮成小頭像，交接很弱。</li><li>本區 → 願景與使命：沒有可以接力的形狀。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

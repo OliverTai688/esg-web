@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>合作洽詢 · S3 非營利合作 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<style>
+.mock { container-type: inline-size; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; }
+.more summary { display: inline-flex; align-items: center; min-height: 44px; font: 700 13px/1 var(--font-sans); color: var(--orange-strong); cursor: pointer; list-style: none; }
+.more summary::-webkit-details-marker { display: none; }
+.more summary::after { content: " ＋"; }
+.more[open] summary::after { content: " －"; }
+.orgs { display: grid; gap: 10px; margin: 12px 0 0; padding: 0; list-style: none; }
+@container (min-width: 760px) { .orgs { grid-template-columns: repeat(3, 1fr); } }
+.orgs li { display: flex; align-items: center; gap: 14px; }
+.orgs .geo { --s: 36px; }
+.orgs b { display: block; font: 700 15px/1.4 var(--font-sans); }
+.orgs span span { font-size: 12px; color: var(--ink-2); }
+.sub { font: 700 13px/1.4 var(--font-sans); color: var(--ink-2); margin: 36px 0 0; }
+.foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; }
+.foot .small { font-size: 12px; }
+
+/* A — two petals facing each other */
+.pair { display: grid; gap: 14px; margin-top: 28px; }
+@container (min-width: 760px) { .pair { grid-template-columns: 1fr 1fr; gap: 0; } }
+.leaf { position: relative; background: #fff; padding: 26px 24px 16px; border-radius: 0 56px 0 56px; }
+.leaf.r { border-radius: 56px 0 56px 0; background: var(--yellow-soft); }
+
+/* C — rows */
+.rows { display: grid; gap: 28px; }
+@container (min-width: 760px) { .rows { grid-template-columns: .8fr 1.2fr; gap: 48px; } }
+.fold summary .geo { --s: 16px; }
+</style>
+</head>
+<body data-budget="210">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>合作洽詢 · S3 非營利合作</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s2-solutions.html">← 上一區</a><a href="s4-membership.html">下一區 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">合作洽詢 · S3</span>
+  <h1>我們是非營利組織，你們懂我們嗎？</h1>
+  <p>現況：可見 298 字；兩張說明卡各有一段說明又各有三個重點（同一件事講兩次），小標寫「NPO 合作」、選單寫「非營利合作」；沒有往表單的路。真實案例與照片待客戶提供（C03）。</p>
+  <p>本區在主線中的角色：<b>只有花瓣</b>——非營利組織是有機端；兩種合作模式是兩片相對的花瓣。上一區是白底的分頁籤，這一區要安靜。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>兩片相對的花瓣</h2><span class="tag">並排兩張＋卡內「展開全文」ReadMore</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec">
+      <p class="eyebrow">非營利合作</p>
+      <h2 class="h2">非營利組織合作模式</h2>
+      <p class="lead">共好玟化與非營利組織攜手，透過專業顧問輔導與資源連結，讓社會影響力被更多企業看見。</p>
+      <div class="pair">
+        <div class="leaf"><h3 class="h3">公益夥伴方案</h3>
+          <ul class="chips"><li class="chip">優惠合作方案</li><li class="chip">永續影響力數據整理</li><li class="chip">企業 ESG 部門對接</li></ul>
+          <details class="more"><summary>完整說明</summary><p class="small">針對非營利組織提供優惠合作方案，協助整理永續影響力數據，建立與企業 CSR／ESG 部門對接的溝通架構。</p></details></div>
+        <div class="leaf r"><h3 class="h3">跨界溝通</h3>
+          <ul class="chips"><li class="chip" style="background:#fff">ESG共學坊平台資源</li><li class="chip" style="background:#fff">永續語言轉譯</li><li class="chip" style="background:#fff">長期合作關係促成</li></ul>
+          <details class="more"><summary>完整說明</summary><p class="small">透過ESG共學坊平台與產業網絡，將非營利組織的社會價值轉譯為企業端可理解的永續語言，促成長期合作關係。</p></details></div>
+      </div>
+      <p class="sub">合作過的非營利與公益機構</p>
+      <ul class="orgs">
+        <li><span class="geo geo-petal c-yellow"></span><span><b>愛慈基金會</b><span>社會福利基金會・工作坊與永續白皮書案例</span></span></li>
+        <li><span class="geo geo-petal c-orange"></span><span><b>台東康復之友</b><span>身心障礙服務・永續輔導成果</span></span></li>
+        <li><span class="geo geo-petal c-yellow"></span><span><b>天成醫院</b><span>醫療機構・工作坊與回饋</span></span></li>
+      </ul>
+      <div class="foot"><p class="small">案例內容整理中，將陸續公開。</p><a class="btn btn-primary" href="#">預約諮詢</a></div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>兩個模式同時可見（它們是互補的，不是二選一）；每張卡只留名稱與三個重點，完整說明點一下就到。</li><li>兩張卡本身就是兩片相對的花瓣；三個機構各帶一片小花瓣，照片到位後直接換成花瓣形遮罩的照片。</li><li>補上往表單的按鈕，方向自動選「非營利合作」。</li></ul></div>
+    <div><h3>風險</h3><ul><li>花瓣形的卡片有兩個大圓角，卡內留白要夠，否則文字會貼到弧線。</li><li>兩個「完整說明」是兩個獨立的展開，不能互斥。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>服務項目 → 本區：第四個分頁籤的橘花瓣把人帶到這裡；交界本身靜默。</li><li>本區 → 會員方案：沙色段以拱形頂部切入（T4），從「只有花瓣」換到「四分圓長大」。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>兩個模式切換著看</h2><span class="tag">分頁 Tabs＋機構滑軌</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec">
+      <p class="eyebrow">非營利合作</p>
+      <h2 class="h2">非營利組織合作模式</h2>
+      <p class="lead">共好玟化與非營利組織攜手，透過專業顧問輔導與資源連結，讓社會影響力被更多企業看見。</p>
+      <div class="tabs" data-tabs style="margin-top:26px">
+        <div class="tablist"><button aria-selected="true">公益夥伴方案</button><button aria-selected="false">跨界溝通</button></div>
+        <div class="panel card"><p class="small">針對非營利組織提供優惠合作方案，協助整理永續影響力數據，建立與企業 CSR／ESG 部門對接的溝通架構。</p>
+          <ul class="chips"><li class="chip">優惠合作方案</li><li class="chip">永續影響力數據整理</li><li class="chip">企業 ESG 部門對接</li></ul></div>
+        <div class="panel card" hidden><p class="small">透過ESG共學坊平台與產業網絡，將非營利組織的社會價值轉譯為企業端可理解的永續語言，促成長期合作關係。</p>
+          <ul class="chips"><li class="chip">ESG共學坊平台資源</li><li class="chip">永續語言轉譯</li><li class="chip">長期合作關係促成</li></ul></div>
+      </div>
+      <p class="sub">合作過的非營利與公益機構</p>
+      <div class="rail" style="margin-top:12px">
+        <div class="card"><b>愛慈基金會</b><p class="small">社會福利基金會</p></div>
+        <div class="card"><b>台東康復之友</b><p class="small">身心障礙服務</p></div>
+        <div class="card"><b>天成醫院</b><p class="small">醫療機構</p></div>
+      </div>
+      <div class="foot"><p class="small">案例內容整理中，將陸續公開。</p><a class="btn btn-primary" href="#">預約諮詢</a></div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>目前分頁的完整說明直接可見，不用再點一次。</li><li>機構滑軌在案例照片到位後可以直接擴充成四張案例卡。</li></ul></div>
+    <div><h3>風險</h3><ul><li>只有兩項、而且不是互斥的內容，用分頁籤等於把其中一半藏起來——訪客可能不知道還有第二種模式。</li><li>上一區已經是分頁籤，連續兩區同一種互動，節奏沒有變化。</li><li>三個機構用滑軌：桌機一排就放得下，滑軌沒有作用；手機第三個要滑才看得到。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>服務項目 → 本區：兩個分頁籤區塊相鄰，交界看起來像同一區的延續。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>三列，點開才讀</h2><span class="tag">可展開列 FoldList</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec">
+      <div class="rows">
+        <div>
+          <p class="eyebrow">非營利合作</p>
+          <h2 class="h2">非營利組織合作模式</h2>
+          <p class="lead">共好玟化與非營利組織攜手，透過專業顧問輔導與資源連結，讓社會影響力被更多企業看見。</p>
+          <div class="btns"><a class="btn btn-primary" href="#">預約諮詢</a></div>
+        </div>
+        <div class="fold">
+          <details name="s3c" open><summary><span class="geo geo-petal c-yellow"></span>公益夥伴方案</summary><div class="body">針對非營利組織提供優惠合作方案，協助整理永續影響力數據，建立與企業 CSR／ESG 部門對接的溝通架構。
+            <ul class="chips"><li class="chip">優惠合作方案</li><li class="chip">永續影響力數據整理</li><li class="chip">企業 ESG 部門對接</li></ul></div></details>
+          <details name="s3c"><summary><span class="geo geo-petal c-orange"></span>跨界溝通</summary><div class="body">透過ESG共學坊平台與產業網絡，將非營利組織的社會價值轉譯為企業端可理解的永續語言，促成長期合作關係。
+            <ul class="chips"><li class="chip">ESG共學坊平台資源</li><li class="chip">永續語言轉譯</li><li class="chip">長期合作關係促成</li></ul></div></details>
+          <details name="s3c"><summary><span class="geo geo-petal c-yellow"></span>合作過的非營利與公益機構</summary><div class="body">愛慈基金會（社會福利基金會・工作坊與永續白皮書案例）、台東康復之友（身心障礙服務・永續輔導成果）、天成醫院（醫療機構・工作坊與回饋）。案例內容整理中，將陸續公開。</div></details>
+        </div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>字數最少；左標題右列表的版型和 S5 常見問題一致，實作成本最低。</li></ul></div>
+    <div><h3>風險</h3><ul><li>合作過的機構是這一區唯一的證據，被收進第三列等於把證據藏起來。</li><li>這頁會出現第二個、甚至第三個手風琴；非營利訪客看到的是一張清單，不是「你們懂我們」。</li><li>C03 的案例照片到位後，照片沒有地方放。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>本區 → 會員方案：列表結尾是一條線，和拱形邊界接不起來。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

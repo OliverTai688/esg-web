@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>主題列表頁 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<style>
+.mock { container-type: inline-size; }
+.back { display: inline-flex; align-items: center; min-height: 44px; font: 700 14px/1 var(--font-sans); color: var(--ink-2); text-decoration: none; }
+.back::before { content: "← "; white-space: pre; }
+.head { display: grid; gap: 24px; align-items: center; }
+@container (min-width: 760px) { .head { grid-template-columns: 1fr 220px; gap: 48px; } }
+.big { width: min(60%, 220px); margin-inline: auto; display: block; }
+@container (min-width: 760px) { .big { width: 100%; } }
+.d { font: 700 14px/1 var(--font-display); font-variant-numeric: tabular-nums; }
+
+/* A · numbered rows, then the other five petals */
+.rows { list-style: none; margin: 0; padding: 0; counter-reset: n; }
+.rows a { counter-increment: n; display: grid; grid-template-columns: 2.6em 1fr; gap: 2px 8px; align-items: baseline; min-height: 72px; padding: 16px 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+.rows a::before { content: "0" counter(n); font: 700 15px/1 var(--font-display); color: var(--orange-strong); }
+.rows strong { font: 700 17px/1.5 var(--font-sans); }
+.rows span { grid-column: 2; font-size: 13px; color: var(--ink-2); }
+.others { list-style: none; margin: 20px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.others a { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 18px 0 14px; border-radius: 999px; background: var(--card); font: 700 14px/1 var(--font-sans); color: var(--ink); text-decoration: none; }
+.others svg { width: 24px; height: 24px; }
+
+/* B · rows that open to show the excerpt */
+.s-b summary { align-items: baseline; }
+.s-b .body a { display: inline-block; margin-top: 10px; font-weight: 700; color: var(--orange-strong); text-decoration: none; }
+
+/* C · cards on a rail */
+.pc { display: flex; flex-direction: column; gap: 10px; min-height: 180px; padding: 24px 22px; border-radius: 0 56px 0 56px; background: var(--card); border: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+.pc .h3 { font-size: 17px; line-height: 1.5; }
+.pc .small { margin-top: auto; }
+</style>
+</head>
+<!-- 5 articles (the largest topic): header ≤ 140, each row ≤ 60 -->
+<body data-budget="400">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <path id="pt" d="M0-8A28.3 28.3 0 0 1 0-48 28.3 28.3 0 0 1 0-8Z"/>
+  <g id="fl" fill="#F6DC93"><use href="#pt" transform="rotate(30)"/><use href="#pt" transform="rotate(90)"/><use href="#pt" transform="rotate(150)"/><use href="#pt" transform="rotate(210)"/><use href="#pt" transform="rotate(270)"/><use href="#pt" transform="rotate(330)"/></g>
+</defs></svg>
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>主題列表頁</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="article-chrome.html">← 文章頁</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">主題列表頁</span>
+  <h1>這個主題有哪些文章？讀完這個主題之後呢？</h1>
+  <p>現況：文首 55 字＋每張卡約 80 字（含摘要）；看完清單就沒有下一步，也沒有收尾。在主線中的角色：一朵只亮一片的大花——這個主題在六瓣花裡的位置——接著是這個主題的文章列，最後是其餘五片。示意用最大的主題「永續責任」（5 篇）。每列上限 60 字。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>亮一片的花＋編號列＋其餘五片</h2><span class="tag">形狀本身（花）＋精簡列＋主題連結列</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec"><div class="head">
+      <div>
+        <a class="back" href="#">返回六大主題</a>
+        <p class="eyebrow" style="margin-top:12px">共好學習・5 篇文章</p>
+        <h1 class="h1">永續責任</h1>
+        <p class="lead">深入了解企業社會責任的實踐方式，從 ESG 報告到利害關係人溝通。</p>
+      </div>
+      <svg class="big" viewBox="-50 -50 100 100" aria-hidden="true"><use href="#fl"/><use href="#pt" fill="#F25232" transform="rotate(150)"/></svg>
+    </div></div>
+    <div class="sec white" style="padding-block:40px">
+      <ol class="rows">
+        <li><a href="#"><strong>聚焦重大性議題：有限資源下的最優選擇</strong><span><span class="d">2024.09.26</span> · 1 分鐘閱讀</span></a></li>
+        <li><a href="#"><strong>透過 SDGs 打造永續競爭優勢</strong><span><span class="d">2024.09.26</span> · 1 分鐘閱讀</span></a></li>
+        <li><a href="#"><strong>從永續報告書中洞察企業未來承諾</strong><span><span class="d">2024.09.26</span> · 1 分鐘閱讀</span></a></li>
+        <li><a href="#"><strong>ESG 實務工作者需求與挑戰調查結果報告</strong><span><span class="d">2024.06.26</span> · 1 分鐘閱讀</span></a></li>
+        <li><a href="#"><strong>從碳足跡到碳手印：塑造更永續的明天</strong><span><span class="d">2024.03.25</span> · 1 分鐘閱讀</span></a></li>
+      </ol>
+    </div>
+    <div class="sec sand" style="padding-block:40px">
+      <p class="eyebrow">其他主題</p>
+      <ul class="others">
+        <li><a href="#"><svg viewBox="-50 -50 100 100" aria-hidden="true"><use href="#fl"/><use href="#pt" fill="#F25232" transform="rotate(30)"/></svg>創新策略</a></li>
+        <li><a href="#"><svg viewBox="-50 -50 100 100" aria-hidden="true"><use href="#fl"/><use href="#pt" fill="#F25232" transform="rotate(90)"/></svg>市場競爭力</a></li>
+        <li><a href="#"><svg viewBox="-50 -50 100 100" aria-hidden="true"><use href="#fl"/><use href="#pt" fill="#F25232" transform="rotate(210)"/></svg>合作模式</a></li>
+        <li><a href="#"><svg viewBox="-50 -50 100 100" aria-hidden="true"><use href="#fl"/><use href="#pt" fill="#F25232" transform="rotate(270)"/></svg>溝通與換位思考</a></li>
+        <li><a href="#"><svg viewBox="-50 -50 100 100" aria-hidden="true"><use href="#fl"/><use href="#pt" fill="#F25232" transform="rotate(330)"/></svg>人物專訪</a></li>
+      </ul>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>大花一眼說明「你在六個主題裡的這一個」，和 <code>/learning</code> 的花是同一朵。</li><li>每列約 32 字（上限 60）：編號、標題、日期、閱讀時間，由新到舊。</li><li>讀完清單還有路：其餘五片花瓣，再接共用收尾（學習地圖＋LINE）。</li><li>返回連結回到 <code>/learning</code> 的六大主題，並且已選好這一片。</li></ul></div>
+    <div><h3>風險</h3><ul><li>列表沒有摘要，主題頁作為搜尋落地頁的文字量變少（主題說明仍在）。</li><li>只有一篇文章的主題（人物專訪、公告）頁面很短：靠「其他主題」與收尾撐住。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>文首（米白）→ 文章列（白）→ 其他主題（沙色）→ <code>CtaBand</code>：亮一片 → 排成列 → 其餘五片 → 火焰。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>可展開列：標題先看，摘要點了才有</h2><span class="tag">可展開列 FoldList（摘要在裡面）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec s-b">
+      <a class="back" href="#">返回六大主題</a>
+      <p class="eyebrow" style="margin-top:12px">共好學習・5 篇文章</p>
+      <h1 class="h1">永續責任</h1>
+      <div class="fold" style="margin-top:28px">
+        <details name="c" open><summary>聚焦重大性議題：有限資源下的最優選擇</summary><div class="body">企業資源有限，透過重大性議題評估，精準選擇最具影響力的 ESG 議題，實現資源最大化配置。<br><a href="#">閱讀全文 →</a></div></details>
+        <details name="c"><summary>透過 SDGs 打造永續競爭優勢</summary><div class="body">永續發展目標為企業提供明確框架，從品牌價值、創新驅動到競爭力強化，全面提升企業的永續競爭力。<br><a href="#">閱讀全文 →</a></div></details>
+        <details name="c"><summary>從永續報告書中洞察企業未來承諾</summary><div class="body">了解如何閱讀永續報告書，從企業的遠程目標中洞察其對未來的承諾與永續發展方向。<br><a href="#">閱讀全文 →</a></div></details>
+        <details name="c"><summary>ESG 實務工作者需求與挑戰調查結果報告</summary><div class="body">調查顯示 43.6% ESG 工作者經驗不足一年，面臨學習平衡、數據衡量與資源匱乏三大挑戰。<br><a href="#">閱讀全文 →</a></div></details>
+        <details name="c"><summary>從碳足跡到碳手印：塑造更永續的明天</summary><div class="body">探討碳足跡與碳手印兩個概念的差異，以及五項實踐策略，形成雙軌策略應對氣候變化。<br><a href="#">閱讀全文 →</a></div></details>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>摘要留在這一頁的 HTML 裡，對搜尋引擎最完整；沒有 JavaScript 也能用。</li><li>可見字數最低。</li></ul></div>
+    <div><h3>風險</h3><ul><li>要點兩次才進得了文章（先展開、再按「閱讀全文」）：把本頁唯一的工作變慢。</li><li>點標題的直覺是「進文章」，結果是展開，行為不符預期。</li><li>沒有形狀、沒有其他主題的出口。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>單一區塊，沒有交界。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>卡片滑軌</h2><span class="tag">橫向滑軌 SnapRail（葉形卡）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec">
+      <a class="back" href="#">返回六大主題</a>
+      <p class="eyebrow" style="margin-top:12px">共好學習・5 篇文章</p>
+      <h1 class="h1">永續責任</h1>
+      <p class="lead">深入了解企業社會責任的實踐方式，從 ESG 報告到利害關係人溝通。</p>
+      <div class="rail" style="margin-top:28px">
+        <a class="pc" href="#"><span class="h3">聚焦重大性議題：有限資源下的最優選擇</span><span class="small"><span class="d">2024.09.26</span> · 1 分鐘閱讀</span></a>
+        <a class="pc" href="#"><span class="h3">透過 SDGs 打造永續競爭優勢</span><span class="small"><span class="d">2024.09.26</span> · 1 分鐘閱讀</span></a>
+        <a class="pc" href="#"><span class="h3">從永續報告書中洞察企業未來承諾</span><span class="small"><span class="d">2024.09.26</span> · 1 分鐘閱讀</span></a>
+        <a class="pc" href="#"><span class="h3">ESG 實務工作者需求與挑戰調查結果報告</span><span class="small"><span class="d">2024.06.26</span> · 1 分鐘閱讀</span></a>
+        <a class="pc" href="#"><span class="h3">從碳足跡到碳手印：塑造更永續的明天</span><span class="small"><span class="d">2024.03.25</span> · 1 分鐘閱讀</span></a>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>葉形卡有形狀感；手機上滑動順手。</li></ul></div>
+    <div><h3>風險</h3><ul><li>這是一頁「清單」：訪客要的是一次看完這個主題有幾篇、哪一篇最新；滑軌一次只露三張，要按箭頭才知道後面還有。</li><li>只有兩篇的主題，滑軌不會動，右邊留一大塊空白。</li><li>頁面只有一屏高，像是沒做完。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>滑軌之後沒有其他主題的出口，要另外加。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

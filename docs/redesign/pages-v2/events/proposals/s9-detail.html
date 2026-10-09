@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>永續足跡 · S9 課程詳情頁 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<link rel="stylesheet" href="_events.css">
+<style>
+.back { display: inline-flex; align-items: center; min-height: 44px; font: 700 14px/1.4 var(--font-sans); color: var(--ink-2); text-decoration: none; }
+.back::before { content: "←"; margin-right: 8px; }
+.facts { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border-block: 1px solid var(--line); margin: 0; }
+.facts div { background: var(--paper); padding: 14px 0 14px 2px; }
+.card .facts { grid-template-columns: 1fr; border: 0; } .card .facts div { background: #fff; display: flex; justify-content: space-between; gap: 12px; padding: 12px 0; }
+@container (min-width: 760px) { .facts.wide { grid-template-columns: repeat(6, 1fr); } .facts.wide div { padding-left: 14px; } }
+.facts dt { font-size: 12px; color: var(--ink-2); } .facts dd { margin: 2px 0 0; font: 700 14.5px/1.5 var(--font-sans); }
+.hl { display: grid; gap: 12px; margin: 16px 0 0; padding: 0; list-style: none; }
+@container (min-width: 760px) { .hl { grid-template-columns: repeat(4, 1fr); } }
+.hl li { display: flex; align-items: center; gap: 12px; font: 700 15px/1.4 var(--font-sans); }
+.other { display: flex; flex-wrap: wrap; gap: 6px 24px; margin-top: 10px; }
+@container (min-width: 760px) { .two.tk { grid-template-columns: 1.5fr 1fr; } }
+.top { display: grid; gap: 24px; } @container (min-width: 760px) { .top { grid-template-columns: 1fr auto; align-items: center; gap: 48px; } }
+</style>
+</head>
+<body data-budget="260">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>永續足跡 · S9 課程詳情頁</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s8-cta.html">← 上一區</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">/events/[slug]</span>
+  <h1>這堂課是什麼、我現在能做什麼？</h1>
+  <p>現況：可見 227 字（預算 ≤ 260）。深色 Hero；「返回永續足跡」回到 <code>#upcoming</code>（服務與已結束活動也是）；按鈕在桌機右欄、手機最底下；次按鈕是 Coffee Chat；已結束的活動沒有任何下一步。訪客多半從 LINE 推播或海報直接落地。形狀：一個大圓，狀態跟著課程走（規劃中＝虛線圓，與 <code>/events</code>「下一梯次」同一個圓）。範例：永續商創師初階（規劃中）。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>一個足跡的近照：狀態圓＋下一步都在第一屏</h2><span class="tag">單欄；事實列＋編號小圓</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec" style="padding-bottom:36px">
+      <a class="back" href="#">返回 下一梯次</a>
+      <div class="top mt-s">
+        <div>
+          <h1 class="h1" style="margin-top:0">永續商創師初階</h1>
+          <p class="lead">結合ESG與商業策略，幫助建立成為永續商創師的基礎能力。課程融合AI工具應用、品牌案例分析與實作演練。</p>
+          <div class="btns"><a class="btn btn-line" href="#">加 LINE 候補下一梯次</a><a class="btn btn-ghost" href="#">看永續學習地圖</a></div>
+        </div>
+        <span class="step dash xl">下一梯次<br>規劃中</span>
+      </div>
+    </div>
+    <div class="sec white" style="padding-top:36px">
+      <dl class="facts wide"><div><dt>講師</dt><dd>吳玟樺（共好玟化創辦人）</dd></div><div><dt>時數</dt><dd>3 天 / 18 小時</dd></div><div><dt>日期</dt><dd>下一梯次規劃中</dd></div><div><dt>地點</dt><dd>台北市</dd></div><div><dt>名額</dt><dd>20 人</dd></div><div><dt>費用</dt><dd>NT$25,000</dd></div></dl>
+      <h2 class="h3 mt">課程重點</h2>
+      <ol class="hl"><li><i class="step sm c-yellow">01</i>AI 工具應用</li><li><i class="step sm c-yellow">02</i>品牌案例分析</li><li><i class="step sm c-yellow">03</i>實作演練</li><li><i class="step sm c-yellow">04</i>結業證書</li></ol>
+      <h2 class="h3 mt">其他課程</h2>
+      <p class="other"><a class="link" href="#">永續商創師進階</a><a class="link" href="#">永續品牌初階工作坊</a></p>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>第一屏（手機也是）就回答三件事：這是什麼課、現在的狀態（虛線圓＝還沒排定）、我能做什麼（LINE 候補）。</li><li>回上一層的連結寫出章節名稱，回到它所屬的區塊：課程 → 下一梯次、服務 → 持續服務、已結束 → 我們走過的路。</li><li>下一步的順序符合跨頁規劃：LINE 第一、學習地圖第二；已結束的活動也有下一步（收開課通知）。</li><li>與 <code>/events</code> 同一套形狀：虛線圓跨頁接力，課程重點是一列編號小圓。</li></ul></div>
+    <div><h3>風險</h3><ul><li>桌機沒有固定在側邊的按鈕：頁面只有一屏半，按鈕在第一屏，可接受。</li><li>事實列手機兩欄，講師名稱 12 個字會換行。</li></ul></div>
+    <div class="wide"><h3>與 /events 的銜接</h3><ul><li>「下一梯次」的列 → 本頁：小虛線圓放大成本頁的大虛線圓。</li><li>本頁 → 回程：落在所屬章節的小標；或往前走到學習地圖。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>左內容、右「票根」：事實與按鈕固定在側邊</h2><span class="tag">兩欄＋sticky 卡（現行結構改淺色）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec">
+      <a class="back" href="#">返回 下一梯次</a>
+      <div class="two tk mt-s">
+        <div>
+          <span class="chip">下一梯次規劃中</span>
+          <h1 class="h1">永續商創師初階</h1>
+          <p class="lead">結合ESG與商業策略，幫助建立成為永續商創師的基礎能力。課程融合AI工具應用、品牌案例分析與實作演練。</p>
+          <h2 class="h3 mt">課程重點</h2>
+          <ol class="hl" style="grid-template-columns:1fr 1fr"><li><i class="step sm c-yellow">01</i>AI 工具應用</li><li><i class="step sm c-yellow">02</i>品牌案例分析</li><li><i class="step sm c-yellow">03</i>實作演練</li><li><i class="step sm c-yellow">04</i>結業證書</li></ol>
+          <h2 class="h3 mt">其他課程</h2>
+          <p class="other"><a class="link" href="#">永續商創師進階</a><a class="link" href="#">永續品牌初階工作坊</a></p>
+        </div>
+        <div class="card">
+          <dl class="facts"><div><dt>講師</dt><dd>吳玟樺（共好玟化創辦人）</dd></div><div><dt>時數</dt><dd>3 天 / 18 小時</dd></div><div><dt>日期</dt><dd>下一梯次規劃中</dd></div><div><dt>地點</dt><dd>台北市</dd></div><div><dt>名額</dt><dd>20 人</dd></div><div><dt>費用</dt><dd>NT$25,000</dd></div></dl>
+          <div class="btns" style="flex-direction:column;margin-top:16px"><a class="btn btn-line" href="#">加 LINE 候補下一梯次</a><a class="btn btn-ghost" href="#">看永續學習地圖</a></div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>桌機上按鈕與事實一直在視線內；改動最小。</li></ul></div>
+    <div><h3>風險</h3><ul><li>手機上卡片排在課程重點與其他課程之後，按鈕在最底下——從 LINE 推播點進來的人（多半用手機）要滑到底才找得到下一步。</li><li>沒有主角形狀；狀態只是一個小標籤，和「可報名」的課程頁長得一樣。</li><li>頁面內容只有一屏半，sticky 幾乎沒有機會發揮。</li></ul></div>
+    <div class="wide"><h3>與 /events 的銜接</h3><ul><li>回程正確；形狀沒有接力。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>資訊分頁：課程重點／課程資訊／其他課程</h2><span class="tag">分頁 Tabs</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec">
+      <a class="back" href="#">返回 下一梯次</a>
+      <p class="mt-s"><span class="chip">下一梯次規劃中</span></p>
+      <h1 class="h1">永續商創師初階</h1>
+      <p class="lead">結合ESG與商業策略，幫助建立成為永續商創師的基礎能力。課程融合AI工具應用、品牌案例分析與實作演練。</p>
+      <div class="btns"><a class="btn btn-line" href="#">加 LINE 候補下一梯次</a><a class="btn btn-ghost" href="#">看永續學習地圖</a></div>
+      <div class="tabs mt" data-tabs>
+        <div class="tablist"><button aria-selected="true">課程重點</button><button aria-selected="false">課程資訊</button><button aria-selected="false">其他課程</button></div>
+        <div class="panel"><ol class="hl"><li><i class="step sm c-yellow">01</i>AI 工具應用</li><li><i class="step sm c-yellow">02</i>品牌案例分析</li><li><i class="step sm c-yellow">03</i>實作演練</li><li><i class="step sm c-yellow">04</i>結業證書</li></ol></div>
+        <div class="panel" hidden><dl class="facts wide"><div><dt>講師</dt><dd>吳玟樺（共好玟化創辦人）</dd></div><div><dt>時數</dt><dd>3 天 / 18 小時</dd></div><div><dt>日期</dt><dd>下一梯次規劃中</dd></div><div><dt>地點</dt><dd>台北市</dd></div><div><dt>名額</dt><dd>20 人</dd></div><div><dt>費用</dt><dd>NT$25,000</dd></div></dl></div>
+        <div class="panel" hidden><p class="other"><a class="link" href="#">永續商創師進階</a><a class="link" href="#">永續品牌初階工作坊</a></p></div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>可見字數最低；按鈕在第一屏。</li></ul></div>
+    <div><h3>風險</h3><ul><li>全頁才 230 字，本來就在預算內：把時數、地點、費用這些決定要不要報名的事實藏到第二個籤，是為了分頁而分頁。</li><li>三個籤的內容加起來不到一屏，操作成本高於閱讀成本。</li><li>沒有主角形狀。</li></ul></div>
+    <div class="wide"><h3>與 /events 的銜接</h3><ul><li>回程正確；形狀沒有接力。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>永續足跡 · S2 下一梯次 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<link rel="stylesheet" href="_events.css">
+<style>
+.next { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
+@container (min-width: 760px) { .next { align-items: center; text-align: center; } }
+.ccard { display: flex; flex-direction: column; gap: 10px; min-height: 210px; }
+.ccard .price { margin-top: auto; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; }
+</style>
+</head>
+<body data-budget="260">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>永續足跡 · S2 下一梯次</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s1-hero.html">← 上一區</a><a href="s3-learning-map.html">下一區 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">永續足跡 · S2</span>
+  <h1>現在有什麼可以參加？</h1>
+  <p>現況：可見 344 字。選單寫「活動列表」，點進來卻是「下一梯次規劃中」；三張卡各重複一次狀態、說明、時數、地點、價格。所有課程日期都已過，頁面不得出現「招生中」。本區在主線中的角色：虛線圓＝還沒落地的下一步。上一區交接過來的形狀：Hero 路線最前面的虛線圓。小標與選單名稱改為「下一梯次」。課程說明留在詳情頁（另一頁），這裡只留掃讀層。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>一個大虛線圓＋三列課程</h2><span class="tag">形狀＋精簡列表（列＝連到詳情頁）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec">
+      <p class="eyebrow">下一梯次</p>
+      <h2 class="h2">日期一公布，第一個通知你</h2>
+      <p class="lead">下一梯次課程正在規劃中。加入官方 LINE，開課時第一時間通知你。</p>
+      <div class="two mt">
+        <div class="next">
+          <span class="step dash xl">下一梯次<br>規劃中</span>
+          <a class="btn btn-line" href="#">加入 LINE 搶先通知</a>
+        </div>
+        <div class="rows">
+          <a class="row arrow" href="#"><i class="step dash sm" aria-hidden="true"></i><span class="grow"><b>永續商創師初階</b><span class="meta">3 天 / 18 小時・台北市</span></span><span class="price">NT$25,000</span></a>
+          <a class="row arrow" href="#"><i class="step dash sm" aria-hidden="true"></i><span class="grow"><b>永續商創師進階</b><span class="meta">2 天 / 12 小時・台北市</span></span><span class="price">NT$22,000</span></a>
+          <a class="row arrow" href="#"><i class="step dash sm" aria-hidden="true"></i><span class="grow"><b>永續品牌初階工作坊</b><span class="meta">2 小時・線上</span></span><span class="price">NT$6,000</span></a>
+        </div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>狀態只說一次，而且是用形狀說：一個大虛線圓＝下一步還沒落地。誠實，不會被誤讀成可報名。</li><li>三門課一眼掃完（名稱、時數、地點、價格），每列 64px 高，整列可點。</li><li>全段只有一個往外的行動：LINE。</li></ul></div>
+    <div><h3>風險</h3><ul><li>課程說明不在這一頁，要點進詳情頁才看得到。</li><li>手機上價格與箭頭要留在同一列：課名最長 9 個字，375px 可容納。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：Hero 的虛線圓放大（T1 靜態接力）。</li><li>本區 → 學習地圖：靜默轉場（米白 → 白）。三個小虛線圓到下一段變成八個實心的層次圓：從「還沒排定」到「隨時可以選」。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>三張課程卡的橫向滑軌</h2><span class="tag">SnapRail</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec">
+      <p class="eyebrow">下一梯次</p>
+      <h2 class="h2">日期一公布，第一個通知你</h2>
+      <p class="lead">下一梯次課程正在規劃中。加入官方 LINE，開課時第一時間通知你。</p>
+      <div class="rail mt">
+        <a class="card ccard" href="#" style="text-decoration:none;color:inherit"><span class="chip">下一梯次規劃中</span><b class="t">永續商創師初階</b><span class="meta">3 天 / 18 小時・台北市</span><span class="price">NT$25,000</span></a>
+        <a class="card ccard" href="#" style="text-decoration:none;color:inherit"><span class="chip">下一梯次規劃中</span><b class="t">永續商創師進階</b><span class="meta">2 天 / 12 小時・台北市</span><span class="price">NT$22,000</span></a>
+        <a class="card ccard" href="#" style="text-decoration:none;color:inherit"><span class="chip">下一梯次規劃中</span><b class="t">永續品牌初階工作坊</b><span class="meta">2 小時・線上</span><span class="price">NT$6,000</span></a>
+      </div>
+      <div class="btns"><a class="btn btn-line" href="#">加入 LINE 搶先通知</a></div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>卡片是訪客熟悉的「課程列表」樣子。</li><li>桌機三張剛好一排，不出現箭頭。</li></ul></div>
+    <div><h3>風險</h3><ul><li>只有三張、每張只有四行字，用滑軌是小題大作：手機上要滑兩次才看完三個課名。</li><li>「下一梯次規劃中」重複三次；卡片長得像可以報名，與實際狀態矛盾（現況的問題沒有解決）。</li><li>沒有主角形狀，主線在這一段斷掉。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：Hero 的虛線圓沒有被接住。</li><li>本區 → 學習地圖：卡片牆接卡片牆，節奏沒有變化。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>三門課做成分頁籤，一次看一門的完整內容</h2><span class="tag">分頁 Tabs</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec">
+      <p class="eyebrow">下一梯次</p>
+      <h2 class="h2">日期一公布，第一個通知你</h2>
+      <div class="tabs mt" data-tabs>
+        <div class="tablist"><button aria-selected="true">永續商創師初階</button><button aria-selected="false">永續商創師進階</button><button aria-selected="false">永續品牌初階工作坊</button></div>
+        <div class="panel card">
+          <span class="chip">下一梯次規劃中</span>
+          <p class="small mt-s">結合ESG與商業策略，幫助建立成為永續商創師的基礎能力。課程融合AI工具應用、品牌案例分析與實作演練。</p>
+          <ul class="facts"><li class="date">3 天 / 18 小時</li><li class="date">台北市</li><li class="date">20 人</li><li class="date">NT$25,000</li></ul>
+          <p class="mt-s"><a class="link" href="#">查看課程內容</a></p>
+        </div>
+        <div class="panel card" hidden>
+          <span class="chip">下一梯次規劃中</span>
+          <p class="small mt-s">進階培訓，涵蓋實施策略、利害關係人溝通、影響力評估，打造完整的永續商業策略能力。</p>
+          <ul class="facts"><li class="date">2 天 / 12 小時</li><li class="date">台北市</li><li class="date">15 人</li><li class="date">NT$22,000</li></ul>
+          <p class="mt-s"><a class="link" href="#">查看課程內容</a></p>
+        </div>
+        <div class="panel card" hidden>
+          <span class="chip">下一梯次規劃中</span>
+          <p class="small mt-s">用2小時掌握打造永續品牌的第一步。互動式教學模式，建立永續品牌的基礎觀念與核心價值。</p>
+          <ul class="facts"><li class="date">2 小時</li><li class="date">線上</li><li class="date">30 人</li><li class="date">NT$6,000</li></ul>
+          <p class="mt-s"><a class="link" href="#">查看課程內容</a></p>
+        </div>
+      </div>
+      <div class="btns"><a class="btn btn-line" href="#">加入 LINE 搶先通知</a></div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>課程說明留在本頁（在 HTML 裡，可被搜尋），不必進詳情頁。</li><li>三個課名都在籤列上。</li></ul></div>
+    <div><h3>風險</h3><ul><li>把還沒開課的課程講得最詳細，訪客讀完找不到報名鈕，落差最大。</li><li>與詳情頁內容完全重複。</li><li>籤列三個長名稱在手機上要橫向滑動才看得到第三個。</li><li>沒有主角形狀。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：虛線圓沒有被接住。</li><li>本區 → 學習地圖：連續兩段「課程內容」，下一段的學習地圖會被稀釋。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

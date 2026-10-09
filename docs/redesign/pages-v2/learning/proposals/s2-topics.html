@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>共好學習 · S2 六大主題 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<style>
+.mock { container-type: inline-size; }
+.t-list { list-style: none; margin: 16px 0 0; padding: 0; border-top: 1px solid var(--line); }
+.t-list a { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 8px 0; border-bottom: 1px solid var(--line); font: 700 15px/1.5 var(--font-sans); color: var(--ink); text-decoration: none; }
+.t-list a::after { content: "→"; margin-left: auto; color: var(--orange-strong); }
+.d { margin-top: 8px; }
+.all { display: inline-block; margin-top: 16px; }
+.cnt { font: 700 13px/1 var(--font-display); color: var(--ink-2); }
+
+/* A · petals at 30° + 60°k: the two horizontal ones carry the long names */
+.s2a { display: grid; gap: 28px; margin-top: 32px; align-items: center; }
+@container (min-width: 760px) { .s2a { grid-template-columns: 1fr minmax(0, 420px); gap: 56px; } .s2a > .panel { grid-column: 1; grid-row: 1; } .s2a > .fl { grid-column: 2; grid-row: 1; } }
+.s2a > .panel { margin: 0; }
+.fl.tablist { position: relative; display: block; overflow: visible; width: min(100%, 420px); aspect-ratio: 1; margin-inline: auto; }
+.fl.tablist button { position: absolute; left: 34%; top: 34%; width: 32%; height: 32%; min-height: 0; padding: 0; border-radius: 0 100% 0 100%; background: var(--yellow); color: var(--ink); transform: rotate(var(--a)) translateY(-85%) rotate(45deg) scale(.93); transition: transform .4s var(--geo-ease), background .3s; }
+.fl.tablist button[aria-selected="true"] { background: var(--orange); color: var(--ink); transform: rotate(var(--a)) translateY(-85%) rotate(45deg); }
+.fl.tablist button span { display: block; rotate: calc(-45deg - var(--a)); font: 700 13px/1.25 var(--font-sans); }
+.fl.tablist button small { display: block; font: 700 12px/1.4 var(--font-display); }
+.fl::after { content: ""; position: absolute; left: 50%; top: 50%; width: 7%; height: 7%; translate: -50% -50%; border-radius: 50%; background: var(--grey); }
+
+.s2b { display: grid; gap: 28px; margin-top: 28px; align-items: start; }
+@container (min-width: 760px) { .s2b { grid-template-columns: 200px 1fr; gap: 48px; } }
+.mini { position: relative; width: 160px; aspect-ratio: 1; margin-inline: auto; }
+.mini i { position: absolute; left: 34%; top: 34%; width: 32%; height: 32%; border-radius: 0 100% 0 100%; background: var(--yellow); transform: rotate(var(--a)) translateY(-85%) rotate(45deg); }
+.s2b summary .cnt { margin-left: auto; }
+.s2b .fold summary::after { margin-left: 0; }
+
+.t-card { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 8px; min-height: 190px; padding: 26px 22px 22px; border-radius: 18px; background: var(--card); border: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+.t-card::before { content: ""; position: absolute; right: -18px; top: -18px; width: 68px; height: 68px; border-radius: 0 100% 0 100%; background: var(--yellow); }
+.t-card .small { margin-top: auto; color: var(--ink); font-weight: 700; }
+</style>
+</head>
+<body data-budget="260">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>共好學習 · S2 六大主題</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s1-hero.html">← 上一區</a><a href="s3-featured.html">下一區 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">共好學習 · S2</span>
+  <h1>我關心的題目在哪一片？</h1>
+  <p>現況：可見 252 字，六張「icon＋主題名＋兩行說明」的卡片；導覽列六個下拉項目都指到這同一格卡片牆，所以點哪個都像沒反應。本區在主線中的角色：花開——六個主題是六片花瓣。上一區交接過來的形狀：兩片花瓣的芽。</p>
+  <p>導覽契約：本區是一個 <code>&lt;section id="topics"&gt;</code>；舊的 <code>#innovation</code> 等六個錨點要落在這一區並選好那個主題。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>六瓣花：花瓣就是分頁籤</h2><span class="tag">分頁 Tabs（籤列是花）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec white">
+      <p class="eyebrow">六大主題</p>
+      <h2 class="h2">選一片花瓣，從一個主題讀起</h2>
+      <div class="tabs s2a" data-tabs>
+        <div class="tablist fl" role="tablist" aria-label="六大主題">
+          <button style="--a:30deg" aria-selected="true"><span>創新策略<small>2</small></span></button>
+          <button style="--a:90deg" aria-selected="false"><span>市場競爭力<small>2</small></span></button>
+          <button style="--a:150deg" aria-selected="false"><span>永續責任<small>5</small></span></button>
+          <button style="--a:210deg" aria-selected="false"><span>合作模式<small>2</small></span></button>
+          <button style="--a:270deg" aria-selected="false"><span>溝通與<br>換位思考<small>3</small></span></button>
+          <button style="--a:330deg" aria-selected="false"><span>人物專訪<small>1</small></span></button>
+        </div>
+        <div class="panel">
+          <h3 class="h3">創新策略 <span class="cnt">2 篇文章</span></h3>
+          <p class="small d">探索永續轉型的創新方法，從商業模式到產品設計，重新定義品牌的永續競爭力。</p>
+          <ul class="t-list"><li><a href="#">核心策略指引：九宮格模型助力創新與問題解決</a></li><li><a href="#">擴大影響力：聯合利華的永續成功策略</a></li></ul>
+          <a class="link all" href="#">看這個主題的所有文章</a>
+        </div>
+        <div class="panel" hidden>
+          <h3 class="h3">市場競爭力 <span class="cnt">2 篇文章</span></h3>
+          <p class="small d">提升品牌在永續市場中的能見度，掌握消費者趨勢與企業採購標準。</p>
+          <ul class="t-list"><li><a href="#">數據驅動的決策：推動永續策略實現的第一步</a></li><li><a href="#">透過市場數據洞察趨勢，提升永續產品競爭力</a></li></ul>
+          <a class="link all" href="#">看這個主題的所有文章</a>
+        </div>
+        <div class="panel" hidden>
+          <h3 class="h3">永續責任 <span class="cnt">5 篇文章</span></h3>
+          <p class="small d">深入了解企業社會責任的實踐方式，從 ESG 報告到利害關係人溝通。</p>
+          <ul class="t-list"><li><a href="#">聚焦重大性議題：有限資源下的最優選擇</a></li><li><a href="#">透過 SDGs 打造永續競爭優勢</a></li><li><a href="#">從永續報告書中洞察企業未來承諾</a></li></ul>
+          <a class="link all" href="#">看這個主題的所有文章</a>
+        </div>
+        <div class="panel" hidden>
+          <h3 class="h3">合作模式 <span class="cnt">2 篇文章</span></h3>
+          <p class="small d">了解多元的產業合作形式，從供應鏈整合到跨界聯名，找到最適合的合作路徑。</p>
+          <ul class="t-list"><li><a href="#">公益與企業共贏：提升社會價值與經濟效益</a></li><li><a href="#">從贊助到夥伴：企業與非營利組織的雙贏策略</a></li></ul>
+          <a class="link all" href="#">看這個主題的所有文章</a>
+        </div>
+        <div class="panel" hidden>
+          <h3 class="h3">溝通與換位思考 <span class="cnt">3 篇文章</span></h3>
+          <p class="small d">培養跨界對話的溝通能力，學習如何用不同產業的語言傳達永續價值。</p>
+          <ul class="t-list"><li><a href="#">透過對話創造價值：搭建企業與社會的溝通橋樑</a></li><li><a href="#">換位思考：提升問卷設計的有效性</a></li><li><a href="#">從內部落實到外部溝通：強化永續理念的傳播</a></li></ul>
+          <a class="link all" href="#">看這個主題的所有文章</a>
+        </div>
+        <div class="panel" hidden>
+          <h3 class="h3">人物專訪 <span class="cnt">1 篇文章</span></h3>
+          <p class="small d">永續實踐者的第一手故事，聆聽不同領域的先驅者如何將理念化為行動。</p>
+          <ul class="t-list"><li><a href="#">從父親的塑膠建材到我的永續革命：彭欣惠的接班與新生</a></li></ul>
+          <a class="link all" href="#">看這個主題的所有文章</a>
+        </div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>主線最直接：六個主題＝六片花瓣，點花瓣就換主題，選中的那片變橘色。</li><li>掃讀層只有六個主題名與篇數；說明與文章標題一次只出現一組。</li><li>六個面板都在 HTML 裡（未選的 <code>hidden</code>），搜尋引擎讀得到。</li><li>花瓣位置固定，之後在文章頁、列表上用「第幾片亮起來」當主題標記。</li></ul></div>
+    <div><h3>風險</h3><ul><li>花瓣最窄處手機約 61px：主題名只能四到五個字，長的兩個必須放在水平的兩片（已這樣排）。英文需要短名稱。</li><li>花瓣以 60° 旋轉，超出文法的「90° 倍數」，需在整頁規劃中註明。</li><li>手機上花在上、面板在下，點了花瓣要確認面板在視窗內。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>S1 → 本區：芽的兩片花瓣長成六片；捲入時花瓣由花心向外展開（靜止狀態就是開好的花）。</li><li>本區 → S3：深色段以拱形上緣切入；被選中的橘色花瓣在下一區放大成托著精選文章的那一片。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>主題清單：六列可展開</h2><span class="tag">可展開列 FoldList（一次開一列）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec white">
+      <p class="eyebrow">六大主題</p>
+      <h2 class="h2">六個主題，展開看文章</h2>
+      <div class="s2b">
+        <div class="mini" aria-hidden="true"><i style="--a:30deg"></i><i style="--a:90deg"></i><i style="--a:150deg"></i><i style="--a:210deg"></i><i style="--a:270deg"></i><i style="--a:330deg"></i></div>
+        <div class="fold">
+          <details name="s2b" open><summary>創新策略<span class="cnt">2 篇</span></summary><div class="body">探索永續轉型的創新方法，從商業模式到產品設計，重新定義品牌的永續競爭力。<ul class="t-list"><li><a href="#">核心策略指引：九宮格模型助力創新與問題解決</a></li><li><a href="#">擴大影響力：聯合利華的永續成功策略</a></li></ul></div></details>
+          <details name="s2b"><summary>市場競爭力<span class="cnt">2 篇</span></summary><div class="body">提升品牌在永續市場中的能見度，掌握消費者趨勢與企業採購標準。<ul class="t-list"><li><a href="#">數據驅動的決策：推動永續策略實現的第一步</a></li><li><a href="#">透過市場數據洞察趨勢，提升永續產品競爭力</a></li></ul></div></details>
+          <details name="s2b"><summary>永續責任<span class="cnt">5 篇</span></summary><div class="body">深入了解企業社會責任的實踐方式，從 ESG 報告到利害關係人溝通。</div></details>
+          <details name="s2b"><summary>合作模式<span class="cnt">2 篇</span></summary><div class="body">了解多元的產業合作形式，從供應鏈整合到跨界聯名，找到最適合的合作路徑。</div></details>
+          <details name="s2b"><summary>溝通與換位思考<span class="cnt">3 篇</span></summary><div class="body">培養跨界對話的溝通能力，學習如何用不同產業的語言傳達永續價值。</div></details>
+          <details name="s2b"><summary>人物專訪<span class="cnt">1 篇</span></summary><div class="body">永續實踐者的第一手故事，聆聽不同領域的先驅者如何將理念化為行動。</div></details>
+        </div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>原生 <code>&lt;details&gt;</code>：沒有 JavaScript 也能用，頁內搜尋會自動展開。</li><li>主題名多長都放得下，英文不必另取短名。</li><li>手機上是最省空間的排法。</li></ul></div>
+    <div><h3>風險</h3><ul><li>花只是旁邊的插圖，和內容沒有關係——拿掉也不影響，等於主線沒有落地。</li><li>與同頁 S4 的文章列、<code>/consulting</code> 的 FAQ 長得一樣，這一頁沒有自己的記憶點。</li><li>展開列把後面的列往下推，連續比較兩個主題時畫面會跳。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>S1 → 本區：芽 → 小花，形狀有接上，但花不能互動。</li><li>本區 → S3：清單直接碰到深色段，沒有形狀可以交接。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>主題卡滑軌：每張卡帶一篇最新文章</h2><span class="tag">橫向滑軌 SnapRail（六張卡）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec white">
+      <p class="eyebrow">六大主題</p>
+      <h2 class="h2">六個主題，各從最新一篇開始</h2>
+      <div class="rail" style="margin-top:28px">
+        <a class="t-card" href="#"><span class="cnt">2 篇</span><span class="h3">創新策略</span><span class="small">核心策略指引：九宮格模型助力創新與問題解決</span></a>
+        <a class="t-card" href="#"><span class="cnt">2 篇</span><span class="h3">市場競爭力</span><span class="small">數據驅動的決策：推動永續策略實現的第一步</span></a>
+        <a class="t-card" href="#"><span class="cnt">5 篇</span><span class="h3">永續責任</span><span class="small">聚焦重大性議題：有限資源下的最優選擇</span></a>
+        <a class="t-card" href="#"><span class="cnt">2 篇</span><span class="h3">合作模式</span><span class="small">公益與企業共贏：提升社會價值與經濟效益</span></a>
+        <a class="t-card" href="#"><span class="cnt">3 篇</span><span class="h3">溝通與換位思考</span><span class="small">透過對話創造價值：搭建企業與社會的溝通橋樑</span></a>
+        <a class="t-card" href="#"><span class="cnt">1 篇</span><span class="h3">人物專訪</span><span class="small">從父親的塑膠建材到我的永續革命：彭欣惠的接班與新生</span></a>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>每張卡直接帶一篇文章，少點一次。</li><li>手機一次一張半，滑動是熟悉的手勢；卡片角落的花瓣與首頁合作單位卡同一個語彙。</li></ul></div>
+    <div><h3>風險</h3><ul><li>桌機一次只看到三個主題，另外三個要按箭頭——六個主題不再是「一眼看完」。</li><li>主題的一句說明放不進預算（六句共 222 字），只能整個拿掉。</li><li>一張卡只能連到一個地方（主題頁或那篇文章），另一個入口就消失。</li><li>花被拆成六張卡的角飾，「一朵花」不存在。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>S1 → 本區：芽的花瓣變成卡片角飾，尺寸變小、角色變弱。</li><li>本區 → S3：滑軌下方直接接深色段；與 S4 之後若也用卡片，會連續兩段卡片。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>共好學習 · S5 收尾 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<style>
+.mock { container-type: inline-size; }
+/* The shared CtaBand: a small arch closing over the flame */
+.band { text-align: center; border-top: 1px solid var(--line); }
+.band .arc { position: relative; width: 200px; margin: 0 auto 28px; }
+.band .arc svg { display: block; width: 100%; height: auto; }
+.band .arc img { position: absolute; left: 50%; top: -4px; width: 34px; translate: -50% 0; }
+.band .lead { margin-inline: auto; }
+.band .btns { justify-content: center; }
+@container (max-width: 520px) { .band .btns .btn { width: 100%; } }
+
+/* B · one action and a QR code */
+.qr { width: 112px; height: 112px; margin: 24px auto 0; border-radius: 12px; background: repeating-conic-gradient(var(--ink) 0 25%, #fff 0 50%) 0 0 / 16px 16px; border: 8px solid #fff; }
+@container (max-width: 759px) { .qr { display: none; } }
+
+/* C · two doors */
+.doors { display: grid; gap: 14px; margin-top: 28px; text-align: left; }
+@container (min-width: 760px) { .doors { grid-template-columns: 1fr 1fr; } }
+.door { display: flex; flex-direction: column; gap: 8px; padding: 26px 24px; color: var(--ink); text-decoration: none; }
+.door.p { border-radius: 0 64px 0 64px; background: var(--yellow); }
+.door.b { border-radius: 14px; background: var(--grey); color: #fff; }
+.door .h3 { font-size: 18px; }
+.door .go { margin-top: 10px; font: 700 14px/1.4 var(--font-sans); }
+.door .go::after { content: " →"; }
+</style>
+</head>
+<body data-budget="90">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>共好學習 · S5 收尾</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s4-articles.html">← 上一區</a><a href="insights-list.html">最新文章 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">共好學習 · S5</span>
+  <h1>讀完之後呢？</h1>
+  <p>現況：可見 74 字，共用的 <code>CtaBand</code>（學習地圖＋LINE）。本區在主線中的角色：花回到火焰——小拱在火焰上合龍，這是本頁唯一一次完整火焰。版型由全站共用，三案比的是「要訪客做哪一件事」。依 <code>00</code> 第七節，<code>/learning</code> 的收尾＝打開學習地圖＋LINE。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>學習地圖＋LINE（全站規定的組合）</h2><span class="tag">共用 CtaBand：主按鈕＋LINE</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec band">
+      <div class="arc" aria-hidden="true"><svg viewBox="0 0 240 96" fill="none"><path d="M10 96C10 44 60 14 104 12" stroke="#FAB40A" stroke-width="12" stroke-linecap="round"/><path d="M230 96C230 44 180 14 136 12" stroke="#F25232" stroke-width="12" stroke-linecap="round"/></svg><img src="../../_shared/mark.svg" alt=""></div>
+      <h2 class="h2">讀完了，下一步呢？</h2>
+      <p class="lead">想把文章裡的觀念用在自己的組織？從學習地圖找到適合的主題，或加入官方 LINE 收到新文章與課程通知。</p>
+      <div class="btns"><a class="btn btn-primary" href="#">打開永續學習地圖</a><a class="btn btn-line" href="#">加入官方 LINE</a></div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>從「讀」接到「學」：學習地圖是知識區最自然的下一層（旅程：認識 → 參與）。</li><li>LINE 是零摩擦的備案，符合本頁次要下一步。</li><li>與全站其他分頁的收尾一致，不需要新元件。</li></ul></div>
+    <div><h3>風險</h3><ul><li>兩顆按鈕並排，手機上要直排。</li><li>連到 <code>/events#workshops</code>：那一頁改 id 時要同步。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>S4 → 本區：沙色 → 米白；兩段弧捲入時描出（本頁第二處、也是最後一處捲動動畫）。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>只做一件事：加 LINE 收新文章</h2><span class="tag">單一行動＋QR code（桌機）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec band">
+      <div class="arc" aria-hidden="true"><svg viewBox="0 0 240 96" fill="none"><path d="M10 96C10 44 60 14 104 12" stroke="#FAB40A" stroke-width="12" stroke-linecap="round"/><path d="M230 96C230 44 180 14 136 12" stroke="#F25232" stroke-width="12" stroke-linecap="round"/></svg><img src="../../_shared/mark.svg" alt=""></div>
+      <h2 class="h2">新文章上線，LINE 通知你</h2>
+      <p class="lead">加入官方 LINE，收到新文章與課程通知。</p>
+      <div class="btns"><a class="btn btn-line" href="#">加入官方 LINE</a></div>
+      <div class="qr" role="img" aria-label="官方 LINE QR code"></div>
+      <p class="small" style="margin-top:10px">@381iutjm</p>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>一個行動，轉換最單純；桌機訪客可以直接掃碼。</li><li>字數最少。</li></ul></div>
+    <div><h3>風險</h3><ul><li>主按鈕變成 LINE 綠，違反「全頁只有一種主按鈕顏色（橘）」。</li><li>與 <code>/join</code> 的工作重複；想更進一步的人（學習地圖、顧問）在這裡沒有路。</li><li>共用 <code>CtaBand</code> 沒有 QR code 的位置，要改共用元件。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>S4 → 本區：同 A。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>兩道門：想系統地學／已經有問題</h2><span class="tag">兩張分流卡（花瓣門＋方塊門）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec band">
+      <h2 class="h2">讀完了，下一步呢？</h2>
+      <div class="doors">
+        <a class="door p" href="#"><span class="h3">想系統地學</span><span class="small" style="color:var(--ink)">從永續學習地圖找到適合的主題。</span><span class="go">打開永續學習地圖</span></a>
+        <a class="door b" href="#"><span class="h3">已經有具體問題</span><span class="small" style="color:#fff">和顧問聊 15 分鐘，不收費。</span><span class="go">預約 Coffee Chat</span></a>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>依意圖分流，文案最清楚；花瓣門與方塊門是首頁「服務對象」的語彙。</li></ul></div>
+    <div><h3>風險</h3><ul><li>花瓣＋方塊是 <code>/consulting</code> 的主角形狀（合龍點），在知識區提前用掉。</li><li>沒有 LINE：本頁的次要下一步不見了。</li><li>不是共用的 <code>CtaBand</code>，全站收尾會出現第二種樣式；也沒有火焰。</li><li>這個分流更適合文章頁文末（讀完一篇、問題最具體的時候）。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>S4 → 本區：沒有弧，收尾與其他分頁不同調。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

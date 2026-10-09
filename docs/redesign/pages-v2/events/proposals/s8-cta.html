@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>永續足跡 · S8 CTA 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<link rel="stylesheet" href="_events.css">
+<style>
+/* Mirrors src/components/site/CtaBand.tsx: a small arch closing over the flame */
+.band { text-align: center; border-top: 1px solid var(--line); display: flex; flex-direction: column; align-items: center; }
+.band .archs { position: relative; width: 200px; height: 80px; }
+.band .archs::before, .band .archs::after { content: ""; position: absolute; bottom: 0; width: 46%; height: 100%; border: 11px solid var(--yellow); border-bottom: 0; }
+.band .archs::before { left: 0; border-right: 0; border-radius: 100% 0 0 0; }
+.band .archs::after { right: 0; border-left: 0; border-radius: 0 100% 0 0; border-color: var(--orange); }
+.band .archs img { position: absolute; left: 50%; top: -14px; width: 30px; translate: -50% 0; }
+.band .btns { justify-content: center; }
+.steps3 { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; margin: 26px 0 0; padding: 0; list-style: none; font: 700 14px/1.5 var(--font-sans); }
+.steps3 b { font: 700 12px/1 var(--font-display); color: var(--orange-strong); margin-right: 6px; }
+</style>
+</head>
+<body data-budget="90">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>永續足跡 · S8 CTA</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s7-cases.html">← 上一區</a><a href="s9-detail.html">詳情頁 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">永續足跡 · S8</span>
+  <h1>我的下一步是什麼？</h1>
+  <p>現況：可見 83 字，主按鈕是「預約 15 分鐘 Coffee Chat」。依跨頁規劃第七節，本頁的主要行動是「加 LINE 收開課通知」，收尾用共用的 <code>CtaBand</code>（小拱在火焰上合龍）：主＝LINE、次＝企業包班洽詢。版型由共用元件決定，三案比的是「放什麼、哪一顆是主按鈕、要不要步驟列」。上一區交接過來的形狀：三個合成圓。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>一句話＋兩顆按鈕：LINE 為主、企業包班為次</h2><span class="tag">CtaBand（無步驟列）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec band">
+      <div class="archs" aria-hidden="true"><img src="../../_shared/mark.svg" alt=""></div>
+      <h2 class="h2">下一個足跡，換你踏出</h2>
+      <p class="lead">開課日期一公布，LINE 第一個通知你；團隊想一起學，直接談企業包班。</p>
+      <div class="btns"><a class="btn btn-line" href="#">加入 LINE 收開課通知</a><a class="btn btn-ghost" href="#">洽詢企業包班</a></div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>主按鈕與 Hero、「下一梯次」是同一顆（LINE），全頁只有一個主要行動。</li><li>標題把主線收回來：前面是別人的腳步，這裡換訪客。</li><li>次按鈕接住企業端（P2）：包班與客製課程 → <code>/consulting#contact</code>。</li><li>字數最少，音量低於首頁的收尾。</li></ul></div>
+    <div><h3>風險</h3><ul><li>沒有說明加 LINE 之後會發生什麼（以說明句的前半句交代）。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：三個合成圓 → 兩段弧在火焰上合龍（捲入時描邊，元件內建）。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>加上三步驟：加 LINE 之後會發生什麼</h2><span class="tag">CtaBand＋steps</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec band">
+      <div class="archs" aria-hidden="true"><img src="../../_shared/mark.svg" alt=""></div>
+      <h2 class="h2">下一個足跡，換你踏出</h2>
+      <p class="lead">開課日期一公布，LINE 第一個通知你；團隊想一起學，直接談企業包班。</p>
+      <div class="btns"><a class="btn btn-line" href="#">加入 LINE 收開課通知</a><a class="btn btn-ghost" href="#">洽詢企業包班</a></div>
+      <ol class="steps3"><li><b>01</b>加入官方 LINE</li><li><b>02</b>收到開課通知</li><li><b>03</b>選一門課開始</li></ol>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>把「加 LINE 之後」講清楚，降低猶豫。</li></ul></div>
+    <div><h3>風險</h3><ul><li>三個步驟只是把說明句再說一次；字數貼近上限（約 85）。</li><li>步驟列是首頁收尾（三步合作流程）的特徵，這裡再用會和首頁一樣大聲。</li><li>第三步「選一門課開始」在日期未定時是空的承諾。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>同 A。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>維持現況：Coffee Chat 為主、LINE 為次</h2><span class="tag">CtaBand（現行文案）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec band">
+      <div class="archs" aria-hidden="true"><img src="../../_shared/mark.svg" alt=""></div>
+      <h2 class="h2">準備好開始你的永續旅程了嗎？</h2>
+      <p class="lead">無論你是初次接觸 ESG 的品牌主，還是想深化永續策略的企業夥伴，我們都有適合你的課程與服務。</p>
+      <div class="btns"><a class="btn btn-primary" href="#">預約 15 分鐘 Coffee Chat</a><a class="btn btn-line" href="#">加入官方 LINE</a></div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>不用改文案；Coffee Chat 是全站轉換率最高的行動。</li></ul></div>
+    <div><h3>風險</h3><ul><li>與本頁旅程位置不符：這一頁的主要訪客是學習者（P4），他們要的是開課通知，不是顧問會談；Coffee Chat 已經是首頁與 <code>/sustainability</code> 的主按鈕。</li><li>Hero 的主按鈕是 LINE、收尾卻換成 Coffee Chat：同一頁出現兩個主要行動。</li><li>標題是任何一頁都能用的句子，沒有接住「足跡」。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>形狀接力成立，但文字沒有回應前面的主線。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

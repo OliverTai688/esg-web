@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>共好學習 · S3 精選文章 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<style>
+.mock { container-type: inline-size; background: #fff; }
+/* Seam 2 (T4): the dark section's top edge is an arch */
+.arch { margin-top: 48px; border-radius: 50% 50% 0 0 / clamp(40px, 9cqw, 110px) clamp(40px, 9cqw, 110px) 0 0; padding-top: clamp(64px, 11cqw, 130px); }
+.meta { font-size: 13px; margin: 14px 0 0; }
+
+/* A · one large petal carries one article */
+.s3a { display: grid; gap: 28px; align-items: end; margin-top: 28px; }
+@container (min-width: 760px) { .s3a { grid-template-columns: 1fr auto; gap: 48px; } }
+.leaf-card { padding: clamp(28px, 6cqw, 52px); border-radius: 0 clamp(72px, 16cqw, 150px) 0 clamp(72px, 16cqw, 150px); background: var(--yellow); color: var(--ink); max-width: 720px; }
+.leaf-card .h2 { font-size: clamp(22px, 3.6cqw, 34px); line-height: 1.45; }
+.leaf-card .lead { color: var(--ink); font-size: 16px; }
+.leaf-card .chip { background: var(--ink); color: #fff; }
+
+/* B · three picks on a rail */
+.pick { display: flex; flex-direction: column; gap: 12px; min-height: 210px; padding: 24px 22px; border-radius: 0 56px 0 56px; background: rgba(255,255,255,.07); color: #fff; text-decoration: none; }
+.pick .h3 { font-size: 18px; line-height: 1.5; }
+.pick .meta { margin-top: auto; color: rgba(255,255,255,.7); }
+.pick .chip { align-self: flex-start; }
+
+/* C · tabs by kind of article */
+.s3c .panel { max-width: 720px; }
+.s3c .h3 { font-size: clamp(20px, 3.2cqw, 28px); line-height: 1.45; }
+</style>
+</head>
+<body data-budget="260">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>共好學習 · S3 精選文章</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s2-topics.html">← 上一區</a><a href="s4-articles.html">下一區 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">共好學習 · S3</span>
+  <h1>沒有想法的話，先讀哪一篇？</h1>
+  <p>現況：可見 97 字，一張深色大卡（最新一篇非公告文章），沒有區塊標題，也不在導覽列裡。本區在主線中的角色：摘下一片——從六片花瓣裡拿出一片，放大，托著一篇文章；這是本頁唯一的深色段與最大聲的時刻。上一區交接過來的形狀：被選中的橘色花瓣。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>一片大花瓣，一篇文章，一顆按鈕</h2><span class="tag">單一主打（不需要互動元件）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec dark arch">
+      <p class="eyebrow">精選文章</p>
+      <div class="s3a">
+        <article class="leaf-card">
+          <span class="chip">人物專訪</span>
+          <h2 class="h2">從父親的塑膠建材到我的永續革命：彭欣惠的接班與新生</h2>
+          <p class="lead">彭欣惠接掌家族塑膠建材事業，將父親的技術創新轉化為永續推廣，在 ESG 的路上找到新方向。</p>
+          <p class="meta">ESG共學坊 · 2024.10.19 · 1 分鐘閱讀</p>
+          <div class="btns" style="margin-top:22px"><a class="btn btn-primary" href="#">開始閱讀</a></div>
+        </article>
+        <span class="geo geo-petal c-orange" style="--s:clamp(56px,10cqw,96px)" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>一個決定：讀，或往下捲。主要下一步（讀下一篇）在這裡最大聲。</li><li>大花瓣本身承載內容，不是裝飾；黃底墨字對比 11:1。</li><li>字數最少（約 100 字），把預算留給 S4 的清單。</li></ul></div>
+    <div><h3>風險</h3><ul><li>只推一篇：如果最新一篇剛好不合訪客胃口，這一屏就浪費了。</li><li>「精選」目前是程式規則（最新一篇非公告文章），不是編輯挑選；需要客戶確認要不要改成手動指定。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>S2 → 本區：白 → 深，拱形上緣（T4）；S2 被選中的橘色花瓣在這裡放大成黃色的大花瓣。</li><li>本區 → S4：右下的小橘花瓣跨在深／沙交界上（T1），在 S4 變成每列文章前面的花徽。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>三篇滑軌：最新、專訪、公告</h2><span class="tag">橫向滑軌 SnapRail（三張卡）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec dark arch">
+      <p class="eyebrow">精選文章</p>
+      <h2 class="h2">先從這三篇開始</h2>
+      <div class="rail" style="margin-top:28px">
+        <a class="pick" href="#"><span class="chip">人物專訪</span><span class="h3">從父親的塑膠建材到我的永續革命：彭欣惠的接班與新生</span><span class="meta">2024.10.19 · 1 分鐘閱讀</span></a>
+        <a class="pick" href="#"><span class="chip">創新策略</span><span class="h3">核心策略指引：九宮格模型助力創新與問題解決</span><span class="meta">2024.10.08 · 1 分鐘閱讀</span></a>
+        <a class="pick" href="#"><span class="chip">ESG共學坊公告</span><span class="h3">訂閱 3 步驟</span><span class="meta">2024.11.11 · 1 分鐘閱讀</span></a>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>三種類型各一篇，命中率比單篇高。</li><li>手機一次一張半，暗示「還有」。</li></ul></div>
+    <div><h3>風險</h3><ul><li>三張同樣大小的卡沒有主次，「大聲時刻」變成一排卡片；緊接的 S4 又是清單，連續兩段列表。</li><li>摘要放不下（三段共 130 字），只剩標題，和 S4 的列沒有差別。</li><li>三篇都會在 S4 的前六列再出現一次。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>S2 → 本區：一片花瓣變三張葉形卡，「摘下一片」不成立。</li><li>本區 → S4：卡片 → 列，形狀沒有接力。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>依類型切換：觀點／專訪／公告</h2><span class="tag">分頁 Tabs（三個分頁，各一篇）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec dark arch">
+      <p class="eyebrow">精選文章</p>
+      <div class="tabs s3c" data-tabs style="margin-top:24px">
+        <div class="tablist" role="tablist" aria-label="文章類型">
+          <button aria-selected="true">專訪</button><button aria-selected="false">觀點</button><button aria-selected="false">公告</button>
+        </div>
+        <div class="panel">
+          <h2 class="h3">從父親的塑膠建材到我的永續革命：彭欣惠的接班與新生</h2>
+          <p class="lead">彭欣惠接掌家族塑膠建材事業，將父親的技術創新轉化為永續推廣，在 ESG 的路上找到新方向。</p>
+          <p class="meta small">ESG共學坊 · 2024.10.19 · 1 分鐘閱讀</p>
+          <div class="btns" style="margin-top:22px"><a class="btn btn-primary" href="#">開始閱讀</a></div>
+        </div>
+        <div class="panel" hidden>
+          <h2 class="h3">核心策略指引：九宮格模型助力創新與問題解決</h2>
+          <p class="lead">運用商業模式九宮格框架，提供結構化思考方式，幫助企業聚焦核心要素，提高效率與效益。</p>
+          <p class="meta small">ESG共學坊 · 2024.10.08 · 1 分鐘閱讀</p>
+          <div class="btns" style="margin-top:22px"><a class="btn btn-primary" href="#">開始閱讀</a></div>
+        </div>
+        <div class="panel" hidden>
+          <h2 class="h3">訂閱 3 步驟</h2>
+          <p class="lead">加入ESG共學坊的三個簡單步驟：LINE 註冊、系統登入、信用卡綁定，輕鬆開啟永續學習之旅。</p>
+          <p class="meta small">ESG共學坊 · 2024.11.11 · 1 分鐘閱讀</p>
+          <div class="btns" style="margin-top:22px"><a class="btn btn-primary" href="#">開始閱讀</a></div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>一次只看一篇（字數與 A 相同），但有三個選擇。</li><li>類型籤（觀點／專訪／公告）與 <code>/insights</code> 用的是同一組詞。</li></ul></div>
+    <div><h3>風險</h3><ul><li>S2 剛用花瓣切換過主題，緊接著又一組分頁籤：連續兩段都要「先選再看」，節奏沒有鬆緊。</li><li>「類型」是 <code>/insights</code> 的分類法；放在主題頁會讓兩頁的角色又混在一起。</li><li>沒有形狀：深色段裡只有籤與文字。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>S2 → 本區：花瓣籤 → 膠囊籤，兩種籤樣式相鄰。</li><li>本區 → S4：S4 還有一排篩選籤，三段連續出現三種籤。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

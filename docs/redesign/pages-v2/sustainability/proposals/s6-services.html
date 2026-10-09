@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>共好永續力 · S6 服務項目 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<style>
+.mock { container-type: inline-size; }
+.head { display: flex; flex-direction: column; gap: 14px; }
+@container (min-width: 760px) { .head { flex-direction: row; justify-content: space-between; align-items: flex-end; } }
+.tablist button small { margin-left: 6px; padding: 3px 7px; border-radius: 999px; background: var(--yellow); color: var(--ink); font: 700 11px/1 var(--font-sans); }
+/* The door: one arch-topped panel under the tabs */
+.door { background: var(--paper); border-radius: clamp(60px, 16cqw, 150px) clamp(60px, 16cqw, 150px) 0 0; padding: clamp(44px, 9cqw, 84px) clamp(24px, 8cqw, 96px) 34px; text-align: center; }
+.door .chip { background: var(--ink); color: #fff; }
+.door p { max-width: 30em; margin-inline: auto; }
+.fold summary em { font: 700 12px/1 var(--font-sans); font-style: normal; background: #F4EEE6; padding: 6px 9px; border-radius: 999px; flex: none; }
+.fold summary small { padding: 3px 7px; border-radius: 999px; background: var(--yellow); font: 700 11px/1 var(--font-sans); }
+/* C */
+.dcard { background: var(--paper); border-radius: 90px 90px 0 0; padding: 56px 20px 22px; height: 100%; }
+.dcard .chip { background: #fff; } .dcard h3 { margin-top: 12px; }
+.dcard details summary { font: 700 13px/1 var(--font-sans); color: var(--orange-strong); min-height: 44px; display: inline-flex; align-items: center; cursor: pointer; list-style: none; }
+</style>
+</head>
+<body data-budget="260">
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>共好永續力 · S6 服務項目</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="s5-difference.html">← 上一區</a><a href="s7-impact.html">下一區 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">共好永續力 · S6</span>
+  <h1>所以，我可以向你們買到什麼？</h1>
+  <p>現況：可見 261 字，四張卡的完整說明常駐，內容與 <code>/consulting#solutions</code> 重複。這一頁的任務是信任，不是銷售：這裡只要讓人知道有哪四項、再把人送到方案頁。本區在主線中的角色：<b>拱下的門</b>——橋搭好之後可以走進去的入口。上一區交接過來的形狀：跨界的黃色結語卡。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>四個分頁籤，一道拱門</h2><span class="tag">UX 元件：分頁 Tabs</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec white">
+      <div class="head"><div><p class="eyebrow">服務項目</p><h2 class="h2">一站式永續解決方案</h2><p class="lead">從顧問輔導到市場連結，每一項服務都以商業成果為導向。</p></div><a class="link" href="#">查看方案與價格</a></div>
+      <div class="tabs" data-tabs style="margin-top:28px">
+        <div class="tablist"><button aria-selected="true">永續品牌顧問輔導</button><button aria-selected="false">永續白皮書<small>最受歡迎</small></button><button aria-selected="false">永續課程／工作坊</button><button aria-selected="false">ESG共學坊溝通平台</button></div>
+        <div class="panel door"><span class="chip">顧問</span><h3 class="h3" style="margin-top:12px">永續品牌顧問輔導</h3><p class="small" style="margin-top:10px">從品牌定位到 ESG 策略，量身打造永續轉型路徑，找到你的獨特價值主張。</p></div>
+        <div class="panel door" hidden><span class="chip">報告</span><h3 class="h3" style="margin-top:12px">永續白皮書</h3><p class="small" style="margin-top:10px">深度調研與數據分析，產出具公信力的永續報告，建立可量化的 ESG 敘事。</p></div>
+        <div class="panel door" hidden><span class="chip">課程</span><h3 class="h3" style="margin-top:12px">永續課程／工作坊</h3><p class="small" style="margin-top:10px">協助企業、品牌將永續理念轉化為實際行動與市場語言。透過課程與工作坊，建立 ESG 思維、溝通能力與永續應用策略。</p></div>
+        <div class="panel door" hidden><span class="chip">平台</span><h3 class="h3" style="margin-top:12px">ESG共學坊溝通平台</h3><p class="small" style="margin-top:10px">串連跨產業永續專家、企業與供應鏈資源，打造知識共享與合作交流場域，推動永續經驗、產業連結與共好轉型。</p></div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>四項服務是同一層級、互斥的四組內容，正是分頁籤的用途；四個名稱常駐在籤列，掃讀層完整。</li><li>可見約 125 字（現況 261，−52%）；預設就有一段說明，區塊不會看起來是空的。</li><li>拱門只有一道，音量低，不搶上一段的高峰。</li></ul></div>
+    <div><h3>風險</h3><ul><li>手機籤列要橫向滑動，第四個籤（ESG共學坊溝通平台）一開始在畫面外：籤列右緣要露出半個籤。</li><li>「最受歡迎」放在籤上，字小，需確認對比。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：黃色結語卡壓在本段上緣，標題排在它下方。</li><li>本區 → 實際成果：拱門的圓頂，下一段沙色的拱形上緣再出現一次（交界 6，T4 第 2 次）。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>四列可展開</h2><span class="tag">UX 元件：可展開列 FoldList</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec white">
+      <div class="head"><div><p class="eyebrow">服務項目</p><h2 class="h2">一站式永續解決方案</h2><p class="lead">從顧問輔導到市場連結，每一項服務都以商業成果為導向。</p></div><a class="link" href="#">查看方案與價格</a></div>
+      <div class="fold" style="margin-top:28px">
+        <details name="s"><summary><em>顧問</em>永續品牌顧問輔導</summary><div class="body">從品牌定位到 ESG 策略，量身打造永續轉型路徑，找到你的獨特價值主張。</div></details>
+        <details name="s"><summary><em>報告</em>永續白皮書 <small>最受歡迎</small></summary><div class="body">深度調研與數據分析，產出具公信力的永續報告，建立可量化的 ESG 敘事。</div></details>
+        <details name="s"><summary><em>課程</em>永續課程／工作坊</summary><div class="body">協助企業、品牌將永續理念轉化為實際行動與市場語言。透過課程與工作坊，建立 ESG 思維、溝通能力與永續應用策略。</div></details>
+        <details name="s"><summary><em>平台</em>ESG共學坊溝通平台</summary><div class="body">串連跨產業永續專家、企業與供應鏈資源，打造知識共享與合作交流場域，推動永續經驗、產業連結與共好轉型。</div></details>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>字最少（約 90）；不需要 JavaScript；手機不用橫向滑動。</li></ul></div>
+    <div><h3>風險</h3><ul><li>這是全頁第四組可展開列（前面已有支柱、能力、三層架構）：整頁會變成一張又一張的清單。</li><li>預設全部收合，區塊看起來像目錄，沒有任何一句在說服人。</li><li>沒有形狀。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：結語卡壓在清單上方，可行。</li><li>本區 → 實際成果：清單的橫線接弧切邊界，沒有呼應。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>四道拱門橫向滑軌</h2><span class="tag">UX 元件：橫向滑軌 SnapRail＋展開全文 ReadMore</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec white">
+      <div class="head"><div><p class="eyebrow">服務項目</p><h2 class="h2">一站式永續解決方案</h2><p class="lead">從顧問輔導到市場連結，每一項服務都以商業成果為導向。</p></div><a class="link" href="#">查看方案與價格</a></div>
+      <div class="rail" style="margin-top:28px">
+        <div class="dcard"><span class="chip">顧問</span><h3 class="h3">永續品牌顧問輔導</h3><p class="small" style="margin-top:8px">從品牌定位到 ESG 策略，量身打造永續轉型路徑，找到你的獨特價值主張。</p></div>
+        <div class="dcard"><span class="chip">報告</span><h3 class="h3">永續白皮書</h3><p class="small" style="margin-top:8px">深度調研與數據分析，產出具公信力的永續報告，建立可量化的 ESG 敘事。</p></div>
+        <div class="dcard"><span class="chip">課程</span><h3 class="h3">永續課程／工作坊</h3><p class="small" style="margin-top:8px">協助企業、品牌將永續理念轉化為實際行動與市場語言。</p><details><summary>繼續讀</summary><p class="small">透過課程與工作坊，建立 ESG 思維、溝通能力與永續應用策略。</p></details></div>
+        <div class="dcard"><span class="chip">平台</span><h3 class="h3">ESG共學坊溝通平台</h3><p class="small" style="margin-top:8px">串連跨產業永續專家、企業與供應鏈資源，打造知識共享與合作交流場域，推動永續經驗、產業連結與共好轉型。</p></div>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>四道門並排，最貼近「拱下的門」；手機滑動順。</li><li>說明幾乎都不用點。</li></ul></div>
+    <div><h3>風險</h3><ul><li>可見約 235 字，只比現況少一成：滑軌只是把字推到畫面外。</li><li>第四張的一句話 51 字，超過「卡片一句 ≤ 40 字」；要嘛裁切客戶文案、要嘛四張高度不齊。</li><li>三道以上並排的拱門，與首頁「服務對象」的三道門同構，而且音量比上一段的大聲時刻還大。</li><li>桌機一次三張＋箭頭，第四張要按箭頭才看得到。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>上一區 → 本區：結語卡與四個圓頂上下相疊，太擠。</li><li>本區 → 實際成果：連續兩段都是圓頂（門、弧切），重複。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>

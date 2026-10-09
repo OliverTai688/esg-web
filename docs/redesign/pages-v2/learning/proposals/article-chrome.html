@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>文章頁 · 文首與文末 提案</title>
+<link rel="stylesheet" href="../../_shared/_tokens.css">
+<link rel="stylesheet" href="../../_shared/_geo.css">
+<link rel="stylesheet" href="../../_shared/_proposal.css">
+<style>
+.mock { container-type: inline-size; background: #fff; }
+.col { max-width: 720px; margin-inline: auto; }
+.g { width: 26px; height: 26px; flex: none; }
+.back { display: inline-flex; align-items: center; min-height: 44px; font: 700 14px/1 var(--font-sans); color: var(--ink-2); text-decoration: none; }
+.back::before { content: "← "; white-space: pre; }
+.topic { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font: 700 14px/1 var(--font-sans); color: var(--orange-strong); text-decoration: none; }
+.title { font: 900 clamp(26px, 4.6cqw, 40px)/1.4 var(--font-sans); margin: 6px 0 0; }
+.meta { font-size: 14px; color: var(--ink-2); margin: 16px 0 0; }
+/* Sample of the article body: not counted, the body has no limit */
+.body { font-size: 17px; line-height: 1.95; padding-block: 32px; border-block: 1px dashed var(--line); margin-block: 28px; }
+.body .stand { font-size: 19px; font-weight: 700; }
+.tags { font-size: 13px; color: var(--ink-2); }
+.bar { position: sticky; top: 0; height: 3px; background: linear-gradient(90deg, var(--orange) 35%, transparent 35%); }
+.toc { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 22px; font-size: 13px; color: var(--ink-2); }
+.toc a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border-radius: 999px; background: var(--yellow-soft); font: 700 14px/1 var(--font-sans); color: var(--ink); text-decoration: none; }
+
+/* A · next article on one petal + shared closing band */
+.next { display: flex; gap: 18px; align-items: center; padding: 22px 24px; border-radius: 0 64px 0 64px; background: var(--yellow); color: var(--ink); text-decoration: none; }
+.next .h3 { font-size: 18px; line-height: 1.5; margin-top: 4px; }
+.band { text-align: center; border-top: 1px solid var(--line); background: var(--paper); }
+.band .lead { margin-inline: auto; } .band .btns { justify-content: center; }
+
+/* B · sticky side column */
+.s-b { display: grid; gap: 28px; }
+@container (min-width: 760px) { .s-b { grid-template-columns: 200px 1fr; gap: 48px; } }
+.aside { display: grid; gap: 4px; align-content: start; font-size: 14px; }
+.aside a { display: flex; align-items: center; min-height: 44px; color: var(--ink); text-decoration: none; border-left: 2px solid var(--line); padding-left: 14px; }
+.rel { display: flex; flex-direction: column; gap: 10px; min-height: 150px; padding: 20px; border-radius: 16px; border: 1px solid var(--line); color: var(--ink); text-decoration: none; font: 700 16px/1.5 var(--font-sans); }
+
+/* C · two doors */
+.doors { display: grid; gap: 12px; }
+@container (min-width: 760px) { .doors { grid-template-columns: 1fr 1fr; } }
+.door { display: flex; flex-direction: column; gap: 6px; padding: 24px; color: var(--ink); text-decoration: none; }
+.door.p { border-radius: 0 56px 0 56px; background: var(--yellow); }
+.door.b { border-radius: 14px; background: var(--grey); color: #fff; }
+.door b { font-size: 17px; } .door span { font: 700 14px/1.4 var(--font-sans); margin-top: 8px; }
+</style>
+</head>
+<body data-budget="250">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <path id="pt" d="M0-8A28.3 28.3 0 0 1 0-48 28.3 28.3 0 0 1 0-8Z"/>
+  <g id="fl" fill="#F6DC93"><use href="#pt" transform="rotate(30)"/><use href="#pt" transform="rotate(90)"/><use href="#pt" transform="rotate(150)"/><use href="#pt" transform="rotate(210)"/><use href="#pt" transform="rotate(270)"/><use href="#pt" transform="rotate(330)"/></g>
+</defs></svg>
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>文章頁 · 文首與文末</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <button type="button" data-device aria-pressed="false">375px</button>
+  <span class="pp-sep"></span>
+  <a href="insights-list.html">← 最新文章</a><a href="category.html">主題列表頁 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">文章頁</span>
+  <h1>這篇是誰寫的、多長、讀完去哪？</h1>
+  <p>現況：內文以外約 460 字——文首有摘要與三格資訊，文末同時有 LINE、學習地圖、Coffee Chat 三個行動，再加三張含摘要的延伸閱讀卡。沒有閱讀進度、沒有目錄。這一頁的目標是好讀，不是變短：內文不設上限，<strong>內文以外 ≤ 250 字</strong>。虛線框內是內文示意（導言＋本文），不計入徽章。</p>
+  <p>在主線中的角色：六瓣花只亮一片（這篇屬於哪個主題）→ 讀完 → 下一片花瓣。</p>
+</header>
+
+<main>
+<section class="opt" data-opt="A">
+  <div class="wrap opt-head"><span class="pp-label">A</span><h2>單欄：花徽文首＋進度條＋段落籤，文末一片花瓣＋共用收尾</h2><span class="tag">閱讀進度條＋錨點籤（目錄）＋共用 CtaBand</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="bar" aria-hidden="true"></div>
+    <div class="sec"><div class="col">
+      <a class="back" href="#">返回共好學習</a><br>
+      <a class="topic" href="#"><svg class="g" viewBox="-50 -50 100 100" aria-hidden="true"><use href="#fl"/><use href="#pt" fill="#F25232" transform="rotate(330)"/></svg>人物專訪</a>
+      <h1 class="title">從父親的塑膠建材到我的永續革命：彭欣惠的接班與新生</h1>
+      <p class="meta">ESG共學坊 · 2024.10.19 · 1 分鐘閱讀</p>
+      <nav class="toc" aria-label="本文段落">本文段落 <a href="#">從接班到轉型</a><a href="#">推動永續實踐</a><a href="#">教育與合作</a></nav>
+      <div class="body" aria-hidden="true"><p class="stand">彭欣惠接掌家族塑膠建材事業，將父親的技術創新轉化為永續推廣，在 ESG 的路上找到新方向。</p><p>彭欣惠原本規劃從事教育或策展工作，卻在父母年長之際回到家族的塑膠建材企業……</p></div>
+      <p class="tags">#人物專訪　#綠色建材　#塑膠再生　#ESG</p>
+      <a class="next" href="#" style="margin-top:32px"><svg class="g" style="width:44px;height:44px" viewBox="-50 -50 100 100" aria-hidden="true"><use href="#fl" fill="#fff"/><use href="#pt" fill="#F25232" transform="rotate(30)"/></svg><div><span class="small" style="color:var(--ink)">接著讀 · 創新策略</span><div class="h3">核心策略指引：九宮格模型助力創新與問題解決</div></div></a>
+      <p style="margin:14px 0 0"><a class="link" href="#">回到人物專訪</a></p>
+    </div></div>
+    <div class="sec band">
+      <h2 class="h2">讀完了，下一步呢？</h2>
+      <p class="lead">還在探索，加 LINE 收新文章；已經有具體問題，約 15 分鐘 Coffee Chat。</p>
+      <div class="btns"><a class="btn btn-primary" href="#">預約 15 分鐘 Coffee Chat</a><a class="btn btn-line" href="#">加入官方 LINE</a></div>
+    </div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>欄寬固定 720px，沒有任何東西和內文搶視線；手機、桌機是同一個版型。</li><li>段落籤同時是「這篇在講什麼」的三秒摘要；小標少於三段就不出現。</li><li>文末只有一個閱讀出口（下一篇）和一個行動區（兩條路用一句話分開）。</li><li>摘要移到內文開頭當導言，仍在頁面上。</li></ul></div>
+    <div><h3>風險</h3><ul><li>目錄不會跟著捲動（長文時要捲回文首才看得到）；目前文章都在 1–2 分鐘內，可接受。</li><li>主題只有一篇時（人物專訪、公告），「同主題下一篇」要退回「最新的另一篇」。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>文首的小花徽（亮著這篇的主題）→ 文末大一號的花徽（亮著下一篇的主題）：讀完一片，換下一片。</li><li>下一篇卡片是一片黃花瓣，下緣接 <code>CtaBand</code> 的兩段弧。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="B">
+  <div class="wrap opt-head"><span class="pp-label">B</span><h2>雙欄：固定側欄放目錄，文末三篇滑軌</h2><span class="tag">固定側欄目錄＋橫向滑軌 SnapRail</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec"><div class="s-b">
+      <div class="aside"><a class="back" href="#" style="border:0;padding:0">返回共好學習</a><a href="#">從接班到轉型</a><a href="#">推動永續實踐</a><a href="#">教育與合作</a><a href="#">加入官方 LINE</a></div>
+      <div>
+        <span class="chip">人物專訪</span>
+        <h1 class="title">從父親的塑膠建材到我的永續革命：彭欣惠的接班與新生</h1>
+        <p class="meta">作者 ESG共學坊　發布日期 2024.10.19　1 分鐘閱讀</p>
+        <div class="body" aria-hidden="true"><p>彭欣惠原本規劃從事教育或策展工作，卻在父母年長之際回到家族的塑膠建材企業……</p></div>
+        <p class="eyebrow">延伸閱讀</p>
+        <div class="rail" style="margin-top:16px">
+          <a class="rel" href="#">核心策略指引：九宮格模型助力創新與問題解決<span class="small">創新策略</span></a>
+          <a class="rel" href="#">數據驅動的決策：推動永續策略實現的第一步<span class="small">市場競爭力</span></a>
+          <a class="rel" href="#">透過對話創造價值：搭建企業與社會的溝通橋樑<span class="small">溝通與換位思考</span></a>
+        </div>
+        <div class="btns"><a class="btn btn-primary" href="#">預約 15 分鐘 Coffee Chat</a></div>
+      </div>
+    </div></div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>目錄永遠在旁邊，長文最好用。</li><li>三篇延伸閱讀，選擇比較多。</li></ul></div>
+    <div><h3>風險</h3><ul><li>目前的文章只有 300–400 字：側欄比內文還長，版面頭重腳輕。</li><li>手機上側欄只能疊到文首，變成一長串連結擋在標題前面。</li><li>三張同樣大的卡沒有「下一篇」的明確建議；LINE 被放進側欄，和目錄混在一起。</li><li>沒有形狀，看不出這篇屬於花的哪一片。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>文末滑軌之後直接是按鈕，收尾和全站其他頁不同調。</li></ul></div>
+  </div></div>
+</section>
+
+<section class="opt" data-opt="C">
+  <div class="wrap opt-head"><span class="pp-label">C</span><h2>極簡文首，文末兩道門＋同主題清單</h2><span class="tag">兩張分流卡＋可展開列 FoldList（同主題文章）</span></div>
+  <div class="wrap"><div class="mock">
+    <div class="sec"><div class="col">
+      <a class="back" href="#">人物專訪</a>
+      <h1 class="title">從父親的塑膠建材到我的永續革命：彭欣惠的接班與新生</h1>
+      <p class="meta">ESG共學坊 · 2024.10.19 · 1 分鐘閱讀</p>
+      <div class="body" aria-hidden="true"><p>彭欣惠原本規劃從事教育或策展工作，卻在父母年長之際回到家族的塑膠建材企業……</p></div>
+      <div class="doors">
+        <a class="door p" href="#"><b>還在探索</b>新文章與課程上線時通知你。<span>加入官方 LINE →</span></a>
+        <a class="door b" href="#"><b>已經有具體問題</b>和顧問聊 15 分鐘，不收費。<span>預約 Coffee Chat →</span></a>
+      </div>
+      <div class="fold" style="margin-top:28px"><details><summary>更多文章（15 篇）</summary><div class="body" style="border:0;margin:0;padding:0 0 16px;font-size:15px">核心策略指引：九宮格模型助力創新與問題解決／數據驅動的決策：推動永續策略實現的第一步／…</div></details></div>
+    </div></div>
+  </div></div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>優點</h3><ul><li>兩條路寫得最明白：「還在探索」與「已經有具體問題」各一張卡。</li><li>文首只有三行，最快進入內文。</li></ul></div>
+    <div><h3>風險</h3><ul><li>主要下一步（讀下一篇）被摺起來：本頁的任務是「讀完一篇還想讀下一篇」，這一案把它放到第二順位。</li><li>花瓣門＋方塊門是 <code>/consulting</code> 的主角形狀；也不是共用的 <code>CtaBand</code>。</li><li>沒有目錄與進度；主題連結與返回連結合成一個，回不到 <code>/learning</code> 首屏。</li></ul></div>
+    <div class="wide"><h3>與前後區塊的銜接</h3><ul><li>文首沒有花徽，文末兩道門的形狀也和前面無關：整頁只有文末出現形狀。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script src="../../_shared/_proposal.js"></script>
+</body>
+</html>
