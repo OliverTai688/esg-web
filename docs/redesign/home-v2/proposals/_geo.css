@@ -1,0 +1,64 @@
+/* 共好玟化 geometry kit — shared by every home-v2 proposal.
+   Every shape is derived from the logo or the CIS colours:
+   - petal: the flame's teardrop strokes (one rounded corner pair)
+   - arc / ring: the "Sayun = bridge" arch
+   - quarter / half disc: the flame's rounded base, cut on the grid
+   - block: flat CIS colour squares on a 4-column module
+   Transformations used to make the shapes "move" between sections:
+   rotate(90deg steps), scale, mirror (scaleX(-1)), recolour, and recombine
+   (four quarters → one disc, two halves → one arc). */
+
+:root {
+  --geo-unit: clamp(40px, 7vw, 96px); /* one module */
+  --geo-orange: var(--orange, #F25232);
+  --geo-yellow: var(--yellow, #FAB40A);
+  --geo-grey: var(--grey, #4D515B);
+  --geo-ink: var(--ink, #1F2022);
+  --geo-paper: var(--paper, #FBF8F4);
+  --geo-ease: cubic-bezier(.2, .8, .2, 1);
+}
+
+/* ── Base shapes (size with width/height or the --s variable) ── */
+.geo { --s: var(--geo-unit); width: var(--s); height: var(--s); display: block; flex: none; }
+.geo-block   { background: var(--c, var(--geo-orange)); }
+.geo-disc    { background: var(--c, var(--geo-orange)); border-radius: 50%; }
+.geo-quarter { background: var(--c, var(--geo-orange)); border-radius: 100% 0 0 0; }   /* rotate for other corners */
+.geo-half    { background: var(--c, var(--geo-orange)); border-radius: var(--s) var(--s) 0 0; height: calc(var(--s) / 2); }
+.geo-petal   { background: var(--c, var(--geo-orange)); border-radius: 0 100% 0 100%; } /* flame stroke / leaf */
+.geo-ring    { border: calc(var(--s) * .16) solid var(--c, var(--geo-orange)); border-radius: 50%; }
+.geo-arc     { border: calc(var(--s) * .14) solid var(--c, var(--geo-orange)); border-bottom-color: transparent; border-left-color: transparent; border-radius: 50%; transform: rotate(-45deg); }
+.geo-tri     { background: var(--c, var(--geo-orange)); clip-path: polygon(0 100%, 100% 100%, 0 0); }
+
+/* Colour helpers */
+.c-orange { --c: var(--geo-orange); }
+.c-yellow { --c: var(--geo-yellow); }
+.c-grey   { --c: var(--geo-grey); }
+.c-ink    { --c: var(--geo-ink); }
+.c-paper  { --c: var(--geo-paper); }
+.c-white  { --c: #fff; }
+
+/* Rotation / mirror helpers */
+.r90  { transform: rotate(90deg); }
+.r180 { transform: rotate(180deg); }
+.r270 { transform: rotate(270deg); }
+.mx   { transform: scaleX(-1); }
+
+/* ── Module grid: compose shapes on a square grid ── */
+.geo-grid { display: grid; grid-template-columns: repeat(var(--cols, 4), var(--geo-unit)); grid-auto-rows: var(--geo-unit); gap: 0; }
+.geo-grid > * { width: 100%; height: 100%; }
+
+/* ── The logo mark as a shape (use the real SVG) ── */
+.geo-mark { width: var(--s, 64px); height: auto; display: block; }
+
+/* ── Motion (respect reduced motion) ── */
+@media (prefers-reduced-motion: no-preference) {
+  .geo-spin   { animation: geo-spin 24s linear infinite; }
+  .geo-breathe{ animation: geo-breathe 6s var(--geo-ease) infinite alternate; }
+  .geo-flip:hover .geo, .geo-flip:focus-within .geo { transform: rotate(90deg); transition: transform .6s var(--geo-ease); }
+}
+@keyframes geo-spin { to { transform: rotate(360deg); } }
+@keyframes geo-breathe { from { transform: scale(.94); } to { transform: scale(1.04); } }
+
+/* ── Section seams: shapes that sit on the boundary between two sections ── */
+.seam { position: relative; height: 0; z-index: 2; }
+.seam > * { position: absolute; left: var(--x, 50%); top: 0; translate: -50% -50%; }
