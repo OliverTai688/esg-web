@@ -26,7 +26,8 @@ const petals = Array.from({ length: COUNT }, (_, i) => {
 export function HeroPetalArc({ left, right, center }: { left: string; right: string; center: string }) {
   return (
     <figure className="relative mx-auto w-full max-w-[560px]">
-      <svg viewBox="40 40 520 290" className="h-auto w-full" aria-hidden="true">
+      {/* Petal tips reach R + 60 from the centre, so the box spans 12…588 plus a margin. */}
+      <svg viewBox="4 4 592 320" className="h-auto w-full" aria-hidden="true">
         {/* Bridge deck */}
         <line x1="62" x2="538" y1={CY + 8} y2={CY + 8} stroke="#1F2022" strokeOpacity=".18" strokeWidth="2" strokeDasharray="2 10" strokeLinecap="round" />
         {petals.map((p) => (
