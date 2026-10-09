@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S6 服務對象 · 三個方案</title>
+<link rel="stylesheet" href="_tokens.css">
+<link rel="stylesheet" href="_geo.css">
+<style>
+/* ───────── Proposal chrome (shared by s5–s8, not part of the design) ───────── */
+[hidden] { display: none !important; }
+html { scroll-padding-top: 56px; }
+body { overflow-x: clip; }
+.pp-intro { max-width: 1200px; margin: 0 auto; padding: 32px 16px 16px; }
+.pp-intro h1 { font: 900 clamp(24px, 4vw, 34px)/1.3 var(--font-sans); margin: 12px 0 8px; }
+.pp-intro p { color: var(--ink-2); margin: 0 0 12px; max-width: 75ch; }
+.opt { padding: 48px 0 64px; border-top: 6px solid #111; }
+.opt-head { max-width: 1200px; margin: 0 auto 24px; padding: 0 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.opt-head h2 { font: 900 clamp(20px, 3vw, 26px)/1.3 var(--font-sans); margin: 0; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+.pp-card { max-width: 1200px; margin: 32px auto 0; padding: 0 16px; }
+.pp-card dl { margin: 0; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(18px, 3vw, 28px); display: grid; gap: 18px 36px; grid-template-columns: 1fr; }
+@media (min-width: 860px) { .pp-card dl { grid-template-columns: 1fr 1fr; } }
+.pp-card dt { font: 700 13px/1.4 var(--font-sans); color: var(--orange-strong); letter-spacing: .08em; }
+.pp-card dd { margin: 4px 0 0; font-size: 15px; }
+.pp-card .full { grid-column: 1 / -1; }
+.pp-card ul { margin: 4px 0 0; padding-left: 1.2em; }
+.pp-card li + li { margin-top: 4px; }
+
+/* ───────── Mock primitives ───────── */
+.kicker { display: inline-flex; align-items: center; gap: 10px; font: 700 13px/1 var(--font-sans); letter-spacing: .16em; color: var(--orange-strong); }
+.kicker::before { content: ""; width: 12px; height: 12px; background: var(--orange); border-radius: 0 100% 0 100%; }
+.m-h2 { font: 900 clamp(26px, 3.6vw, 42px)/1.28 var(--font-sans); margin: 14px 0 12px; letter-spacing: .01em; }
+.m-lead { color: var(--ink-2); margin: 0 0 28px; font-size: 17px; max-width: 46ch; }
+.m-link { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--orange-strong); text-decoration: none; border-bottom: 2px solid currentColor; padding-bottom: 2px; }
+.m-note { font-size: 13px; color: var(--ink-2); margin: 16px 0 0; }
+.flame { display: block; width: var(--fw, 40px); height: auto; }
+:focus-visible { outline: 3px solid var(--orange-strong); outline-offset: 3px; }
+
+/* ───────── Mock primitives ───────── */
+.kicker { display: inline-flex; align-items: center; gap: 10px; font: 700 13px/1 var(--font-sans); letter-spacing: .16em; color: var(--orange-strong); }
+.kicker::before { content: ""; width: 12px; height: 12px; background: var(--orange); border-radius: 0 100% 0 100%; }
+.m-h2 { font: 900 clamp(26px, 3.6vw, 42px)/1.28 var(--font-sans); margin: 14px 0 12px; }
+.m-lead { color: var(--ink-2); margin: 0; font-size: 17px; max-width: 60ch; }
+.m-link { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--orange-strong); text-decoration: none; border-bottom: 2px solid currentColor; padding-bottom: 2px; }
+.flame { display: block; width: var(--fw, 40px); height: auto; }
+.m-h3 { font: 900 clamp(20px, 2.4vw, 26px)/1.35 var(--font-sans); margin: 0; }
+:focus-visible { outline: 3px solid var(--orange-strong); outline-offset: 3px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 10px 18px; border-radius: 999px; font: 700 15px/1.3 var(--font-sans); text-decoration: none; border: 2px solid currentColor; color: var(--ink); background: transparent; }
+.btn:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+/* ───────── A · 圓頂三門 ───────── */
+.s6a { background: var(--paper); padding: clamp(56px, 8vw, 112px) 0; }
+.doors { --g: 16px; container-type: inline-size; display: grid; gap: var(--g); margin-top: 48px; }
+@media (min-width: 900px) { .doors { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.door { --t: var(--ink); position: relative; display: flex; flex-direction: column; color: var(--t); transition: translate .5s var(--geo-ease); }
+.door .cap { position: relative; height: clamp(84px, 12vw, 150px); overflow: hidden; }
+.door .cap::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 200%; border-radius: 50%; background: var(--c); }
+@media (min-width: 900px) {
+  .door .cap::before { width: 100cqw; left: calc(var(--i) * -1 * ((100cqw - 2 * var(--g)) / 3 + var(--g))); }
+}
+.door .cap .geo { position: absolute; left: 50%; bottom: 14px; translate: -50% 0; --s: 40px; z-index: 1; }
+.door .body { background: var(--c); flex: 1; display: flex; flex-direction: column; gap: 12px; padding: 8px clamp(20px, 2.4vw, 32px) 28px; }
+.door .idx { font: 800 14px/1 var(--font-display); letter-spacing: .14em; }
+.door h4 { font: 900 24px/1.35 var(--font-sans); margin: 0; }
+.door p { margin: 0; font-size: 15px; flex: 1; }
+.door a { align-self: flex-start; font-weight: 700; font-size: 15px; color: inherit; text-decoration: none; border-bottom: 2px solid currentColor; padding-bottom: 2px; }
+.door a::after { content: ""; position: absolute; inset: 0; }
+.door:hover, .door:focus-within { translate: 0 -12px; }
+.doors:has(.door:hover, .door:focus-within) .door:not(:hover, :focus-within) .cap::before { filter: saturate(.55) brightness(1.06); }
+.d1 { --c: var(--orange); --i: 0; } .d1 h4 { color: #fff; }
+.d2 { --c: var(--grey); --i: 1; --t: #fff; } .d2 a { color: #fff; border-bottom-color: var(--yellow); }
+.d3 { --c: var(--yellow); --i: 2; }
+.d3 .sub { background: #fff; border-radius: 8px; padding: 8px 12px; align-self: flex-start; }
+.d3 .sub img { display: block; height: 26px; width: auto; }
+.grow { margin-top: clamp(56px, 7vw, 88px); }
+.grow-head { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: baseline; justify-content: space-between; border-bottom: 2px solid var(--ink); padding-bottom: 14px; }
+.grow ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+@media (min-width: 900px) { .grow ol { grid-template-columns: repeat(3, 1fr); } }
+.grow li { display: grid; grid-template-columns: 64px 1fr; gap: 4px 18px; padding: 24px 24px 24px 0; border-bottom: 1px solid var(--line); }
+@media (min-width: 900px) { .grow li { border-bottom: 0; } .grow li + li { border-left: 1px solid var(--line); padding-left: 24px; } }
+.grow .shape { width: 56px; height: 56px; position: relative; grid-row: span 3; }
+.grow .shape .geo { --s: 56px; position: absolute; left: 0; top: 0; }
+.grow .shape .geo.geo-half { top: 0; }
+.grow .per { font: 800 22px/1.2 var(--font-display); color: var(--orange-strong); }
+.grow h5 { font-size: 18px; margin: 0; }
+.grow p { margin: 0; font-size: 15px; color: var(--ink-2); }
+
+/* ───────── B · 橋上三站 ───────── */
+.s6b { background: #fff; padding: clamp(56px, 8vw, 112px) 0; }
+.s6b-head { text-align: center; max-width: 760px; margin: 0 auto; }
+.s6b-head .m-lead { margin-inline: auto; }
+.span { position: relative; height: 150px; margin-top: 40px; display: none; }
+@media (min-width: 900px) { .span { display: block; } }
+.span svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.span path { fill: none; stroke-width: 12; vector-effect: non-scaling-stroke; stroke-linecap: round; }
+.node { position: absolute; translate: -50% -50%; width: 64px; height: 64px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 4px #fff, 0 6px 20px -8px rgba(0,0,0,.35); display: grid; place-items: center; }
+.node .geo { --s: 32px; }
+.n1 { left: 16.667%; top: 29%; } .n2 { left: 50%; top: 7%; width: 84px; height: 84px; } .n3 { left: 83.333%; top: 29%; }
+.n2 .flame { --fw: 34px; }
+.stations { list-style: none; margin: 40px 0 0; padding: 0; display: grid; gap: 0; position: relative; }
+@media (min-width: 900px) { .stations { grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 12px; } .stations li:nth-child(2) { margin-top: -28px; } }
+.stations li { position: relative; padding: 0 0 36px 44px; }
+.stations li::before { content: ""; position: absolute; left: 13px; top: 8px; bottom: 0; width: 4px; background: linear-gradient(var(--orange), var(--yellow)); }
+.stations li:last-child::before { display: none; }
+.stations .dot { position: absolute; left: 0; top: 0; width: 30px; height: 30px; display: grid; place-items: center; background: #fff; }
+.stations .dot .geo { --s: 24px; }
+@media (min-width: 900px) {
+  .stations li { padding: 0; text-align: center; display: flex; flex-direction: column; align-items: center; }
+  .stations li::before, .stations .dot { display: none; }
+}
+.stations .who { font: 700 12px/1.4 var(--font-sans); letter-spacing: .14em; color: var(--ink-2); }
+.stations h4 { font: 900 22px/1.4 var(--font-sans); margin: 6px 0 10px; }
+.stations p { margin: 0 0 18px; font-size: 15px; color: var(--ink-2); max-width: 34ch; }
+.stations .sub img { height: 24px; width: auto; display: block; margin: 0 0 12px; }
+.deckwrap { margin-top: clamp(48px, 6vw, 80px); }
+.deckhead { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 12px 24px; }
+.piers { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 16px; border-top: 6px solid var(--ink); padding-top: 0; }
+@media (min-width: 900px) { .piers { grid-template-columns: repeat(3, 1fr); gap: 32px; } }
+.piers li { display: grid; gap: 6px; }
+.piers .pier { height: 14px; width: var(--w); background: var(--c); border-radius: 0 0 var(--r, 0) 0; transition: height .5s var(--geo-ease); }
+@media (min-width: 900px) { .piers .pier { width: 56px; height: var(--h); border-radius: 0; } .piers li:hover .pier { height: calc(var(--h) + 16px); } }
+.piers .per { font: 800 20px/1.2 var(--font-display); color: var(--orange-strong); margin-top: 8px; }
+.piers h5 { margin: 0; font-size: 18px; }
+.piers p { margin: 0; font-size: 15px; color: var(--ink-2); }
+
+/* ───────── C · 色票扇 ───────── */
+.s6c { background: var(--orange-soft); padding: clamp(56px, 8vw, 112px) 0; overflow: hidden; }
+.fan { list-style: none; margin: 48px 0 0; padding: 0; display: grid; gap: 24px; }
+@media (min-width: 900px) {
+  .fan { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; padding: 12px 24px 0; }
+  .chip { transform-origin: 50% 110%; transition: rotate .6s var(--geo-ease), translate .6s var(--geo-ease); }
+  .chip:nth-child(1) { rotate: -6deg; translate: 18px 14px; }
+  .chip:nth-child(2) { z-index: 2; }
+  .chip:nth-child(3) { rotate: 6deg; translate: -18px 14px; }
+  .chip:hover, .chip:focus-within { rotate: 0deg; translate: 0 -16px; z-index: 3; }
+}
+@media (max-width: 899px) { .chip:nth-child(odd) { rotate: -1.2deg; } .chip:nth-child(even) { rotate: 1.2deg; } }
+.chip { position: relative; background: #fff; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 1px 0 var(--line), 0 24px 48px -24px rgba(31,32,34,.45); }
+.sw { position: relative; background: var(--c); aspect-ratio: 16 / 10; overflow: hidden; }
+.sw .geo { position: absolute; }
+.sw .code { position: absolute; left: 16px; bottom: 12px; font: 700 12px/1.3 var(--font-display); letter-spacing: .08em; color: var(--ct, var(--ink)); }
+.sw .code b { display: block; font-size: 15px; }
+.chip .body { padding: 22px 24px 26px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.chip h4 { font: 900 22px/1.4 var(--font-sans); margin: 0; }
+.chip p { margin: 0; font-size: 15px; color: var(--ink-2); flex: 1; }
+.chip a { align-self: flex-start; }
+.chip a::after { content: ""; position: absolute; inset: 0; }
+.chip .sub img { height: 22px; width: auto; display: block; }
+.k1 .sw { --c: var(--orange); }
+.k2 .sw { --c: var(--grey); --ct: #fff; }
+.k3 .sw { --c: var(--yellow); }
+.scale { margin-top: clamp(56px, 7vw, 96px); }
+.scale-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 12px 24px; margin-bottom: 18px; }
+.scale ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+@media (min-width: 900px) { .scale ol { flex-direction: row; align-items: flex-end; gap: 0; } }
+.scale li { background: var(--c); padding: 22px 24px; border-top-right-radius: var(--r); width: var(--w); }
+@media (min-width: 900px) { .scale li { width: auto; flex: var(--f); min-height: var(--h); } }
+.scale .per { font: 800 20px/1.2 var(--font-display); }
+.scale h5 { margin: 4px 0; font-size: 18px; }
+.scale p { margin: 0; font-size: 15px; max-width: 38ch; }
+.l1 { --c: #fff; --w: 86%; --f: 1; --h: 180px; --r: 48px; }
+.l2 { --c: var(--yellow); --w: 93%; --f: 1.2; --h: 220px; --r: 72px; }
+.l3 { --c: var(--orange); --w: 100%; --f: 1.4; --h: 260px; --r: 110px; }
+.s6c .m-link { color: var(--orange-strong); }
+
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="flame" viewBox="203.59 169.44 74.13 95.22">
+      <path style="fill:var(--fy,#FAB40A)" d="M 224.308594 264.65625 C 224.308594 264.65625 241.097656 262.621094 241.433594 246.953125 C 241.625 238.117188 235.25 230.648438 229.917969 225.21875 C 224.523438 219.726562 222.128906 214.316406 221.109375 211.136719 C 220.878906 210.425781 219.835938 210.523438 219.75 211.265625 C 218.554688 221.480469 226.351562 233.089844 226.351562 233.089844 C 225.839844 233.125 215.3125 221.828125 210.816406 207.996094 C 210.589844 207.308594 209.589844 207.378906 209.460938 208.09375 C 208.628906 212.773438 208.371094 223.503906 219.164062 235.855469 C 214.113281 233.695312 208.886719 224.738281 206.78125 220.800781 C 206.453125 220.191406 205.527344 220.378906 205.46875 221.066406 C 205.15625 224.648438 205.746094 232.074219 214.355469 239.027344 C 214.5 239.144531 210.058594 237.746094 205.027344 231.703125 C 204.535156 231.117188 203.589844 231.617188 203.8125 232.347656 C 204.585938 234.871094 206.445312 238.640625 210.933594 242.105469 C 216.203125 246.171875 222.085938 251.511719 223.917969 256.210938 C 225.75 260.910156 225.007812 263.308594 224.308594 264.65625 "/>
+      <path style="fill:var(--fo,#F25232)" d="M 269.261719 228.570312 C 270.472656 216.289062 274.730469 209.757812 277.25 206.894531 C 277.71875 206.359375 277.179688 205.542969 276.507812 205.769531 C 271.0625 207.570312 267.476562 211.140625 265.082031 215.121094 C 263.925781 212.765625 262.503906 210.484375 260.910156 208.128906 C 253.144531 196.664062 250.515625 183.726562 249.734375 178.566406 C 249.628906 177.871094 248.671875 177.742188 248.398438 178.390625 C 242.378906 192.726562 253.308594 210.753906 253.308594 210.753906 C 252.550781 210.652344 238.230469 191.742188 235.6875 170.277344 C 235.597656 169.519531 234.527344 169.4375 234.324219 170.175781 C 232.582031 176.476562 230.46875 192.078125 242.695312 213.503906 C 235.621094 208.625 230.007812 191.570312 228.210938 185.5625 C 228.011719 184.894531 227.058594 184.898438 226.867188 185.574219 C 225.476562 190.507812 223.597656 203.167969 234.800781 216.6875 C 234.980469 216.90625 228.476562 213.3125 222.789062 202.125 C 222.445312 201.449219 221.429688 201.710938 221.464844 202.464844 C 221.632812 206.257812 223.453125 214.753906 229.503906 221.730469 C 235.949219 229.167969 242.222656 234.816406 243.5 242.160156 C 244.773438 249.5 242.765625 255 241.351562 256.75 C 241.351562 256.75 265.066406 258.183594 268.347656 235.984375 C 268.417969 235.507812 269.136719 229.835938 269.261719 228.570312 "/>
+    </symbol>
+  </defs>
+</svg>
+
+<nav class="pp-bar" hidden aria-label="方案切換">
+  <strong>S6 服務對象</strong>
+  <button type="button" data-show="a" aria-pressed="false">A</button>
+  <button type="button" data-show="b" aria-pressed="false">B</button>
+  <button type="button" data-show="c" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+</nav>
+<header class="pp-intro">
+  <span class="pp-label">Home v2 · Round 2 · S6</span>
+  <h1>我們服務誰／接下來去哪：三個幾何方向</h1>
+  <p>文案取自 <code>home.ts → audiences</code>（三種夥伴＋發展藍圖），未新增任何主張。三案都把「分流」做成 CIS 色塊，並以幾何變換表達藍圖的推進。本頁只陳列選項，不做推薦。</p>
+  <p class="pp-note">ESG共學坊相關處使用子品牌標誌 <code>coesg-class.svg</code>；其綠色只出現在子品牌標誌本身。</p>
+</header>
+
+<!-- ═════════════════════════ A ═════════════════════════ -->
+<section class="opt" data-opt="a" id="opt-a" aria-labelledby="a-t">
+  <div class="opt-head"><span class="pp-label">方案 A</span><h2 id="a-t">圓頂三門：一座圓頂切成三道門，手機上各自成拱</h2></div>
+  <div class="s6a">
+    <div class="wrap">
+      <span class="kicker">我們服務誰</span>
+      <h3 class="m-h2">你是哪一種夥伴？</h3>
+      <p class="m-lead">共好玟化服務兩大群體：有長期經營理念的品牌主，以及想找到永續供應鏈的大企業；ESG共學坊則讓學習者與講師在同一個場域交流。</p>
+
+      <div class="doors">
+        <article class="door d1">
+          <div class="cap"><span class="geo geo-petal c-yellow" aria-hidden="true"></span></div>
+          <div class="body">
+            <span class="idx">01</span>
+            <h4>有長期經營理念的品牌主</h4>
+            <p>你已經在做永續，或你的事業本身就具備社會與環境價值。無論是農業、設計、身心靈、文化創意，我們協助你把這些價值整理清楚。</p>
+            <a href="#">看顧問與永續白皮書方案 →</a>
+          </div>
+        </article>
+        <article class="door d2">
+          <div class="cap"><span class="geo geo-block c-orange" aria-hidden="true" style="--s:36px"></span></div>
+          <div class="body">
+            <span class="idx">02</span>
+            <h4>想找到永續供應鏈的大企業</h4>
+            <p>大企業需要的，除了符合規範的供應商，還需要真正呼應品牌精神、對應 ESG 指標的合作夥伴。我們整合了一個具備永續實踐力的夥伴網絡平台。</p>
+            <a href="#">認識共好生態圈 →</a>
+          </div>
+        </article>
+        <article class="door d3">
+          <div class="cap"><span class="geo geo-quarter c-orange" aria-hidden="true"></span></div>
+          <div class="body">
+            <span class="idx">03</span>
+            <h4>想學習永續的個人與團隊</h4>
+            <span class="sub"><img src="../../../../public/brand/coesg-class.svg" alt="ESG共學坊"></span>
+            <p>透過ESG共學坊，串聯不同領域的永續實踐者，讓講師、品牌與企業在同一個場域交流碰撞，延伸出新的合作與可能。</p>
+            <a href="#">打開永續學習地圖 →</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="grow">
+        <div class="grow-head"><h4 class="m-h3">接下來，我們要去哪裡</h4><a class="m-link" href="#">看完整發展藍圖 →</a></div>
+        <ol>
+          <li><span class="shape" aria-hidden="true"><span class="geo geo-quarter c-orange" style="left:0;top:0;width:28px;height:28px"></span></span><span class="per">2026</span><h5>把基礎打深</h5><p>建立標準化的永續白皮書範本、拓展多元客戶，完成官網與品牌識別更新。</p></li>
+          <li><span class="shape" aria-hidden="true"><span class="geo geo-half c-orange" style="--s:56px"></span></span><span class="per">2027–2028</span><h5>讓模式可複製</h5><p>建立可複製的永續揭露服務流程，深化農業永續供應鏈，發展 AI 輔助永續顧問工具。</p></li>
+          <li><span class="shape" aria-hidden="true"><span class="geo geo-disc c-orange"></span></span><span class="per">2029 以後</span><h5>成為生態圈的節點</h5><p>以「共學、共創、共生」模式，把永續白皮書與 IOOI 框架帶到亞太與華語圈。</p></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="pp-card"><dl>
+    <div><dt>概念</dt><dd>桌機上三道門的門楣合起來是一座完整的圓頂：三種夥伴屬於同一個生態圈。滑過某一道門，它從圓頂中「被推開」浮起；手機上圓頂拆開，每道門各自長出完整的拱。藍圖則用「四分之一 → 半圓 → 整圓」表達逐步長成。</dd></div>
+    <div><dt>幾何語彙與變換</dt><dd>拱（half / dome）＋色塊（block）＝門；以容器寬度計算位移，讓三片門楣<strong>重組</strong>為一個橢圓頂（recombine），窄螢幕時<strong>重新拼貼</strong>為三個獨立拱（re-tile）。互動時該門上浮 12px，其他門楣降低飽和（recolour）。門楣內小圖示：花瓣／方塊／四分圓。藍圖用四分圓 → 半圓 → 整圓<strong>重組成長</strong>。</dd></div>
+    <div><dt>參考來源</dt><dd>Airbnb「成為房東」與 Mailchimp 的大色塊分流入口；Pentagram 作品中常見的「切片拼回整體」版面（如 MIT Media Lab 識別的網格切割）。</dd></div>
+    <div><dt>優點</dt><dd>分流一目了然，整張門都是點擊範圍；圓頂直接延續「Sayun 橋」的拱形；三色門讓三種夥伴有固定代表色，可延伸到內頁。手機版自然變成三張拱形卡，不需另做設計。</dd></div>
+    <div><dt>風險</dt><dd>橘門上白色標題只能用 24px 粗體，內文需用墨色，同一張卡內混用兩種文字色需細調；圓頂切片依賴容器查詢單位，舊瀏覽器會退化為三個獨立拱（可接受）；三色等重可能弱化「兩大群體＋共學坊」的主次。</dd></div>
+    <div class="full"><dt>與前後區塊的銜接可能</dt><dd><ul>
+      <li>可能一：證據區的圓（或拱）在接縫處被切成三片，落下成為三道門楣；離開時中間那道灰門延伸成客戶回饋區的深色底，回饋從「門後」出現。</li>
+      <li>可能二：證據區以淺底收尾，這裡改用紙色＋三色門形成第一個大面積 CIS 色塊；離開時藍圖的整圓放大成為客戶回饋區中央的火焰底盤。</li>
+    </ul></dd></div>
+  </dl></div>
+</section>
+
+<!-- ═════════════════════════ B ═════════════════════════ -->
+<section class="opt" data-opt="b" id="opt-b" aria-labelledby="b-t">
+  <div class="opt-head"><span class="pp-label">方案 B</span><h2 id="b-t">橋上三站：品牌主與企業是兩岸，共學坊在拱心</h2></div>
+  <div class="s6b">
+    <div class="wrap">
+      <div class="s6b-head">
+        <span class="kicker">我們服務誰</span>
+        <h3 class="m-h2">你是哪一種夥伴？</h3>
+        <p class="m-lead">共好玟化服務兩大群體：有長期經營理念的品牌主，以及想找到永續供應鏈的大企業；ESG共學坊則讓學習者與講師在同一個場域交流。</p>
+      </div>
+
+      <div class="span" aria-hidden="true">
+        <svg viewBox="0 0 600 140" preserveAspectRatio="none">
+          <path d="M0 130 A300 120 0 0 1 300 10" stroke="#F25232"/>
+          <path d="M300 10 A300 120 0 0 1 600 130" stroke="#FAB40A"/>
+        </svg>
+        <span class="node n1"><span class="geo geo-petal c-orange"></span></span>
+        <span class="node n2"><svg class="flame" viewBox="0 0 74.13 95.22"><use href="#flame" width="74.13" height="95.22"/></svg></span>
+        <span class="node n3"><span class="geo geo-petal c-yellow mx"></span></span>
+      </div>
+
+      <ol class="stations">
+        <li>
+          <span class="dot" aria-hidden="true"><span class="geo geo-petal c-orange"></span></span>
+          <span class="who">一端</span>
+          <h4>有長期經營理念的品牌主</h4>
+          <p>你已經在做永續，或你的事業本身就具備社會與環境價值。無論是農業、設計、身心靈、文化創意，我們協助你把這些價值整理清楚。</p>
+          <a class="btn" href="#">看顧問與永續白皮書方案 →</a>
+        </li>
+        <li>
+          <span class="dot" aria-hidden="true"><svg class="flame" style="--fw:20px" viewBox="0 0 74.13 95.22"><use href="#flame" width="74.13" height="95.22"/></svg></span>
+          <span class="who">交會處</span>
+          <h4>想學習永續的個人與團隊</h4>
+          <span class="sub"><img src="../../../../public/brand/coesg-class.svg" alt="ESG共學坊"></span>
+          <p>透過ESG共學坊，串聯不同領域的永續實踐者，讓講師、品牌與企業在同一個場域交流碰撞，延伸出新的合作與可能。</p>
+          <a class="btn" href="#">打開永續學習地圖 →</a>
+        </li>
+        <li>
+          <span class="dot" aria-hidden="true"><span class="geo geo-petal c-yellow mx"></span></span>
+          <span class="who">另一端</span>
+          <h4>想找到永續供應鏈的大企業</h4>
+          <p>大企業需要的，除了符合規範的供應商，還需要真正呼應品牌精神、對應 ESG 指標的合作夥伴。我們整合了一個具備永續實踐力的夥伴網絡平台。</p>
+          <a class="btn" href="#">認識共好生態圈 →</a>
+        </li>
+      </ol>
+
+      <div class="deckwrap">
+        <div class="deckhead"><h4 class="m-h3">接下來，我們要去哪裡</h4><a class="m-link" href="#">看完整發展藍圖 →</a></div>
+        <ol class="piers">
+          <li><span class="pier" style="--c:var(--yellow);--h:40px;--w:40%;--r:14px" aria-hidden="true"></span><span class="per">2026</span><h5>把基礎打深</h5><p>建立標準化的永續白皮書範本、拓展多元客戶，完成官網與品牌識別更新。</p></li>
+          <li><span class="pier" style="--c:var(--orange);--h:72px;--w:70%;--r:14px" aria-hidden="true"></span><span class="per">2027–2028</span><h5>讓模式可複製</h5><p>建立可複製的永續揭露服務流程，深化農業永續供應鏈，發展 AI 輔助永續顧問工具。</p></li>
+          <li><span class="pier" style="--c:var(--grey);--h:104px;--w:100%;--r:14px" aria-hidden="true"></span><span class="per">2029 以後</span><h5>成為生態圈的節點</h5><p>以「共學、共創、共生」模式，把永續白皮書與 IOOI 框架帶到亞太與華語圈。</p></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="pp-card"><dl>
+    <div><dt>概念</dt><dd>把「Sayun＝橋」直接畫成選單：左岸是品牌主、右岸是大企業，拱心是 ESG共學坊——兩端的人在這裡交流。藍圖是橋面下的三根橋墩，一根比一根高。</dd></div>
+    <div><dt>幾何語彙與變換</dt><dd>一道拱（arc）以拱心為軸<strong>鏡像</strong>：左半橘、右半黃（mirror + recolour）；左岸花瓣與右岸花瓣互為 scaleX(-1)；拱心是原色火焰。手機上拱<strong>旋轉 90°</strong>成為左側直軌，三站沿軌排列。橋墩用色塊<strong>縮放</strong>（40／72／104px）表達推進，手機上改為橫向長度遞增。</dd></div>
+    <div><dt>參考來源</dt><dd>Stripe「依你的角色開始」的分流列；倫敦地鐵路線圖的站點＋線段語言；Apple 產品比較頁中央對齊的三欄。</dd></div>
+    <div><dt>優點</dt><dd>最直接講出品牌名稱的意義，且不需互動即可理解；鏡像構圖讓「品牌主」與「企業」看起來對等，符合橋樑定位；白底＋細線，資訊密度高也不擁擠。</dd></div>
+    <div><dt>風險</dt><dd>文案順序是品牌主→企業→學習者，此案為了構圖把學習者放到中間（DOM 順序已調整），需確認可接受；拱的節點位置綁定三欄，若未來變四種夥伴需重算；手機版看不到完整的拱，橋的意象較弱。</dd></div>
+    <div class="full"><dt>與前後區塊的銜接可能</dt><dd><ul>
+      <li>可能一：證據區若用拱或環，這道拱是它的延續（同一條線從上一區畫進來）；離開時橋面（深色粗線）延伸為客戶回饋區的頂邊。</li>
+      <li>可能二：證據區以色塊收尾時，這裡以白底「留白呼吸」；離開時拱心火焰下降，成為客戶回饋區花瓣環繞的中心。</li>
+    </ul></dd></div>
+  </dl></div>
+</section>
+
+<!-- ═════════════════════════ C ═════════════════════════ -->
+<section class="opt" data-opt="c" id="opt-c" aria-labelledby="c-t">
+  <div class="opt-head"><span class="pp-label">方案 C</span><h2 id="c-t">色票扇：三種夥伴是三張 CIS 色票</h2></div>
+  <div class="s6c">
+    <div class="wrap">
+      <span class="kicker">我們服務誰</span>
+      <h3 class="m-h2">你是哪一種夥伴？</h3>
+      <p class="m-lead">共好玟化服務兩大群體：有長期經營理念的品牌主，以及想找到永續供應鏈的大企業；ESG共學坊則讓學習者與講師在同一個場域交流。</p>
+
+      <ul class="fan">
+        <li class="chip k1">
+          <div class="sw" aria-hidden="true">
+            <span class="geo geo-petal c-yellow" style="width:62%;height:auto;aspect-ratio:1;right:-6%;top:-30%"></span>
+            <span class="code"><b>01</b>CIS · 165 C</span>
+          </div>
+          <div class="body">
+            <h4>有長期經營理念的品牌主</h4>
+            <p>你已經在做永續，或你的事業本身就具備社會與環境價值。無論是農業、設計、身心靈、文化創意，我們協助你把這些價值整理清楚。</p>
+            <a class="btn" href="#">看顧問與永續白皮書方案 →</a>
+          </div>
+        </li>
+        <li class="chip k2">
+          <div class="sw" aria-hidden="true">
+            <span class="geo geo-block c-orange" style="width:30%;height:auto;aspect-ratio:1;right:34%;top:0"></span>
+            <span class="geo geo-quarter c-yellow r180" style="width:30%;height:auto;aspect-ratio:1;right:4%;top:0"></span>
+            <span class="code"><b>02</b>CIS · Cool Grey 11 C</span>
+          </div>
+          <div class="body">
+            <h4>想找到永續供應鏈的大企業</h4>
+            <p>大企業需要的，除了符合規範的供應商，還需要真正呼應品牌精神、對應 ESG 指標的合作夥伴。我們整合了一個具備永續實踐力的夥伴網絡平台。</p>
+            <a class="btn" href="#">認識共好生態圈 →</a>
+          </div>
+        </li>
+        <li class="chip k3">
+          <div class="sw" aria-hidden="true">
+            <span class="geo geo-disc c-orange" style="width:44%;height:auto;aspect-ratio:1;right:-8%;top:-14%"></span>
+            <span class="geo geo-disc c-white" style="width:20%;height:auto;aspect-ratio:1;right:24%;top:34%"></span>
+            <span class="code"><b>03</b>CIS · 7548 C</span>
+          </div>
+          <div class="body">
+            <h4>想學習永續的個人與團隊</h4>
+            <span class="sub"><img src="../../../../public/brand/coesg-class.svg" alt="ESG共學坊"></span>
+            <p>透過ESG共學坊，串聯不同領域的永續實踐者，讓講師、品牌與企業在同一個場域交流碰撞，延伸出新的合作與可能。</p>
+            <a class="btn" href="#">打開永續學習地圖 →</a>
+          </div>
+        </li>
+      </ul>
+
+      <div class="scale">
+        <div class="scale-head"><h4 class="m-h3">接下來，我們要去哪裡</h4><a class="m-link" href="#">看完整發展藍圖 →</a></div>
+        <ol>
+          <li class="l1"><span class="per">2026</span><h5>把基礎打深</h5><p>建立標準化的永續白皮書範本、拓展多元客戶，完成官網與品牌識別更新。</p></li>
+          <li class="l2"><span class="per">2027–2028</span><h5>讓模式可複製</h5><p>建立可複製的永續揭露服務流程，深化農業永續供應鏈，發展 AI 輔助永續顧問工具。</p></li>
+          <li class="l3"><span class="per">2029 以後</span><h5>成為生態圈的節點</h5><p>以「共學、共創、共生」模式，把永續白皮書與 IOOI 框架帶到亞太與華語圈。</p></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="pp-card"><dl>
+    <div><dt>概念</dt><dd>把品牌色票本身當成選單：三種夥伴是三張 CIS 色票，像設計師手上展開的色票扇。選到哪一張，那張就從扇中抽出、轉正。藍圖是一條由淺到深的色階，越往後越飽和、越寬。</dd></div>
+    <div><dt>幾何語彙與變換</dt><dd>色票上方是 CIS 色塊與幾何（花瓣／方塊＋四分圓／雙圓）；桌機上三張以底部為軸<strong>旋轉</strong> -6°／0°／6° 成扇形，互動時<strong>轉正＋上移</strong>；手機上改為 ±1.2° 的輕微交錯堆疊。藍圖色階以<strong>重新上色</strong>（白→黃→橘）與<strong>縮放</strong>（寬度與高度遞增、右上角四分圓半徑遞增）呈現。</dd></div>
+    <div><dt>參考來源</dt><dd>Pantone 色票扇的實體隱喻；Pitch.com 與 Arc 網站的扇形卡片堆疊互動。</dd></div>
+    <div><dt>優點</dt><dd>最有「設計品牌」的手感，色票標註直接展示 CIS 規範，對外溝通「我們有完整識別」；白卡內文對比最好；藍圖色階不需圖示就能讀出「由淺入深」。</dd></div>
+    <div><dt>風險</dt><dd>色票隱喻對非設計背景的受眾可能較難意會；扇形重疊在 900–1100px 之間較擠，需微調位移；色票上的「CIS · 165 C」是內部規格語言，正式上線時可能要換成對使用者有意義的標籤。</dd></div>
+    <div class="full"><dt>與前後區塊的銜接可能</dt><dd><ul>
+      <li>可能一：證據區的數字色塊在接縫處「收成一疊色票」，再在這裡展開成扇；離開時第三張黃色票放大成客戶回饋區的底色帶。</li>
+      <li>可能二：以淺橘底（orange-soft）在證據區與回饋區之間形成一段暖色過渡；離開時色階最右端的大四分圓延續為回饋區左上角的裁切圖形。</li>
+    </ul></dd></div>
+  </dl></div>
+</section>
+
+<script>
+(() => {
+  const bar = document.querySelector('.pp-bar');
+  const opts = [...document.querySelectorAll('.opt')];
+  bar.hidden = false;
+  bar.addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-show]');
+    if (!b) return;
+    const k = b.dataset.show;
+    bar.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    opts.forEach((o) => { o.hidden = k !== 'all' && o.dataset.opt !== k; });
+    window.scrollTo({ top: 0 });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S8 下一步 CTA · 三個方案</title>
+<link rel="stylesheet" href="_tokens.css">
+<link rel="stylesheet" href="_geo.css">
+<style>
+/* ───────── Proposal chrome (shared by s5–s8, not part of the design) ───────── */
+[hidden] { display: none !important; }
+html { scroll-padding-top: 56px; }
+body { overflow-x: clip; }
+.pp-intro { max-width: 1200px; margin: 0 auto; padding: 32px 16px 16px; }
+.pp-intro h1 { font: 900 clamp(24px, 4vw, 34px)/1.3 var(--font-sans); margin: 12px 0 8px; }
+.pp-intro p { color: var(--ink-2); margin: 0 0 12px; max-width: 75ch; }
+.opt { padding: 48px 0 64px; border-top: 6px solid #111; }
+.opt-head { max-width: 1200px; margin: 0 auto 24px; padding: 0 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.opt-head h2 { font: 900 clamp(20px, 3vw, 26px)/1.3 var(--font-sans); margin: 0; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+.pp-card { max-width: 1200px; margin: 32px auto 0; padding: 0 16px; }
+.pp-card dl { margin: 0; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(18px, 3vw, 28px); display: grid; gap: 18px 36px; grid-template-columns: 1fr; }
+@media (min-width: 860px) { .pp-card dl { grid-template-columns: 1fr 1fr; } }
+.pp-card dt { font: 700 13px/1.4 var(--font-sans); color: var(--orange-strong); letter-spacing: .08em; }
+.pp-card dd { margin: 4px 0 0; font-size: 15px; }
+.pp-card .full { grid-column: 1 / -1; }
+.pp-card ul { margin: 4px 0 0; padding-left: 1.2em; }
+.pp-card li + li { margin-top: 4px; }
+
+/* ───────── Mock primitives ───────── */
+.kicker { display: inline-flex; align-items: center; gap: 10px; font: 700 13px/1 var(--font-sans); letter-spacing: .16em; color: var(--orange-strong); }
+.kicker::before { content: ""; width: 12px; height: 12px; background: var(--orange); border-radius: 0 100% 0 100%; }
+.m-h2 { font: 900 clamp(26px, 3.6vw, 42px)/1.28 var(--font-sans); margin: 14px 0 12px; letter-spacing: .01em; }
+.m-lead { color: var(--ink-2); margin: 0 0 28px; font-size: 17px; max-width: 46ch; }
+.m-link { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--orange-strong); text-decoration: none; border-bottom: 2px solid currentColor; padding-bottom: 2px; }
+.m-note { font-size: 13px; color: var(--ink-2); margin: 16px 0 0; }
+.flame { display: block; width: var(--fw, 40px); height: auto; }
+:focus-visible { outline: 3px solid var(--orange-strong); outline-offset: 3px; }
+
+/* ───────── Mock primitives ───────── */
+.kicker { display: inline-flex; align-items: center; gap: 10px; font: 700 13px/1 var(--font-sans); letter-spacing: .16em; color: var(--orange-strong); }
+.kicker::before { content: ""; width: 12px; height: 12px; background: var(--orange); border-radius: 0 100% 0 100%; }
+.m-h2 { font: 900 clamp(28px, 4.4vw, 52px)/1.25 var(--font-sans); margin: 14px 0 14px; }
+.m-lead { margin: 0; font-size: 17px; max-width: 40ch; }
+.flame { display: block; width: var(--fw, 40px); height: auto; }
+:focus-visible { outline: 3px solid var(--orange-strong); outline-offset: 3px; }
+.btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 12px 26px; border-radius: 999px; font: 700 16px/1.3 var(--font-sans); text-decoration: none; border: 2px solid transparent; transition: background .3s, color .3s, translate .3s; }
+.btn-primary { background: var(--orange-strong); color: #fff; }
+.btn-primary:hover { background: #9E2E14; }
+.btn-ghost { border-color: currentColor; color: var(--ink); }
+.btn-ghost:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+/* ───────── A · 橋合龍 ───────── */
+.s8a { overflow: hidden; background: var(--paper); padding: clamp(56px, 8vw, 112px) 0; }
+.stage { position: relative; max-width: 980px; margin: 0 auto; text-align: center; padding: clamp(96px, 15vw, 190px) clamp(28px, 6vw, 96px) 8px; }
+.stage .half { position: absolute; top: 0; bottom: 0; width: 50%; --bw: clamp(10px, 1.8vw, 20px); border: var(--bw) solid var(--c); border-bottom: 0; border-right: 0; border-top-left-radius: 100% clamp(140px, 24vw, 300px); pointer-events: none; }
+.stage .l { left: 0; --c: var(--yellow); transform-origin: 50% 100%; }
+.stage .r { right: 0; --c: var(--orange); transform: scaleX(-1); transform-origin: 50% 100%; }
+.keystone { position: absolute; left: 50%; top: 0; translate: -50% -38%; width: clamp(64px, 9vw, 104px); aspect-ratio: 1; border-radius: 50%; background: var(--paper); display: grid; place-items: center; box-shadow: 0 0 0 8px var(--paper); transition: scale .5s var(--geo-ease); }
+.keystone .flame { --fw: 52%; }
+.s8a:has(.btn-primary:hover, .btn-primary:focus-visible) .keystone { scale: 1.18; }
+.stage .m-lead { margin-inline: auto; color: var(--ink-2); }
+.stage .btns { justify-content: center; }
+.steps { list-style: none; margin: 40px auto 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 640px; counter-reset: st; }
+.steps li { counter-increment: st; display: flex; flex-direction: column; align-items: center; gap: 8px; font: 700 14px/1.4 var(--font-sans); position: relative; }
+.steps li::before { content: counter(st, decimal-leading-zero); display: grid; place-items: center; width: 44px; height: 22px; padding-top: 6px; border-radius: 44px 44px 0 0; background: var(--c); font: 800 12px/1 var(--font-display); color: var(--ink); }
+.steps li:nth-child(1) { --c: var(--yellow); } .steps li:nth-child(2) { --c: #F7A35A; } .steps li:nth-child(3) { --c: var(--orange); }
+.steps li + li::after { content: ""; position: absolute; top: 20px; right: calc(50% + 30px); width: calc(100% - 52px); height: 2px; background: var(--line); }
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .stage .l { animation: s8a-l linear both; animation-timeline: view(); animation-range: entry 0% cover 45%; }
+    .stage .r { animation: s8a-r linear both; animation-timeline: view(); animation-range: entry 0% cover 45%; }
+    .keystone { animation: s8a-k linear both; animation-timeline: view(); animation-range: cover 30% cover 48%; }
+  }
+}
+@keyframes s8a-l { from { transform: rotate(-24deg) translateX(-8%); opacity: .3; } to { transform: none; opacity: 1; } }
+@keyframes s8a-r { from { transform: scaleX(-1) rotate(-24deg) translateX(-8%); opacity: .3; } to { transform: scaleX(-1); opacity: 1; } }
+@keyframes s8a-k { from { scale: 0; } to { scale: 1; } }
+
+/* ───────── B · 最後一塊 ───────── */
+.s8b { background: var(--orange); padding: clamp(56px, 8vw, 112px) 0; color: var(--ink); overflow: hidden; }
+.s8b .kicker { color: var(--ink); }
+.s8b .kicker::before { background: var(--yellow); }
+.s8b-grid { display: grid; gap: 48px; align-items: center; }
+@media (min-width: 960px) { .s8b-grid { grid-template-columns: 1.1fr .9fr; gap: 72px; } }
+.s8b .m-h2 { color: #fff; }
+.s8b .btn-primary { background: #fff; color: var(--orange-strong); }
+.s8b .btn-primary:hover { background: var(--ink); color: #fff; }
+.s8b :focus-visible { outline-color: var(--ink); }
+.puzzle { container-type: inline-size; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 8px; width: min(100%, 460px); aspect-ratio: 1; margin-inline: auto; }
+.pc { position: relative; isolation: isolate; display: flex; flex-direction: column; gap: 4px; padding: 5cqw; color: var(--t, var(--ink)); text-decoration: none; }
+.pc::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--c); border-radius: 100% 0 0 0; rotate: var(--r); transition: rotate .7s var(--geo-ease), background .4s, border-color .4s; }
+.pc b { font: 800 9cqw/1 var(--font-display); }
+.pc span { font: 700 max(14px, 4cqw)/1.35 var(--font-sans); max-width: 8em; }
+.pc1 { --c: var(--yellow); --r: 0deg; justify-content: flex-end; align-items: flex-end; text-align: right; }
+.pc2 { --c: var(--paper); --r: 90deg; justify-content: flex-end; }
+.pc3 { --c: var(--grey); --r: 180deg; --t: #fff; }
+.pc4 { --r: 270deg; justify-content: flex-start; align-items: flex-end; text-align: right; color: #fff; }
+.pc4::before { background: transparent; border: 3px dashed rgba(31,32,34,.55); }
+.pc4 b { font-size: 7cqw; }
+.pc4 .cta { font: 900 max(16px, 4.6cqw)/1.35 var(--font-sans); color: var(--ink); transition: color .3s; }
+.pc4:hover::before, .pc4:focus-visible::before,
+.s8b:has(.btn-primary:hover, .btn-primary:focus-visible) .pc4::before { background: var(--ink); border-color: var(--ink); rotate: 270deg; }
+.pc4:hover .cta, .pc4:focus-visible .cta, .s8b:has(.btn-primary:hover, .btn-primary:focus-visible) .pc4 .cta { color: #fff; }
+@media (prefers-reduced-motion: no-preference) {
+  .pc4::before { rotate: 180deg; }
+  .pc4:hover::before, .pc4:focus-visible::before, .s8b:has(.btn-primary:hover, .btn-primary:focus-visible) .pc4::before { rotate: 270deg; }
+}
+.pc1, .pc2 { padding-bottom: 6cqw; } .pc3, .pc4 { padding-top: 6cqw; }
+.s8b .pp-mini { font-size: 14px; margin-top: 18px; }
+
+/* ───────── C · 雙焰相向 ───────── */
+.s8c { position: relative; overflow: hidden; background: var(--surface-dark); color: #fff; padding: clamp(64px, 9vw, 128px) 0 clamp(150px, 20vw, 220px); text-align: center; }
+.s8c .kicker { color: var(--yellow); }
+.s8c .kicker::before { background: var(--yellow); }
+.s8c .m-lead { color: rgba(255,255,255,.85); margin-inline: auto; }
+.s8c .btns { justify-content: center; }
+.s8c .btn-primary { background: var(--yellow); color: var(--ink); }
+.s8c .btn-primary:hover { background: #fff; }
+.s8c .btn-ghost { color: #fff; }
+.s8c .btn-ghost:hover { background: #fff; color: var(--ink); border-color: #fff; }
+.s8c :focus-visible { outline-color: var(--yellow); }
+.s8c .inner { position: relative; z-index: 2; }
+.s8c .fl { position: absolute; bottom: -18%; width: clamp(170px, 30vw, 430px); z-index: 1; transition: translate .7s var(--geo-ease); }
+.s8c .fl.l { left: -5%; transform: scaleX(-1); --fy: #5B606B; --fo: #4D515B; }
+.s8c .fl.r { right: -5%; }
+.s8c:has(.btn-primary:hover, .btn-primary:focus-visible) .fl.l { translate: 6% -4%; }
+.s8c:has(.btn-primary:hover, .btn-primary:focus-visible) .fl.r { translate: -6% -4%; }
+.petals { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 28px; padding: 0; margin: 36px 0 0; }
+.petals li { display: flex; align-items: center; gap: 10px; font: 700 15px/1.4 var(--font-sans); }
+.petals .geo { --s: 30px; display: grid; place-items: center; }
+.petals .geo b { font: 800 12px/1 var(--font-display); color: var(--ink); }
+.signoff { position: absolute; z-index: 2; left: 50%; bottom: 28px; translate: -50% 0; opacity: .9; }
+.signoff img { height: 30px; width: auto; display: block; }
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .s8c .fl.r { animation: s8c-r linear both; animation-timeline: view(); animation-range: entry 0% cover 40%; }
+  }
+}
+@keyframes s8c-r { from { scale: .6; rotate: 18deg; } to { scale: 1; rotate: 0deg; } }
+.s8b .m-lead { color: var(--ink); font-weight: 500; }
+
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="flame" viewBox="203.59 169.44 74.13 95.22">
+      <path style="fill:var(--fy,#FAB40A)" d="M 224.308594 264.65625 C 224.308594 264.65625 241.097656 262.621094 241.433594 246.953125 C 241.625 238.117188 235.25 230.648438 229.917969 225.21875 C 224.523438 219.726562 222.128906 214.316406 221.109375 211.136719 C 220.878906 210.425781 219.835938 210.523438 219.75 211.265625 C 218.554688 221.480469 226.351562 233.089844 226.351562 233.089844 C 225.839844 233.125 215.3125 221.828125 210.816406 207.996094 C 210.589844 207.308594 209.589844 207.378906 209.460938 208.09375 C 208.628906 212.773438 208.371094 223.503906 219.164062 235.855469 C 214.113281 233.695312 208.886719 224.738281 206.78125 220.800781 C 206.453125 220.191406 205.527344 220.378906 205.46875 221.066406 C 205.15625 224.648438 205.746094 232.074219 214.355469 239.027344 C 214.5 239.144531 210.058594 237.746094 205.027344 231.703125 C 204.535156 231.117188 203.589844 231.617188 203.8125 232.347656 C 204.585938 234.871094 206.445312 238.640625 210.933594 242.105469 C 216.203125 246.171875 222.085938 251.511719 223.917969 256.210938 C 225.75 260.910156 225.007812 263.308594 224.308594 264.65625 "/>
+      <path style="fill:var(--fo,#F25232)" d="M 269.261719 228.570312 C 270.472656 216.289062 274.730469 209.757812 277.25 206.894531 C 277.71875 206.359375 277.179688 205.542969 276.507812 205.769531 C 271.0625 207.570312 267.476562 211.140625 265.082031 215.121094 C 263.925781 212.765625 262.503906 210.484375 260.910156 208.128906 C 253.144531 196.664062 250.515625 183.726562 249.734375 178.566406 C 249.628906 177.871094 248.671875 177.742188 248.398438 178.390625 C 242.378906 192.726562 253.308594 210.753906 253.308594 210.753906 C 252.550781 210.652344 238.230469 191.742188 235.6875 170.277344 C 235.597656 169.519531 234.527344 169.4375 234.324219 170.175781 C 232.582031 176.476562 230.46875 192.078125 242.695312 213.503906 C 235.621094 208.625 230.007812 191.570312 228.210938 185.5625 C 228.011719 184.894531 227.058594 184.898438 226.867188 185.574219 C 225.476562 190.507812 223.597656 203.167969 234.800781 216.6875 C 234.980469 216.90625 228.476562 213.3125 222.789062 202.125 C 222.445312 201.449219 221.429688 201.710938 221.464844 202.464844 C 221.632812 206.257812 223.453125 214.753906 229.503906 221.730469 C 235.949219 229.167969 242.222656 234.816406 243.5 242.160156 C 244.773438 249.5 242.765625 255 241.351562 256.75 C 241.351562 256.75 265.066406 258.183594 268.347656 235.984375 C 268.417969 235.507812 269.136719 229.835938 269.261719 228.570312 "/>
+    </symbol>
+  </defs>
+</svg>
+
+<nav class="pp-bar" hidden aria-label="方案切換">
+  <strong>S8 下一步</strong>
+  <button type="button" data-show="a" aria-pressed="false">A</button>
+  <button type="button" data-show="b" aria-pressed="false">B</button>
+  <button type="button" data-show="c" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+</nav>
+<header class="pp-intro">
+  <span class="pp-label">Home v2 · Round 2 · S8</span>
+  <h1>下一步（CTA）：讓幾何「完成」的三種收尾</h1>
+  <p>文案取自 <code>home.ts → cta</code>（標題、說明、兩個按鈕、三個步驟），未新增字句。三案都讓前面出現過的形狀在這裡「合起來」，作為首頁的收束。本頁只陳列選項，不做推薦。</p>
+</header>
+
+<!-- ═════════════════════════ A ═════════════════════════ -->
+<section class="opt" data-opt="a" id="opt-a" aria-labelledby="a-t">
+  <div class="opt-head"><span class="pp-label">方案 A</span><h2 id="a-t">橋合龍：兩段弧在拱心相遇</h2></div>
+  <div class="s8a">
+    <div class="wrap">
+      <div class="stage">
+        <span class="half l" aria-hidden="true"></span>
+        <span class="half r" aria-hidden="true"></span>
+        <span class="keystone" aria-hidden="true"><svg class="flame" viewBox="0 0 74.13 95.22"><use href="#flame" width="74.13" height="95.22"/></svg></span>
+        <span class="kicker">下一步</span>
+        <h3 class="m-h2">準備好讓市場看見你了嗎？</h3>
+        <p class="m-lead">預約一場 15 分鐘的 Coffee Chat，讓我們聊聊如何把你正在做的事，說清楚、被看見、被理解。</p>
+        <div class="btns">
+          <a class="btn btn-primary" href="#">預約 15 分鐘 Coffee Chat</a>
+          <a class="btn btn-ghost" href="#">先加入官方 LINE</a>
+        </div>
+        <ol class="steps">
+          <li>留下聯絡方式</li>
+          <li>15 分鐘線上聊聊</li>
+          <li>收到下一步建議</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="pp-card"><dl>
+    <div><dt>概念</dt><dd>整頁一路出現的「Sayun 橋」在最後一區合龍：左段黃（理念夥伴的一端）、右段橘（企業的一端），兩段弧在拱心相遇，拱心石就是共好玟化的火焰。按下預約，就是把橋搭完的那一步。</dd></div>
+    <div><dt>幾何語彙與變換</dt><dd>兩段四分之一橢圓弧（arc）互為<strong>鏡像</strong>（scaleX(-1)）並<strong>重新上色</strong>（黃／橘）；進場時兩段各自從外側<strong>旋轉</strong> 24° 收合，最後拱心火焰由 0 <strong>放大</strong>到 1；滑過主按鈕時拱心再放大 1.18。三步驟以小半圓為「橋墩」，顏色由黃漸變到橘。</dd></div>
+    <div><dt>參考來源</dt><dd>Airbnb「成為房東」與 Stripe 頁尾前的置中大 CTA 區；Pentagram 識別系統中「形狀在最後一頁合體」的手冊式收尾。</dd></div>
+    <div><dt>優點</dt><dd>故事收束感最強，與 Hero 的橋樑主張首尾呼應；淺底＋深橘按鈕，對比與可點性最清楚；版面置中、元素少，手機上幾乎不需調整。</dd></div>
+    <div><dt>風險</dt><dd>若 Hero 已使用同樣的完整拱橋，此處可能顯得重複，需讓 Hero 呈現「未完成」狀態才有合龍的意義；捲動驅動動畫需確認在 Safari 的降級（降級時直接顯示完成狀態）。</dd></div>
+    <div class="full"><dt>與前後區塊的銜接可能</dt><dd><ul>
+      <li>可能一：客戶回饋區的花瓣／徽章在接縫處分成兩半、飛向左右成為兩段弧的起點；離開時拱的兩腳向下延伸成頁尾的深色底邊框。</li>
+      <li>可能二：前一區以深色或淡黃收尾，這裡以紙色形成「天亮」的對比；離開時拱心火焰縮小，成為頁尾白色橫式標誌中的火焰。</li>
+    </ul></dd></div>
+  </dl></div>
+</section>
+
+<!-- ═════════════════════════ B ═════════════════════════ -->
+<section class="opt" data-opt="b" id="opt-b" aria-labelledby="b-t">
+  <div class="opt-head"><span class="pp-label">方案 B</span><h2 id="b-t">最後一塊：三步驟是三片四分圓，第四片由你補上</h2></div>
+  <div class="s8b">
+    <div class="wrap s8b-grid">
+      <div>
+        <span class="kicker">下一步</span>
+        <h3 class="m-h2">準備好讓市場看見你了嗎？</h3>
+        <p class="m-lead">預約一場 15 分鐘的 Coffee Chat，讓我們聊聊如何把你正在做的事，說清楚、被看見、被理解。</p>
+        <div class="btns">
+          <a class="btn btn-primary" href="#">預約 15 分鐘 Coffee Chat</a>
+          <a class="btn btn-ghost" href="#">先加入官方 LINE</a>
+        </div>
+      </div>
+      <ol class="puzzle" style="list-style:none;margin-block:0;padding:0" aria-label="預約流程">
+        <li class="pc pc1"><b>01</b><span>留下聯絡方式</span></li>
+        <li class="pc pc2"><b>02</b><span>15 分鐘線上聊聊</span></li>
+        <li class="pc pc3" style="grid-area:2/2"><b>03</b><span>收到下一步建議</span></li>
+        <li style="grid-area:2/1;display:grid"><a class="pc pc4" href="#"><b aria-hidden="true">↗</b><span class="cta">預約 15 分鐘 Coffee Chat</span></a></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="pp-card"><dl>
+    <div><dt>概念</dt><dd>三個步驟是一個圓的四分之三，缺的那一片，就是你按下預約。把「行動」做成拼圖的最後一塊——不是我們邀請你，而是由你把圓補完。整區用 CIS 橘滿版，作為首頁最飽和的一刻。</dd></div>
+    <div><dt>幾何語彙與變換</dt><dd>四分圓（quarter）× 4，依 0／90／180／270° <strong>旋轉</strong>拼成圓（recombine）；第四片在靜止時是虛線缺口且偏轉 90°，滑過或聚焦缺口、或滑過左側主按鈕時，<strong>旋轉</strong>歸位並由虛線<strong>重新上色</strong>為墨色實心。減少動態時缺口不旋轉、僅變色。</dd></div>
+    <div><dt>參考來源</dt><dd>Calendly／Cal.com 預約頁的三步驟說明；Mastercard 識別（Pentagram）以圓形重疊表達「連結」的做法；Duolingo 的「進度圓」完成回饋。</dd></div>
+    <div><dt>優點</dt><dd>流程三步驟一眼可見，降低預約心理門檻；CTA 有兩個入口（按鈕＋缺口），點擊範圍大；滿版橘在整頁中形成最強的停留點。</dd></div>
+    <div><dt>風險</dt><dd>橘底上的小字需用墨色（白字只用於大標），整區文字色彩規則較嚴；缺口與按鈕重複同一個 CTA，讀屏使用者會聽到兩次，可將其中一個設為 aria-hidden 的裝飾連結；滿版橘緊接頁尾可能過重。</dd></div>
+    <div class="full"><dt>與前後區塊的銜接可能</dt><dd><ul>
+      <li>可能一：前一區（回饋）中出現的四分圓或花瓣在接縫處掉落，成為這裡的三片拼圖；離開時完成的圓縮小，成為頁尾的回到頂端按鈕。</li>
+      <li>可能二：前一區以淺底收尾，這裡以滿版橘製造強烈切換；離開時灰色那片四分圓延伸成頁尾的灰色底（Cool Grey 11C）。</li>
+    </ul></dd></div>
+  </dl></div>
+</section>
+
+<!-- ═════════════════════════ C ═════════════════════════ -->
+<section class="opt" data-opt="c" id="opt-c" aria-labelledby="c-t">
+  <div class="opt-head"><span class="pp-label">方案 C</span><h2 id="c-t">雙焰相向：兩把火從兩側靠近，中間是你的下一步</h2></div>
+  <div class="s8c">
+    <svg class="fl l" viewBox="0 0 74.13 95.22" aria-hidden="true"><use href="#flame" width="74.13" height="95.22"/></svg>
+    <svg class="fl r" viewBox="0 0 74.13 95.22" aria-hidden="true"><use href="#flame" width="74.13" height="95.22"/></svg>
+    <div class="wrap inner">
+      <span class="kicker">下一步</span>
+      <h3 class="m-h2">準備好讓市場看見你了嗎？</h3>
+      <p class="m-lead">預約一場 15 分鐘的 Coffee Chat，讓我們聊聊如何把你正在做的事，說清楚、被看見、被理解。</p>
+      <div class="btns">
+        <a class="btn btn-primary" href="#">預約 15 分鐘 Coffee Chat</a>
+        <a class="btn btn-ghost" href="#">先加入官方 LINE</a>
+      </div>
+      <ol class="petals">
+        <li><span class="geo geo-petal c-yellow" aria-hidden="true"><b>1</b></span>留下聯絡方式</li>
+        <li><span class="geo geo-petal c-orange" aria-hidden="true"><b>2</b></span>15 分鐘線上聊聊</li>
+        <li><span class="geo geo-petal c-white" aria-hidden="true"><b>3</b></span>收到下一步建議</li>
+      </ol>
+    </div>
+    <div class="signoff"><img src="../../../../public/brand/gungho-horizontal-white.svg" alt="共好玟化 Gung Ho Culture"></div>
+  </div>
+
+  <div class="pp-card"><dl>
+    <div><dt>概念</dt><dd>標誌本身就是兩組筆觸相向而生的火焰。這裡把火焰放大、裁切到畫面兩側：右邊是原色的共好玟化，左邊是鏡像、轉為灰階的「還沒被看見的你」。按下預約，兩把火向中間靠近。</dd></div>
+    <div><dt>幾何語彙與變換</dt><dd>標誌<strong>放大裁切</strong>（scale + crop）＋<strong>鏡像</strong>（scaleX(-1)）＋<strong>重新上色</strong>（灰階）；進場時右焰由 0.6 放大並回正 18°；滑過主按鈕時兩焰同時向中央平移。三步驟以花瓣（petal）為編號底，顏色黃／橘／白。底部以白色橫式標誌收尾，直接交棒給頁尾。</dd></div>
+    <div><dt>參考來源</dt><dd>Apple 產品頁結尾的深色置中大字＋單一行動；Spotify、Nike 以巨型裁切品牌符號作為版面構成的做法。</dd></div>
+    <div><dt>優點</dt><dd>標誌的辨識度在全頁最高，品牌感最強；深底上黃色主按鈕對比充足（約 9:1），焦點明確；敘事上「你」與「我們」對等，呼應雙向的橋樑定位。</dd></div>
+    <div><dt>風險</dt><dd>灰階鏡像火焰的寓意（「還沒被看見的你」）需要客戶認可，否則可能被讀成「被冷落」；深色 CTA 與深色頁尾相連時邊界不清，需靠標誌或分隔線區分；手機上火焰只露出局部，需確認裁切比例。</dd></div>
+    <div class="full"><dt>與前後區塊的銜接可能</dt><dd><ul>
+      <li>可能一：前一區以淺色（如淡黃回饋區）收尾，這裡以深色＋火焰從底部升起形成「入夜點火」；離開時底部白色標誌直接成為頁尾的開頭，CTA 與頁尾合為一個深色收尾段。</li>
+      <li>可能二：前一區若已是深色，這裡改以 orange-soft 作底、火焰改原色與淺灰；離開時兩把火的尖端在頁尾上緣交會成一條細弧，作為頁尾頂邊。</li>
+    </ul></dd></div>
+  </dl></div>
+</section>
+
+<script>
+(() => {
+  const bar = document.querySelector('.pp-bar');
+  const opts = [...document.querySelectorAll('.opt')];
+  bar.hidden = false;
+  bar.addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-show]');
+    if (!b) return;
+    const k = b.dataset.show;
+    bar.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    opts.forEach((o) => { o.hidden = k !== 'all' && o.dataset.opt !== k; });
+    window.scrollTo({ top: 0 });
+  });
+})();
+</script>
+</body>
+</html>

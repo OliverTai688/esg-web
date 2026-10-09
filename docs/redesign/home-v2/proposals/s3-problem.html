@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>首頁 v2 · S3 問題提案</title>
+<link rel="stylesheet" href="_tokens.css">
+<link rel="stylesheet" href="_geo.css">
+<style>
+/* ── Proposal chrome (shared by s1–s4) ── */
+html { scroll-padding-top: 56px; }
+.wrap { width: 100%; max-width: 1200px; margin-inline: auto; padding-inline: 16px; }
+@media (min-width: 860px) { .wrap { padding-inline: 40px; } }
+.pp-intro { padding-block: 36px 28px; }
+.pp-intro h1 { font: 900 clamp(26px, 4.4vw, 40px)/1.25 var(--font-sans); margin: 12px 0 8px; }
+.pp-intro p { color: var(--ink-2); max-width: 72ch; margin: 0 0 6px; font-size: 15px; }
+.pp-intro .pp-note { margin-top: 16px; max-width: 72ch; }
+.pp-bar .pp-sep { flex: 1; }
+.pp-bar a { color: #fff; opacity: .75; text-decoration: none; font-size: 12px; }
+.pp-bar a:hover { opacity: 1; text-decoration: underline; }
+.opt { border-top: 1px solid var(--line); }
+.opt[hidden] { display: none; }
+.opt-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding-block: 36px 18px; }
+.opt-head h2 { font: 700 clamp(18px, 2.4vw, 22px)/1.4 var(--font-sans); margin: 0; }
+.opt-head .tag { font: 500 13px/1.4 var(--font-sans); color: var(--ink-2); }
+.mock { position: relative; overflow: clip; isolation: isolate; box-shadow: 0 0 0 1px var(--line); }
+.pp-card { padding-block: 24px 64px; }
+.pp-card .in { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 20px; display: grid; gap: 18px 36px; }
+@media (min-width: 860px) { .pp-card .in { grid-template-columns: 1fr 1fr; padding: 28px 32px; } }
+.pp-card h3 { font: 700 13px/1.4 var(--font-sans); letter-spacing: .1em; color: var(--orange-strong); margin: 0 0 6px; }
+.pp-card p, .pp-card li { font-size: 14.5px; line-height: 1.75; margin: 0; }
+.pp-card ul { margin: 0; padding-left: 1.2em; }
+.pp-card .wide { grid-column: 1 / -1; }
+.pp-card .ho li + li { margin-top: 4px; }
+
+/* ── Mock primitives ── */
+.eyebrow { display: inline-flex; align-items: center; gap: 10px; font: 700 13px/1.4 var(--font-sans); letter-spacing: .14em; color: var(--orange-strong); margin: 0; }
+.eyebrow::before { content: ""; width: 10px; height: 10px; background: currentColor; border-radius: 0 100% 0 100%; flex: none; }
+.on-dark .eyebrow { color: var(--yellow); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 999px; font: 700 15px/1.3 var(--font-sans); text-decoration: none; border: 2px solid transparent; transition: transform .2s var(--geo-ease), background-color .2s; }
+.btn:hover { transform: translateY(-2px); }
+.btn:focus-visible, .pp-bar button:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+.btn-primary { background: var(--orange-strong); color: #fff; }
+.btn-primary:hover { background: #A52F13; }
+.btn-ghost { border-color: var(--ink); color: var(--ink); }
+.btn-yellow { background: var(--yellow); color: var(--ink); }
+.btn-ghost-light { border-color: rgba(255,255,255,.7); color: #fff; }
+.mk { display: block; width: var(--s, 48px); aspect-ratio: 74.13 / 95.22; height: auto; overflow: visible; }
+.vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.site-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 18px; position: relative; z-index: 3; }
+.site-nav img { height: 34px; width: auto; }
+.site-nav ul { display: none; list-style: none; margin: 0; padding: 0; gap: 26px; font: 500 15px/1 var(--font-sans); }
+.site-nav .nav-cta { display: none; }
+.site-nav .burger { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; border: 1.5px solid currentColor; }
+.site-nav .burger span { width: 16px; height: 2px; background: currentColor; box-shadow: 0 5px currentColor, 0 -5px currentColor; }
+@media (min-width: 980px) { .site-nav ul { display: flex; } .site-nav .nav-cta { display: inline-flex; min-height: 40px; font-size: 14px; } .site-nav .burger { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+.sec-title { font: 900 clamp(26px, 4.2vw, 44px)/1.3 var(--font-sans); margin: 12px 0 14px; text-wrap: balance; }
+.sec-desc { color: var(--ink-2); font-size: 16px; max-width: 56ch; margin: 0; }
+.lbl { font: 700 13px/1.4 var(--font-sans); letter-spacing: .08em; color: var(--orange-strong); margin: 0 0 6px; }
+.on-dark .lbl { color: var(--yellow); }
+
+/* ═════════ A · 四分之一拼成圓 ═════════ */
+.q-a { background: var(--paper); padding-block: 60px 72px; }
+.qa-head { margin-bottom: 36px; }
+.qa-grid { --Q: 64px; position: relative; display: grid; gap: 12px; }
+.qa-cell { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: calc(var(--Q) + 28px) 22px 26px; }
+.qa-cell h3 { font: 700 21px/1.4 var(--font-sans); margin: 0 0 10px; }
+.qa-cell p { margin: 0; font-size: 15.5px; color: var(--ink-2); }
+.qa-cell p.lbl { color: var(--orange-strong); }
+.qa-cell .num { position: absolute; right: 22px; top: 20px; font: 800 15px/1 var(--font-display); letter-spacing: .1em; color: var(--ink-2); }
+.qq { position: absolute; left: 22px; top: 22px; width: var(--Q); height: var(--Q); background: var(--c); border-radius: 100% 0 0 0; transform: rotate(var(--r)); }
+.qa-cell.sol { background: var(--surface-dark); border-color: var(--surface-dark); color: #fff; }
+.qa-cell.sol h3 { color: #fff; font-size: 24px; }
+.qa-cell.sol p { color: rgba(255,255,255,.86); }
+.qa-cell.sol p.lbl { color: var(--yellow); }
+.qa-cell.sol .num { color: rgba(255,255,255,.7); }
+.mini { position: absolute; left: 22px; top: 22px; width: var(--Q); height: var(--Q); display: grid; grid-template-columns: 1fr 1fr; }
+.mini i { background: var(--c); border-radius: 100% 0 0 0; transform: rotate(var(--r)); }
+.pillars { list-style: none; padding: 0; margin: 20px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.pillars li { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid rgba(255,255,255,.22); border-radius: 10px; font: 700 15px/1.3 var(--font-sans); }
+.pillars li i { width: 16px; height: 16px; flex: none; background: var(--yellow); border-radius: 100% 0 0 0; transform: rotate(var(--r)); }
+.qa-grid .hub { display: none; }
+@media (min-width: 900px) {
+  .qa-grid { --Q: 118px; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--line); border-radius: 20px; overflow: clip; background: var(--card); }
+  .qa-cell { border: 0; border-radius: 0; padding: 40px 44px calc(var(--Q) + 32px); }
+  .qa-cell:nth-child(1) { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .qa-cell:nth-child(2) { border-bottom: 1px solid var(--line); }
+  .qa-cell:nth-child(3) { border-right: 1px solid var(--line); padding: calc(var(--Q) + 32px) 44px 44px; }
+  .qa-cell.sol { padding: calc(var(--Q) + 32px) 44px 44px; }
+  .qa-cell .num { right: auto; left: 44px; top: auto; bottom: 40px; }
+  .qa-cell:nth-child(1) .num, .qa-cell:nth-child(2) .num { bottom: 40px; }
+  .qa-cell:nth-child(3) .num, .qa-cell.sol .num { top: 40px; bottom: auto; right: 44px; left: auto; }
+  .qa-cell:nth-child(2) .num { left: auto; right: 44px; }
+  .qa-cell:nth-child(3) .num { right: auto; left: 44px; }
+  .qa-cell:nth-child(1) .qq { left: auto; top: auto; right: 0; bottom: 0; }
+  .qa-cell:nth-child(2) .qq { top: auto; left: 0; bottom: 0; }
+  .qa-cell:nth-child(3) .qq { top: 0; left: auto; right: 0; }
+  .qa-cell.sol .mini { display: none; }
+  .qa-cell.sol .qq { display: block !important; top: 0; left: 0; }
+  .qa-grid .hub { display: block; position: absolute; left: 50%; top: 50%; translate: -50% -50%; --s: 92px; --fy: #fff; --fo: #fff; z-index: 2; }
+  .pillars li { white-space: nowrap; }
+}
+@media (prefers-reduced-motion: no-preference) and (min-width: 900px) {
+  @supports (animation-timeline: view()) {
+    .qa-grid .qq { animation: qa-join linear both; animation-timeline: view(); animation-range: entry 0% cover 45%; }
+    .qa-grid .hub { animation: qa-hub linear both; animation-timeline: view(); animation-range: cover 30% cover 48%; }
+  }
+}
+@keyframes qa-join { from { transform: translate(var(--dx), var(--dy)) rotate(calc(var(--r) - 90deg)) scale(.6); } }
+@keyframes qa-hub { from { scale: .2; opacity: 0; } }
+
+/* ═════════ B · 三層階梯 ═════════ */
+.q-b { background: var(--card); padding-block: 60px 0; }
+.qb-head { display: grid; gap: 8px 48px; margin-bottom: 40px; }
+@media (min-width: 900px) { .qb-head { grid-template-columns: 1.1fr 1fr; align-items: end; } }
+.strata { list-style: none; margin: 0; padding: 0; display: grid; gap: 34px; }
+.strata li { display: grid; gap: 14px; }
+.strata .bar { width: max(240px, calc(var(--w) * 100%)); max-width: 100%; min-height: 64px; display: flex; align-items: center; gap: 14px; padding: 0 30px 0 18px; background: var(--c); color: var(--t, var(--ink)); border-radius: 0 999px 999px 0; transform-origin: 0 50%; position: relative; }
+.strata .bar .n { font: 800 34px/1 var(--font-display); }
+.strata .bar .lb { font: 700 16px/1.35 var(--font-sans); }
+.strata .tx { display: grid; gap: 6px 40px; }
+.strata h3 { font: 700 22px/1.4 var(--font-sans); margin: 0; }
+.strata p { margin: 0; color: var(--ink-2); font-size: 15.5px; }
+@media (min-width: 900px) {
+  .strata .tx { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); padding-left: 18px; }
+  .strata .bar { min-height: 76px; }
+}
+.qb-sol { margin-top: 56px; background: var(--surface-dark); color: #fff; padding-bottom: 60px; }
+.qb-sol .merge { display: flex; height: 14px; }
+.qb-sol .merge i { flex: var(--f); background: var(--c); }
+.qb-sol .in { padding-top: 44px; display: grid; gap: 28px; }
+@media (min-width: 900px) { .qb-sol .in { grid-template-columns: 1fr 1.2fr; gap: 56px; align-items: start; } }
+.qb-sol h3 { font: 900 clamp(24px, 3vw, 32px)/1.35 var(--font-sans); margin: 0 0 12px; color: #fff; }
+.qb-sol p { margin: 0; color: rgba(255,255,255,.86); }
+.qb-pillars { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.18); border-radius: 14px; overflow: hidden; }
+.qb-pillars li { background: var(--surface-dark); padding: 20px 18px; display: grid; gap: 14px; font: 700 17px/1.3 var(--font-sans); }
+.qb-pillars .sh { width: 44px; height: 44px; background: var(--c); }
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .strata .bar { animation: qb-grow linear both; animation-timeline: view(); animation-range: entry 10% cover 40%; }
+    .qb-sol .merge i { animation: qb-grow linear both; animation-timeline: view(); animation-range: entry 0% cover 30%; transform-origin: 0 50%; }
+  }
+}
+@keyframes qb-grow { from { transform: scaleX(.25); } }
+
+/* ═════════ C · 花瓣轉盤 ═════════ */
+.q-c { background: var(--paper); padding-block: 60px 0; }
+.qc-grid { display: grid; gap: 28px; }
+@media (min-width: 900px) { .qc-grid { grid-template-columns: 5fr 7fr; gap: 64px; align-items: start; } }
+.qc-side { display: grid; gap: 22px; }
+@media (min-width: 900px) { .qc-side { position: sticky; top: 72px; } }
+.dial { container-type: inline-size; position: relative; width: min(100%, 300px); aspect-ratio: 1; margin: 6px auto 0; }
+@media (min-width: 900px) { .dial { width: min(100%, 360px); margin: 10px 0 0; } }
+.dial .track { position: absolute; inset: 14%; border-radius: 50%; border: 2px dashed var(--line); }
+.dial .rot { position: absolute; inset: 0; transform: rotate(var(--rot, 0deg)); transition: transform .9s var(--geo-ease); }
+.dial .p { --p: 22cqw; --R: 30cqw; position: absolute; left: 50%; top: 50%; width: var(--p); height: var(--p); margin: calc(var(--p) / -2) 0 0 calc(var(--p) / -2); background: var(--c); border-radius: 0 100% 0 100%;
+  transform: rotate(var(--a)) translateY(calc(var(--R) * -1)) rotate(45deg); opacity: .32; transition: opacity .5s, transform .9s var(--geo-ease); }
+.dial[data-step="1"] .p1, .dial[data-step="2"] .p2, .dial[data-step="3"] .p3 { opacity: 1; transform: rotate(var(--a)) translateY(calc(var(--R) * -1.08)) rotate(45deg) scale(1.18); }
+.dial[data-step="2"] { --rot: -120deg; } .dial[data-step="3"] { --rot: -240deg; }
+.dial .mk { position: absolute; left: 50%; top: 50%; translate: -50% -50%; --s: 20cqw; }
+.dial .pin { z-index: 2; position: absolute; left: 50%; top: 0; width: 14px; height: 14px; margin-left: -7px; background: var(--ink); clip-path: polygon(50% 100%, 0 0, 100% 0); }
+.qc-cards { display: grid; gap: 16px; }
+.qc-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 22px; display: grid; grid-template-columns: 52px 1fr; gap: 4px 18px; transition: border-color .4s, box-shadow .4s; }
+@media (min-width: 900px) { .qc-card { padding: 34px 34px; min-height: 260px; align-content: center; } .qc-cards { gap: 22px; padding-bottom: 40px; } }
+.qc-card.on { border-color: var(--c); box-shadow: 0 0 0 1px var(--c); }
+.qc-card .gl { grid-row: span 3; width: 40px; height: 40px; background: var(--c); border-radius: 0 100% 0 100%; transform: rotate(calc(var(--a) + 45deg)); margin-top: 4px; }
+.qc-card h3 { font: 700 22px/1.4 var(--font-sans); margin: 0 0 6px; }
+.qc-card p { margin: 0; color: var(--ink-2); font-size: 15.5px; }
+.qc-card p.lbl { color: var(--orange-strong); }
+.qc-sol { margin-top: 48px; background: var(--surface-dark); color: #fff; padding-block: 56px 64px; }
+.qc-sol .in { display: grid; gap: 32px; align-items: center; }
+@media (min-width: 900px) { .qc-sol .in { grid-template-columns: 1fr 1fr; gap: 64px; } }
+.qc-sol h3 { font: 900 clamp(24px, 3vw, 32px)/1.35 var(--font-sans); margin: 0 0 12px; color: #fff; }
+.qc-sol p { margin: 0; color: rgba(255,255,255,.86); }
+.flower { display: grid; grid-template-columns: 1fr auto 1fr; grid-template-rows: auto auto auto; align-items: center; justify-items: center; gap: 10px; max-width: 460px; margin-inline: auto; width: 100%; }
+.flower .lab { font: 700 15px/1.3 var(--font-sans); padding: 8px 14px; border: 1px solid rgba(255,255,255,.3); border-radius: 999px; white-space: nowrap; }
+.flower .t { grid-area: 1 / 2; } .flower .r { grid-area: 2 / 3; justify-self: start; } .flower .b { grid-area: 3 / 2; } .flower .l { grid-area: 2 / 1; justify-self: end; }
+.flower .core { grid-area: 2 / 2; container-type: inline-size; width: clamp(140px, 40vw, 200px); aspect-ratio: 1; position: relative; }
+.flower .core .p { --p: 30cqw; --R: 25cqw; position: absolute; left: 50%; top: 50%; width: var(--p); height: var(--p); margin: calc(var(--p) / -2) 0 0 calc(var(--p) / -2); background: var(--c); border-radius: 0 100% 0 100%; transform: rotate(var(--a)) translateY(calc(var(--R) * -1)) rotate(45deg); }
+.flower .core .mk { position: absolute; left: 50%; top: 50%; translate: -50% -50%; --s: 22cqw; --fy: #fff; --fo: #fff; }
+@media (max-width: 420px) { .flower .lab { font-size: 13.5px; padding: 6px 10px; } }
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .flower .core .p { animation: qc-bloom linear both; animation-timeline: view(); animation-range: entry 20% cover 45%; }
+  }
+}
+@keyframes qc-bloom { from { transform: rotate(calc(var(--a) - 90deg)) translateY(calc(var(--R) * -.2)) rotate(45deg) scale(.3); } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="fl-y" viewBox="203.59 169.44 74.13 95.22"><path fill="var(--fy,#FAB40A)" d="M 224.308594 264.65625 C 224.308594 264.65625 241.097656 262.621094 241.433594 246.953125 C 241.625 238.117188 235.25 230.648438 229.917969 225.21875 C 224.523438 219.726562 222.128906 214.316406 221.109375 211.136719 C 220.878906 210.425781 219.835938 210.523438 219.75 211.265625 C 218.554688 221.480469 226.351562 233.089844 226.351562 233.089844 C 225.839844 233.125 215.3125 221.828125 210.816406 207.996094 C 210.589844 207.308594 209.589844 207.378906 209.460938 208.09375 C 208.628906 212.773438 208.371094 223.503906 219.164062 235.855469 C 214.113281 233.695312 208.886719 224.738281 206.78125 220.800781 C 206.453125 220.191406 205.527344 220.378906 205.46875 221.066406 C 205.15625 224.648438 205.746094 232.074219 214.355469 239.027344 C 214.5 239.144531 210.058594 237.746094 205.027344 231.703125 C 204.535156 231.117188 203.589844 231.617188 203.8125 232.347656 C 204.585938 234.871094 206.445312 238.640625 210.933594 242.105469 C 216.203125 246.171875 222.085938 251.511719 223.917969 256.210938 C 225.75 260.910156 225.007812 263.308594 224.308594 264.65625 "/></symbol>
+  <symbol id="fl-o" viewBox="203.59 169.44 74.13 95.22"><path fill="var(--fo,#F25232)" d="M 269.261719 228.570312 C 270.472656 216.289062 274.730469 209.757812 277.25 206.894531 C 277.71875 206.359375 277.179688 205.542969 276.507812 205.769531 C 271.0625 207.570312 267.476562 211.140625 265.082031 215.121094 C 263.925781 212.765625 262.503906 210.484375 260.910156 208.128906 C 253.144531 196.664062 250.515625 183.726562 249.734375 178.566406 C 249.628906 177.871094 248.671875 177.742188 248.398438 178.390625 C 242.378906 192.726562 253.308594 210.753906 253.308594 210.753906 C 252.550781 210.652344 238.230469 191.742188 235.6875 170.277344 C 235.597656 169.519531 234.527344 169.4375 234.324219 170.175781 C 232.582031 176.476562 230.46875 192.078125 242.695312 213.503906 C 235.621094 208.625 230.007812 191.570312 228.210938 185.5625 C 228.011719 184.894531 227.058594 184.898438 226.867188 185.574219 C 225.476562 190.507812 223.597656 203.167969 234.800781 216.6875 C 234.980469 216.90625 228.476562 213.3125 222.789062 202.125 C 222.445312 201.449219 221.429688 201.710938 221.464844 202.464844 C 221.632812 206.257812 223.453125 214.753906 229.503906 221.730469 C 235.949219 229.167969 242.222656 234.816406 243.5 242.160156 C 244.773438 249.5 242.765625 255 241.351562 256.75 C 241.351562 256.75 265.066406 258.183594 268.347656 235.984375 C 268.417969 235.507812 269.136719 229.835938 269.261719 228.570312 "/></symbol>
+  <symbol id="flame" viewBox="203.59 169.44 74.13 95.22"><path fill="var(--fy,#FAB40A)" d="M 224.308594 264.65625 C 224.308594 264.65625 241.097656 262.621094 241.433594 246.953125 C 241.625 238.117188 235.25 230.648438 229.917969 225.21875 C 224.523438 219.726562 222.128906 214.316406 221.109375 211.136719 C 220.878906 210.425781 219.835938 210.523438 219.75 211.265625 C 218.554688 221.480469 226.351562 233.089844 226.351562 233.089844 C 225.839844 233.125 215.3125 221.828125 210.816406 207.996094 C 210.589844 207.308594 209.589844 207.378906 209.460938 208.09375 C 208.628906 212.773438 208.371094 223.503906 219.164062 235.855469 C 214.113281 233.695312 208.886719 224.738281 206.78125 220.800781 C 206.453125 220.191406 205.527344 220.378906 205.46875 221.066406 C 205.15625 224.648438 205.746094 232.074219 214.355469 239.027344 C 214.5 239.144531 210.058594 237.746094 205.027344 231.703125 C 204.535156 231.117188 203.589844 231.617188 203.8125 232.347656 C 204.585938 234.871094 206.445312 238.640625 210.933594 242.105469 C 216.203125 246.171875 222.085938 251.511719 223.917969 256.210938 C 225.75 260.910156 225.007812 263.308594 224.308594 264.65625 "/><path fill="var(--fo,#F25232)" d="M 269.261719 228.570312 C 270.472656 216.289062 274.730469 209.757812 277.25 206.894531 C 277.71875 206.359375 277.179688 205.542969 276.507812 205.769531 C 271.0625 207.570312 267.476562 211.140625 265.082031 215.121094 C 263.925781 212.765625 262.503906 210.484375 260.910156 208.128906 C 253.144531 196.664062 250.515625 183.726562 249.734375 178.566406 C 249.628906 177.871094 248.671875 177.742188 248.398438 178.390625 C 242.378906 192.726562 253.308594 210.753906 253.308594 210.753906 C 252.550781 210.652344 238.230469 191.742188 235.6875 170.277344 C 235.597656 169.519531 234.527344 169.4375 234.324219 170.175781 C 232.582031 176.476562 230.46875 192.078125 242.695312 213.503906 C 235.621094 208.625 230.007812 191.570312 228.210938 185.5625 C 228.011719 184.894531 227.058594 184.898438 226.867188 185.574219 C 225.476562 190.507812 223.597656 203.167969 234.800781 216.6875 C 234.980469 216.90625 228.476562 213.3125 222.789062 202.125 C 222.445312 201.449219 221.429688 201.710938 221.464844 202.464844 C 221.632812 206.257812 223.453125 214.753906 229.503906 221.730469 C 235.949219 229.167969 242.222656 234.816406 243.5 242.160156 C 244.773438 249.5 242.765625 255 241.351562 256.75 C 241.351562 256.75 265.066406 258.183594 268.347656 235.984375 C 268.417969 235.507812 269.136719 229.835938 269.261719 228.570312 "/></symbol>
+</svg>
+
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>S3 · 問題</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <span class="pp-sep"></span>
+  <a href="s2-partners.html">← S2</a><a href="s4-story.html">S4 故事 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">Home v2 · Round 2 · S3</span>
+  <h1>我們在解決什麼：三個問題，一個答案</h1>
+  <p>文案的結構本身就是「3＋1」：三個層次的痛點（品牌主、產業、國際），加上一個答案與四個支柱。三個方案都用幾何變換把「3 → 1」畫出來：四分圓拼成圓、三條色帶合為一條、三片花瓣轉成四瓣花。</p>
+  <p class="pp-note">本頁僅呈現選項，不做推薦；取捨將依首頁總體規劃另行決定。</p>
+</header>
+
+<main>
+<!-- ───────────── A ───────────── -->
+<section class="opt" data-opt="A" aria-labelledby="a-h">
+  <div class="wrap opt-head"><span class="pp-label">Option A</span><h2 id="a-h">四分之一拼成圓：三個問題＋一個答案＝一個完整的圓</h2></div>
+  <div class="mock q-a">
+    <div class="wrap">
+      <div class="qa-head">
+        <p class="eyebrow">我們在解決什麼</p>
+        <h2 class="sec-title">從概念到行動，中間差了什麼？</h2>
+        <p class="sec-desc">共好玟化同時面對三個層次的問題，協助品牌主、產業與整體環境找到永續的共同語言。</p>
+      </div>
+      <div class="qa-grid">
+        <article class="qa-cell"><i class="qq" style="--c:var(--orange);--r:0deg;--dx:-40%;--dy:-40%" aria-hidden="true"></i><span class="num">01</span>
+          <p class="lbl">對品牌主／消費者端</p><h3>有好產品，卻不知如何被看見</h3>
+          <p>很多人有好的服務與產品，卻不知道企業地圖長什麼樣子、該從哪個切入點進入。我們協助你釐清定位、整理永續敘事，提升你在市場上的競爭力。</p></article>
+        <article class="qa-cell"><i class="qq" style="--c:var(--yellow);--r:90deg;--dx:40%;--dy:-40%" aria-hidden="true"></i><span class="num">02</span>
+          <p class="lbl">對產業端</p><h3>供應鏈資訊不透明</h3>
+          <p>具備及符合 ESG 採購標準的廠商沒有適合的平台被看見，我們協助建立一個供應鏈與企業可以對接的溝通平台。</p></article>
+        <article class="qa-cell"><i class="qq" style="--c:var(--grey);--r:270deg;--dx:-40%;--dy:40%" aria-hidden="true"></i><span class="num">03</span>
+          <p class="lbl">對國際接軌</p><h3>接軌國際趨勢</h3>
+          <p>ISO、GRI、TCFD、生物多樣性、CBAM…這麼多國際標準，在公司資源有限下，共好玟化扮演知識轉譯與溝通的角色，協助企業與國際 ESG 接軌。</p></article>
+        <article class="qa-cell sol"><i class="qq" style="--c:var(--orange);--r:180deg;--dx:40%;--dy:40%;display:none" aria-hidden="true"></i>
+          <span class="mini" aria-hidden="true"><i style="--c:var(--orange);--r:0deg"></i><i style="--c:var(--yellow);--r:90deg"></i><i style="--c:var(--grey);--r:270deg;box-shadow:0 0 0 1px rgba(255,255,255,.25)"></i><i style="--c:var(--orange);--r:180deg"></i></span>
+          <span class="num">＋</span>
+          <p class="lbl">我們的答案</p><h3>成為永續生態圈的專業橋樑</h3>
+          <p>共好玟化透過顧問輔導、永續白皮書服務、ESG共學坊與溝通平台，讓不同領域的永續價值能被企業理解、被市場看見、也能找到理念相符的合作夥伴。說清楚，才能被看見。</p>
+          <ul class="pillars"><li><i style="--r:0deg"></i>顧問輔導</li><li><i style="--r:90deg"></i>永續白皮書</li><li><i style="--r:270deg"></i>ESG共學坊</li><li><i style="--r:180deg"></i>溝通平台</li></ul>
+        </article>
+        <svg class="mk hub" aria-hidden="true"><use href="#flame"/></svg>
+      </div>
+    </div>
+  </div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>概念</h3><p>「三個缺口＋一個答案，才是一個完整的圓」。桌機版 2×2 格，每格在內角放一片四分圓，四片在格線交點拼成一個圓、圓心是白色火焰；手機版每張卡左上角是一片「碎片」，到了解方卡才看到四片拼好的完整圓。</p></div>
+    <div><h3>幾何語彙與變換</h3><ul><li>quarter ×4、disc、標誌</li><li><b>旋轉</b>：同一片 quarter 旋轉 0/90/270/180° 放入四個內角</li><li><b>重組</b>：4 quarter → 1 disc（解方＝補上最後一塊）</li><li><b>換色</b>：橘／黃／灰三痛點，解方回到橘</li><li>支援的瀏覽器中，捲動時四片由外向內滑入合體（scroll-driven）</li></ul></div>
+    <div><h3>參考來源</h3><p>Apple「環境」頁與 Stripe「Payments」頁的 2×2 特色格；Pentagram 為 MIT Media Lab 所做的格狀識別（同一形狀在格內旋轉變化）。</p></div>
+    <div><h3>優點</h3><ul><li>「3＋1」的文案結構被圖形直接說明，不需額外說明文字</li><li>解方與痛點同處一格，比例對等，不會被當作頁尾附註</li><li>桌機合體、手機分片，兩種尺寸都各自成立</li></ul></div>
+    <div><h3>風險</h3><ul><li>內角留給四分圓的空間讓每格變高，桌機區塊總高度約 900px</li><li>若 S1 也採用四分圓組裝，兩區重複度高，需擇一或做出差異</li></ul></div>
+    <div><h3>與前後區塊的銜接可能</h3><ul class="ho"><li>① 承接 S2：夥伴牆最後一塊幾何磚（四分圓）放大後「落」到本區左上角，成為第一片碎片。</li><li>② 銜接 S4：中心的白色火焰標誌往下延伸成故事區的「Sayun」起點，圓形放大為故事區背景的同心圓。</li></ul></div>
+  </div></div>
+</section>
+
+<!-- ───────────── B ───────────── -->
+<section class="opt" data-opt="B" aria-labelledby="b-h">
+  <div class="wrap opt-head"><span class="pp-label">Option B</span><h2 id="b-h">三層階梯：三條色帶由短到長，最後合成一條</h2></div>
+  <div class="mock q-b">
+    <div class="wrap">
+      <div class="qb-head">
+        <div><p class="eyebrow">我們在解決什麼</p><h2 class="sec-title" style="margin-bottom:0">從概念到行動，中間差了什麼？</h2></div>
+        <p class="sec-desc">共好玟化同時面對三個層次的問題，協助品牌主、產業與整體環境找到永續的共同語言。</p>
+      </div>
+      <ol class="strata">
+        <li style="--w:.42;--c:var(--yellow)">
+          <div class="bar"><span class="n">1</span><span class="lb">對品牌主／消費者端</span></div>
+          <div class="tx"><h3>有好產品，卻不知如何被看見</h3><p>很多人有好的服務與產品，卻不知道企業地圖長什麼樣子、該從哪個切入點進入。我們協助你釐清定位、整理永續敘事，提升你在市場上的競爭力。</p></div>
+        </li>
+        <li style="--w:.7;--c:var(--orange)">
+          <div class="bar"><span class="n">2</span><span class="lb">對產業端</span></div>
+          <div class="tx"><h3>供應鏈資訊不透明</h3><p>具備及符合 ESG 採購標準的廠商沒有適合的平台被看見，我們協助建立一個供應鏈與企業可以對接的溝通平台。</p></div>
+        </li>
+        <li style="--w:1;--c:var(--grey);--t:#fff">
+          <div class="bar"><span class="n">3</span><span class="lb">對國際接軌</span></div>
+          <div class="tx"><h3>接軌國際趨勢</h3><p>ISO、GRI、TCFD、生物多樣性、CBAM…這麼多國際標準，在公司資源有限下，共好玟化扮演知識轉譯與溝通的角色，協助企業與國際 ESG 接軌。</p></div>
+        </li>
+      </ol>
+    </div>
+    <div class="qb-sol on-dark">
+      <div class="merge" aria-hidden="true"><i style="--f:.42;--c:var(--yellow)"></i><i style="--f:.7;--c:var(--orange)"></i><i style="--f:1;--c:var(--grey)"></i></div>
+      <div class="wrap in">
+        <div><p class="lbl">我們的答案</p><h3>成為永續生態圈的專業橋樑</h3>
+          <p>共好玟化透過顧問輔導、永續白皮書服務、ESG共學坊與溝通平台，讓不同領域的永續價值能被企業理解、被市場看見、也能找到理念相符的合作夥伴。說清楚，才能被看見。</p></div>
+        <ul class="qb-pillars">
+          <li><i class="sh" style="--c:var(--orange);border-radius:100% 0 0 0" aria-hidden="true"></i>顧問輔導</li>
+          <li><i class="sh" style="--c:var(--yellow);border-radius:999px 999px 0 0;height:22px;margin-top:22px" aria-hidden="true"></i>永續白皮書</li>
+          <li><i class="sh" style="--c:#C9CCD2;border-radius:0 100% 0 100%" aria-hidden="true"></i>ESG共學坊</li>
+          <li><i class="sh" style="--c:var(--orange);border-radius:50%" aria-hidden="true"></i>溝通平台</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>概念</h3><p>「問題是有層次的」。文案明說「三個層次」：品牌主 → 產業 → 國際，範圍一層比一層大。三條 CIS 色帶的長度依序放大（約 40%→70%→100%），像一座逐級變寬的階梯；到了解方，三條色帶首尾相接合成一條，帶出「同一座橋」。</p></div>
+    <div><h3>幾何語彙與變換</h3><ul><li>block 色帶＋half 圓頭（膠囊端）、四支柱各配 quarter／half／petal／disc</li><li><b>縮放</b>：同一色帶 scaleX 0.42／0.7／1</li><li><b>重組</b>：三條 → 一條多色分段帶</li><li>支援的瀏覽器中，捲動時色帶由短長到定位</li></ul></div>
+    <div><h3>參考來源</h3><p>Patagonia、Ørsted 永續報告網頁的「層級遞進」敘事；The Pudding 與 Bloomberg 圖表式網頁中以長條比例表達範圍的手法。</p></div>
+    <div><h3>優點</h3><ul><li>最貼近文案原意（三個層次），閱讀順序與範圍大小一致</li><li>色帶可直接作為後續頁面的分類色（黃＝品牌主、橘＝產業、灰＝國際）</li><li>純排版＋色塊，實作最簡單、最穩定</li></ul></div>
+    <div><h3>風險</h3><ul><li>長條容易被誤讀為「資料圖表」（例如比例或成長）</li><li>logo 筆觸元素在本方案較少，品牌圖形感相對弱</li></ul></div>
+    <div><h3>與前後區塊的銜接可能</h3><ul class="ho"><li>① 承接 S1 的三色橋（若採用超大火焰方案）：Hero 的黃／橘／灰三塊直接延伸成本區的三條色帶。</li><li>② 銜接 S4：底部合併後的多色細帶留在頁面上，成為故事區的頂部邊界，象徵「把橋接起來」。</li></ul></div>
+  </div></div>
+</section>
+
+<!-- ───────────── C ───────────── -->
+<section class="opt" data-opt="C" aria-labelledby="c-h">
+  <div class="wrap opt-head"><span class="pp-label">Option C</span><h2 id="c-h">花瓣轉盤：捲動時轉盤轉 120°，最後綻放成四瓣花</h2></div>
+  <div class="mock q-c">
+    <div class="wrap">
+      <div class="qc-grid">
+        <div class="qc-side">
+          <div><p class="eyebrow">我們在解決什麼</p><h2 class="sec-title">從概念到行動，中間差了什麼？</h2>
+          <p class="sec-desc">共好玟化同時面對三個層次的問題，協助品牌主、產業與整體環境找到永續的共同語言。</p></div>
+          <div class="dial" data-step="1" aria-hidden="true">
+            <i class="track"></i><i class="pin"></i>
+            <div class="rot">
+              <i class="p p1" style="--a:0deg;--c:var(--orange)"></i>
+              <i class="p p2" style="--a:120deg;--c:var(--yellow)"></i>
+              <i class="p p3" style="--a:240deg;--c:var(--grey)"></i>
+            </div>
+            <svg class="mk"><use href="#flame"/></svg>
+          </div>
+        </div>
+        <div class="qc-cards">
+          <article class="qc-card on" data-step="1" style="--c:var(--orange);--a:0deg"><i class="gl" aria-hidden="true"></i>
+            <p class="lbl">01 · 對品牌主／消費者端</p><h3>有好產品，卻不知如何被看見</h3>
+            <p>很多人有好的服務與產品，卻不知道企業地圖長什麼樣子、該從哪個切入點進入。我們協助你釐清定位、整理永續敘事，提升你在市場上的競爭力。</p></article>
+          <article class="qc-card" data-step="2" style="--c:var(--yellow);--a:120deg"><i class="gl" aria-hidden="true"></i>
+            <p class="lbl">02 · 對產業端</p><h3>供應鏈資訊不透明</h3>
+            <p>具備及符合 ESG 採購標準的廠商沒有適合的平台被看見，我們協助建立一個供應鏈與企業可以對接的溝通平台。</p></article>
+          <article class="qc-card" data-step="3" style="--c:var(--grey);--a:240deg"><i class="gl" aria-hidden="true"></i>
+            <p class="lbl">03 · 對國際接軌</p><h3>接軌國際趨勢</h3>
+            <p>ISO、GRI、TCFD、生物多樣性、CBAM…這麼多國際標準，在公司資源有限下，共好玟化扮演知識轉譯與溝通的角色，協助企業與國際 ESG 接軌。</p></article>
+        </div>
+      </div>
+    </div>
+    <div class="qc-sol on-dark">
+      <div class="wrap in">
+        <div><p class="lbl">我們的答案</p><h3>成為永續生態圈的專業橋樑</h3>
+          <p>共好玟化透過顧問輔導、永續白皮書服務、ESG共學坊與溝通平台，讓不同領域的永續價值能被企業理解、被市場看見、也能找到理念相符的合作夥伴。說清楚，才能被看見。</p></div>
+        <div class="flower">
+          <span class="lab t">顧問輔導</span><span class="lab r">永續白皮書</span><span class="lab b">ESG共學坊</span><span class="lab l">溝通平台</span>
+          <div class="core" aria-hidden="true">
+            <i class="p" style="--a:0deg;--c:var(--orange)"></i><i class="p" style="--a:90deg;--c:var(--yellow)"></i><i class="p" style="--a:180deg;--c:#C9CCD2"></i><i class="p" style="--a:270deg;--c:var(--orange)"></i>
+            <svg class="mk"><use href="#flame"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>概念</h3><p>「同一個標誌，三個面向」。左側轉盤上有三片花瓣（三個層次），讀到哪一張卡，轉盤就轉 120° 把對應的花瓣轉到指針下並點亮；三張卡讀完，到了解方區，花瓣重新排成 90° 間隔的四瓣花，對應四個支柱。</p></div>
+    <div><h3>幾何語彙與變換</h3><ul><li>petal、虛線 ring、tri 指針、標誌</li><li><b>旋轉</b>：轉盤每步 −120°</li><li><b>放大</b>：當前花瓣外移並放大 1.18 倍</li><li><b>重組</b>：3 瓣（120° 間隔）→ 4 瓣（90° 間隔）</li><li>卡片圖示保留各自花瓣的角度（0／120／240°）</li></ul></div>
+    <div><h3>參考來源</h3><p>Apple 產品頁的「sticky 圖像＋捲動文字」敘事（scrollytelling）；Stripe Atlas、Linear 功能頁中隨段落切換的固定插圖。</p></div>
+    <div><h3>優點</h3><ul><li>最有「互動感」，捲動本身就是在轉動品牌標誌</li><li>文字全部以卡片完整呈現，動畫只是加分，不會擋住內容</li><li>解方的四瓣花可延伸為四個服務的圖示系統</li></ul></div>
+    <div><h3>風險</h3><ul><li>需少量 JavaScript（IntersectionObserver）切換轉盤狀態；關閉 JS 時轉盤停在第一步</li><li>手機版轉盤無法固定在側邊，敘事效果減弱為一般卡片列表</li><li>sticky 版面在內容很短時效果不明顯</li></ul></div>
+    <div><h3>與前後區塊的銜接可能</h3><ul class="ho"><li>① 承接 S2 花瓣成環：夥伴環收合成三片花瓣，直接成為本區轉盤（同一組元素持續變形）。</li><li>② 銜接 S4：四瓣花旋轉 45° 並放大，成為故事區四點信念（bullets）的編號圖示。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script>
+(function () {
+  var bar = document.querySelector('.pp-bar');
+  if (!bar) return;
+  var opts = [].slice.call(document.querySelectorAll('.opt'));
+  var btns = [].slice.call(bar.querySelectorAll('button[data-show]'));
+  function show(k) {
+    opts.forEach(function (o) { o.hidden = !(k === 'all' || o.dataset.opt === k); });
+    btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.show === k)); });
+  }
+  btns.forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.show); window.scrollTo({ top: 0 }); }); });
+  bar.hidden = false;
+})();
+</script>
+<script>
+(function () {
+  var dial = document.querySelector('.dial');
+  var cards = document.querySelectorAll('.qc-card');
+  if (!dial || !('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      dial.dataset.step = e.target.dataset.step;
+      cards.forEach(function (c) { c.classList.toggle('on', c === e.target); });
+    });
+  }, { rootMargin: '-45% 0px -45% 0px' });
+  cards.forEach(function (c) { io.observe(c); });
+})();
+</script>
+</body>
+</html>

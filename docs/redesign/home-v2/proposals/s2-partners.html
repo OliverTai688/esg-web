@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>首頁 v2 · S2 夥伴提案</title>
+<link rel="stylesheet" href="_tokens.css">
+<link rel="stylesheet" href="_geo.css">
+<style>
+/* ── Proposal chrome (shared by s1–s4) ── */
+html { scroll-padding-top: 56px; }
+.wrap { width: 100%; max-width: 1200px; margin-inline: auto; padding-inline: 16px; }
+@media (min-width: 860px) { .wrap { padding-inline: 40px; } }
+.pp-intro { padding-block: 36px 28px; }
+.pp-intro h1 { font: 900 clamp(26px, 4.4vw, 40px)/1.25 var(--font-sans); margin: 12px 0 8px; }
+.pp-intro p { color: var(--ink-2); max-width: 72ch; margin: 0 0 6px; font-size: 15px; }
+.pp-intro .pp-note { margin-top: 16px; max-width: 72ch; }
+.pp-bar .pp-sep { flex: 1; }
+.pp-bar a { color: #fff; opacity: .75; text-decoration: none; font-size: 12px; }
+.pp-bar a:hover { opacity: 1; text-decoration: underline; }
+.opt { border-top: 1px solid var(--line); }
+.opt[hidden] { display: none; }
+.opt-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding-block: 36px 18px; }
+.opt-head h2 { font: 700 clamp(18px, 2.4vw, 22px)/1.4 var(--font-sans); margin: 0; }
+.opt-head .tag { font: 500 13px/1.4 var(--font-sans); color: var(--ink-2); }
+.mock { position: relative; overflow: clip; isolation: isolate; box-shadow: 0 0 0 1px var(--line); }
+.pp-card { padding-block: 24px 64px; }
+.pp-card .in { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 20px; display: grid; gap: 18px 36px; }
+@media (min-width: 860px) { .pp-card .in { grid-template-columns: 1fr 1fr; padding: 28px 32px; } }
+.pp-card h3 { font: 700 13px/1.4 var(--font-sans); letter-spacing: .1em; color: var(--orange-strong); margin: 0 0 6px; }
+.pp-card p, .pp-card li { font-size: 14.5px; line-height: 1.75; margin: 0; }
+.pp-card ul { margin: 0; padding-left: 1.2em; }
+.pp-card .wide { grid-column: 1 / -1; }
+.pp-card .ho li + li { margin-top: 4px; }
+
+/* ── Mock primitives ── */
+.eyebrow { display: inline-flex; align-items: center; gap: 10px; font: 700 13px/1.4 var(--font-sans); letter-spacing: .14em; color: var(--orange-strong); margin: 0; }
+.eyebrow::before { content: ""; width: 10px; height: 10px; background: currentColor; border-radius: 0 100% 0 100%; flex: none; }
+.on-dark .eyebrow { color: var(--yellow); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 999px; font: 700 15px/1.3 var(--font-sans); text-decoration: none; border: 2px solid transparent; transition: transform .2s var(--geo-ease), background-color .2s; }
+.btn:hover { transform: translateY(-2px); }
+.btn:focus-visible, .pp-bar button:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+.btn-primary { background: var(--orange-strong); color: #fff; }
+.btn-primary:hover { background: #A52F13; }
+.btn-ghost { border-color: var(--ink); color: var(--ink); }
+.btn-yellow { background: var(--yellow); color: var(--ink); }
+.btn-ghost-light { border-color: rgba(255,255,255,.7); color: #fff; }
+.mk { display: block; width: var(--s, 48px); aspect-ratio: 74.13 / 95.22; height: auto; overflow: visible; }
+.vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.site-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 18px; position: relative; z-index: 3; }
+.site-nav img { height: 34px; width: auto; }
+.site-nav ul { display: none; list-style: none; margin: 0; padding: 0; gap: 26px; font: 500 15px/1 var(--font-sans); }
+.site-nav .nav-cta { display: none; }
+.site-nav .burger { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; border: 1.5px solid currentColor; }
+.site-nav .burger span { width: 16px; height: 2px; background: currentColor; box-shadow: 0 5px currentColor, 0 -5px currentColor; }
+@media (min-width: 980px) { .site-nav ul { display: flex; } .site-nav .nav-cta { display: inline-flex; min-height: 40px; font-size: 14px; } .site-nav .burger { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+.sec-title { font: 900 clamp(26px, 4vw, 40px)/1.3 var(--font-sans); margin: 12px 0 0; text-wrap: balance; }
+.legend { display: flex; flex-wrap: wrap; gap: 10px 20px; list-style: none; padding: 0; margin: 18px 0 0; font-size: 14px; color: var(--ink-2); }
+.legend li { display: inline-flex; align-items: center; gap: 8px; }
+.legend i { width: 16px; height: 16px; display: block; background: var(--c); }
+
+/* ═════════ A · 旋轉磚牆 ═════════ */
+.p-a { background: var(--paper); padding-block: 56px 64px; }
+.pa-head { display: grid; gap: 12px; margin-bottom: 28px; }
+@media (min-width: 900px) { .pa-head { grid-template-columns: 1fr auto; align-items: end; } }
+.pa-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; list-style: none; margin: 0; padding: 0; }
+@media (min-width: 620px) { .pa-grid { grid-template-columns: repeat(4, 1fr); } .pa-grid > li { aspect-ratio: 1 / .82; } }
+@media (min-width: 1000px) { .pa-grid { grid-template-columns: repeat(6, 1fr); } }
+.pa-grid > li { aspect-ratio: 1 / .66; position: relative; padding: 14px; display: flex; align-items: flex-end; font: 500 14.5px/1.45 var(--font-sans); background: var(--card); border-radius: 4px; transition: background-color .3s; }
+.pa-grid .g { --sz: 30px; position: absolute; top: 14px; left: 14px; width: var(--sz); height: var(--sz); background: var(--c); transform: rotate(var(--r, 0deg)); transition: transform .6s var(--geo-ease); }
+.pa-grid .g.q { border-radius: 100% 0 0 0; }
+.pa-grid .g.h { border-radius: 999px 999px 0 0; height: calc(var(--sz) / 2); top: 22px; }
+.pa-grid .g.p { border-radius: 0 100% 0 100%; }
+.pa-grid > li:hover .g { transform: rotate(calc(var(--r, 0deg) + 90deg)); }
+.pa-grid > li.n1:hover { background: var(--orange-soft); }
+.pa-grid > li.n2:hover { background: var(--yellow-soft); }
+.pa-grid > li.n3:hover { background: #EEEFF1; }
+.pa-grid > li.hd { font: 700 22px/1.3 var(--font-sans); align-items: flex-end; }
+.pa-grid > li.hd.c1 { background: var(--orange); color: #fff; font-size: 24px; }
+.pa-grid > li.hd.c2 { background: var(--yellow); color: var(--ink); }
+.pa-grid > li.hd.c3 { background: var(--grey); color: #fff; }
+.pa-grid > li.hd .g { --sz: 44px; --c: rgba(255,255,255,.9); }
+.pa-grid > li.hd.c2 .g { --c: var(--ink); }
+.pa-grid > li.dc { background: none; padding: 0; overflow: hidden; }
+.pa-grid > li.dc i { position: absolute; inset: 0; background: var(--c); }
+.pa-grid > li.dc i + i { inset: auto 0 0 auto; width: 50%; height: 50%; }
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .pa-grid .g { animation: pa-turn linear both; animation-timeline: view(); animation-range: entry 0% cover 40%; }
+  }
+}
+@keyframes pa-turn { from { transform: rotate(calc(var(--r, 0deg) - 180deg)) scale(.4); } }
+
+/* ═════════ B · 鏡像花瓣卡 ═════════ */
+.p-b { background: var(--card); padding-block: 60px 72px; }
+.pb-head { text-align: center; display: grid; justify-items: center; gap: 4px; margin-bottom: 40px; }
+.fan { position: relative; width: 150px; height: 100px; margin-bottom: 10px; }
+.fan i { position: absolute; left: 50%; bottom: 0; width: 40px; height: 40px; margin-left: -20px; background: var(--c); border-radius: 0 100% 0 100%; transform-origin: 50% 100%; transform: rotate(var(--a)) translateY(-28px) rotate(45deg); }
+.pb-cards { display: grid; gap: 16px; list-style: none; margin: 0; padding: 0; }
+@media (min-width: 900px) { .pb-cards { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+.pb-card { position: relative; padding: 28px 24px 30px; border-radius: 0 64px 0 64px; background: var(--bg); overflow: hidden; }
+.pb-card:nth-child(2) { border-radius: 64px 0 64px 0; }
+.pb-card .top { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+.pb-card .gl { width: 44px; height: 44px; flex: none; background: var(--c); border-radius: 0 100% 0 100%; transform: rotate(calc(var(--a) + 45deg)); transition: transform .6s var(--geo-ease); }
+.pb-card:hover .gl { transform: rotate(45deg) scale(1.1); }
+.pb-card .idx { font: 800 14px/1 var(--font-display); letter-spacing: .1em; color: var(--ink-2); display: block; margin-bottom: 4px; }
+.pb-card h3 { font: 700 21px/1.35 var(--font-sans); margin: 0; }
+.pb-card ul { list-style: none; margin: 0; padding: 0; display: grid; }
+.pb-card li { padding: 10px 0; border-top: 1px solid rgba(31,32,34,.12); font: 500 15.5px/1.5 var(--font-sans); display: flex; gap: 10px; align-items: baseline; }
+.pb-card li::before { content: ""; width: 7px; height: 7px; flex: none; background: var(--c); border-radius: 0 100% 0 100%; transform: translateY(-2px); }
+.pb-card .ghost { position: absolute; right: -28px; bottom: -36px; width: 140px; height: 140px; background: var(--c); opacity: .14; border-radius: 0 100% 0 100%; transform: rotate(var(--a)); }
+.pb-card:nth-child(2) .ghost { right: auto; left: -28px; transform: rotate(var(--a)) scaleX(-1); }
+.pb-foot { margin: 28px 0 0; text-align: center; font-size: 14px; color: var(--ink-2); }
+@media (prefers-reduced-motion: no-preference) {
+  .fan i { animation: pb-fan 1.2s var(--geo-ease) .2s both; }
+}
+@keyframes pb-fan { from { transform: rotate(0deg) translateY(-28px) rotate(45deg) scale(.6); } }
+
+/* ═════════ C · 花瓣成環 ═════════ */
+.p-c { background: var(--surface-dark); color: #fff; padding-block: 60px 72px; }
+.p-c .sec-title { color: #fff; }
+.pc-grid { display: grid; gap: 36px; align-items: center; margin-top: 32px; }
+@media (min-width: 960px) { .pc-grid { grid-template-columns: 5fr 7fr; gap: 64px; } }
+.ring18 { container-type: inline-size; position: relative; width: min(100%, 440px); aspect-ratio: 1; margin-inline: auto; }
+.ring18 .p { --p: 10cqw; --R: 38cqw; position: absolute; left: 50%; top: 50%; width: var(--p); height: var(--p); margin: calc(var(--p) / -2) 0 0 calc(var(--p) / -2); background: var(--c); border-radius: 0 100% 0 100%;
+  transform: rotate(var(--a)) translateY(calc(var(--R) * -1)) rotate(45deg); transition: transform .4s var(--geo-ease), opacity .3s; }
+.ring18 .p.c1 { --c: var(--orange); } .ring18 .p.c2 { --c: var(--yellow); } .ring18 .p.c3 { --c: #C9CCD2; }
+.ring18 .core { position: absolute; inset: 27%; border-radius: 50%; display: grid; place-items: center;
+  background: conic-gradient(from -10deg, var(--orange) 0 160deg, transparent 0 160deg, var(--yellow) 0 260deg, #C9CCD2 0 360deg);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px)); mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px)); }
+.ring18 .mk { position: absolute; left: 50%; top: 50%; translate: -50% -50%; --s: 20cqw; }
+.ring18.dim .p { opacity: .25; }
+.ring18.dim .p.on { opacity: 1; transform: rotate(var(--a)) translateY(calc(var(--R) * -1.08)) rotate(45deg) scale(1.25); }
+.pc-lists { display: grid; gap: 28px; }
+@media (min-width: 640px) { .pc-lists { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+.pc-lists h3 { font: 700 16px/1.4 var(--font-sans); margin: 0 0 10px; color: var(--yellow); display: flex; align-items: center; gap: 10px; padding-bottom: 10px; border-bottom: 2px solid var(--c); }
+.pc-lists h3::before { content: ""; width: 12px; height: 12px; background: var(--c); border-radius: 0 100% 0 100%; }
+.pc-lists ul { list-style: none; padding: 0; margin: 0; }
+.pc-lists li { padding: 7px 0; font-size: 15px; line-height: 1.5; color: rgba(255,255,255,.9); cursor: default; transition: color .2s, padding .3s var(--geo-ease); }
+.pc-lists li:hover, .pc-lists li.on { color: var(--yellow); padding-left: 6px; }
+.pc-note { font-size: 13px; color: rgba(255,255,255,.7); margin: 22px 0 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .ring18 .p { animation: pc-fan 1.6s var(--geo-ease) both; animation-delay: calc(var(--i) * .045s + .2s); }
+}
+@keyframes pc-fan { from { transform: rotate(0deg) translateY(calc(var(--R) * -1)) rotate(45deg) scale(.4); opacity: 0; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="fl-y" viewBox="203.59 169.44 74.13 95.22"><path fill="var(--fy,#FAB40A)" d="M 224.308594 264.65625 C 224.308594 264.65625 241.097656 262.621094 241.433594 246.953125 C 241.625 238.117188 235.25 230.648438 229.917969 225.21875 C 224.523438 219.726562 222.128906 214.316406 221.109375 211.136719 C 220.878906 210.425781 219.835938 210.523438 219.75 211.265625 C 218.554688 221.480469 226.351562 233.089844 226.351562 233.089844 C 225.839844 233.125 215.3125 221.828125 210.816406 207.996094 C 210.589844 207.308594 209.589844 207.378906 209.460938 208.09375 C 208.628906 212.773438 208.371094 223.503906 219.164062 235.855469 C 214.113281 233.695312 208.886719 224.738281 206.78125 220.800781 C 206.453125 220.191406 205.527344 220.378906 205.46875 221.066406 C 205.15625 224.648438 205.746094 232.074219 214.355469 239.027344 C 214.5 239.144531 210.058594 237.746094 205.027344 231.703125 C 204.535156 231.117188 203.589844 231.617188 203.8125 232.347656 C 204.585938 234.871094 206.445312 238.640625 210.933594 242.105469 C 216.203125 246.171875 222.085938 251.511719 223.917969 256.210938 C 225.75 260.910156 225.007812 263.308594 224.308594 264.65625 "/></symbol>
+  <symbol id="fl-o" viewBox="203.59 169.44 74.13 95.22"><path fill="var(--fo,#F25232)" d="M 269.261719 228.570312 C 270.472656 216.289062 274.730469 209.757812 277.25 206.894531 C 277.71875 206.359375 277.179688 205.542969 276.507812 205.769531 C 271.0625 207.570312 267.476562 211.140625 265.082031 215.121094 C 263.925781 212.765625 262.503906 210.484375 260.910156 208.128906 C 253.144531 196.664062 250.515625 183.726562 249.734375 178.566406 C 249.628906 177.871094 248.671875 177.742188 248.398438 178.390625 C 242.378906 192.726562 253.308594 210.753906 253.308594 210.753906 C 252.550781 210.652344 238.230469 191.742188 235.6875 170.277344 C 235.597656 169.519531 234.527344 169.4375 234.324219 170.175781 C 232.582031 176.476562 230.46875 192.078125 242.695312 213.503906 C 235.621094 208.625 230.007812 191.570312 228.210938 185.5625 C 228.011719 184.894531 227.058594 184.898438 226.867188 185.574219 C 225.476562 190.507812 223.597656 203.167969 234.800781 216.6875 C 234.980469 216.90625 228.476562 213.3125 222.789062 202.125 C 222.445312 201.449219 221.429688 201.710938 221.464844 202.464844 C 221.632812 206.257812 223.453125 214.753906 229.503906 221.730469 C 235.949219 229.167969 242.222656 234.816406 243.5 242.160156 C 244.773438 249.5 242.765625 255 241.351562 256.75 C 241.351562 256.75 265.066406 258.183594 268.347656 235.984375 C 268.417969 235.507812 269.136719 229.835938 269.261719 228.570312 "/></symbol>
+  <symbol id="flame" viewBox="203.59 169.44 74.13 95.22"><path fill="var(--fy,#FAB40A)" d="M 224.308594 264.65625 C 224.308594 264.65625 241.097656 262.621094 241.433594 246.953125 C 241.625 238.117188 235.25 230.648438 229.917969 225.21875 C 224.523438 219.726562 222.128906 214.316406 221.109375 211.136719 C 220.878906 210.425781 219.835938 210.523438 219.75 211.265625 C 218.554688 221.480469 226.351562 233.089844 226.351562 233.089844 C 225.839844 233.125 215.3125 221.828125 210.816406 207.996094 C 210.589844 207.308594 209.589844 207.378906 209.460938 208.09375 C 208.628906 212.773438 208.371094 223.503906 219.164062 235.855469 C 214.113281 233.695312 208.886719 224.738281 206.78125 220.800781 C 206.453125 220.191406 205.527344 220.378906 205.46875 221.066406 C 205.15625 224.648438 205.746094 232.074219 214.355469 239.027344 C 214.5 239.144531 210.058594 237.746094 205.027344 231.703125 C 204.535156 231.117188 203.589844 231.617188 203.8125 232.347656 C 204.585938 234.871094 206.445312 238.640625 210.933594 242.105469 C 216.203125 246.171875 222.085938 251.511719 223.917969 256.210938 C 225.75 260.910156 225.007812 263.308594 224.308594 264.65625 "/><path fill="var(--fo,#F25232)" d="M 269.261719 228.570312 C 270.472656 216.289062 274.730469 209.757812 277.25 206.894531 C 277.71875 206.359375 277.179688 205.542969 276.507812 205.769531 C 271.0625 207.570312 267.476562 211.140625 265.082031 215.121094 C 263.925781 212.765625 262.503906 210.484375 260.910156 208.128906 C 253.144531 196.664062 250.515625 183.726562 249.734375 178.566406 C 249.628906 177.871094 248.671875 177.742188 248.398438 178.390625 C 242.378906 192.726562 253.308594 210.753906 253.308594 210.753906 C 252.550781 210.652344 238.230469 191.742188 235.6875 170.277344 C 235.597656 169.519531 234.527344 169.4375 234.324219 170.175781 C 232.582031 176.476562 230.46875 192.078125 242.695312 213.503906 C 235.621094 208.625 230.007812 191.570312 228.210938 185.5625 C 228.011719 184.894531 227.058594 184.898438 226.867188 185.574219 C 225.476562 190.507812 223.597656 203.167969 234.800781 216.6875 C 234.980469 216.90625 228.476562 213.3125 222.789062 202.125 C 222.445312 201.449219 221.429688 201.710938 221.464844 202.464844 C 221.632812 206.257812 223.453125 214.753906 229.503906 221.730469 C 235.949219 229.167969 242.222656 234.816406 243.5 242.160156 C 244.773438 249.5 242.765625 255 241.351562 256.75 C 241.351562 256.75 265.066406 258.183594 268.347656 235.984375 C 268.417969 235.507812 269.136719 229.835938 269.261719 228.570312 "/></symbol>
+</svg>
+
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>S2 · 夥伴</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <span class="pp-sep"></span>
+  <a href="s1-hero.html">← S1</a><a href="s3-problem.html">S3 問題 →</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">Home v2 · Round 2 · S2</span>
+  <h1>夥伴：沒有 logo 也能有份量的信任列</h1>
+  <p>目前夥伴 logo 檔與露出授權仍在確認中（H01），因此三個方案都只用「名稱」排版，並以三種幾何形分別代表三個群組：品牌與企業、公部門與學會、非營利與國際。日後取得 logo 時可直接替換名稱。</p>
+  <p class="pp-note">本頁僅呈現選項，不做推薦；取捨將依首頁總體規劃另行決定。名單與分組完全取自現行文案，未加入數量或其他主張。</p>
+</header>
+
+<main>
+<!-- ───────────── A ───────────── -->
+<section class="opt" data-opt="A" aria-labelledby="a-h">
+  <div class="wrap opt-head"><span class="pp-label">Option A</span><h2 id="a-h">旋轉磚牆：每個名字一塊磚，形狀依序轉 90°</h2></div>
+  <div class="mock p-a">
+    <div class="wrap">
+      <div class="pa-head">
+        <div><p class="eyebrow">PARTNERS</p><h2 class="sec-title">合作過的夥伴與單位</h2></div>
+        <ul class="legend" aria-label="圖例">
+          <li><i style="--c:var(--orange);border-radius:100% 0 0 0"></i>品牌與企業</li>
+          <li><i style="--c:var(--yellow);border-radius:999px 999px 0 0;height:8px"></i>公部門與學會</li>
+          <li><i style="--c:var(--grey);border-radius:0 100% 0 100%"></i>非營利與國際</li>
+        </ul>
+      </div>
+      <ul class="pa-grid">
+        <li class="hd c1"><i class="g q" style="--r:0deg" aria-hidden="true"></i>品牌與企業</li>
+        <li class="n1"><i class="g q" style="--c:var(--orange);--r:90deg" aria-hidden="true"></i>思凡自然農場</li>
+        <li class="n1"><i class="g q" style="--c:var(--orange);--r:180deg" aria-hidden="true"></i>兔耳生活</li>
+        <li class="n1"><i class="g q" style="--c:var(--orange);--r:270deg" aria-hidden="true"></i>星芽社會企業</li>
+        <li class="n1"><i class="g q" style="--c:var(--orange);--r:0deg" aria-hidden="true"></i>RAFAC 機能襪</li>
+        <li class="n1"><i class="g q" style="--c:var(--orange);--r:90deg" aria-hidden="true"></i>處處花版</li>
+        <li class="n1"><i class="g q" style="--c:var(--orange);--r:180deg" aria-hidden="true"></i>齊禾品牌顧問</li>
+        <li class="n1"><i class="g q" style="--c:var(--orange);--r:270deg" aria-hidden="true"></i>勤億蛋品</li>
+        <li class="n1"><i class="g q" style="--c:var(--orange);--r:0deg" aria-hidden="true"></i>大慶旅遊</li>
+        <li class="dc" aria-hidden="true"><i style="--c:var(--orange);border-radius:0 0 100% 0"></i><i style="--c:var(--yellow);border-radius:100% 0 0 0"></i></li>
+        <li class="hd c2"><i class="g h" style="--r:0deg" aria-hidden="true"></i>公部門與學會</li>
+        <li class="n2"><i class="g h" style="--c:var(--yellow);--r:90deg" aria-hidden="true"></i>台北市政府</li>
+        <li class="n2"><i class="g h" style="--c:var(--yellow);--r:180deg" aria-hidden="true"></i>台灣休閒農業學會</li>
+        <li class="n2"><i class="g h" style="--c:var(--yellow);--r:270deg" aria-hidden="true"></i>三鶯社區大學</li>
+        <li class="n2"><i class="g h" style="--c:var(--yellow);--r:0deg" aria-hidden="true"></i>南港社區大學</li>
+        <li class="n2"><i class="g h" style="--c:var(--yellow);--r:90deg" aria-hidden="true"></i>萬華社區大學</li>
+        <li class="dc" aria-hidden="true"><i style="--c:var(--yellow);border-radius:0 100% 0 100%"></i></li>
+        <li class="hd c3"><i class="g p" style="--r:0deg" aria-hidden="true"></i>非營利與國際</li>
+        <li class="n3"><i class="g p" style="--c:var(--grey);--r:90deg" aria-hidden="true"></i>中華少年成長基金會</li>
+        <li class="n3"><i class="g p" style="--c:var(--grey);--r:180deg" aria-hidden="true"></i>愛慈基金會</li>
+        <li class="n3"><i class="g p" style="--c:var(--grey);--r:270deg" aria-hidden="true"></i>台東康復之友</li>
+        <li class="n3"><i class="g p" style="--c:var(--grey);--r:0deg" aria-hidden="true"></i>UN-SDGs Impact Developers Conference</li>
+        <li class="n3"><i class="g p" style="--c:var(--grey);--r:90deg" aria-hidden="true"></i>Global Youth Leadership Programme</li>
+        <li class="dc" aria-hidden="true"><i style="--c:var(--grey);border-radius:50%"></i><i style="--c:var(--orange);border-radius:100% 0 0 0"></i></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>概念</h3><p>「每一個名字都是一塊磚」。名字以方磚排成一面牆，每塊磚左上角的小圖形依序旋轉 90°，讀過去像圖形在轉動；三個群組各有一塊實心色磚當作「章節」，牆面中穿插純幾何磚，讓整面牆本身就是一張 CIS 圖樣。</p></div>
+    <div><h3>幾何語彙與變換</h3><ul><li>quarter＝品牌與企業、half＝公部門與學會、petal＝非營利與國際</li><li><b>旋轉序列</b>：同一形狀依序 0/90/180/270°</li><li><b>換色</b>：群組色磚中的圖形反白</li><li>hover 時圖形再轉 90°、磚面淡染群組色；支援的瀏覽器在捲入畫面時圖形由 −180° 轉回定位</li></ul></div>
+    <div><h3>參考來源</h3><p>Stripe「Customers」頁與 Vercel 首頁的格狀 logo 牆；Studio Dumbar 為荷蘭交通部等識別所做的「形狀旋轉序列」圖樣。</p></div>
+    <div><h3>優點</h3><ul><li>日後換成 logo 時版型完全不變，只要替換磚內內容</li><li>形狀＝群組的編碼，色盲使用者也能辨識（不只靠顏色）</li><li>手機兩欄、平板四欄、桌機六欄，皆整齊收尾</li></ul></div>
+    <div><h3>風險</h3><ul><li>六欄磚牆高度可觀，若放在 Hero 之後可能讓「下一個重點」被推得太遠</li><li>名稱長短不一（例如英文會議名稱），磚內換行需逐一檢查</li></ul></div>
+    <div><h3>與前後區塊的銜接可能</h3><ul class="ho"><li>① 承接 S1 若採用模組格方案，磚牆可直接沿用同一個 --geo-unit，視覺上像 Hero 的色塊「長出」名字。</li><li>② 牆的最後一塊幾何磚（灰圓＋橘四分圓）放大成 S3 的開場圖形，作為「這些夥伴遇到了什麼問題」的轉場。</li></ul></div>
+  </div></div>
+</section>
+
+<!-- ───────────── B ───────────── -->
+<section class="opt" data-opt="B" aria-labelledby="b-h">
+  <div class="wrap opt-head"><span class="pp-label">Option B</span><h2 id="b-h">鏡像花瓣卡：火焰的三片花瓣，拆成三張卡</h2></div>
+  <div class="mock p-b">
+    <div class="wrap">
+      <div class="pb-head">
+        <div class="fan" aria-hidden="true">
+          <i style="--a:-42deg;--c:var(--orange)"></i><i style="--a:42deg;--c:var(--grey)"></i><i style="--a:0deg;--c:var(--yellow)"></i>
+        </div>
+        <p class="eyebrow">PARTNERS</p>
+        <h2 class="sec-title">合作過的夥伴與單位</h2>
+      </div>
+      <ul class="pb-cards">
+        <li class="pb-card" style="--bg:var(--orange-soft);--c:var(--orange);--a:-30deg">
+          <i class="ghost" aria-hidden="true"></i>
+          <div class="top"><i class="gl" aria-hidden="true"></i><div><span class="idx">01</span><h3>品牌與企業</h3></div></div>
+          <ul><li>思凡自然農場</li><li>兔耳生活</li><li>星芽社會企業</li><li>RAFAC 機能襪</li><li>處處花版</li><li>齊禾品牌顧問</li><li>勤億蛋品</li><li>大慶旅遊</li></ul>
+        </li>
+        <li class="pb-card" style="--bg:var(--yellow-soft);--c:var(--yellow);--a:0deg">
+          <i class="ghost" aria-hidden="true"></i>
+          <div class="top"><i class="gl" aria-hidden="true"></i><div><span class="idx">02</span><h3>公部門與學會</h3></div></div>
+          <ul><li>台北市政府</li><li>台灣休閒農業學會</li><li>三鶯社區大學</li><li>南港社區大學</li><li>萬華社區大學</li></ul>
+        </li>
+        <li class="pb-card" style="--bg:#EFF0F2;--c:var(--grey);--a:30deg">
+          <i class="ghost" aria-hidden="true"></i>
+          <div class="top"><i class="gl" aria-hidden="true"></i><div><span class="idx">03</span><h3>非營利與國際</h3></div></div>
+          <ul><li>中華少年成長基金會</li><li>愛慈基金會</li><li>台東康復之友</li><li>UN-SDGs Impact Developers Conference</li><li>Global Youth Leadership Programme</li></ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>概念</h3><p>「三種夥伴，是同一把火焰的三片花瓣」。區塊頂端三片花瓣以 −30°／0°／30° 扇形排成一束小火焰；往下拆開成三張卡，每張卡保留自己那片花瓣的角度，hover 時花瓣轉正——從「一束」到「各自」再到「對齊」。</p></div>
+    <div><h3>幾何語彙與變換</h3><ul><li>petal（標誌筆觸）為唯一形狀，三色＝三群組</li><li><b>拆解／重組</b>：一束火焰 → 三張卡</li><li><b>鏡像</b>：中間卡片的花瓣圓角左右翻轉（0 64 0 64 → 64 0 64 0）</li><li><b>旋轉</b>：卡片 hover 時圖示轉正、放大</li><li>卡片角落的大花瓣浮水印以 14% 透明度重複同一形狀</li></ul></div>
+    <div><h3>參考來源</h3><p>Notion、Figma 客戶頁以「分類卡＋清單」呈現合作對象；Airbnb 品牌指南中以同一圓角形狀做卡片外框的作法。</p></div>
+    <div><h3>優點</h3><ul><li>資訊結構最清楚，三個群組一眼可比較</li><li>整體最安靜、留白最多，適合與高度視覺化的 Hero 搭配</li><li>清單是純文字，SEO 與螢幕閱讀器友善</li></ul></div>
+    <div><h3>風險</h3><ul><li>三張卡長度不同（8／5／5 筆），桌機底部參差</li><li>像一般「卡片清單」，若前後區塊也用卡片，記憶點會被稀釋</li></ul></div>
+    <div><h3>與前後區塊的銜接可能</h3><ul class="ho"><li>① 承接 S1 的火焰標誌：Hero 中的標誌縮小並「裂開」成區塊頂端的三片花瓣。</li><li>② 三張卡的花瓣角度（−30／0／30）在 S3 延續為三個痛點的圖示，讓「夥伴類型」與「問題層次」用同一套形狀對應。</li></ul></div>
+  </div></div>
+</section>
+
+<!-- ───────────── C ───────────── -->
+<section class="opt" data-opt="C" aria-labelledby="c-h">
+  <div class="wrap opt-head"><span class="pp-label">Option C</span><h2 id="c-h">花瓣成環：每位夥伴一片花瓣，展開成一個圓</h2></div>
+  <div class="mock p-c on-dark">
+    <div class="wrap">
+      <p class="eyebrow">PARTNERS</p>
+      <h2 class="sec-title">合作過的夥伴與單位</h2>
+      <div class="pc-grid">
+        <div class="ring18" aria-hidden="true">
+          <i class="core"></i>
+          <i class="p c1" style="--a:0deg;--i:0"></i><i class="p c1" style="--a:20deg;--i:1"></i><i class="p c1" style="--a:40deg;--i:2"></i><i class="p c1" style="--a:60deg;--i:3"></i><i class="p c1" style="--a:80deg;--i:4"></i><i class="p c1" style="--a:100deg;--i:5"></i><i class="p c1" style="--a:120deg;--i:6"></i><i class="p c1" style="--a:140deg;--i:7"></i>
+          <i class="p c2" style="--a:160deg;--i:8"></i><i class="p c2" style="--a:180deg;--i:9"></i><i class="p c2" style="--a:200deg;--i:10"></i><i class="p c2" style="--a:220deg;--i:11"></i><i class="p c2" style="--a:240deg;--i:12"></i>
+          <i class="p c3" style="--a:260deg;--i:13"></i><i class="p c3" style="--a:280deg;--i:14"></i><i class="p c3" style="--a:300deg;--i:15"></i><i class="p c3" style="--a:320deg;--i:16"></i><i class="p c3" style="--a:340deg;--i:17"></i>
+          <svg class="mk"><use href="#flame"/></svg>
+        </div>
+        <div>
+          <div class="pc-lists">
+            <div style="--c:var(--orange)"><h3>品牌與企業</h3><ul><li data-i="0">思凡自然農場</li><li data-i="1">兔耳生活</li><li data-i="2">星芽社會企業</li><li data-i="3">RAFAC 機能襪</li><li data-i="4">處處花版</li><li data-i="5">齊禾品牌顧問</li><li data-i="6">勤億蛋品</li><li data-i="7">大慶旅遊</li></ul></div>
+            <div style="--c:var(--yellow)"><h3>公部門與學會</h3><ul><li data-i="8">台北市政府</li><li data-i="9">台灣休閒農業學會</li><li data-i="10">三鶯社區大學</li><li data-i="11">南港社區大學</li><li data-i="12">萬華社區大學</li></ul></div>
+            <div style="--c:#C9CCD2"><h3>非營利與國際</h3><ul><li data-i="13">中華少年成長基金會</li><li data-i="14">愛慈基金會</li><li data-i="15">台東康復之友</li><li data-i="16">UN-SDGs Impact Developers Conference</li><li data-i="17">Global Youth Leadership Programme</li></ul></div>
+          </div>
+          <p class="pc-note">滑鼠移到名稱上，對應的花瓣會在圓環上被點亮。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>概念</h3><p>「每一位夥伴都是火焰的一片花瓣」。載入時所有花瓣先疊在頂端，再沿圓周展開，排成以標誌為圓心的花環；內圈色環依三個群組分段。名稱清單與花瓣一一對應，移到名稱上即點亮該片花瓣——讓「名單」變成「我們一起組成的圓」。</p></div>
+    <div><h3>幾何語彙與變換</h3><ul><li>petal ×18、ring（以 conic-gradient 分段）、標誌</li><li><b>旋轉＋放射</b>：花瓣每 20° 一片，從一束展開成一圈</li><li><b>重組</b>：花瓣（火焰筆觸）→ 圓環</li><li><b>放大</b>：對應的花瓣在 hover 時外移並放大 1.25 倍</li></ul></div>
+    <div><h3>參考來源</h3><p>Google「About」頁與 Apple 環境進度報告中的放射狀資料圖；Spotify Wrapped 的圓形構圖與互動點亮。</p></div>
+    <div><h3>優點</h3><ul><li>夥伴區不再只是「信任列」，而是一個可以被記住的品牌圖像</li><li>花瓣數量會隨名單成長，未來新增夥伴即自然「長滿」</li><li>深色底與 S1／S3 的淺色底形成節奏</li></ul></div>
+    <div><h3>風險</h3><ul><li>花瓣與名單的對應需要互動才看得懂，觸控裝置上無 hover</li><li>名單超過約 30 筆時花瓣會過密，需改為每片代表一個群組或分圈</li><li>圓環圖可能被誤讀為「比例圖表」</li></ul></div>
+    <div><h3>與前後區塊的銜接可能</h3><ul class="ho"><li>① 若 S1 採用花瓣拱橋：Hero 的半圓拱在此「補完」成整圓，延續同一個放射動作。</li><li>② 圓環在捲出時收合成三片花瓣，分別成為 S3 三個痛點的標記，深色底在 S3 解方帶再出現一次形成呼應。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script>
+(function () {
+  var bar = document.querySelector('.pp-bar');
+  if (!bar) return;
+  var opts = [].slice.call(document.querySelectorAll('.opt'));
+  var btns = [].slice.call(bar.querySelectorAll('button[data-show]'));
+  function show(k) {
+    opts.forEach(function (o) { o.hidden = !(k === 'all' || o.dataset.opt === k); });
+    btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.show === k)); });
+  }
+  btns.forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.show); window.scrollTo({ top: 0 }); }); });
+  bar.hidden = false;
+})();
+</script>
+<script>
+(function () {
+  var ring = document.querySelector('.ring18');
+  if (!ring) return;
+  var petals = ring.querySelectorAll('.p');
+  document.querySelectorAll('.pc-lists li[data-i]').forEach(function (li) {
+    li.addEventListener('mouseenter', function () { ring.classList.add('dim'); petals[+li.dataset.i].classList.add('on'); li.classList.add('on'); });
+    li.addEventListener('mouseleave', function () { ring.classList.remove('dim'); petals[+li.dataset.i].classList.remove('on'); li.classList.remove('on'); });
+  });
+})();
+</script>
+</body>
+</html>

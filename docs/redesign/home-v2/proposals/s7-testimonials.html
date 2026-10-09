@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S7 客戶回饋 · 三個方案</title>
+<link rel="stylesheet" href="_tokens.css">
+<link rel="stylesheet" href="_geo.css">
+<style>
+/* ───────── Proposal chrome (shared by s5–s8, not part of the design) ───────── */
+[hidden] { display: none !important; }
+html { scroll-padding-top: 56px; }
+body { overflow-x: clip; }
+.pp-intro { max-width: 1200px; margin: 0 auto; padding: 32px 16px 16px; }
+.pp-intro h1 { font: 900 clamp(24px, 4vw, 34px)/1.3 var(--font-sans); margin: 12px 0 8px; }
+.pp-intro p { color: var(--ink-2); margin: 0 0 12px; max-width: 75ch; }
+.opt { padding: 48px 0 64px; border-top: 6px solid #111; }
+.opt-head { max-width: 1200px; margin: 0 auto 24px; padding: 0 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.opt-head h2 { font: 900 clamp(20px, 3vw, 26px)/1.3 var(--font-sans); margin: 0; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+.pp-card { max-width: 1200px; margin: 32px auto 0; padding: 0 16px; }
+.pp-card dl { margin: 0; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(18px, 3vw, 28px); display: grid; gap: 18px 36px; grid-template-columns: 1fr; }
+@media (min-width: 860px) { .pp-card dl { grid-template-columns: 1fr 1fr; } }
+.pp-card dt { font: 700 13px/1.4 var(--font-sans); color: var(--orange-strong); letter-spacing: .08em; }
+.pp-card dd { margin: 4px 0 0; font-size: 15px; }
+.pp-card .full { grid-column: 1 / -1; }
+.pp-card ul { margin: 4px 0 0; padding-left: 1.2em; }
+.pp-card li + li { margin-top: 4px; }
+
+/* ───────── Mock primitives ───────── */
+.kicker { display: inline-flex; align-items: center; gap: 10px; font: 700 13px/1 var(--font-sans); letter-spacing: .16em; color: var(--orange-strong); }
+.kicker::before { content: ""; width: 12px; height: 12px; background: var(--orange); border-radius: 0 100% 0 100%; }
+.m-h2 { font: 900 clamp(26px, 3.6vw, 42px)/1.28 var(--font-sans); margin: 14px 0 12px; letter-spacing: .01em; }
+.m-lead { color: var(--ink-2); margin: 0 0 28px; font-size: 17px; max-width: 46ch; }
+.m-link { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--orange-strong); text-decoration: none; border-bottom: 2px solid currentColor; padding-bottom: 2px; }
+.m-note { font-size: 13px; color: var(--ink-2); margin: 16px 0 0; }
+.flame { display: block; width: var(--fw, 40px); height: auto; }
+:focus-visible { outline: 3px solid var(--orange-strong); outline-offset: 3px; }
+
+/* ───────── Mock primitives ───────── */
+.kicker { display: inline-flex; align-items: center; gap: 10px; font: 700 13px/1 var(--font-sans); letter-spacing: .16em; color: var(--orange-strong); }
+.kicker::before { content: ""; width: 12px; height: 12px; background: var(--orange); border-radius: 0 100% 0 100%; }
+.m-h2 { font: 900 clamp(26px, 3.6vw, 42px)/1.28 var(--font-sans); margin: 14px 0 12px; }
+.m-lead { color: var(--ink-2); margin: 0; font-size: 17px; max-width: 46ch; }
+.flame { display: block; width: var(--fw, 40px); height: auto; }
+:focus-visible { outline: 3px solid var(--orange-strong); outline-offset: 3px; }
+button { font: inherit; color: inherit; }
+.mono { font: 900 var(--ms, 40px)/1 var(--font-sans); }
+
+/* ───────── A · 四瓣花 ───────── */
+.s7a { background: var(--paper); padding: clamp(56px, 8vw, 112px) 0; }
+.s7a-grid { display: grid; gap: 40px; align-items: center; }
+@media (min-width: 960px) { .s7a-grid { grid-template-columns: 1fr 1fr; gap: 72px; } }
+.flower { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 10px; width: min(100%, 480px); aspect-ratio: 1; margin-inline: auto; container-type: inline-size; }
+.pet { position: relative; isolation: isolate; border: 0; background: none; padding: 0; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: var(--t); transition: color .3s; }
+.pet::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--c); border-radius: 0 100% 0 100%; rotate: var(--r); transition: scale .45s var(--geo-ease), background .3s; }
+.pet .mono { --ms: max(32px, 11cqw); }
+.pet .nm { font: 700 max(12px, 3cqw)/1.3 var(--font-sans); max-width: 6.5em; text-align: center; }
+.pet .nm { color: var(--tn, var(--t)); }
+.p1 { grid-area: 1 / 1; --c: var(--orange); --t: #fff; --tn: var(--ink); --r: 0deg; }
+.p2 { grid-area: 1 / 2; --c: var(--yellow); --t: var(--ink); --r: 90deg; }
+.p3 { grid-area: 2 / 2; --c: var(--grey); --t: #fff; --r: 180deg; }
+.p4 { grid-area: 2 / 1; --c: var(--ink); --t: var(--yellow); --tn: #fff; --r: 270deg; }
+.pet:hover::before, .pet:focus-visible::before { scale: 1.07; }
+.flower:has(.pet:hover, .pet:focus-visible) .pet:not(:hover, :focus-visible) { --t: var(--ink); --tn: var(--ink); }
+.flower:has(.pet:hover, .pet:focus-visible) .pet:not(:hover, :focus-visible)::before { background: var(--line); scale: .92; }
+.hub { position: absolute; left: 50%; top: 50%; translate: -50% -50%; width: 20%; aspect-ratio: 1; border-radius: 50%; background: var(--paper); display: grid; place-items: center; box-shadow: 0 0 0 8px var(--paper); pointer-events: none; }
+.hub .flame { --fw: 50%; }
+@media (prefers-reduced-motion: no-preference) {
+  .flower .hub .flame { transition: rotate .6s var(--geo-ease); }
+  .flower:has(.p2:hover, .p2:focus-visible) .hub .flame { rotate: 90deg; }
+  .flower:has(.p3:hover, .p3:focus-visible) .hub .flame { rotate: 180deg; }
+  .flower:has(.p4:hover, .p4:focus-visible) .hub .flame { rotate: 270deg; }
+}
+.hl-panel { position: relative; min-height: 260px; }
+.hl-panel blockquote { display: none; margin: 0; }
+.s7a:not(:has(.pet:hover, .pet:focus-visible)) .hl-panel .h1,
+.s7a:has(.p1:hover, .p1:focus-visible) .hl-panel .h1,
+.s7a:has(.p2:hover, .p2:focus-visible) .hl-panel .h2,
+.s7a:has(.p3:hover, .p3:focus-visible) .hl-panel .h3,
+.s7a:has(.p4:hover, .p4:focus-visible) .hl-panel .h4 { display: block; animation: fade .35s ease both; }
+@media (prefers-reduced-motion: reduce) { .hl-panel blockquote { animation: none !important; } }
+@keyframes fade { from { opacity: 0; translate: 0 6px; } }
+.hl-panel .qm { width: 44px; height: 44px; background: var(--orange); border-radius: 0 100% 0 100%; margin-bottom: 18px; }
+.hl-panel blockquote p { font: 900 clamp(22px, 2.6vw, 30px)/1.5 var(--font-sans); margin: 0 0 18px; }
+.hl-panel footer { font-size: 15px; color: var(--ink-2); }
+.hl-panel footer b { color: var(--ink); }
+.chip { display: inline-block; font: 700 12px/1 var(--font-sans); letter-spacing: .08em; padding: 6px 10px; border-radius: 999px; background: var(--orange-soft); color: var(--orange-strong); margin-left: 8px; vertical-align: 2px; }
+.hint { margin-top: 18px; font-size: 14px; color: var(--ink-2); display: flex; align-items: center; gap: 8px; }
+.hint::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--orange); }
+
+/* ───────── B · 色塊字標牆 ───────── */
+.s7b { background: #fff; padding: clamp(56px, 8vw, 112px) 0; }
+.s7b-head { display: grid; gap: 8px 48px; align-items: end; }
+@media (min-width: 960px) { .s7b-head { grid-template-columns: 1fr 1fr; } }
+.wall { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: minmax(140px, auto); grid-auto-flow: dense; gap: 8px; margin-top: 40px; }
+@media (min-width: 900px) { .wall { grid-template-columns: repeat(6, minmax(0, 1fr)); grid-auto-rows: minmax(200px, auto); } }
+.tile { grid-column: span 2; position: relative; display: grid; grid-template-columns: clamp(84px, 30%, 128px) 1fr; gap: 18px; align-items: center; text-align: left; padding: 20px; border: 1px solid var(--line); border-radius: 4px; background: var(--paper); cursor: pointer; transition: background .35s, color .35s, border-color .35s; }
+.tile .mk { position: relative; aspect-ratio: 1; display: grid; place-items: center; }
+.tile .mk .geo { position: absolute; inset: 0; width: 100%; height: 100%; transition: rotate .6s var(--geo-ease); }
+.tile .mk .mono { position: relative; --ms: clamp(30px, 3.6vw, 44px); color: var(--mt); }
+.tile .nm { display: block; font: 900 19px/1.35 var(--font-sans); }
+.tile .role { display: block; font-size: 14px; color: var(--ink-2); margin-top: 4px; }
+.tile .hl { display: none; font: 700 16px/1.6 var(--font-sans); margin-top: 8px; }
+.tile .go { display: none; font: 700 13px/1 var(--font-sans); margin-top: 10px; color: var(--yellow); letter-spacing: .06em; }
+.tile:hover, .tile:focus-visible { background: var(--ink); color: #fff; border-color: var(--ink); }
+.tile:hover .role, .tile:focus-visible .role { display: none; }
+.tile:hover .hl, .tile:focus-visible .hl, .tile:hover .go, .tile:focus-visible .go { display: block; }
+.tile:hover .mk .geo, .tile:focus-visible .mk .geo { rotate: 90deg; }
+.tile:focus-visible { outline-color: var(--orange-strong); }
+@media (hover: none) { .tile .hl { display: block; color: var(--ink); } }
+.deco { position: relative; overflow: hidden; background: var(--paper); border-radius: 4px; display: grid; place-items: center; }
+.deco .geo { width: 72%; height: auto; aspect-ratio: 1; transition: rotate .8s var(--geo-ease); }
+.deco .geo.geo-half { aspect-ratio: 2 / 1; }
+.wall:has(.tile:hover, .tile:focus-visible) .deco .geo { rotate: 90deg; }
+.deco.flame-cell .flame { --fw: 34%; }
+.s7b .src { font-size: 13px; color: var(--ink-2); margin-top: 16px; }
+
+/* ───────── C · 對開徽章索引 ───────── */
+.s7c { background: var(--yellow-soft); padding: clamp(56px, 8vw, 112px) 0; overflow: hidden; }
+.s7c-grid { display: grid; gap: 40px; }
+@media (min-width: 960px) { .s7c-side .big { width: min(60%, 260px); } .s7c-grid { grid-template-columns: .8fr 1.2fr; gap: 64px; } .s7c-side { position: sticky; top: 80px; align-self: start; } }
+.s7c-side .big { position: relative; width: min(36%, 260px); aspect-ratio: 1; margin-top: 36px; }
+.s7c-side .big span { position: absolute; left: 0; width: 100%; height: 50%; background: var(--c); }
+.s7c-side .big .t { top: 0; border-radius: 999px 999px 0 0; --c: var(--orange); translate: 0 -8px; }
+.s7c-side .big .b { bottom: 0; border-radius: 0 0 999px 999px; --c: var(--yellow); translate: 0 8px; }
+.s7c-side .big .flame { position: absolute; left: 50%; top: 50%; translate: -50% -50%; --fw: 30%; --fy: #fff; --fo: #fff; }
+.ix { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--ink); }
+.ix button { width: 100%; display: grid; grid-template-columns: 64px 1fr; gap: 6px 20px; align-items: center; padding: 20px 4px; background: none; border: 0; border-bottom: 1px solid rgba(31,32,34,.18); text-align: left; cursor: pointer; transition: background .3s; }
+@media (min-width: 640px) { .ix button { grid-template-columns: 76px 1fr auto; } }
+.split { position: relative; width: 100%; aspect-ratio: 1; display: grid; place-items: center; }
+.split i { position: absolute; left: 0; width: 100%; height: 50%; transition: translate .45s var(--geo-ease); }
+.split .t { top: 0; background: var(--a); border-radius: 999px 999px 0 0; }
+.split .b { bottom: 0; background: var(--b); border-radius: 999px 999px 0 0; scale: 1 -1; }
+.split .mono { position: relative; --ms: 28px; color: var(--ink); }
+.ix .nm { font: 900 clamp(20px, 2.4vw, 28px)/1.3 var(--font-sans); display: block; }
+.ix .role { font-size: 14px; color: var(--ink-2); }
+.ix .act { display: none; font: 700 14px/1 var(--font-sans); color: var(--orange-strong); white-space: nowrap; }
+@media (min-width: 640px) { .ix .act { display: inline-flex; gap: 6px; align-items: center; } }
+.ix .act::after { content: "+"; display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; border: 2px solid currentColor; font-size: 16px; transition: rotate .4s var(--geo-ease); }
+.ix .hlw { grid-column: 2 / -1; display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s var(--geo-ease); }
+.ix .hlw > span { overflow: hidden; font: 700 17px/1.6 var(--font-sans); }
+.ix .hlw > span::before { content: "「"; } .ix .hlw > span::after { content: "」"; }
+.ix button:hover, .ix button:focus-visible { background: rgba(255,255,255,.65); }
+.ix button:hover .hlw, .ix button:focus-visible .hlw { grid-template-rows: 1fr; }
+.ix button:hover .split .t, .ix button:focus-visible .split .t { translate: 0 -5px; }
+.ix button:hover .split .b, .ix button:focus-visible .split .b { translate: 0 5px; }
+.ix button:hover .act::after, .ix button:focus-visible .act::after { rotate: 90deg; }
+@media (hover: none) { .ix .hlw { grid-template-rows: 1fr; } }
+
+/* ───────── Shared dialog (full feedback) ───────── */
+dialog.fb { border: 0; padding: 0; border-radius: 20px; width: min(760px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); box-shadow: 0 40px 80px -30px rgba(0,0,0,.5); color: var(--ink); background: #fff; overflow: auto; }
+dialog.fb::backdrop { background: rgba(31,32,34,.62); }
+.fb-in { display: grid; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .fb-in { grid-template-columns: 220px 1fr; } }
+.fb-side { position: relative; background: var(--c, var(--orange)); color: var(--mt, #fff); min-height: 150px; display: grid; place-items: center; overflow: hidden; }
+.fb-side .mono { --ms: 72px; position: relative; }
+.fb-side .pt { position: absolute; width: 46%; aspect-ratio: 1; background: rgba(255,255,255,.22); border-radius: 0 100% 0 100%; }
+.fb-side .pt.a { left: -10%; top: -10%; } .fb-side .pt.b { right: -10%; bottom: -10%; rotate: 180deg; }
+.fb-main { padding: 32px clamp(20px, 4vw, 40px) 32px; }
+.fb-tag { display: inline-block; font: 700 12px/1 var(--font-sans); letter-spacing: .08em; padding: 6px 10px; border-radius: 999px; background: var(--orange-soft); color: var(--orange-strong); }
+.fb-hl { font: 900 clamp(20px, 2.6vw, 26px)/1.5 var(--font-sans); margin: 14px 0 12px; }
+.fb-q { color: var(--ink-2); margin: 0 0 20px; font-size: 16px; }
+.fb-who { border-top: 1px solid var(--line); padding-top: 14px; font-size: 15px; }
+.fb-who b { display: block; font-size: 17px; }
+.fb-close { position: absolute; top: 12px; right: 12px; min-width: 44px; min-height: 44px; border-radius: 999px; border: 0; background: var(--ink); color: #fff; font: 700 14px/1 var(--font-sans); padding: 0 16px; cursor: pointer; }
+.fb-in { position: relative; }
+
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="flame" viewBox="203.59 169.44 74.13 95.22">
+      <path style="fill:var(--fy,#FAB40A)" d="M 224.308594 264.65625 C 224.308594 264.65625 241.097656 262.621094 241.433594 246.953125 C 241.625 238.117188 235.25 230.648438 229.917969 225.21875 C 224.523438 219.726562 222.128906 214.316406 221.109375 211.136719 C 220.878906 210.425781 219.835938 210.523438 219.75 211.265625 C 218.554688 221.480469 226.351562 233.089844 226.351562 233.089844 C 225.839844 233.125 215.3125 221.828125 210.816406 207.996094 C 210.589844 207.308594 209.589844 207.378906 209.460938 208.09375 C 208.628906 212.773438 208.371094 223.503906 219.164062 235.855469 C 214.113281 233.695312 208.886719 224.738281 206.78125 220.800781 C 206.453125 220.191406 205.527344 220.378906 205.46875 221.066406 C 205.15625 224.648438 205.746094 232.074219 214.355469 239.027344 C 214.5 239.144531 210.058594 237.746094 205.027344 231.703125 C 204.535156 231.117188 203.589844 231.617188 203.8125 232.347656 C 204.585938 234.871094 206.445312 238.640625 210.933594 242.105469 C 216.203125 246.171875 222.085938 251.511719 223.917969 256.210938 C 225.75 260.910156 225.007812 263.308594 224.308594 264.65625 "/>
+      <path style="fill:var(--fo,#F25232)" d="M 269.261719 228.570312 C 270.472656 216.289062 274.730469 209.757812 277.25 206.894531 C 277.71875 206.359375 277.179688 205.542969 276.507812 205.769531 C 271.0625 207.570312 267.476562 211.140625 265.082031 215.121094 C 263.925781 212.765625 262.503906 210.484375 260.910156 208.128906 C 253.144531 196.664062 250.515625 183.726562 249.734375 178.566406 C 249.628906 177.871094 248.671875 177.742188 248.398438 178.390625 C 242.378906 192.726562 253.308594 210.753906 253.308594 210.753906 C 252.550781 210.652344 238.230469 191.742188 235.6875 170.277344 C 235.597656 169.519531 234.527344 169.4375 234.324219 170.175781 C 232.582031 176.476562 230.46875 192.078125 242.695312 213.503906 C 235.621094 208.625 230.007812 191.570312 228.210938 185.5625 C 228.011719 184.894531 227.058594 184.898438 226.867188 185.574219 C 225.476562 190.507812 223.597656 203.167969 234.800781 216.6875 C 234.980469 216.90625 228.476562 213.3125 222.789062 202.125 C 222.445312 201.449219 221.429688 201.710938 221.464844 202.464844 C 221.632812 206.257812 223.453125 214.753906 229.503906 221.730469 C 235.949219 229.167969 242.222656 234.816406 243.5 242.160156 C 244.773438 249.5 242.765625 255 241.351562 256.75 C 241.351562 256.75 265.066406 258.183594 268.347656 235.984375 C 268.417969 235.507812 269.136719 229.835938 269.261719 228.570312 "/>
+    </symbol>
+  </defs>
+</svg>
+
+<nav class="pp-bar" hidden aria-label="方案切換">
+  <strong>S7 客戶回饋</strong>
+  <button type="button" data-show="a" aria-pressed="false">A</button>
+  <button type="button" data-show="b" aria-pressed="false">B</button>
+  <button type="button" data-show="c" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+</nav>
+<header class="pp-intro">
+  <span class="pp-label">Home v2 · Round 2 · S7</span>
+  <h1>客戶回饋：三種「字標牆」</h1>
+  <p>文案取自 <code>home.ts → trust</code>，四則回饋未改字。三案都符合客戶指定的互動：<strong>品牌標誌牆 → 滑過／鍵盤聚焦顯示一句重點 → 點擊開啟完整回饋</strong>。本頁只陳列選項，不做推薦。</p>
+  <p class="pp-note">夥伴 logo 檔尚未提供，暫以「字標」（取名稱首字的 monogram）置入 CIS 幾何中；正式 logo 到位後可直接替換字標。完整回饋以原生 <code>&lt;dialog&gt;</code> 開啟，Esc 或「關閉」可離開，焦點回到原按鈕。</p>
+</header>
+
+<!-- ═════════════════════════ A ═════════════════════════ -->
+<section class="opt" data-opt="a" id="opt-a" aria-labelledby="a-t">
+  <div class="opt-head"><span class="pp-label">方案 A</span><h2 id="a-t">四瓣花：四個夥伴是環繞火焰的四片花瓣</h2></div>
+  <div class="s7a">
+    <div class="wrap s7a-grid">
+      <div>
+        <span class="kicker">合作夥伴怎麼說</span>
+        <h3 class="m-h2">客戶回饋</h3>
+        <p class="m-lead">來自品牌主、社會企業與產業夥伴的真實合作回饋。點選夥伴名稱，閱讀完整回饋。</p>
+        <div class="hl-panel" aria-live="polite" style="margin-top:36px">
+          <blockquote class="h1"><div class="qm" aria-hidden="true"></div><p>ESG 本質仍然是以人為核心，共好玟化提供的價值非常契合。</p><footer><b>思凡自然農場</b>｜自然農園負責人<span class="chip">ESG 報告</span></footer></blockquote>
+          <blockquote class="h2"><div class="qm" aria-hidden="true" style="background:var(--yellow)"></div><p>專業、溫暖、負責任，整個合作過程讓人感到安心。</p><footer><b>兔耳生活有限公司</b>｜品牌創辦人<span class="chip">品牌永續</span></footer></blockquote>
+          <blockquote class="h3"><div class="qm" aria-hidden="true" style="background:var(--grey)"></div><p>從零散被動的企業合作，轉變為更主動、有策略的窗口溝通。</p><footer><b>台灣休閒農場學會</b>｜產業合作夥伴<span class="chip">供應鏈</span></footer></blockquote>
+          <blockquote class="h4"><div class="qm" aria-hidden="true" style="background:var(--ink)"></div><p>共好玟化是企業 ESG 優化的專家。</p><footer><b>齊禾品牌顧問</b>｜共同創辦人<span class="chip">顧問輔導</span></footer></blockquote>
+          <p class="hint">滑過花瓣看重點，點擊閱讀完整回饋</p>
+        </div>
+      </div>
+      <div class="flower">
+        <button class="pet p1" type="button" data-t="0" aria-haspopup="dialog"><span class="mono" aria-hidden="true">思</span><span class="nm">思凡自然農場</span></button>
+        <button class="pet p2" type="button" data-t="1" aria-haspopup="dialog"><span class="mono" aria-hidden="true">兔</span><span class="nm">兔耳生活有限公司</span></button>
+        <button class="pet p3" type="button" data-t="2" aria-haspopup="dialog"><span class="mono" aria-hidden="true">休</span><span class="nm">台灣休閒農場學會</span></button>
+        <button class="pet p4" type="button" data-t="3" aria-haspopup="dialog"><span class="mono" aria-hidden="true">齊</span><span class="nm">齊禾品牌顧問</span></button>
+        <div class="hub" aria-hidden="true"><svg class="flame" viewBox="0 0 74.13 95.22"><use href="#flame" width="74.13" height="95.22"/></svg></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pp-card"><dl>
+    <div><dt>概念</dt><dd>標誌的火焰由一筆筆花瓣狀的筆觸組成；這裡把四位夥伴做成四片花瓣，圍繞著火焰開成一朵花——回饋是從共好玟化這個核心長出來的。滑過哪一片，左側就換成那位夥伴的一句重點。</dd></div>
+    <div><dt>幾何語彙與變換</dt><dd>花瓣（petal）× 4，同一形狀<strong>旋轉</strong> 0／90／180／270° 後尖端朝中心<strong>重組</strong>成花；互動時該瓣放大 1.07，其餘<strong>重新上色</strong>為線色並縮小；中央火焰隨選取的花瓣旋轉 90° 的倍數，「指向」目前的夥伴。字標以首字取代 logo。</dd></div>
+    <div><dt>參考來源</dt><dd>Apple Watch 表面「花瓣」構成與 Google I/O 的環形選單；左文右圖的「選取即預覽」模式如 Stripe Customers 頁。</dd></div>
+    <div><dt>優點</dt><dd>品牌記憶點最強，牆＝標誌本身；四個夥伴剛好四瓣，構圖完整；重點文字以大字呈現，閱讀負擔低。完整回饋用原生 dialog，鍵盤與讀屏可用。</dd></div>
+    <div><dt>風險</dt><dd>只能容納 4 位夥伴，增加到 5–6 位時構圖需改為六瓣或環狀；左側重點區在觸控裝置上只顯示第一則（點擊直接開完整回饋）；花瓣內放真實 logo 時，橫式 logo 會受限。</dd></div>
+    <div class="full"><dt>與前後區塊的銜接可能</dt><dd><ul>
+      <li>可能一：服務對象區的三種夥伴色（橘／灰／黃）在這裡化為花瓣，加上墨色成為第四瓣；離開時四片花瓣張開、向外旋轉，成為 CTA 區兩側的弧，接著合成橋。</li>
+      <li>可能二：以紙色延續上一區、讓花朵成為頁面後半的視覺中心；離開時中央火焰放大並移到 CTA 區，作為「最後一步」的主視覺。</li>
+    </ul></dd></div>
+  </dl></div>
+</section>
+
+<!-- ═════════════════════════ B ═════════════════════════ -->
+<section class="opt" data-opt="b" id="opt-b" aria-labelledby="b-t">
+  <div class="opt-head"><span class="pp-label">方案 B</span><h2 id="b-t">色塊字標牆：字標與幾何磚交錯，一動全牆轉</h2></div>
+  <div class="s7b">
+    <div class="wrap">
+      <div class="s7b-head">
+        <div><span class="kicker">合作夥伴怎麼說</span><h3 class="m-h2">客戶回饋</h3></div>
+        <p class="m-lead">來自品牌主、社會企業與產業夥伴的真實合作回饋。點選夥伴名稱，閱讀完整回饋。</p>
+      </div>
+      <div class="wall">
+        <button class="tile" type="button" data-t="0" aria-haspopup="dialog" style="--mt:#fff">
+          <span class="mk" aria-hidden="true"><span class="geo geo-disc c-orange"></span><span class="mono">思</span></span>
+          <span><span class="nm">思凡自然農場</span><span class="role">自然農園負責人 · ESG 報告</span><span class="hl">ESG 本質仍然是以人為核心，共好玟化提供的價值非常契合。</span><span class="go">閱讀回饋 →</span></span>
+        </button>
+        <div class="deco" aria-hidden="true"><span class="geo geo-quarter c-yellow r90"></span></div>
+        <button class="tile" type="button" data-t="1" aria-haspopup="dialog" style="--mt:var(--ink)">
+          <span class="mk" aria-hidden="true"><span class="geo geo-petal c-yellow"></span><span class="mono">兔</span></span>
+          <span><span class="nm">兔耳生活有限公司</span><span class="role">品牌創辦人 · 品牌永續</span><span class="hl">專業、溫暖、負責任，整個合作過程讓人感到安心。</span><span class="go">閱讀回饋 →</span></span>
+        </button>
+        <div class="deco flame-cell" aria-hidden="true"><svg class="flame" viewBox="0 0 74.13 95.22"><use href="#flame" width="74.13" height="95.22"/></svg></div>
+        <div class="deco" aria-hidden="true"><span class="geo geo-half c-orange"></span></div>
+        <button class="tile" type="button" data-t="2" aria-haspopup="dialog" style="--mt:#fff">
+          <span class="mk" aria-hidden="true"><span class="geo geo-quarter c-grey"></span><span class="mono">休</span></span>
+          <span><span class="nm">台灣休閒農場學會</span><span class="role">產業合作夥伴 · 供應鏈</span><span class="hl">從零散被動的企業合作，轉變為更主動、有策略的窗口溝通。</span><span class="go">閱讀回饋 →</span></span>
+        </button>
+        <div class="deco" aria-hidden="true"><span class="geo geo-petal c-grey r90"></span></div>
+        <button class="tile" type="button" data-t="3" aria-haspopup="dialog" style="--mt:var(--yellow)">
+          <span class="mk" aria-hidden="true"><span class="geo geo-block c-ink"></span><span class="mono">齊</span></span>
+          <span><span class="nm">齊禾品牌顧問</span><span class="role">共同創辦人 · 顧問輔導</span><span class="hl">共好玟化是企業 ESG 優化的專家。</span><span class="go">閱讀回饋 →</span></span>
+        </button>
+      </div>
+      <p class="src">夥伴標誌以字標暫代，正式 logo 與授權到位後替換。</p>
+    </div>
+  </div>
+
+  <div class="pp-card"><dl>
+    <div><dt>概念</dt><dd>最接近客戶指定的「標誌牆」：夥伴字標磚與純幾何磚在 6 欄模組網格上交錯，牆本身就是一張 CIS 構成海報。滑過任何一位夥伴，整面牆的幾何磚一起轉 90°——一個人的聲音，帶動整個生態圈。</dd></div>
+    <div><dt>幾何語彙與變換</dt><dd>模組網格（module grid）＋圓／花瓣／四分圓／方塊作為字標底座；互動時字標底座<strong>旋轉</strong> 90°、磚面由紙色<strong>重新上色</strong>為墨色並露出重點句；同時所有裝飾磚同步旋轉 90°。手機上以 dense 排列<strong>重新拼貼</strong>為 2 欄，字標磚跨滿寬、裝飾磚兩兩成對。</dd></div>
+    <div><dt>參考來源</dt><dd>Pentagram 與 Studio Dumbar 的幾何色塊網格海報；Basecamp／Linear 客戶頁的 logo 牆＋點擊展開案例。</dd></div>
+    <div><dt>優點</dt><dd>最貼近客戶需求原文，擴充最容易（多一位夥伴＝多一塊 2 格磚）；logo 到位後可直接替換字標；重點句在磚內顯示，視線不需跳到別處。觸控裝置上重點句常駐顯示。</dd></div>
+    <div><dt>風險</dt><dd>裝飾磚若比例太高會稀釋夥伴存在感，需控制在 1:2 以內；全牆同步旋轉在大量磚時可能顯得躁動，可改為只轉相鄰磚；墨色反白狀態與頁面其他深色區塊需協調。</dd></div>
+    <div class="full"><dt>與前後區塊的銜接可能</dt><dd><ul>
+      <li>可能一：服務對象區的三色門在接縫處縮成網格中的三塊磚，成為這面牆的起點；離開時牆最右下的墨色方塊放大成 CTA 區的深色底。</li>
+      <li>可能二：以白底與前一區的色塊形成對比，牆作為「輕」的段落；離開時火焰磚升起，成為 CTA 區拱橋中心的拱心石。</li>
+    </ul></dd></div>
+  </dl></div>
+</section>
+
+<!-- ═════════════════════════ C ═════════════════════════ -->
+<section class="opt" data-opt="c" id="opt-c" aria-labelledby="c-t">
+  <div class="opt-head"><span class="pp-label">方案 C</span><h2 id="c-t">對開徽章索引：兩個半圓合成一枚徽章，打開就是重點</h2></div>
+  <div class="s7c">
+    <div class="wrap s7c-grid">
+      <div class="s7c-side">
+        <span class="kicker">合作夥伴怎麼說</span>
+        <h3 class="m-h2">客戶回饋</h3>
+        <p class="m-lead">來自品牌主、社會企業與產業夥伴的真實合作回饋。點選夥伴名稱，閱讀完整回饋。</p>
+        <div class="big" aria-hidden="true"><span class="t"></span><span class="b"></span><svg class="flame" viewBox="0 0 74.13 95.22"><use href="#flame" width="74.13" height="95.22"/></svg></div>
+      </div>
+      <ul class="ix">
+        <li><button type="button" data-t="0" aria-haspopup="dialog">
+          <span class="split" aria-hidden="true" style="--a:var(--orange);--b:var(--yellow)"><i class="t"></i><i class="b"></i><span class="mono">思</span></span>
+          <span><span class="nm">思凡自然農場</span><span class="role">自然農園負責人 · ESG 報告</span></span>
+          <span class="act">閱讀回饋</span>
+          <span class="hlw"><span>ESG 本質仍然是以人為核心，共好玟化提供的價值非常契合。</span></span>
+        </button></li>
+        <li><button type="button" data-t="1" aria-haspopup="dialog">
+          <span class="split" aria-hidden="true" style="--a:var(--yellow);--b:var(--orange)"><i class="t"></i><i class="b"></i><span class="mono">兔</span></span>
+          <span><span class="nm">兔耳生活有限公司</span><span class="role">品牌創辦人 · 品牌永續</span></span>
+          <span class="act">閱讀回饋</span>
+          <span class="hlw"><span>專業、溫暖、負責任，整個合作過程讓人感到安心。</span></span>
+        </button></li>
+        <li><button type="button" data-t="2" aria-haspopup="dialog">
+          <span class="split" aria-hidden="true" style="--a:var(--orange);--b:#fff"><i class="t"></i><i class="b"></i><span class="mono">休</span></span>
+          <span><span class="nm">台灣休閒農場學會</span><span class="role">產業合作夥伴 · 供應鏈</span></span>
+          <span class="act">閱讀回饋</span>
+          <span class="hlw"><span>從零散被動的企業合作，轉變為更主動、有策略的窗口溝通。</span></span>
+        </button></li>
+        <li><button type="button" data-t="3" aria-haspopup="dialog">
+          <span class="split" aria-hidden="true" style="--a:#fff;--b:var(--yellow)"><i class="t"></i><i class="b"></i><span class="mono">齊</span></span>
+          <span><span class="nm">齊禾品牌顧問</span><span class="role">共同創辦人 · 顧問輔導</span></span>
+          <span class="act">閱讀回饋</span>
+          <span class="hlw"><span>共好玟化是企業 ESG 優化的專家。</span></span>
+        </button></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="pp-card"><dl>
+    <div><dt>概念</dt><dd>編輯式索引：每位夥伴是一列，左側徽章由上下兩個半圓合成——上半是共好玟化、下半是夥伴，鏡像相對、合為一體。滑過時徽章「對開」，夥伴的一句話從縫隙中展開；點擊再讀完整回饋。</dd></div>
+    <div><dt>幾何語彙與變換</dt><dd>半圓（half）＋其<strong>鏡像</strong>（scaleY(-1)）＝圓；每列交替<strong>重新上色</strong>（橘／黃／白）；互動時兩半沿垂直方向分開 5px（split），重點句以高度 0→自動展開；「+」<strong>旋轉</strong> 90°。左側大徽章為同一構造放大（scale），中央白色火焰。</dd></div>
+    <div><dt>參考來源</dt><dd>Pentagram 作品索引與 Linear Customers 的列表式案例；Apple 規格頁「+」展開的手風琴互動。</dd></div>
+    <div><dt>優點</dt><dd>資訊最完整、最好掃讀；列表能無痛擴充到 8–12 位夥伴；觸控裝置上重點句常駐顯示；淡黃底讓這區溫暖但不搶 CTA。</dd></div>
+    <div><dt>風險</dt><dd>「牆」的感覺最弱，若客戶堅持視覺上的 logo 牆，此案較不符合期待；字標在 64px 圓內辨識度有限，正式 logo 需再設計徽章版本；滑過展開會造成列高變動，需注意版面跳動。</dd></div>
+    <div class="full"><dt>與前後區塊的銜接可能</dt><dd><ul>
+      <li>可能一：服務對象區的藍圖（整圓）在此被一分為二成為徽章的原型；離開時左側大徽章的兩半向左右展開成 CTA 區的兩段弧，弧再合為橋。</li>
+      <li>可能二：淡黃底與上一區的淺底以一道橘色細線分隔；離開時最後一列的白／黃徽章放大，成為 CTA 區底色的「日出」半圓。</li>
+    </ul></dd></div>
+  </dl></div>
+</section>
+
+<dialog class="fb" id="fb" aria-labelledby="fb-name">
+  <div class="fb-in">
+    <div class="fb-side" aria-hidden="true"><span class="pt a"></span><span class="pt b"></span><span class="mono" id="fb-mono">思</span></div>
+    <div class="fb-main">
+      <span class="fb-tag" id="fb-tag"></span>
+      <p class="fb-hl" id="fb-hl"></p>
+      <p class="fb-q" id="fb-q"></p>
+      <div class="fb-who"><b id="fb-name"></b><span id="fb-title"></span></div>
+    </div>
+    <form method="dialog"><button class="fb-close" type="submit">關閉</button></form>
+  </div>
+</dialog>
+<script>
+(() => {
+  const T = [
+    { m: '思', c: 'var(--orange)', t: '#fff', tag: 'ESG 報告', hl: 'ESG 本質仍然是以人為核心，共好玟化提供的價值非常契合。', q: '從創辦者的角度切入，協助你想清楚自己在做的事與永續的關聯。幫企業做報告的同時，也喚醒人對永續的初衷。', n: '思凡自然農場', r: '自然農園負責人' },
+    { m: '兔', c: 'var(--yellow)', t: 'var(--ink)', tag: '品牌永續', hl: '專業、溫暖、負責任，整個合作過程讓人感到安心。', q: '讓複雜的永續內容變得不那麼有壓力。不同背景的人可以在同一個場域交流碰撞，延伸出新的合作與可能。', n: '兔耳生活有限公司', r: '品牌創辦人' },
+    { m: '休', c: 'var(--grey)', t: '#fff', tag: '供應鏈', hl: '從零散被動的企業合作，轉變為更主動、有策略的窗口溝通。', q: '如同名字一樣的『共好』夥伴，共好玟化是知識整合與轉譯的角色。', n: '台灣休閒農場學會', r: '產業合作夥伴' },
+    { m: '齊', c: 'var(--ink)', t: 'var(--yellow)', tag: '顧問輔導', hl: '共好玟化是企業 ESG 優化的專家。', q: '能提出客戶想不到的視角，也能在客戶既有基礎上做更深入的延伸。整合環境、社會與經濟三大效益。', n: '齊禾品牌顧問', r: '共同創辦人' }
+  ];
+  const dlg = document.getElementById('fb');
+  const $ = (id) => document.getElementById(id);
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-t]');
+    if (!b || !dlg.showModal) return;
+    const t = T[+b.dataset.t];
+    const side = dlg.querySelector('.fb-side');
+    side.style.setProperty('--c', t.c); side.style.setProperty('--mt', t.t);
+    $('fb-mono').textContent = t.m; $('fb-tag').textContent = t.tag; $('fb-hl').textContent = t.hl;
+    $('fb-q').textContent = t.q; $('fb-name').textContent = t.n; $('fb-title').textContent = t.r;
+    dlg.showModal();
+  });
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+})();
+</script>
+
+<script>
+(() => {
+  const bar = document.querySelector('.pp-bar');
+  const opts = [...document.querySelectorAll('.opt')];
+  bar.hidden = false;
+  bar.addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-show]');
+    if (!b) return;
+    const k = b.dataset.show;
+    bar.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    opts.forEach((o) => { o.hidden = k !== 'all' && o.dataset.opt !== k; });
+    window.scrollTo({ top: 0 });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>首頁 v2 · S4 品牌故事提案</title>
+<link rel="stylesheet" href="_tokens.css">
+<link rel="stylesheet" href="_geo.css">
+<style>
+/* ── Proposal chrome (shared by s1–s4) ── */
+html { scroll-padding-top: 56px; }
+.wrap { width: 100%; max-width: 1200px; margin-inline: auto; padding-inline: 16px; }
+@media (min-width: 860px) { .wrap { padding-inline: 40px; } }
+.pp-intro { padding-block: 36px 28px; }
+.pp-intro h1 { font: 900 clamp(26px, 4.4vw, 40px)/1.25 var(--font-sans); margin: 12px 0 8px; }
+.pp-intro p { color: var(--ink-2); max-width: 72ch; margin: 0 0 6px; font-size: 15px; }
+.pp-intro .pp-note { margin-top: 16px; max-width: 72ch; }
+.pp-bar .pp-sep { flex: 1; }
+.pp-bar a { color: #fff; opacity: .75; text-decoration: none; font-size: 12px; }
+.pp-bar a:hover { opacity: 1; text-decoration: underline; }
+.opt { border-top: 1px solid var(--line); }
+.opt[hidden] { display: none; }
+.opt-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding-block: 36px 18px; }
+.opt-head h2 { font: 700 clamp(18px, 2.4vw, 22px)/1.4 var(--font-sans); margin: 0; }
+.opt-head .tag { font: 500 13px/1.4 var(--font-sans); color: var(--ink-2); }
+.mock { position: relative; overflow: clip; isolation: isolate; box-shadow: 0 0 0 1px var(--line); }
+.pp-card { padding-block: 24px 64px; }
+.pp-card .in { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 20px; display: grid; gap: 18px 36px; }
+@media (min-width: 860px) { .pp-card .in { grid-template-columns: 1fr 1fr; padding: 28px 32px; } }
+.pp-card h3 { font: 700 13px/1.4 var(--font-sans); letter-spacing: .1em; color: var(--orange-strong); margin: 0 0 6px; }
+.pp-card p, .pp-card li { font-size: 14.5px; line-height: 1.75; margin: 0; }
+.pp-card ul { margin: 0; padding-left: 1.2em; }
+.pp-card .wide { grid-column: 1 / -1; }
+.pp-card .ho li + li { margin-top: 4px; }
+
+/* ── Mock primitives ── */
+.eyebrow { display: inline-flex; align-items: center; gap: 10px; font: 700 13px/1.4 var(--font-sans); letter-spacing: .14em; color: var(--orange-strong); margin: 0; }
+.eyebrow::before { content: ""; width: 10px; height: 10px; background: currentColor; border-radius: 0 100% 0 100%; flex: none; }
+.on-dark .eyebrow { color: var(--yellow); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 999px; font: 700 15px/1.3 var(--font-sans); text-decoration: none; border: 2px solid transparent; transition: transform .2s var(--geo-ease), background-color .2s; }
+.btn:hover { transform: translateY(-2px); }
+.btn:focus-visible, .pp-bar button:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+.btn-primary { background: var(--orange-strong); color: #fff; }
+.btn-primary:hover { background: #A52F13; }
+.btn-ghost { border-color: var(--ink); color: var(--ink); }
+.btn-yellow { background: var(--yellow); color: var(--ink); }
+.btn-ghost-light { border-color: rgba(255,255,255,.7); color: #fff; }
+.mk { display: block; width: var(--s, 48px); aspect-ratio: 74.13 / 95.22; height: auto; overflow: visible; }
+.vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.site-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 18px; position: relative; z-index: 3; }
+.site-nav img { height: 34px; width: auto; }
+.site-nav ul { display: none; list-style: none; margin: 0; padding: 0; gap: 26px; font: 500 15px/1 var(--font-sans); }
+.site-nav .nav-cta { display: none; }
+.site-nav .burger { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; border: 1.5px solid currentColor; }
+.site-nav .burger span { width: 16px; height: 2px; background: currentColor; box-shadow: 0 5px currentColor, 0 -5px currentColor; }
+@media (min-width: 980px) { .site-nav ul { display: flex; } .site-nav .nav-cta { display: inline-flex; min-height: 40px; font-size: 14px; } .site-nav .burger { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+.sec-title { font: 900 clamp(26px, 4.2vw, 44px)/1.3 var(--font-sans); margin: 12px 0 14px; text-wrap: balance; }
+.founder { display: flex; align-items: center; gap: 14px; margin: 22px 0; }
+.founder .av { width: 56px; height: 56px; border-radius: 50%; background: var(--ink); display: grid; place-items: center; flex: none; }
+.founder .av .mk { --s: 26px; }
+.founder b { display: block; font: 700 17px/1.3 var(--font-sans); }
+.founder span { font-size: 14px; color: var(--ink-2); }
+.story-more { margin-top: 28px; border-top: 1px solid var(--line); }
+.story-more summary { cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 10px; min-height: 48px; font: 700 15px/1.3 var(--font-sans); color: var(--orange-strong); margin-top: 8px; }
+.story-more summary::-webkit-details-marker { display: none; }
+.story-more summary::before { content: ""; width: 14px; height: 14px; background: currentColor; border-radius: 100% 0 0 0; transform: rotate(135deg); transition: transform .4s var(--geo-ease); }
+.story-more[open] summary::before { transform: rotate(-45deg); }
+.story-more summary .less { display: none; }
+.story-more[open] summary .more { display: none; }
+.story-more[open] summary .less { display: inline; }
+.full p { margin: 0 0 14px; max-width: 64ch; }
+.full strong { color: var(--ink); background: linear-gradient(transparent 60%, var(--yellow-soft) 60%); }
+.lnk { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--orange-strong); text-decoration: none; min-height: 44px; }
+.lnk::after { content: "→"; transition: transform .3s; }
+.lnk:hover::after { transform: translateX(4px); }
+
+/* ═════════ A · 同心圓 ═════════ */
+.s-a { background: var(--paper); padding-block: 60px 64px; }
+.sa-top { display: grid; gap: 40px; align-items: center; }
+@media (min-width: 960px) { .sa-top { grid-template-columns: 1.1fr .9fr; gap: 64px; } }
+.sa-name { font: 800 clamp(64px, 14vw, 128px)/.95 var(--font-display); letter-spacing: -.03em; margin: 8px 0 6px; color: var(--ink); }
+.sa-name em { font-style: normal; color: var(--orange-strong); }
+.sa-head { font: 700 clamp(20px, 2.4vw, 26px)/1.4 var(--font-sans); margin: 0 0 4px; }
+.sa-mean { font: 500 14px/1.4 var(--font-display); color: var(--ink-2); letter-spacing: .04em; margin: 0; }
+.sa-sum { color: var(--ink-2); font-size: 15.5px; margin: 0; }
+.rings { position: relative; width: min(100%, 440px); aspect-ratio: 1; margin-inline: auto; }
+.rings .r { position: absolute; left: 50%; top: 50%; width: calc(var(--k) * 100%); aspect-ratio: 1; translate: -50% -50%; border-radius: 50%; background: var(--c); display: flex; justify-content: center; padding-top: calc(var(--k) * 6% + 2%); }
+.rings .r span { font: 700 15px/1.3 var(--font-sans); color: var(--t, var(--ink)); background: var(--chip, transparent); padding: 4px 10px; border-radius: 999px; height: fit-content; }
+.rings .r.r3 { align-items: center; padding-top: 0; }
+.rings .r.r3 span { font-size: 16px; }
+.rings .mk { position: absolute; left: 50%; bottom: 23%; translate: -50% 0; --s: 34px; --fy: var(--ink); --fo: var(--ink); opacity: .9; }
+.rcap { font-size: 13.5px; color: var(--ink-2); text-align: center; margin-top: 14px; }
+@media (prefers-reduced-motion: no-preference) {
+  .rings .r { animation: sa-grow 1.1s var(--geo-ease) both; animation-delay: calc(var(--d) * .25s + .2s); }
+}
+@keyframes sa-grow { from { scale: .2; opacity: 0; } }
+.sa-bul { list-style: none; padding: 0; margin: 48px 0 0; display: grid; gap: 12px; }
+@media (min-width: 700px) { .sa-bul { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1100px) { .sa-bul { grid-template-columns: repeat(4, 1fr); } }
+.sa-bul li { background: var(--card); border-radius: var(--radius); padding: 22px 20px; border: 1px solid var(--line); font-size: 15px; line-height: 1.75; }
+.sa-bul .pt { display: block; width: 30px; height: 30px; margin-bottom: 14px; background: var(--c); border-radius: 0 100% 0 100%; transform: rotate(var(--r)); }
+.sa-flower { display: flex; align-items: center; gap: 14px; margin-top: 48px; font: 700 15px/1.4 var(--font-sans); }
+.sa-flower .fl { position: relative; width: 44px; height: 44px; flex: none; }
+.sa-flower .fl i { position: absolute; width: 50%; height: 50%; background: var(--c); border-radius: 0 100% 0 100%; }
+.sa-flower .fl i:nth-child(1) { left: 0; top: 0; } .sa-flower .fl i:nth-child(2) { right: 0; top: 0; transform: rotate(90deg); }
+.sa-flower .fl i:nth-child(3) { right: 0; bottom: 0; transform: rotate(180deg); } .sa-flower .fl i:nth-child(4) { left: 0; bottom: 0; transform: rotate(270deg); }
+.sa-flower + .sa-bul { margin-top: 16px; }
+
+/* ═════════ B · 鏡像火焰拱 ═════════ */
+.s-b { background: var(--card); padding-block: 60px 64px; }
+.sb-hero { text-align: center; }
+.sb-arch { position: relative; width: min(100%, 640px); margin: 18px auto 0; aspect-ratio: 16 / 8.6; }
+.sb-arch .f { position: absolute; bottom: 12%; width: 30%; }
+.sb-arch .f .mk { --s: 100%; }
+.sb-arch .f.l { left: 6%; transform: rotate(14deg); transform-origin: 50% 100%; }
+.sb-arch .f.r { right: 6%; transform: scaleX(-1) rotate(14deg); transform-origin: 50% 100%; }
+.sb-arch .word { position: absolute; left: 50%; top: 4%; translate: -50% 0; font: 800 clamp(36px, 9vw, 72px)/1 var(--font-display); letter-spacing: -.02em; color: var(--ink); }
+.sb-arch .mean { position: absolute; left: 50%; top: 40%; translate: -50% 0; font: 700 clamp(15px, 2.2vw, 20px)/1.3 var(--font-sans); color: var(--orange-strong); white-space: nowrap; }
+.sb-arch .deck { position: absolute; left: 0; right: 0; bottom: 12%; height: 6px; background: var(--ink); border-radius: 3px; }
+.sb-arch .half { position: absolute; left: 50%; bottom: calc(12% + 6px); width: 26%; aspect-ratio: 2 / 1; translate: -50% 0; border: 6px solid var(--yellow); border-bottom: 0; border-radius: 999px 999px 0 0; }
+@media (max-width: 600px) { .sb-arch .mean { display: none; } }
+.sb-piers { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 760px; margin: 6px auto 0; text-align: left; }
+.sb-piers p { margin: 0; padding: 14px 16px; border-radius: 12px; font-size: 14.5px; line-height: 1.6; }
+.sb-piers p:first-child { background: var(--orange-soft); border-radius: 12px 0 12px 12px; }
+.sb-piers p:last-child { background: var(--yellow-soft); border-radius: 0 12px 12px 12px; }
+.sb-piers b { display: block; font-size: 12.5px; letter-spacing: .1em; color: var(--ink-2); margin-bottom: 2px; }
+@media (prefers-reduced-motion: no-preference) {
+  .sb-arch .f.l { animation: sb-lean-l 1.4s var(--geo-ease) .3s both; }
+  .sb-arch .f.r { animation: sb-lean-r 1.4s var(--geo-ease) .3s both; }
+  .sb-arch .half { animation: a-fade .8s ease 1.3s both; }
+}
+@keyframes sb-lean-l { from { transform: rotate(-12deg) translateY(10%); } }
+@keyframes sb-lean-r { from { transform: scaleX(-1) rotate(-12deg) translateY(10%); } }
+@keyframes a-fade { from { opacity: 0; } }
+.sb-body { display: grid; gap: 28px 64px; margin-top: 56px; }
+@media (min-width: 960px) { .sb-body { grid-template-columns: .9fr 1.1fr; } }
+.sb-body .sa-head { font-size: clamp(22px, 2.6vw, 28px); }
+.sb-sum { margin: 0; font-size: 16px; color: var(--ink-2); }
+.sb-bul { list-style: none; padding: 0; margin: 40px 0 0; display: grid; gap: 12px; counter-reset: b; }
+@media (min-width: 760px) { .sb-bul { grid-template-columns: 1fr 1fr; } }
+.sb-bul li { position: relative; padding: 22px 22px 22px 64px; background: var(--paper); border-radius: 0 28px 0 28px; font-size: 15px; counter-increment: b; }
+.sb-bul li:nth-child(even) { border-radius: 28px 0 28px 0; }
+.sb-bul li::before { content: counter(b); position: absolute; left: 20px; top: 20px; font: 800 22px/1 var(--font-display); color: var(--orange-strong); }
+.stairs { display: grid; grid-template-columns: repeat(3, 1fr); align-items: end; gap: 6px; margin-top: 40px; max-width: 760px; }
+.stairs div { background: var(--c); color: var(--t, var(--ink)); padding: 14px 12px; font: 700 15px/1.4 var(--font-sans); min-height: calc(var(--h) * 54px); display: flex; align-items: flex-end; border-radius: 0 calc(var(--h) * 16px) 0 0; }
+.stairs-cap { font-size: 13.5px; color: var(--ink-2); margin: 10px 0 0; max-width: 760px; }
+
+/* ═════════ C · 模組拼貼 S 波 ═════════ */
+.s-c { background: var(--paper); padding-block: 0 64px; }
+.sc-grid { display: grid; gap: 6px; grid-template-columns: 1fr; }
+@media (min-width: 960px) { .sc-grid { grid-template-columns: repeat(12, 1fr); } }
+.sc-grid > * { border-radius: 4px; }
+.sc-intro { background: var(--card); padding: 32px 22px; }
+.sc-name { background: var(--orange); color: #fff; padding: 28px 22px; position: relative; overflow: hidden; min-height: 220px; display: flex; flex-direction: column; justify-content: flex-end; }
+.sc-name .big { font: 800 clamp(64px, 12vw, 120px)/.9 var(--font-display); letter-spacing: -.03em; }
+.sc-name .mean { font: 700 24px/1.3 var(--font-sans); margin-top: 10px; }
+.sc-name .mk { position: absolute; right: -8%; top: -20%; --s: 58%; --fy: rgba(255,255,255,.22); --fo: rgba(255,255,255,.22); transform: rotate(-18deg); }
+@media (min-width: 960px) {
+  .sc-intro { grid-column: span 7; padding: 44px 40px; } .sc-name { grid-column: span 5; padding: 36px; }
+  .sc-wave { grid-column: 1 / -1; } .sc-founder { grid-column: span 4; } .sc-sum { grid-column: span 8; }
+  .sc-bul { grid-column: 1 / -1; } .sc-full { grid-column: span 8; } .sc-chain { grid-column: span 4; }
+}
+.sc-intro .sa-head { margin-top: 6px; }
+.sc-wave { display: grid; grid-template-columns: repeat(8, 1fr); background: var(--card); border-radius: 4px; overflow: hidden; }
+.sc-wave i { aspect-ratio: 1; background: var(--c); border-radius: 100% 0 0 0; transform: rotate(var(--r)); }
+.sc-wave i.e { background: none; }
+.sc-wave i.x { display: none; }
+@media (min-width: 960px) { .sc-wave { grid-template-columns: repeat(16, 1fr); } .sc-wave i.x { display: block; } }
+.sc-founder { background: var(--grey); color: #fff; padding: 28px 22px; display: grid; align-content: space-between; gap: 24px; }
+.sc-founder .mk { --s: 40px; --fy: var(--yellow); --fo: #fff; }
+.sc-founder b { display: block; font: 700 22px/1.3 var(--font-sans); }
+.sc-founder span { font-size: 14px; opacity: .9; }
+.sc-sum { background: var(--card); padding: 28px 22px; font-size: 16.5px; line-height: 1.85; }
+.sc-sum p { margin: 0; }
+@media (min-width: 960px) { .sc-sum { padding: 40px; font-size: 17.5px; } .sc-founder { padding: 36px; } }
+.sc-bul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+@media (min-width: 640px) { .sc-bul { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1100px) { .sc-bul { grid-template-columns: repeat(4, 1fr); } }
+.sc-bul li { background: var(--bg); padding: 70px 20px 22px; position: relative; font-size: 15px; line-height: 1.75; border-radius: 4px; }
+.sc-bul li i { position: absolute; left: 20px; top: 20px; width: 34px; height: 34px; background: var(--c); border-radius: 100% 0 0 0; transform: rotate(var(--r)); }
+.sc-full { background: var(--card); padding: 28px 22px; }
+@media (min-width: 960px) { .sc-full { padding: 40px; } .sc-full .cols { column-count: 2; column-gap: 40px; } }
+.sc-full h3 { font: 700 18px/1.4 var(--font-sans); margin: 0 0 16px; }
+.sc-full p { margin: 0 0 12px; font-size: 15px; break-inside: avoid; }
+.sc-full strong { background: linear-gradient(transparent 60%, var(--yellow-soft) 60%); }
+.sc-chain { background: var(--surface-dark); color: #fff; padding: 28px 22px; display: grid; gap: 0; align-content: center; justify-items: center; text-align: center; }
+.sc-chain .st { display: grid; justify-items: center; gap: 10px; }
+.sc-chain .dc { width: 64px; height: 64px; border-radius: 50%; background: var(--c); }
+.sc-chain .dc.h { border-radius: 64px 64px 0 0; height: 32px; }
+.sc-chain .dc.q { border-radius: 100% 0 0 0; width: 48px; height: 48px; transform: rotate(45deg); }
+.sc-chain b { font: 700 16px/1.4 var(--font-sans); }
+.sc-chain .ar { width: 14px; height: 14px; background: rgba(255,255,255,.5); clip-path: polygon(0 0, 100% 0, 50% 100%); margin: 14px 0; }
+.sc-chain .cap { font-size: 13px; color: rgba(255,255,255,.75); margin: 18px 0 0; max-width: 28ch; }
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .sc-wave i { animation: sc-tile linear both; animation-timeline: view(); animation-range: entry 0% cover 50%; }
+    .sc-bul li i { animation: sc-tile linear both; animation-timeline: view(); animation-range: entry 0% cover 40%; }
+  }
+}
+@keyframes sc-tile { from { transform: rotate(calc(var(--r) - 180deg)); } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="fl-y" viewBox="203.59 169.44 74.13 95.22"><path fill="var(--fy,#FAB40A)" d="M 224.308594 264.65625 C 224.308594 264.65625 241.097656 262.621094 241.433594 246.953125 C 241.625 238.117188 235.25 230.648438 229.917969 225.21875 C 224.523438 219.726562 222.128906 214.316406 221.109375 211.136719 C 220.878906 210.425781 219.835938 210.523438 219.75 211.265625 C 218.554688 221.480469 226.351562 233.089844 226.351562 233.089844 C 225.839844 233.125 215.3125 221.828125 210.816406 207.996094 C 210.589844 207.308594 209.589844 207.378906 209.460938 208.09375 C 208.628906 212.773438 208.371094 223.503906 219.164062 235.855469 C 214.113281 233.695312 208.886719 224.738281 206.78125 220.800781 C 206.453125 220.191406 205.527344 220.378906 205.46875 221.066406 C 205.15625 224.648438 205.746094 232.074219 214.355469 239.027344 C 214.5 239.144531 210.058594 237.746094 205.027344 231.703125 C 204.535156 231.117188 203.589844 231.617188 203.8125 232.347656 C 204.585938 234.871094 206.445312 238.640625 210.933594 242.105469 C 216.203125 246.171875 222.085938 251.511719 223.917969 256.210938 C 225.75 260.910156 225.007812 263.308594 224.308594 264.65625 "/></symbol>
+  <symbol id="fl-o" viewBox="203.59 169.44 74.13 95.22"><path fill="var(--fo,#F25232)" d="M 269.261719 228.570312 C 270.472656 216.289062 274.730469 209.757812 277.25 206.894531 C 277.71875 206.359375 277.179688 205.542969 276.507812 205.769531 C 271.0625 207.570312 267.476562 211.140625 265.082031 215.121094 C 263.925781 212.765625 262.503906 210.484375 260.910156 208.128906 C 253.144531 196.664062 250.515625 183.726562 249.734375 178.566406 C 249.628906 177.871094 248.671875 177.742188 248.398438 178.390625 C 242.378906 192.726562 253.308594 210.753906 253.308594 210.753906 C 252.550781 210.652344 238.230469 191.742188 235.6875 170.277344 C 235.597656 169.519531 234.527344 169.4375 234.324219 170.175781 C 232.582031 176.476562 230.46875 192.078125 242.695312 213.503906 C 235.621094 208.625 230.007812 191.570312 228.210938 185.5625 C 228.011719 184.894531 227.058594 184.898438 226.867188 185.574219 C 225.476562 190.507812 223.597656 203.167969 234.800781 216.6875 C 234.980469 216.90625 228.476562 213.3125 222.789062 202.125 C 222.445312 201.449219 221.429688 201.710938 221.464844 202.464844 C 221.632812 206.257812 223.453125 214.753906 229.503906 221.730469 C 235.949219 229.167969 242.222656 234.816406 243.5 242.160156 C 244.773438 249.5 242.765625 255 241.351562 256.75 C 241.351562 256.75 265.066406 258.183594 268.347656 235.984375 C 268.417969 235.507812 269.136719 229.835938 269.261719 228.570312 "/></symbol>
+  <symbol id="flame" viewBox="203.59 169.44 74.13 95.22"><path fill="var(--fy,#FAB40A)" d="M 224.308594 264.65625 C 224.308594 264.65625 241.097656 262.621094 241.433594 246.953125 C 241.625 238.117188 235.25 230.648438 229.917969 225.21875 C 224.523438 219.726562 222.128906 214.316406 221.109375 211.136719 C 220.878906 210.425781 219.835938 210.523438 219.75 211.265625 C 218.554688 221.480469 226.351562 233.089844 226.351562 233.089844 C 225.839844 233.125 215.3125 221.828125 210.816406 207.996094 C 210.589844 207.308594 209.589844 207.378906 209.460938 208.09375 C 208.628906 212.773438 208.371094 223.503906 219.164062 235.855469 C 214.113281 233.695312 208.886719 224.738281 206.78125 220.800781 C 206.453125 220.191406 205.527344 220.378906 205.46875 221.066406 C 205.15625 224.648438 205.746094 232.074219 214.355469 239.027344 C 214.5 239.144531 210.058594 237.746094 205.027344 231.703125 C 204.535156 231.117188 203.589844 231.617188 203.8125 232.347656 C 204.585938 234.871094 206.445312 238.640625 210.933594 242.105469 C 216.203125 246.171875 222.085938 251.511719 223.917969 256.210938 C 225.75 260.910156 225.007812 263.308594 224.308594 264.65625 "/><path fill="var(--fo,#F25232)" d="M 269.261719 228.570312 C 270.472656 216.289062 274.730469 209.757812 277.25 206.894531 C 277.71875 206.359375 277.179688 205.542969 276.507812 205.769531 C 271.0625 207.570312 267.476562 211.140625 265.082031 215.121094 C 263.925781 212.765625 262.503906 210.484375 260.910156 208.128906 C 253.144531 196.664062 250.515625 183.726562 249.734375 178.566406 C 249.628906 177.871094 248.671875 177.742188 248.398438 178.390625 C 242.378906 192.726562 253.308594 210.753906 253.308594 210.753906 C 252.550781 210.652344 238.230469 191.742188 235.6875 170.277344 C 235.597656 169.519531 234.527344 169.4375 234.324219 170.175781 C 232.582031 176.476562 230.46875 192.078125 242.695312 213.503906 C 235.621094 208.625 230.007812 191.570312 228.210938 185.5625 C 228.011719 184.894531 227.058594 184.898438 226.867188 185.574219 C 225.476562 190.507812 223.597656 203.167969 234.800781 216.6875 C 234.980469 216.90625 228.476562 213.3125 222.789062 202.125 C 222.445312 201.449219 221.429688 201.710938 221.464844 202.464844 C 221.632812 206.257812 223.453125 214.753906 229.503906 221.730469 C 235.949219 229.167969 242.222656 234.816406 243.5 242.160156 C 244.773438 249.5 242.765625 255 241.351562 256.75 C 241.351562 256.75 265.066406 258.183594 268.347656 235.984375 C 268.417969 235.507812 269.136719 229.835938 269.261719 228.570312 "/></symbol>
+</svg>
+
+<div class="pp-bar" role="toolbar" aria-label="切換方案" hidden>
+  <strong>S4 · 品牌故事</strong>
+  <button type="button" data-show="A" aria-pressed="false">A</button>
+  <button type="button" data-show="B" aria-pressed="false">B</button>
+  <button type="button" data-show="C" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+  <span class="pp-sep"></span>
+  <a href="s3-problem.html">← S3</a><a href="s1-hero.html">回到 S1</a>
+</div>
+
+<header class="wrap pp-intro">
+  <span class="pp-label">Home v2 · Round 2 · S4</span>
+  <h1>品牌故事：Sayun＝橋樑，用幾何把名字畫出來</h1>
+  <p>沒有創辦人照片時，故事區的主視覺就是「名字」本身。三個方案分別把 Sayun 畫成：同心圓（社會在最內圈）、兩把彼此傾身的火焰（橋）、以四分圓拼出的波浪（模組拼貼）。完整故事以原生 &lt;details&gt; 收合（A、B）或全文展開（C），文案取自現行內容。</p>
+  <p class="pp-note">本頁僅呈現選項，不做推薦；取捨將依首頁總體規劃另行決定。若日後取得創辦人照片，三個方案都預留了可替換的位置（創辦人資訊區塊）。</p>
+</header>
+
+<main>
+<!-- ───────────── A ───────────── -->
+<section class="opt" data-opt="A" aria-labelledby="a-h">
+  <div class="wrap opt-head"><span class="pp-label">Option A</span><h2 id="a-h">同心圓：社會在最內圈，一圈一圈向外放大</h2></div>
+  <div class="mock s-a">
+    <div class="wrap">
+      <div class="sa-top">
+        <div>
+          <p class="eyebrow">品牌故事</p>
+          <h2 class="sec-title">從一個泰雅族名字開始</h2>
+          <p class="sa-name" aria-hidden="true">Say<em>u</em>n</p>
+          <p class="sa-head">Sayun，意思是「橋樑」。</p>
+          <p class="sa-mean">Sayun means "Bridge"</p>
+          <div class="founder"><span class="av"><svg class="mk" aria-hidden="true"><use href="#flame"/></svg></span><div><b>Evvon（Sayun）</b><span>共好玟化 創辦人</span></div></div>
+          <p class="sa-sum">創辦人 Evvon 在擔任社工期間，一位宜蘭南澳的泰雅族牧師給了她「Sayun」這個名字，期許她成為連結不同群體與文化的溝通者。多年後，當永續浪潮席捲而來，她看見一道缺口：企業握有資源、卻缺乏有效的策略；NPO 擁有解決社會問題的專業、卻缺乏與企業連結的橋。於是她決定親手把這座橋搭起來——從單一機構的服務，延伸到整個產業的影響力。</p>
+        </div>
+        <figure style="margin:0"><div class="rings">
+          <div class="r" style="--k:1;--c:#E4E5E8;--d:2"><span>有能力照顧環境</span></div>
+          <div class="r" style="--k:.72;--c:var(--yellow);--d:1"><span>商業能長久</span></div>
+          <div class="r r3" style="--k:.42;--c:var(--orange);--d:0"><span>社會有韌性</span></div>
+          </div>
+          <figcaption class="rcap">人與人之間的關係緊密，社會才有韌性；當社會有韌性，商業才能長久運作；當商業可行，我們才有能力照顧環境。</figcaption>
+        </figure>
+      </div>
+      <div class="sa-flower"><span class="fl" aria-hidden="true"><i style="--c:var(--orange)"></i><i style="--c:var(--yellow)"></i><i style="--c:var(--grey)"></i><i style="--c:var(--orange)"></i></span>四個信念，拼成一朵花</div>
+      <ul class="sa-bul">
+        <li><i class="pt" style="--c:var(--orange);--r:0deg" aria-hidden="true"></i>從社工走向搭橋者，連結有資源卻缺策略的企業，與有專業卻缺連結的社會組織。</li>
+        <li><i class="pt" style="--c:var(--yellow);--r:90deg" aria-hidden="true"></i>永續要從內而外長出來，先把價值寫進治理、長成與人的信任，環境的努力才不會淪為一次性。</li>
+        <li><i class="pt" style="--c:var(--grey);--r:180deg" aria-hidden="true"></i>相信人與人之間緊密的信任，是一切永續最深的根，也是社會韌性的起點。</li>
+        <li><i class="pt" style="--c:var(--orange);--r:270deg" aria-hidden="true"></i>永續不是「獲利」或「責任」的二選一，而是讓社會、環境與經濟一起加乘，這就是雙效益。</li>
+      </ul>
+      <details class="story-more">
+        <summary><span class="more">閱讀完整故事</span><span class="less">收合故事</span></summary>
+        <div class="full">
+          <p>創辦人吳玟樺 Evvon 在擔任社工期間，遇到了一位泰雅族的<strong>林慶台牧師</strong>，也就是電影<strong>賽德克巴萊</strong>的主角。</p>
+          <p>林牧師給了 Evvon 一個泰雅族名字——Sayun，意思是「橋樑」。有資源的人與沒有資源的人之間，需要有一座溝通橋樑。</p>
+          <p>這個名字，後來也成為共好玟化最核心的理念。</p>
+          <p>從社工到創業，Evvon 一直在尋找自己與環境互動的方式。一個機構能影響的人有限，但如果能從一個機構的影響力擴散到整個產業，改變就有機會真正發生。</p>
+          <p>如同品牌名稱「共好玟化」所承載的——共好，讓每一個加入的人，都能一起好。</p>
+          <p>共好玟化的價值主張是：永續是環境、社會、經濟三個效益共同構成的系統。</p>
+          <p>人與人之間的關係緊密，社會才有韌性；當社會有韌性，商業才能長久運作；當商業可行，我們才有能力照顧環境。</p>
+          <p>所以共好玟化將社會放在最前面是因為：永續的核心是「人」，人與人之間共好，才能真正發揮影響力。</p>
+        </div>
+      </details>
+      <a class="lnk" href="#">認識共好玟化</a>
+    </div>
+  </div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>概念</h3><p>「社會放在最前面」畫成最內圈。價值鏈「社會有韌性 → 商業能長久 → 有能力照顧環境」不再是三個箭頭，而是三個同心圓：社會是核心，向外撐起商業，再向外才有能力照顧環境——這正是完整故事最後一段的論點。大字 Sayun 作為主視覺，四個信念各配一片花瓣，合起來是一朵花。</p></div>
+    <div><h3>幾何語彙與變換</h3><ul><li>disc ×3、petal ×4、標誌</li><li><b>縮放</b>：同一個圓以 0.42／0.72／1 三種比例疊合</li><li><b>旋轉</b>：同一片花瓣 0/90/180/270°，四片拼成花</li><li><b>換色</b>：橘（社會）→ 黃（商業）→ 淺灰（環境）</li><li>載入時三圈由內向外依序長出</li></ul></div>
+    <div><h3>參考來源</h3><p>Patagonia「Our Core Values」與 B Corp 網站以同心圓說明「核心價值向外擴散」；The New York Times 長文專題的超大字標開場。</p></div>
+    <div><h3>優點</h3><ul><li>把品牌主張（社會優先）變成一眼可懂的圖，容易被引用與轉述</li><li>不需創辦人照片也成立；日後有照片時可放在大字 Sayun 位置</li><li>同心圓可延伸到「雙效益理論」等內頁</li></ul></div>
+    <div><h3>風險</h3><ul><li>同心圓容易被聯想為一般「黃金圈」簡報圖，需靠色彩與字體拉開差異</li><li>大字英文 Sayun 在中文頁面中份量很重，需確認創辦人對個人名字被放大的接受度</li></ul></div>
+    <div><h3>與前後區塊的銜接可能</h3><ul class="ho"><li>① 承接 S3：解方區的圓（四分圓合體）放大成本區的同心圓，延續「圓＝共好」的語彙。</li><li>② 銜接下一區（行動證據）：最外圈「照顧環境」放大成證據區背景，數字卡片落在圓內，表示成果來自這條價值鏈。</li></ul></div>
+  </div></div>
+</section>
+
+<!-- ───────────── B ───────────── -->
+<section class="opt" data-opt="B" aria-labelledby="b-h">
+  <div class="wrap opt-head"><span class="pp-label">Option B</span><h2 id="b-h">鏡像火焰拱：兩把火焰彼此傾身，搭成一座橋</h2></div>
+  <div class="mock s-b">
+    <div class="wrap">
+      <div class="sb-hero">
+        <p class="eyebrow">品牌故事</p>
+        <h2 class="sec-title">從一個泰雅族名字開始</h2>
+        <div class="sb-arch" aria-hidden="true">
+          <span class="f l"><svg class="mk"><use href="#flame"/></svg></span>
+          <span class="f r"><svg class="mk"><use href="#flame"/></svg></span>
+          <i class="half"></i><i class="deck"></i>
+          <span class="word">Sayun</span>
+          <span class="mean">意思是「橋樑」</span>
+        </div>
+        <div class="sb-piers">
+          <p><b>這一端</b>企業握有資源、卻缺乏有效的策略</p>
+          <p><b>那一端</b>NPO 擁有解決社會問題的專業、卻缺乏與企業連結的橋</p>
+        </div>
+      </div>
+      <div class="sb-body">
+        <div>
+          <p class="sa-head">Sayun，意思是「橋樑」。</p>
+          <p class="sa-mean">Sayun means "Bridge"</p>
+          <div class="founder"><span class="av"><svg class="mk" aria-hidden="true"><use href="#flame"/></svg></span><div><b>Evvon（Sayun）</b><span>共好玟化 創辦人</span></div></div>
+        </div>
+        <p class="sb-sum">創辦人 Evvon 在擔任社工期間，一位宜蘭南澳的泰雅族牧師給了她「Sayun」這個名字，期許她成為連結不同群體與文化的溝通者。多年後，當永續浪潮席捲而來，她看見一道缺口：企業握有資源、卻缺乏有效的策略；NPO 擁有解決社會問題的專業、卻缺乏與企業連結的橋。於是她決定親手把這座橋搭起來——從單一機構的服務，延伸到整個產業的影響力。</p>
+      </div>
+      <ul class="sb-bul">
+        <li>從社工走向搭橋者，連結有資源卻缺策略的企業，與有專業卻缺連結的社會組織。</li>
+        <li>永續要從內而外長出來，先把價值寫進治理、長成與人的信任，環境的努力才不會淪為一次性。</li>
+        <li>相信人與人之間緊密的信任，是一切永續最深的根，也是社會韌性的起點。</li>
+        <li>永續不是「獲利」或「責任」的二選一，而是讓社會、環境與經濟一起加乘，這就是雙效益。</li>
+      </ul>
+      <div class="stairs">
+        <div style="--h:1;--c:var(--orange)">社會有韌性</div>
+        <div style="--h:2;--c:var(--yellow)">商業能長久</div>
+        <div style="--h:3;--c:var(--grey);--t:#fff">有能力照顧環境</div>
+      </div>
+      <p class="stairs-cap">人與人之間的關係緊密，社會才有韌性；當社會有韌性，商業才能長久運作；當商業可行，我們才有能力照顧環境。</p>
+      <details class="story-more">
+        <summary><span class="more">閱讀完整故事</span><span class="less">收合故事</span></summary>
+        <div class="full">
+          <p>創辦人吳玟樺 Evvon 在擔任社工期間，遇到了一位泰雅族的<strong>林慶台牧師</strong>，也就是電影<strong>賽德克巴萊</strong>的主角。</p>
+          <p>林牧師給了 Evvon 一個泰雅族名字——Sayun，意思是「橋樑」。有資源的人與沒有資源的人之間，需要有一座溝通橋樑。</p>
+          <p>這個名字，後來也成為共好玟化最核心的理念。</p>
+          <p>從社工到創業，Evvon 一直在尋找自己與環境互動的方式。一個機構能影響的人有限，但如果能從一個機構的影響力擴散到整個產業，改變就有機會真正發生。</p>
+          <p>如同品牌名稱「共好玟化」所承載的——共好，讓每一個加入的人，都能一起好。</p>
+          <p>共好玟化的價值主張是：永續是環境、社會、經濟三個效益共同構成的系統。</p>
+          <p>人與人之間的關係緊密，社會才有韌性；當社會有韌性，商業才能長久運作；當商業可行，我們才有能力照顧環境。</p>
+          <p>所以共好玟化將社會放在最前面是因為：永續的核心是「人」，人與人之間共好，才能真正發揮影響力。</p>
+        </div>
+      </details>
+      <a class="lnk" href="#">認識共好玟化</a>
+    </div>
+  </div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>概念</h3><p>「橋，是兩端彼此靠近」。把火焰標誌鏡像複製成一對，左右兩把火焰載入時從直立慢慢向中間傾身，在 Sayun 字樣下方形成拱形；兩端分別對應故事中的兩個缺口（企業有資源缺策略、NPO 有專業缺連結）。價值鏈以三階逐級升高的色塊呈現。</p></div>
+    <div><h3>幾何語彙與變換</h3><ul><li>標誌 ×2、half 拱（黃色描邊）、block 橋面、三階 block（右上 quarter 圓角）</li><li><b>鏡像</b>：左側火焰為原標誌 scaleX(−1)</li><li><b>旋轉</b>：兩把火焰各向內傾 14°</li><li><b>縮放</b>：三階高度 1／2／3 倍；信念卡圓角左右交替鏡像</li></ul></div>
+    <div><h3>參考來源</h3><p>Airbnb「Bélo」標誌發表頁以符號拆解說明品牌意義；Mailchimp、Headspace 等品牌在「About」頁用品牌符號講創辦故事的作法。</p></div>
+    <div><h3>優點</h3><ul><li>最直接的「名字＝橋」視覺，標誌本身成為故事的主角</li><li>兩端缺口直接引用故事原文，讓品牌故事與 S3 問題區互相呼應</li><li>整體留白多、情感溫度高，適合「人」的敘事</li></ul></div>
+    <div><h3>風險</h3><ul><li>鏡像與旋轉標誌需取得品牌規範許可（部分 CIS 禁止變形標誌）</li><li>若 S1 也採用拱橋意象（花瓣拱橋），橋的隱喻會重複出現兩次</li><li>三階色塊可能被讀成「成長圖表」</li></ul></div>
+    <div><h3>與前後區塊的銜接可能</h3><ul class="ho"><li>① 承接 S3：S3 的三個痛點色（黃／橘／灰）在本區轉為兩端與橋面，表示「缺口被接起來」。</li><li>② 銜接下一區：三階色塊最高的一階延伸成下一區的頂部色帶，價值鏈「有能力照顧環境」成為行動證據的開場句。</li></ul></div>
+  </div></div>
+</section>
+
+<!-- ───────────── C ───────────── -->
+<section class="opt" data-opt="C" aria-labelledby="c-h">
+  <div class="wrap opt-head"><span class="pp-label">Option C</span><h2 id="c-h">模組拼貼：四分圓排成波浪，故事被切成一格一格</h2></div>
+  <div class="mock s-c">
+    <div class="sc-grid">
+      <div class="sc-intro">
+        <p class="eyebrow">品牌故事</p>
+        <h2 class="sec-title">從一個泰雅族名字開始</h2>
+        <p class="sa-head">Sayun，意思是「橋樑」。</p>
+        <a class="lnk" href="#">認識共好玟化</a>
+      </div>
+      <div class="sc-name"><svg class="mk" aria-hidden="true"><use href="#flame"/></svg><span class="big">Sayun</span><span class="mean">Sayun means "Bridge"</span></div>
+      <div class="sc-wave" aria-hidden="true">
+        <i style="--c:var(--orange);--r:0deg"></i><i style="--c:var(--orange);--r:90deg"></i>
+        <i style="--c:var(--yellow);--r:270deg"></i><i style="--c:var(--yellow);--r:180deg"></i>
+        <i style="--c:var(--grey);--r:0deg"></i><i style="--c:var(--grey);--r:90deg"></i>
+        <i style="--c:var(--orange);--r:270deg"></i><i style="--c:var(--orange);--r:180deg"></i>
+        <i class="x" style="--c:var(--yellow);--r:0deg"></i><i class="x" style="--c:var(--yellow);--r:90deg"></i><i class="x" style="--c:var(--grey);--r:270deg"></i><i class="x" style="--c:var(--grey);--r:180deg"></i><i class="x" style="--c:var(--orange);--r:0deg"></i><i class="x" style="--c:var(--orange);--r:90deg"></i><i class="x" style="--c:var(--yellow);--r:270deg"></i><i class="x" style="--c:var(--yellow);--r:180deg"></i>
+      </div>
+      <div class="sc-founder"><svg class="mk" aria-hidden="true"><use href="#flame"/></svg><div><b>Evvon（Sayun）</b><span>共好玟化 創辦人</span></div></div>
+      <div class="sc-sum"><p>創辦人 Evvon 在擔任社工期間，一位宜蘭南澳的泰雅族牧師給了她「Sayun」這個名字，期許她成為連結不同群體與文化的溝通者。多年後，當永續浪潮席捲而來，她看見一道缺口：企業握有資源、卻缺乏有效的策略；NPO 擁有解決社會問題的專業、卻缺乏與企業連結的橋。於是她決定親手把這座橋搭起來——從單一機構的服務，延伸到整個產業的影響力。</p></div>
+      <ul class="sc-bul">
+        <li style="--bg:var(--card)"><i style="--c:var(--orange);--r:0deg" aria-hidden="true"></i>從社工走向搭橋者，連結有資源卻缺策略的企業，與有專業卻缺連結的社會組織。</li>
+        <li style="--bg:var(--yellow-soft)"><i style="--c:var(--yellow);--r:90deg" aria-hidden="true"></i>永續要從內而外長出來，先把價值寫進治理、長成與人的信任，環境的努力才不會淪為一次性。</li>
+        <li style="--bg:var(--card)"><i style="--c:var(--grey);--r:180deg" aria-hidden="true"></i>相信人與人之間緊密的信任，是一切永續最深的根，也是社會韌性的起點。</li>
+        <li style="--bg:var(--orange-soft)"><i style="--c:var(--orange);--r:270deg" aria-hidden="true"></i>永續不是「獲利」或「責任」的二選一，而是讓社會、環境與經濟一起加乘，這就是雙效益。</li>
+      </ul>
+      <div class="sc-full">
+        <h3>完整故事</h3>
+        <div class="cols">
+          <p>創辦人吳玟樺 Evvon 在擔任社工期間，遇到了一位泰雅族的<strong>林慶台牧師</strong>，也就是電影<strong>賽德克巴萊</strong>的主角。</p>
+          <p>林牧師給了 Evvon 一個泰雅族名字——Sayun，意思是「橋樑」。有資源的人與沒有資源的人之間，需要有一座溝通橋樑。</p>
+          <p>這個名字，後來也成為共好玟化最核心的理念。</p>
+          <p>從社工到創業，Evvon 一直在尋找自己與環境互動的方式。一個機構能影響的人有限，但如果能從一個機構的影響力擴散到整個產業，改變就有機會真正發生。</p>
+          <p>如同品牌名稱「共好玟化」所承載的——共好，讓每一個加入的人，都能一起好。</p>
+          <p>共好玟化的價值主張是：永續是環境、社會、經濟三個效益共同構成的系統。</p>
+          <p>人與人之間的關係緊密，社會才有韌性；當社會有韌性，商業才能長久運作；當商業可行，我們才有能力照顧環境。</p>
+          <p>所以共好玟化將社會放在最前面是因為：永續的核心是「人」，人與人之間共好，才能真正發揮影響力。</p>
+        </div>
+      </div>
+      <div class="sc-chain on-dark">
+        <div class="st"><i class="dc" style="--c:var(--orange)" aria-hidden="true"></i><b>社會有韌性</b></div>
+        <i class="ar" aria-hidden="true"></i>
+        <div class="st"><i class="dc h" style="--c:var(--yellow)" aria-hidden="true"></i><b>商業能長久</b></div>
+        <i class="ar" aria-hidden="true"></i>
+        <div class="st"><i class="dc q" style="--c:#C9CCD2" aria-hidden="true"></i><b>有能力照顧環境</b></div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap pp-card"><div class="in">
+    <div><h3>概念</h3><p>「故事是一塊一塊拼起來的」。整個區塊是一張模組拼貼海報：名字、創辦人、摘要、四個信念、完整故事、價值鏈各佔一格；中間一條由四分圓組成的波浪橫跨全寬，起伏的弧形像一座連續的橋。完整故事直接展開為雙欄（不收合）。</p></div>
+    <div><h3>幾何語彙與變換</h3><ul><li>quarter 波浪帶（手機 8 格、桌機 16 格）、block 格、disc／half／quarter 價值鏈</li><li><b>旋轉＋鏡像</b>：波浪由 quarter 0/90°（拱起）與 270/180°（垂下）交替，即上下鏡像的半圓</li><li><b>重組</b>：價值鏈的形狀由 disc → half → quarter 逐步「被切開」，表示能量向外傳遞</li><li>支援的瀏覽器中，捲動時波浪與信念圖示各自轉 180° 回到定位（色塊重新拼貼）</li></ul></div>
+    <div><h3>參考來源</h3><p>Pentagram 為 The Public Theater 與 Mastercard 做的格狀海報系統；Apple「Today at Apple」與 Spotify Design 網站的 bento 模組拼貼版面。</p></div>
+    <div><h3>優點</h3><ul><li>所有故事內容一次攤開，不需點擊，適合重視透明度的品牌</li><li>格子化讓長文案被切成小塊，掃讀容易</li><li>模組可在「關於我們」頁重複使用，形成一致系統</li></ul></div>
+    <div><h3>風險</h3><ul><li>全文展開讓首頁變長，與「首頁應精簡」的目標可能衝突</li><li>拼貼格數量多，若內容日後增減需重排格子</li><li>手機版退化為單欄堆疊，拼貼感減弱</li></ul></div>
+    <div><h3>與前後區塊的銜接可能</h3><ul class="ho"><li>① 承接 S3：S3 若採三層色帶，其合併後的細色帶在本區「彎曲」成四分圓波浪。</li><li>② 銜接下一區：模組拼貼格線延續到行動證據區，數字卡片直接作為同一張拼貼的下一列。</li></ul></div>
+  </div></div>
+</section>
+</main>
+<script>
+(function () {
+  var bar = document.querySelector('.pp-bar');
+  if (!bar) return;
+  var opts = [].slice.call(document.querySelectorAll('.opt'));
+  var btns = [].slice.call(bar.querySelectorAll('button[data-show]'));
+  function show(k) {
+    opts.forEach(function (o) { o.hidden = !(k === 'all' || o.dataset.opt === k); });
+    btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.show === k)); });
+  }
+  btns.forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.show); window.scrollTo({ top: 0 }); }); });
+  bar.hidden = false;
+})();
+</script>
+</body>
+</html>

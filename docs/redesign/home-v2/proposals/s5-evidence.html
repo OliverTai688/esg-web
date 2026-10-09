@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S5 行動證據 · 三個方案</title>
+<link rel="stylesheet" href="_tokens.css">
+<link rel="stylesheet" href="_geo.css">
+<style>
+/* ───────── Proposal chrome (shared by s5–s8, not part of the design) ───────── */
+[hidden] { display: none !important; }
+html { scroll-padding-top: 56px; }
+body { overflow-x: clip; }
+.pp-intro { max-width: 1200px; margin: 0 auto; padding: 32px 16px 16px; }
+.pp-intro h1 { font: 900 clamp(24px, 4vw, 34px)/1.3 var(--font-sans); margin: 12px 0 8px; }
+.pp-intro p { color: var(--ink-2); margin: 0 0 12px; max-width: 75ch; }
+.opt { padding: 48px 0 64px; border-top: 6px solid #111; }
+.opt-head { max-width: 1200px; margin: 0 auto 24px; padding: 0 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.opt-head h2 { font: 900 clamp(20px, 3vw, 26px)/1.3 var(--font-sans); margin: 0; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+.pp-card { max-width: 1200px; margin: 32px auto 0; padding: 0 16px; }
+.pp-card dl { margin: 0; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(18px, 3vw, 28px); display: grid; gap: 18px 36px; grid-template-columns: 1fr; }
+@media (min-width: 860px) { .pp-card dl { grid-template-columns: 1fr 1fr; } }
+.pp-card dt { font: 700 13px/1.4 var(--font-sans); color: var(--orange-strong); letter-spacing: .08em; }
+.pp-card dd { margin: 4px 0 0; font-size: 15px; }
+.pp-card .full { grid-column: 1 / -1; }
+.pp-card ul { margin: 4px 0 0; padding-left: 1.2em; }
+.pp-card li + li { margin-top: 4px; }
+
+/* ───────── Mock primitives ───────── */
+.kicker { display: inline-flex; align-items: center; gap: 10px; font: 700 13px/1 var(--font-sans); letter-spacing: .16em; color: var(--orange-strong); }
+.kicker::before { content: ""; width: 12px; height: 12px; background: var(--orange); border-radius: 0 100% 0 100%; }
+.m-h2 { font: 900 clamp(26px, 3.6vw, 42px)/1.28 var(--font-sans); margin: 14px 0 12px; letter-spacing: .01em; }
+.m-lead { color: var(--ink-2); margin: 0 0 28px; font-size: 17px; max-width: 46ch; }
+.m-link { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--orange-strong); text-decoration: none; border-bottom: 2px solid currentColor; padding-bottom: 2px; }
+.m-note { font-size: 13px; color: var(--ink-2); margin: 16px 0 0; }
+.flame { display: block; width: var(--fw, 40px); height: auto; }
+:focus-visible { outline: 3px solid var(--orange-strong); outline-offset: 3px; }
+
+/* ───────── A · 四分圓合一 ───────── */
+.s5a { background: var(--paper); padding: clamp(56px, 8vw, 112px) 0; }
+.s5a-grid { display: grid; gap: 48px; align-items: center; }
+@media (min-width: 960px) { .s5a-grid { grid-template-columns: 1fr 1.05fr; gap: 72px; } }
+.s5a-stories { list-style: none; margin: 0; padding: 0; }
+.s5a-stories li { display: grid; grid-template-columns: 36px 1fr; gap: 2px 16px; padding: 16px 0; border-top: 1px solid var(--line); }
+.s5a-stories li:last-child { border-bottom: 1px solid var(--line); }
+.s5a-stories .geo { --s: 28px; grid-row: span 3; margin-top: 4px; }
+.s5a-stories .tag { font: 700 12px/1.4 var(--font-sans); letter-spacing: .12em; color: var(--ink-2); }
+.s5a-stories h4 { margin: 0; font-size: 18px; line-height: 1.4; }
+.s5a-stories p { margin: 2px 0 0; color: var(--ink-2); font-size: 15px; }
+
+.s5a-disc { position: relative; container-type: inline-size; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); grid-template-rows: repeat(2, minmax(0,1fr)); gap: 6px; width: 100%; max-width: 560px; aspect-ratio: 1; margin-inline: auto; }
+.s5a-q { position: relative; isolation: isolate; display: flex; flex-direction: column; padding: 4.5cqw; min-width: 0; text-decoration: none; color: var(--ink); }
+.s5a-q > .geo { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; transition: translate .5s var(--geo-ease); }
+.s5a-q .num { font: 800 11cqw/1 var(--font-display); letter-spacing: -.02em; }
+.s5a-q .num small { font-size: .55em; font-family: var(--font-sans); font-weight: 900; margin-left: 2px; }
+.s5a-q .lab { font: 700 max(14px, 3.8cqw)/1.3 var(--font-sans); margin-top: 6px; }
+.s5a-q.q1, .s5a-q.q2 { padding-bottom: 15cqw; }
+.s5a-q.q3, .s5a-q.q4 { padding-top: 15cqw; }
+.s5a-q.q1 { justify-content: flex-end; align-items: flex-end; text-align: right; color: #fff; }
+.s5a-q.q1 .lab { color: var(--ink); }
+.s5a-q.q2 { justify-content: flex-end; align-items: flex-start; }
+.s5a-q.q3 { justify-content: flex-start; align-items: flex-start; color: #fff; }
+.s5a-q.q4 { justify-content: flex-start; align-items: flex-end; text-align: right; color: #fff; }
+.s5a-q.q4 .lab { font-size: max(15px, 4.2cqw); max-width: 9em; }
+.s5a-q.q4 .arrow { font: 800 9cqw/1 var(--font-display); }
+.s5a-hub { position: absolute; left: 50%; top: 50%; width: 20%; aspect-ratio: 1; translate: -50% -50%; background: var(--paper); border-radius: 50%; display: grid; place-items: center; box-shadow: 0 0 0 6px var(--paper); }
+.s5a-hub .flame { --fw: 46%; }
+.s5a:has(.st1:hover) .q1 > .geo { translate: -4% -4%; }
+.s5a:has(.st2:hover) .q2 > .geo { translate: 4% -4%; }
+.s5a:has(.st3:hover) .q3 > .geo { translate: 4% 4%; }
+.s5a-q.q4:hover > .geo, .s5a-q.q4:focus-visible > .geo { translate: -4% 4%; }
+
+.s5a-track { margin-top: clamp(40px, 6vw, 72px); display: grid; grid-template-columns: repeat(2, 1fr); border-top: 2px solid var(--ink); }
+@media (min-width: 720px) { .s5a-track { grid-template-columns: repeat(4, 1fr); } }
+.s5a-track div { display: flex; gap: 12px; align-items: center; padding: 18px 8px 14px 0; }
+.s5a-track .geo { --s: 26px; }
+.s5a-track strong { font: 800 28px/1 var(--font-display); }
+.s5a-track span { display: block; font-size: 14px; color: var(--ink-2); }
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .s5a-disc .s5a-q > .geo { animation: s5a-in linear both; animation-timeline: view(); animation-range: entry 5% cover 42%; }
+    .s5a-disc .q2 > .geo { animation-range: entry 10% cover 46%; }
+    .s5a-disc .q3 > .geo { animation-range: entry 15% cover 50%; }
+    .s5a-disc .q4 > .geo { animation-range: entry 20% cover 54%; }
+  }
+}
+@keyframes s5a-in { from { rotate: -180deg; scale: .55; } to { rotate: 0deg; scale: 1; } }
+
+/* ───────── B · 刻度盤 ───────── */
+.s5b { background: #fff; padding: clamp(56px, 8vw, 112px) 0; }
+.s5b-head { max-width: 760px; }
+.s5b-grid { display: grid; gap: 40px; align-items: start; margin-top: 16px; }
+@media (min-width: 960px) { .s5b-grid { grid-template-columns: .85fr 1.15fr; gap: 64px; } }
+@media (min-width: 960px) { .s5b-dialcol { position: sticky; top: 80px; } }
+.dial { width: min(100%, 420px); margin-inline: auto; }
+.dial > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.dial .rot { transform-origin: 100px 100px; transform: rotate(var(--rot, -60deg)); transition: transform .9s var(--geo-ease); }
+.dial .seg { fill: none; stroke-width: 26; transition: stroke-width .4s var(--geo-ease); }
+.s5b:has(.r2:hover, .r2:focus-visible) .rot { --rot: -180deg; }
+.s5b:has(.r3:hover, .r3:focus-visible) .rot { --rot: -300deg; }
+.s5b:has(.r1:hover, .r1:focus-visible) .seg1,
+.s5b:has(.r2:hover, .r2:focus-visible) .seg2,
+.s5b:has(.r3:hover, .r3:focus-visible) .seg3 { stroke-width: 34; }
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .dial .intro { transform-origin: 100px 100px; animation: s5b-in linear both; animation-timeline: view(); animation-range: entry 0% cover 40%; }
+  }
+}
+@keyframes s5b-in { from { transform: rotate(-240deg) scale(.7); } to { transform: none; } }
+.s5b-ticks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; margin-top: 28px; border-top: 1px solid var(--line); }
+.s5b-ticks div { padding: 14px 0; border-bottom: 1px solid var(--line); display: flex; align-items: baseline; gap: 8px; }
+.s5b-ticks div:nth-child(odd) { border-right: 1px solid var(--line); }
+.s5b-ticks div:nth-child(even) { padding-left: 16px; }
+.s5b-ticks strong { font: 800 22px/1 var(--font-display); }
+.s5b-ticks span { font-size: 14px; color: var(--ink-2); }
+.s5b-list { list-style: none; margin: 0; padding: 0; }
+.s5b-row { display: grid; grid-template-columns: 1fr; gap: 10px 32px; padding: 26px 0 26px 20px; border-top: 1px solid var(--line); position: relative; cursor: default; }
+.s5b-row:last-child { border-bottom: 1px solid var(--line); }
+.s5b-row::before { content: ""; position: absolute; left: 0; top: 26px; bottom: 26px; width: 6px; background: var(--c); border-radius: 0 6px 6px 0; transform-origin: top; transition: scale .4s var(--geo-ease); scale: 1 .35; }
+.s5b-row:hover::before, .s5b-row:focus-visible::before { scale: 1 1; }
+@media (min-width: 640px) { .s5b-row { grid-template-columns: 180px 1fr; } }
+.s5b-row .num { font: 800 clamp(44px, 5vw, 60px)/1 var(--font-display); letter-spacing: -.02em; }
+.s5b-row .num small { font: 900 .5em var(--font-sans); margin-left: 2px; }
+.s5b-row .lab { font-weight: 700; margin-top: 6px; }
+.s5b-row .tag { font: 700 12px/1.4 var(--font-sans); letter-spacing: .12em; color: var(--ink-2); }
+.s5b-row h4 { margin: 4px 0 6px; font-size: 19px; }
+.s5b-row p { margin: 0; color: var(--ink-2); font-size: 15px; }
+.r1 { --c: var(--orange); } .r1 .num { color: var(--orange); }
+.r2 { --c: var(--yellow); } .r2 .num { color: var(--ink); }
+.r3 { --c: var(--grey); } .r3 .num { color: var(--grey); }
+.s5b-foot { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; margin-top: 24px; }
+.s5b-foot .m-note { margin: 0; }
+
+/* ───────── C · 漣漪拱橋 ───────── */
+.s5c { background: var(--surface-dark); color: #fff; padding: clamp(56px, 8vw, 112px) 0; overflow: hidden; }
+.s5c .kicker { color: var(--yellow); }
+.s5c .kicker::before { background: var(--yellow); }
+.s5c-head { text-align: center; max-width: 760px; margin: 0 auto clamp(56px, 7vw, 80px); }
+.s5c-head .m-lead { color: rgba(255,255,255,.82); margin-inline: auto; }
+.arches { position: relative; width: min(100%, 860px); aspect-ratio: 2 / 1; margin: 0 auto; --bw: clamp(10px, 2.2vw, 22px); }
+.arch { position: absolute; left: 50%; bottom: 0; translate: -50% 0; width: calc(var(--k) * 100%); aspect-ratio: 2 / 1; }
+.arch::before { content: ""; position: absolute; inset: 0; border: var(--bw) solid var(--c); border-bottom: 0; border-radius: 50% 50% 0 0 / 100% 100% 0 0; transform-origin: 50% 100%; transition: opacity .4s, translate .4s var(--geo-ease); }
+.a1 { --k: .42; --c: var(--yellow); }
+.a2 { --k: .7; --c: var(--orange); }
+.a3 { --k: 1; --c: var(--paper); }
+.pill { position: absolute; top: calc(var(--bw) / 2); left: 50%; translate: -50% -50%; z-index: 1; background: var(--surface-dark); padding: 2px 14px; border-radius: 999px; white-space: nowrap; display: flex; gap: 8px; align-items: baseline; }
+.pill b { font: 800 clamp(22px, 3vw, 32px)/1.1 var(--font-display); color: var(--yellow); }
+.pill b small { font: 900 .55em var(--font-sans); }
+.pill span { font-size: clamp(13px, 1.6vw, 15px); font-weight: 700; }
+.arches .flame { position: absolute; left: 50%; bottom: 0; translate: -50% 0; --fw: clamp(36px, 7%, 64px); }
+.deck { height: 4px; background: rgba(255,255,255,.18); width: min(100%, 980px); margin: 0 auto; }
+.s5c-cards { display: grid; gap: 16px; margin-top: 40px; }
+@media (min-width: 860px) { .s5c-cards { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+.s5c-card { border-top: 6px solid var(--c); padding: 18px 4px 4px; }
+.s5c-card .tag { font: 700 12px/1.4 var(--font-sans); letter-spacing: .12em; color: var(--yellow); }
+.s5c-card h4 { margin: 6px 0; font-size: 19px; }
+.s5c-card p { margin: 0; color: rgba(255,255,255,.82); font-size: 15px; }
+.s5c-card .note { font-size: 13px; color: rgba(255,255,255,.7); margin-top: 10px; }
+.c1 { --c: var(--yellow); } .c2 { --c: var(--orange); } .c3 { --c: var(--paper); }
+.s5c:has(.c1:hover) .arch:not(.a1)::before,
+.s5c:has(.c2:hover) .arch:not(.a2)::before,
+.s5c:has(.c3:hover) .arch:not(.a3)::before { opacity: .22; }
+.s5c:has(.c1:hover) .a1::before, .s5c:has(.c2:hover) .a2::before, .s5c:has(.c3:hover) .a3::before { translate: 0 -6px; }
+.s5c-track { display: grid; grid-template-columns: repeat(2, 1fr); margin-top: 48px; border-top: 1px solid rgba(255,255,255,.2); }
+@media (min-width: 720px) { .s5c-track { grid-template-columns: repeat(4, 1fr) ; } }
+.s5c-track div { padding: 18px 0; display: flex; gap: 12px; align-items: center; }
+.s5c-track .geo { --s: 26px; }
+.s5c-track strong { display: block; font: 800 26px/1 var(--font-display); color: var(--yellow); }
+.s5c-track span { font-size: 14px; color: rgba(255,255,255,.82); }
+.s5c-foot { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; align-items: center; margin-top: 8px; }
+.s5c-foot .m-note { color: rgba(255,255,255,.7); margin: 0; }
+.s5c .m-link { color: var(--yellow); }
+.s5c :focus-visible { outline-color: var(--yellow); }
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .arch::before { animation: s5c-in linear both; animation-timeline: view(); }
+    .a1::before { animation-range: entry 0% cover 35%; }
+    .a2::before { animation-range: entry 0% cover 42%; }
+    .a3::before { animation-range: entry 0% cover 50%; }
+  }
+}
+@keyframes s5c-in { from { scale: .3; opacity: 0; } to { scale: 1; opacity: 1; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="flame" viewBox="203.59 169.44 74.13 95.22">
+      <path style="fill:var(--fy,#FAB40A)" d="M 224.308594 264.65625 C 224.308594 264.65625 241.097656 262.621094 241.433594 246.953125 C 241.625 238.117188 235.25 230.648438 229.917969 225.21875 C 224.523438 219.726562 222.128906 214.316406 221.109375 211.136719 C 220.878906 210.425781 219.835938 210.523438 219.75 211.265625 C 218.554688 221.480469 226.351562 233.089844 226.351562 233.089844 C 225.839844 233.125 215.3125 221.828125 210.816406 207.996094 C 210.589844 207.308594 209.589844 207.378906 209.460938 208.09375 C 208.628906 212.773438 208.371094 223.503906 219.164062 235.855469 C 214.113281 233.695312 208.886719 224.738281 206.78125 220.800781 C 206.453125 220.191406 205.527344 220.378906 205.46875 221.066406 C 205.15625 224.648438 205.746094 232.074219 214.355469 239.027344 C 214.5 239.144531 210.058594 237.746094 205.027344 231.703125 C 204.535156 231.117188 203.589844 231.617188 203.8125 232.347656 C 204.585938 234.871094 206.445312 238.640625 210.933594 242.105469 C 216.203125 246.171875 222.085938 251.511719 223.917969 256.210938 C 225.75 260.910156 225.007812 263.308594 224.308594 264.65625 "/>
+      <path style="fill:var(--fo,#F25232)" d="M 269.261719 228.570312 C 270.472656 216.289062 274.730469 209.757812 277.25 206.894531 C 277.71875 206.359375 277.179688 205.542969 276.507812 205.769531 C 271.0625 207.570312 267.476562 211.140625 265.082031 215.121094 C 263.925781 212.765625 262.503906 210.484375 260.910156 208.128906 C 253.144531 196.664062 250.515625 183.726562 249.734375 178.566406 C 249.628906 177.871094 248.671875 177.742188 248.398438 178.390625 C 242.378906 192.726562 253.308594 210.753906 253.308594 210.753906 C 252.550781 210.652344 238.230469 191.742188 235.6875 170.277344 C 235.597656 169.519531 234.527344 169.4375 234.324219 170.175781 C 232.582031 176.476562 230.46875 192.078125 242.695312 213.503906 C 235.621094 208.625 230.007812 191.570312 228.210938 185.5625 C 228.011719 184.894531 227.058594 184.898438 226.867188 185.574219 C 225.476562 190.507812 223.597656 203.167969 234.800781 216.6875 C 234.980469 216.90625 228.476562 213.3125 222.789062 202.125 C 222.445312 201.449219 221.429688 201.710938 221.464844 202.464844 C 221.632812 206.257812 223.453125 214.753906 229.503906 221.730469 C 235.949219 229.167969 242.222656 234.816406 243.5 242.160156 C 244.773438 249.5 242.765625 255 241.351562 256.75 C 241.351562 256.75 265.066406 258.183594 268.347656 235.984375 C 268.417969 235.507812 269.136719 229.835938 269.261719 228.570312 "/>
+    </symbol>
+  </defs>
+</svg>
+
+<nav class="pp-bar" hidden aria-label="方案切換">
+  <strong>S5 行動證據</strong>
+  <button type="button" data-show="a" aria-pressed="false">A</button>
+  <button type="button" data-show="b" aria-pressed="false">B</button>
+  <button type="button" data-show="c" aria-pressed="false">C</button>
+  <button type="button" data-show="all" aria-pressed="true">全部</button>
+</nav>
+
+<header class="pp-intro">
+  <span class="pp-label">Home v2 · Round 2 · S5</span>
+  <h1>行動證據：真的有用嗎？三個幾何方向</h1>
+  <p>文案取自 <code>home.ts → evidence</code> 與 <code>common.ts → impact</code>，數字與註記未改動。三案都以 CIS 色塊與標誌幾何作為主結構，並各自示範一種幾何變換。本頁只陳列選項，不做推薦；決策將對照首頁主計畫另行進行。</p>
+  <p class="pp-note">動態只在「未設定減少動態」時啟用，且只作用在圖形；所有文字與數字在靜止狀態完整可讀。</p>
+</header>
+
+<!-- ═════════════════════════ A ═════════════════════════ -->
+<section class="opt" data-opt="a" id="opt-a" aria-labelledby="a-t">
+  <div class="opt-head"><span class="pp-label">方案 A</span><h2 id="a-t">四分圓合一：三個數字＋一條路，拼成一個圓</h2></div>
+
+  <div class="s5a">
+    <div class="wrap">
+      <div class="s5a-grid">
+        <div>
+          <span class="kicker">永續行動證據</span>
+          <h3 class="m-h2">可量化的影響力，<br>真實的合作成果</h3>
+          <p class="m-lead">每一個數字，都對應一則可以說得出來的故事。</p>
+          <ol class="s5a-stories">
+            <li class="st1"><span class="geo geo-quarter c-orange" aria-hidden="true"></span><span class="tag">營業額助益</span><h4>永續白皮書帶來的經濟資源</h4><p>透過共好玟化協助撰寫永續白皮書，讓一家品牌設計公司在一年內獲得政府補助、天使投資與銀行貸款，累計近 1000 萬的經濟資源挹注。</p></li>
+            <li class="st2"><span class="geo geo-quarter c-yellow r90" aria-hidden="true"></span><span class="tag">合作案例</span><h4>跨產業永續合作</h4><p>從國際論壇到企業採購清單、從跨國永續會議到聯名商品合作，共好玟化持續透過ESG共學坊講師平台促成跨產業合作。</p></li>
+            <li class="st3"><span class="geo geo-quarter c-grey r180" aria-hidden="true"></span><span class="tag">顧問導向</span><h4>站上國際舞台</h4><p>一份永續白皮書，讓用海廢做錶的品牌站上國際青年論壇的舞台。迄今已協助 8 個企業登上國際論壇，讓國際看見台灣的永續實踐者。</p></li>
+          </ol>
+        </div>
+
+        <div class="s5a-disc">
+          <div class="s5a-q q1"><span class="geo geo-quarter c-orange" aria-hidden="true"></span><span class="num">1000<small>萬</small></span><span class="lab">資源挹注</span></div>
+          <div class="s5a-q q2"><span class="geo geo-quarter c-yellow r90" aria-hidden="true"></span><span class="num">130<small>+</small></span><span class="lab">跨產業合作</span></div>
+          <a class="s5a-q q4" href="#" style="grid-row:2;grid-column:1"><span class="geo geo-quarter c-ink r270" aria-hidden="true"></span><span class="arrow" aria-hidden="true">↗</span><span class="lab">看我們走過的路</span></a>
+          <div class="s5a-q q3" style="grid-row:2;grid-column:2"><span class="geo geo-quarter c-grey r180" aria-hidden="true"></span><span class="num">8<small>+</small></span><span class="lab">國際論壇</span></div>
+          <div class="s5a-hub" aria-hidden="true"><svg class="flame" viewBox="0 0 74.13 95.22"><use href="#flame" width="74.13" height="95.22"/></svg></div>
+        </div>
+      </div>
+
+      <div class="s5a-track" aria-label="累計至 2025 年">
+        <div><span class="geo geo-quarter c-orange" aria-hidden="true"></span><p style="margin:0"><strong>100+</strong><span>場講座</span></p></div>
+        <div><span class="geo geo-quarter c-orange r90" aria-hidden="true"></span><p style="margin:0"><strong>30+</strong><span>場工作坊</span></p></div>
+        <div><span class="geo geo-quarter c-orange r180" aria-hidden="true"></span><p style="margin:0"><strong>500+</strong><span>人次培力</span></p></div>
+        <div><span class="geo geo-quarter c-orange r270" aria-hidden="true"></span><p style="margin:0"><strong>10+</strong><span>個縣市</span></p></div>
+      </div>
+      <p class="m-note">累計至 2025 年。數字來源：共好玟化專案紀錄，持續更新中。</p>
+    </div>
+  </div>
+
+  <div class="pp-card"><dl>
+    <div><dt>概念</dt><dd>三個數字不是三張散落的成績單，而是同一個圓的三塊：資源、合作、國際舞台。第四塊是「看我們走過的路」，留給讀者自己補上。四個四分圓拼成一個圓，暗示證據是一個完整的系統。</dd></div>
+    <div><dt>幾何語彙與變換</dt><dd>四分圓（quarter）× 4，以 0／90／180／270° 旋轉後<strong>重組</strong>為一個圓（recombine）；捲動進入時每片自反向 180° <strong>旋轉＋縮放</strong>回到定位。滑過左側故事時，對應那片沿對角線外推（translate）。圓心以紙色小圓承載原色火焰；累計列用同一片四分圓依序轉 90° 當作刻度。</dd></div>
+    <div><dt>參考來源</dt><dd>Pentagram 為 Microsoft 建立的「四格成一」識別構成；Apple Environment 頁面以大數字磚呈現成果的做法。</dd></div>
+    <div><dt>優點</dt><dd>一眼就是品牌幾何；數字落在色塊上辨識度高；故事與數字一一對應，直接落實「每一個數字都對應一則故事」。375px 下 2×2 仍成立，不需換版型。</dd></div>
+    <div><dt>風險</dt><dd>數字字級受四分圓尺寸限制，未來位數變長需重排；白字只能用在大數字，標籤一律用墨色；第四塊作為連結，可能被誤讀為第四個指標。</dd></div>
+    <div class="full"><dt>與前後區塊的銜接可能</dt><dd><ul>
+      <li>可能一：品牌故事區底部的「Sayun 橋」半圓在接縫處落下，成為這個圓的上半；離開時灰色那片四分圓拆出、旋轉成「服務對象」第一道門的圓頂。</li>
+      <li>可能二：與前一區同為淺底直接接續，只在接縫放一枚火焰（seam）過渡；離開時圓保持完整並縮小，成為下一區的定位點，強調「同一個系統」。</li>
+    </ul></dd></div>
+  </dl></div>
+</section>
+
+<!-- ═════════════════════════ B ═════════════════════════ -->
+<section class="opt" data-opt="b" id="opt-b" aria-labelledby="b-t">
+  <div class="opt-head"><span class="pp-label">方案 B</span><h2 id="b-t">刻度盤：讀到哪一則，圓環就轉到哪一段</h2></div>
+
+  <div class="s5b">
+    <div class="wrap">
+      <div class="s5b-head">
+        <span class="kicker">永續行動證據</span>
+        <h3 class="m-h2">可量化的影響力，真實的合作成果</h3>
+        <p class="m-lead">每一個數字，都對應一則可以說得出來的故事。</p>
+      </div>
+      <div class="s5b-grid">
+        <div class="s5b-dialcol">
+          <div class="dial" aria-hidden="true">
+            <svg viewBox="-12 -16 224 228">
+              <g class="intro">
+                <g class="rot">
+                  <circle class="seg seg1" cx="100" cy="100" r="78" stroke="#F25232" stroke-dasharray="157.4 332.7" transform="rotate(-87.8 100 100)"/>
+                  <circle class="seg seg2" cx="100" cy="100" r="78" stroke="#FAB40A" stroke-dasharray="157.4 332.7" transform="rotate(32.2 100 100)"/>
+                  <circle class="seg seg3" cx="100" cy="100" r="78" stroke="#4D515B" stroke-dasharray="157.4 332.7" transform="rotate(152.2 100 100)"/>
+                </g>
+              </g>
+              <path d="M100 5 l9 -14 h-18 z" fill="#1F2022"/>
+              <svg x="72" y="62" width="56" height="72" viewBox="0 0 74.13 95.22"><use href="#flame" width="74.13" height="95.22"/></svg>
+            </svg>
+          </div>
+          <div class="s5b-ticks" aria-label="累計至 2025 年">
+            <div><strong>100+</strong><span>場講座</span></div>
+            <div><strong>30+</strong><span>場工作坊</span></div>
+            <div><strong>500+</strong><span>人次培力</span></div>
+            <div><strong>10+</strong><span>個縣市</span></div>
+          </div>
+          <p class="m-note">累計至 2025 年</p>
+        </div>
+
+        <div>
+          <ol class="s5b-list">
+            <li class="s5b-row r1" tabindex="0">
+              <div><div class="num">1000<small>萬</small></div><div class="lab">資源挹注</div></div>
+              <div><span class="tag">營業額助益</span><h4>永續白皮書帶來的經濟資源</h4><p>透過共好玟化協助撰寫永續白皮書，讓一家品牌設計公司在一年內獲得政府補助、天使投資與銀行貸款，累計近 1000 萬的經濟資源挹注。</p></div>
+            </li>
+            <li class="s5b-row r2" tabindex="0">
+              <div><div class="num">130<small>+</small></div><div class="lab">跨產業合作</div></div>
+              <div><span class="tag">合作案例</span><h4>跨產業永續合作</h4><p>從國際論壇到企業採購清單、從跨國永續會議到聯名商品合作，共好玟化持續透過ESG共學坊講師平台促成跨產業合作。</p></div>
+            </li>
+            <li class="s5b-row r3" tabindex="0">
+              <div><div class="num">8<small>+</small></div><div class="lab">國際論壇</div></div>
+              <div><span class="tag">顧問導向</span><h4>站上國際舞台</h4><p>一份永續白皮書，讓用海廢做錶的品牌站上國際青年論壇的舞台。迄今已協助 8 個企業登上國際論壇，讓國際看見台灣的永續實踐者。</p></div>
+            </li>
+          </ol>
+          <div class="s5b-foot">
+            <p class="m-note">數字來源：共好玟化專案紀錄，持續更新中。</p>
+            <a class="m-link" href="#">看我們走過的路 →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pp-card"><dl>
+    <div><dt>概念</dt><dd>一個刻度盤、一根指針。三則證據是圓環上的三段弧，讀到哪一則，盤面就轉到哪一段。把「可量化」做成可以操作的儀表，但所有內容在靜止時就已全部攤開。</dd></div>
+    <div><dt>幾何語彙與變換</dt><dd>圓環（ring）切成三段弧（arc），配色依 CIS 橘／黃／灰；滑過或以鍵盤聚焦右側條目時，整個環<strong>旋轉</strong> 120° 的倍數，把該段送到指針下，並把該段筆畫<strong>加粗</strong>（scale）。進場時盤面從 -240° 轉入；條目左側色條由 35% 伸展到全高。圓心為原色火焰。</dd></div>
+    <div><dt>參考來源</dt><dd>Apple Watch 活動圓環的分段環形語言；Google Year in Search 以列表驅動視覺切換的「左圖右文」互動摘要。</dd></div>
+    <div><dt>優點</dt><dd>白底、層級清楚，最接近「影響力報告」的語氣；數字以大字呈現，色彩對比容易達標；桌機盤面黏附於捲動，閱讀時始終有視覺錨點。</dd></div>
+    <div><dt>風險</dt><dd>三等份圓環可能被誤讀為比例（三個數字單位不同、不可相加），需在設計或文案上避免「圓餅圖」聯想；旋轉回饋只在滑鼠／鍵盤出現，觸控裝置只看到靜態盤面；條目為可聚焦但非連結，需確認是否需要個別案例頁。</dd></div>
+    <div class="full"><dt>與前後區塊的銜接可能</dt><dd><ul>
+      <li>可能一：品牌故事區的橋弧在接縫處延長，成為這個環的第一段；離開時環停在第三段，展開成一條直線，成為下一區的路線或藍圖軸線。</li>
+      <li>可能二：以白底切換做明確分段（故事深、證據白）；離開時盤面縮小成「服務對象」區的三段頁籤圖示，三段弧分別對應三種夥伴。</li>
+    </ul></dd></div>
+  </dl></div>
+</section>
+
+<!-- ═════════════════════════ C ═════════════════════════ -->
+<section class="opt" data-opt="c" id="opt-c" aria-labelledby="c-t">
+  <div class="opt-head"><span class="pp-label">方案 C</span><h2 id="c-t">漣漪拱橋：同一座橋，一圈圈放大</h2></div>
+
+  <div class="s5c">
+    <div class="wrap">
+      <div class="s5c-head">
+        <span class="kicker">永續行動證據</span>
+        <h3 class="m-h2">可量化的影響力，真實的合作成果</h3>
+        <p class="m-lead">每一個數字，都對應一則可以說得出來的故事。</p>
+      </div>
+
+      <div class="arches">
+        <div class="arch a3"><span class="pill"><b>8<small>+</small></b><span>國際論壇</span></span></div>
+        <div class="arch a2"><span class="pill"><b>130<small>+</small></b><span>跨產業合作</span></span></div>
+        <div class="arch a1"><span class="pill"><b>1000<small>萬</small></b><span>資源挹注</span></span></div>
+        <svg class="flame" viewBox="0 0 74.13 95.22" aria-hidden="true"><use href="#flame" width="74.13" height="95.22"/></svg>
+      </div>
+      <div class="deck" aria-hidden="true"></div>
+
+      <div class="s5c-cards">
+        <article class="s5c-card c1"><span class="tag">營業額助益</span><h4>永續白皮書帶來的經濟資源</h4><p>透過共好玟化協助撰寫永續白皮書，讓一家品牌設計公司在一年內獲得政府補助、天使投資與銀行貸款，累計近 1000 萬的經濟資源挹注。</p></article>
+        <article class="s5c-card c2"><span class="tag">合作案例</span><h4>跨產業永續合作</h4><p>從國際論壇到企業採購清單、從跨國永續會議到聯名商品合作，共好玟化持續透過ESG共學坊講師平台促成跨產業合作。</p><p class="note">130+：透過顧問輔導與ESG共學坊講師平台促成的合作</p></article>
+        <article class="s5c-card c3"><span class="tag">顧問導向</span><h4>站上國際舞台</h4><p>一份永續白皮書，讓用海廢做錶的品牌站上國際青年論壇的舞台。迄今已協助 8 個企業登上國際論壇，讓國際看見台灣的永續實踐者。</p></article>
+      </div>
+
+      <div class="s5c-track" aria-label="累計至 2025 年">
+        <div><span class="geo geo-half c-yellow" aria-hidden="true"></span><p style="margin:0"><strong>100+</strong><span>場講座</span></p></div>
+        <div><span class="geo geo-half c-orange" aria-hidden="true"></span><p style="margin:0"><strong>30+</strong><span>場工作坊</span></p></div>
+        <div><span class="geo geo-half c-paper" aria-hidden="true"></span><p style="margin:0"><strong>500+</strong><span>人次培力</span></p></div>
+        <div><span class="geo geo-half c-grey" aria-hidden="true" style="box-shadow:inset 0 0 0 2px rgba(255,255,255,.35)"></span><p style="margin:0"><strong>10+</strong><span>個縣市</span></p></div>
+      </div>
+      <div class="s5c-foot">
+        <p class="m-note">累計至 2025 年。數字來源：共好玟化專案紀錄，持續更新中。</p>
+        <a class="m-link" href="#">看我們走過的路 →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="pp-card"><dl>
+    <div><dt>概念</dt><dd>一份白皮書像丟進水裡的石頭：從資源挹注，擴散到跨產業合作，再到國際舞台。三道同心拱是同一座「Sayun 橋」按比例放大，也是影響力一圈圈往外。</dd></div>
+    <div><dt>幾何語彙與變換</dt><dd>拱（half ring）× 3，同形不同尺寸：<strong>縮放</strong> 0.42／0.7／1；<strong>重新上色</strong> 黃→橘→紙色。進場時由內而外依序放大；滑過下方故事卡時，其他兩道拱降到 22% 透明度、對應的拱上浮 6px。圓心底部放原色火焰當作「石頭」；累計列以四個小半圓延續拱形。</dd></div>
+    <div><dt>參考來源</dt><dd>Spotify Wrapped 以同心圖形呈現「擴散」的視覺敘事；Stripe 首頁深色數據帶的置中大字構成。</dd></div>
+    <div><dt>優點</dt><dd>深色大場面有記憶點，數字以黃色大字置於深底，對比充足；敘事性最強，拱橋直接呼應 Sayun＝橋；故事卡色條與拱一一對應，不靠互動也讀得懂。</dd></div>
+    <div><dt>風險</dt><dd>同心圓暗示「由小到大」的層級與因果，但三個數字並非同一案例的連續結果，需客戶確認此敘事；若前一區也是深色，頁面可能連續過暗；極窄螢幕上拱上的標籤需縮字，已測 375px 可容納。</dd></div>
+    <div class="full"><dt>與前後區塊的銜接可能</dt><dd><ul>
+      <li>可能一：品牌故事區若為深色，兩區合成一段「夜色」，以拱的底線（deck）作為分界；離開時最外圈的紙色拱放大成下一區的淺色背景，從「線」變成「面」。</li>
+      <li>可能二：品牌故事區若為淺色，以一條自右上斜入的橘色細弧帶入深色；離開時三道拱收回成火焰一點，在下一區中央重現，作為三道門的鉸鍊。</li>
+    </ul></dd></div>
+  </dl></div>
+</section>
+
+<script>
+(() => {
+  const bar = document.querySelector('.pp-bar');
+  const opts = [...document.querySelectorAll('.opt')];
+  bar.hidden = false;
+  bar.addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-show]');
+    if (!b) return;
+    const k = b.dataset.show;
+    bar.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    opts.forEach((o) => { o.hidden = k !== 'all' && o.dataset.opt !== k; });
+    window.scrollTo({ top: 0 });
+  });
+})();
+</script>
+</body>
+</html>
