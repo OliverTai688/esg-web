@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Image from "next/image"
 import { Dialog } from "radix-ui"
 import { Quote, X, ArrowRight } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -13,8 +14,15 @@ interface Testimonial {
   tag: string
 }
 
+interface Logo {
+  src: string
+  alt: string
+}
+
 // S7 · Client feedback: four partners are four petals around one centre
-// (home-v2 decision S7-A). Hover or focus previews the highlight on the left;
+// (home-v2 decision S7-A). Each petal carries the partner's logo on a white
+// disc (client request: logos open the feedback); partners whose logo file has
+// not arrived show their first character instead. Hover or focus previews the highlight on the left;
 // clicking a petal opens the full feedback. Petals gather from the outside as
 // the section scrolls in (transition 6); at rest the flower is complete.
 // Each petal's pointed corners face the centre and the outside.
@@ -27,16 +35,20 @@ const PETALS = [
 
 export function TestimonialFlower({
   items,
+  logos,
   openLabel,
   closeLabel,
 }: {
   items: readonly Testimonial[]
+  /** Same order as `items`; null where there is no logo yet. */
+  logos?: readonly (Logo | null)[]
   openLabel: string
   closeLabel: string
 }) {
   const [active, setActive] = React.useState(0)
   const [open, setOpen] = React.useState(false)
   const current = items[active]
+  const currentLogo = logos?.[active]
 
   return (
     <div className="grid items-center gap-10 lg:grid-cols-[1fr_minmax(0,460px)]">
@@ -52,7 +64,7 @@ export function TestimonialFlower({
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           {openLabel}
           <ArrowRight className="size-4" aria-hidden="true" />
@@ -82,9 +94,15 @@ export function TestimonialFlower({
                   active === i ? "scale-100" : "scale-[0.94] hover:scale-100",
                 )}
               >
-                <span aria-hidden="true" className="text-4xl font-black sm:text-5xl">
-                  {item.name.slice(0, 1)}
-                </span>
+                {logos?.[i] ? (
+                  <span className="relative block size-16 overflow-hidden rounded-full bg-white sm:size-20">
+                    <Image src={logos[i].src} alt="" fill sizes="80px" className="object-contain p-2.5" />
+                  </span>
+                ) : (
+                  <span aria-hidden="true" className="text-4xl font-black sm:text-5xl">
+                    {item.name.slice(0, 1)}
+                  </span>
+                )}
                 <span className="max-w-[9em] text-xs font-bold leading-snug sm:text-sm">{item.name}</span>
               </button>
             </li>
@@ -101,9 +119,15 @@ export function TestimonialFlower({
             <Dialog.Title className="mt-4 text-xl font-black leading-[1.5] text-ink sm:text-2xl">{current.highlight}</Dialog.Title>
             <Dialog.Description className="mt-4 text-base leading-[1.9] text-ink/80">{current.quote}</Dialog.Description>
             <div className="mt-8 flex items-center gap-4 border-t border-border pt-6">
-              <span aria-hidden="true" className="flex size-12 items-center justify-center rounded-tr-full rounded-bl-full bg-orange-soft text-xl font-black text-[#A8321A]">
-                {current.name.slice(0, 1)}
-              </span>
+              {currentLogo ? (
+                <span className="relative block h-12 w-20 shrink-0 overflow-hidden rounded-xl bg-white ring-1 ring-border">
+                  <Image src={currentLogo.src} alt={currentLogo.alt} fill sizes="80px" className="object-contain p-1.5" />
+                </span>
+              ) : (
+                <span aria-hidden="true" className="flex size-12 items-center justify-center rounded-tr-full rounded-bl-full bg-orange-soft text-xl font-black text-[#A8321A]">
+                  {current.name.slice(0, 1)}
+                </span>
+              )}
               <div>
                 <p className="font-bold text-ink">{current.name}</p>
                 <p className="text-sm text-muted-foreground">{current.title}</p>

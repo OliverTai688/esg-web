@@ -19,11 +19,15 @@ const home = {
   },
   partners: {
     label: "合作過的夥伴與單位",
-    // Names only: logo files and display permission are still pending (H01).
+    // Logos come from src/data/clients.ts by group `key`; `others` are partners
+    // named in the site copy whose logo file the client has not supplied yet (H01).
+    // {n} is the number of logos in the group.
+    showAll: "看全部 {n} 個",
+    othersLabel: "以及",
     groups: [
-      { title: "品牌與企業", names: ["思凡自然農場", "兔耳生活", "星芽社會企業", "RAFAC 機能襪", "處處花版", "齊禾品牌顧問", "勤億蛋品", "大慶旅遊"] },
-      { title: "公部門與學會", names: ["台北市政府", "台灣休閒農業學會", "三鶯社區大學", "南港社區大學", "萬華社區大學"] },
-      { title: "非營利與國際", names: ["中華少年成長基金會", "愛慈基金會", "台東康復之友", "UN-SDGs Impact Developers Conference", "Global Youth Leadership Programme"] },
+      { key: "business", title: "品牌與企業", others: ["RAFAC 機能襪", "處處花版"] },
+      { key: "public", title: "公部門與學校", others: ["台北市政府", "台灣休閒農業學會", "萬華社區大學"] },
+      { key: "nonprofit", title: "非營利與國際", others: ["中華少年成長基金會", "台東康復之友", "UN-SDGs Impact Developers Conference", "Global Youth Leadership Programme"] },
     ],
   },
   problem: {
@@ -153,14 +157,17 @@ const home = {
   trust: {
     label: "合作夥伴怎麼說",
     title: "客戶回饋",
-    description: "來自品牌主、社會企業與產業夥伴的真實合作回饋。點選夥伴名稱，閱讀完整回饋。",
+    description: "來自品牌主、社會企業與產業夥伴的真實合作回饋。點選夥伴的標誌，閱讀完整回饋。",
     openLabel: "閱讀回饋",
     closeLabel: "關閉",
+    // `client` is an id in src/data/clients.ts: the petal shows that logo. Leave it
+    // empty while the logo file is missing; the petal falls back to the first character.
     testimonials: [
       {
         highlight: "ESG 本質仍然是以人為核心，共好玟化提供的價值非常契合。",
         quote: "從創辦者的角度切入，協助你想清楚自己在做的事與永續的關聯。幫企業做報告的同時，也喚醒人對永續的初衷。",
         name: "思凡自然農場",
+        client: "sifan-farm",
         title: "自然農園負責人",
         tag: "ESG 報告",
       },
@@ -168,6 +175,7 @@ const home = {
         highlight: "專業、溫暖、負責任，整個合作過程讓人感到安心。",
         quote: "讓複雜的永續內容變得不那麼有壓力。不同背景的人可以在同一個場域交流碰撞，延伸出新的合作與可能。",
         name: "兔耳生活有限公司",
+        client: "tuer-life",
         title: "品牌創辦人",
         tag: "品牌永續",
       },
@@ -175,6 +183,7 @@ const home = {
         highlight: "從零散被動的企業合作，轉變為更主動、有策略的窗口溝通。",
         quote: "如同名字一樣的『共好』夥伴，共好玟化是知識整合與轉譯的角色。",
         name: "台灣休閒農場學會",
+        client: "",
         title: "產業合作夥伴",
         tag: "供應鏈",
       },
@@ -182,6 +191,7 @@ const home = {
         highlight: "共好玟化是企業 ESG 優化的專家。",
         quote: "能提出客戶想不到的視角，也能在客戶既有基礎上做更深入的延伸。整合環境、社會與經濟三大效益。",
         name: "齊禾品牌顧問",
+        client: "chihe",
         title: "共同創辦人",
         tag: "顧問輔導",
       },

@@ -19,11 +19,12 @@ const home = {
   },
   partners: {
     label: "Partners and organisations we have worked with",
-    // Names only: logo files and display permission are still pending (H01).
+    showAll: "See all {n}",
+    othersLabel: "And",
     groups: [
-      { title: "Brands & Businesses", names: ["思凡自然農場", "兔耳生活", "星芽社會企業", "RAFAC Functional Socks", "處處花版", "齊禾品牌顧問", "勤億蛋品", "大慶旅遊"] },
-      { title: "Public Sector & Associations", names: ["Taipei City Government", "台灣休閒農業學會", "Sanying Community College", "Nangang Community College", "Wanhua Community College"] },
-      { title: "Non-Profit & International", names: ["中華少年成長基金會", "愛慈基金會", "台東康復之友", "UN-SDGs Impact Developers Conference", "Global Youth Leadership Programme"] },
+      { key: "business", title: "Brands & Businesses", others: ["RAFAC Functional Socks", "處處花版"] },
+      { key: "public", title: "Public Sector & Schools", others: ["Taipei City Government", "台灣休閒農業學會", "Wanhua Community College"] },
+      { key: "nonprofit", title: "Non-Profit & International", others: ["中華少年成長基金會", "台東康復之友", "UN-SDGs Impact Developers Conference", "Global Youth Leadership Programme"] },
     ],
   },
   problem: {
@@ -153,7 +154,7 @@ const home = {
   trust: {
     label: "What our partners say",
     title: "Client Testimonials",
-    description: "Genuine feedback from brand owners, social enterprises and industry partners. Select a partner to read their full testimonial.",
+    description: "Genuine feedback from brand owners, social enterprises and industry partners. Select a partner's logo to read their full testimonial.",
     openLabel: "Read testimonial",
     closeLabel: "Close",
     testimonials: [
@@ -161,6 +162,7 @@ const home = {
         highlight: "At its core, ESG is still about people, and the value Gung-Ho Culture brings fits that perfectly.",
         quote: "They start from the founder's perspective and help you see how your work connects to sustainability. While preparing the report, they also reawaken your original motivation for doing it.",
         name: "思凡自然農場",
+        client: "sifan-farm",
         title: "Owner, natural farm",
         tag: "ESG Report",
       },
@@ -168,6 +170,7 @@ const home = {
         highlight: "Professional, warm and dependable. The whole collaboration felt reassuring.",
         quote: "They make complex sustainability topics feel far less daunting. People from different backgrounds can meet and exchange ideas, opening up new partnerships and possibilities.",
         name: "兔耳生活有限公司",
+        client: "tuer-life",
         title: "Brand Founder",
         tag: "Brand Sustainability",
       },
@@ -175,6 +178,7 @@ const home = {
         highlight: "We moved from ad hoc, reactive corporate partnerships to proactive, strategic engagement.",
         quote: "True to its name, Gung-Ho Culture is a partner that helps everyone thrive together, integrating and translating knowledge.",
         name: "台灣休閒農業學會",
+        client: "",
         title: "Industry Partner",
         tag: "Supply Chain",
       },
@@ -182,6 +186,7 @@ const home = {
         highlight: "Gung-Ho Culture are experts in strengthening corporate ESG.",
         quote: "They offer perspectives clients would never have thought of, while building further on what clients already have, bringing together environmental, social and economic value.",
         name: "齊禾品牌顧問",
+        client: "chihe",
         title: "Co-founder",
         tag: "Advisory",
       },

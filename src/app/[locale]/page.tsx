@@ -1,6 +1,6 @@
 import Link from "next/link"
 import type { Metadata } from "next"
-import { ArrowRight, ArrowUpRight, ChevronDown } from "lucide-react"
+import { ArrowRight, ArrowUpRight } from "lucide-react"
 import { Container } from "@/components/core/Container"
 import { Button } from "@/components/ui/button"
 import { SectionHeader } from "@/components/site/SectionHeader"
@@ -8,8 +8,12 @@ import { FlameMark } from "@/components/site/FlameMark"
 import { HeroPetalArc } from "@/components/home/HeroPetalArc"
 import { ProblemMosaic } from "@/components/home/ProblemMosaic"
 import { EvidenceRing } from "@/components/home/EvidenceRing"
+import { StoryDialog } from "@/components/home/StoryDialog"
 import { TestimonialFlower } from "@/components/home/TestimonialFlower"
 import { CtaArcs } from "@/components/home/CtaArcs"
+import { ClientLogo } from "@/components/site/ClientLogo"
+import { ReadMore } from "@/components/ux/Fold"
+import { clients, clientLogo, clientName, getClient, type Client } from "@/data/clients"
 import { getMessages } from "@/i18n/messages"
 import type { Locale } from "@/i18n/config"
 import { formatImpactMetric, cn } from "@/lib/utils"
@@ -25,13 +29,23 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 function withBold(text: string) {
   return text.split(/(\*\*[^*]+\*\*)/g).map((part, i) =>
     part.startsWith("**") ? (
-      <strong key={i} className="font-bold text-white">
+      <strong key={i} className="font-bold text-ink">
         {part.slice(2, -2)}
       </strong>
     ) : (
       part
     ),
   )
+}
+
+// Grid cells of logos shown per partner group before "see all": three rows of
+// four. A wide wordmark takes two cells, so the number of logos varies.
+const LOGO_CELLS = 12
+
+function logosInView(logos: readonly Client[]) {
+  let cells = 0
+  const count = logos.findIndex((c) => (cells += c.wide ? 2 : 1) > LOGO_CELLS)
+  return count === -1 ? logos.length : count
 }
 
 // Home page: a bridge being built, top to bottom (docs/redesign/home-v2/).
@@ -52,6 +66,13 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const doorOrder = ["brand", "learner", "enterprise"]
   const audiences = doorOrder.map((k) => h.audiences.items.find((a) => a.key === k)).filter((a) => a !== undefined)
   const partnerTone = ["bg-brand-yellow", "bg-brand-grey", "bg-brand-orange"]
+  const english = locale === "en"
+  const logoGrid = "grid grid-flow-dense grid-cols-4 gap-2 md:grid-cols-2 lg:grid-cols-4"
+  // Each testimonial's logo, when the client has supplied the file
+  const testimonialLogos = h.trust.testimonials.map((item) => {
+    const client = getClient(item.client)
+    return client ? { src: clientLogo(client.id), alt: clientName(client, english) } : null
+  })
 
   return (
     <div className="overflow-x-clip">
@@ -98,28 +119,48 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         <span className="absolute right-[8%] top-0 size-10 -translate-y-1/2 rotate-45 rounded-tr-full rounded-bl-full bg-brand-yellow sm:size-14 lg:right-[22%]" />
       </div>
 
-      {/* S2 ── Partners: three groups, each card marked by a petal in its role colour */}
+      {/* S2 ── Partners: three groups of client logos, each card marked by a petal in its role colour */}
       <section aria-labelledby="partners-heading" className="border-y border-border bg-card py-16 md:py-20">
         <Container>
           <h2 id="partners-heading" className="kicker-rule text-[13px] font-bold tracking-[0.12em] text-primary">
             {h.partners.label}
           </h2>
           <ul className="mt-8 grid gap-4 md:grid-cols-3">
-            {h.partners.groups.map((g, i) => (
-              <li key={g.title} className="relative overflow-hidden rounded-2xl bg-paper p-6 pt-8">
-                <span aria-hidden="true" className={cn("absolute -right-4 -top-4 size-16 rounded-tr-full rounded-bl-full opacity-90", partnerTone[i], i === 1 && "-scale-x-100")} />
-                <p className="font-display text-xs font-bold text-muted-foreground">0{i + 1}</p>
-                <h3 className="mt-1 text-lg font-black text-ink">{g.title}</h3>
-                <ul className="mt-4 space-y-2 border-t border-border pt-4 text-sm text-ink/80">
-                  {g.names.map((n) => (
-                    <li key={n} className="flex gap-2">
-                      <span aria-hidden="true" className={cn("mt-2 size-1.5 shrink-0 rounded-full", partnerTone[i])} />
-                      {n}
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
+            {h.partners.groups.map((g, i) => {
+              const logos = clients.filter((c) => c.group === g.key)
+              const shown = logosInView(logos)
+              const rest = logos.slice(shown)
+              return (
+                <li key={g.key} className="relative overflow-hidden rounded-2xl bg-paper p-6 pt-8">
+                  <span aria-hidden="true" className={cn("absolute -right-4 -top-4 size-16 rounded-tr-full rounded-bl-full opacity-90", partnerTone[i], i === 1 && "-scale-x-100")} />
+                  <p className="font-display text-xs font-bold text-muted-foreground">0{i + 1}</p>
+                  <h3 className="mt-1 text-lg font-black text-ink">{g.title}</h3>
+                  <ul className={cn("mt-4 border-t border-border pt-4", logoGrid)}>
+                    {logos.slice(0, shown).map((c) => (
+                      <li key={c.id} className={cn(c.wide && "col-span-2")}>
+                        <ClientLogo client={c} english={english} className="h-16" />
+                      </li>
+                    ))}
+                  </ul>
+                  {rest.length > 0 && (
+                    <ReadMore label={h.partners.showAll.replace("{n}", String(logos.length))} className="mt-2" contentClassName="mt-2">
+                      <ul className={logoGrid}>
+                        {rest.map((c) => (
+                          <li key={c.id} className={cn(c.wide && "col-span-2")}>
+                            <ClientLogo client={c} english={english} className="h-16" />
+                          </li>
+                        ))}
+                      </ul>
+                    </ReadMore>
+                  )}
+                  <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
+                    {h.partners.othersLabel}
+                    {english ? " " : "："}
+                    {g.others.join(english ? ", " : "、")}
+                  </p>
+                </li>
+              )
+            })}
           </ul>
         </Container>
       </section>
@@ -184,21 +225,15 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                   </li>
                 ))}
               </ul>
-              <details className="group mt-8 rounded-2xl border border-white/15 open:bg-white/[0.04]">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 font-bold [&::-webkit-details-marker]:hidden">
-                  {h.story.readMore}
-                  <ChevronDown className="size-5 transition-transform group-open:rotate-180" aria-hidden="true" />
-                </summary>
-                <div className="space-y-4 px-5 pb-6 text-sm leading-[1.95] text-white/80">
-                  {h.story.fullStory.map((p) => (
-                    <p key={p.slice(0, 16)}>{withBold(p)}</p>
-                  ))}
-                  <p className="pt-2 text-white">
-                    — {h.story.founderName}，{h.story.founderTitle}
-                  </p>
-                </div>
-              </details>
-              <Link href={`/${locale}/sustainability#who-we-are`} className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-brand-yellow underline-offset-4 hover:underline">
+              <StoryDialog triggerLabel={h.story.readMore} kicker={h.story.label} title={h.story.title} closeLabel={h.trust.closeLabel}>
+                {h.story.fullStory.map((p) => (
+                  <p key={p.slice(0, 16)}>{withBold(p)}</p>
+                ))}
+                <p className="pt-2 font-bold text-ink">
+                  — {h.story.founderName}，{h.story.founderTitle}
+                </p>
+              </StoryDialog>
+              <Link href={`/${locale}/sustainability#who-we-are`} className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-brand-yellow underline-offset-4 hover:underline">
                 {h.story.moreLink}
                 <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
@@ -247,7 +282,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               ))}
               <li>{h.evidence.sourceNote}</li>
             </ol>
-            <Link href={`/${locale}/events#history`} className="inline-flex shrink-0 items-center gap-1.5 text-sm font-bold text-primary underline-offset-4 hover:underline">
+            <Link href={`/${locale}/events#history`} className="inline-flex min-h-11 shrink-0 items-center gap-1.5 text-sm font-bold text-primary underline-offset-4 hover:underline">
               {h.evidence.moreLink}
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
@@ -291,7 +326,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           <div className="mt-16 rounded-3xl bg-card p-7 sm:p-10">
             <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
               <h3 className="text-xl font-black text-ink sm:text-2xl">{h.audiences.roadmapTitle}</h3>
-              <Link href={`/${locale}/events#roadmap`} className="inline-flex items-center gap-1.5 text-sm font-bold text-primary underline-offset-4 hover:underline">
+              <Link href={`/${locale}/events#roadmap`} className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-primary underline-offset-4 hover:underline">
                 {h.audiences.roadmapLink}
                 <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
@@ -323,7 +358,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         <Container>
           <SectionHeader kicker={h.trust.label} title={h.trust.title} description={h.trust.description} />
           <div className="mt-12">
-            <TestimonialFlower items={h.trust.testimonials} openLabel={h.trust.openLabel} closeLabel={h.trust.closeLabel} />
+            <TestimonialFlower items={h.trust.testimonials} logos={testimonialLogos} openLabel={h.trust.openLabel} closeLabel={h.trust.closeLabel} />
           </div>
         </Container>
       </section>
