@@ -1,6 +1,23 @@
+import type { ChapterDef } from "@/lib/chapters"
+
 // /sustainability copy. Client text from docs/tasks/sitemap-rev1/S01–S06;
 // terminology follows G01 (see scripts/check-terms.mjs).
+// Page sections in page order: the single source for the navbar dropdown and the
+// in-page ChapterNav. Every id must be a section id on the page (scripts/check-anchors.mjs).
+// Each label is also that section's kicker. Merged in pages-v2: values → vision,
+// sdgs → approach, theory → difference (docs/redesign/pages-v2/sustainability/).
+const chapters: readonly ChapterDef[] = [
+  { id: "who-we-are", label: "我們是誰", desc: "創辦人、團隊與專業資格", icon: "UserRound" },
+  { id: "vision", label: "願景與使命", desc: "要往哪裡去，與五個核心價值", icon: "Compass" },
+  { id: "approach", label: "我們怎麼做", desc: "IOOI 模型、三大支柱與 SDGs", icon: "Route" },
+  { id: "difference", label: "我們的不同", desc: "四種能力與雙效益理論", icon: "Scale" },
+  { id: "services", label: "服務項目", desc: "顧問輔導、永續白皮書、ESG共學坊", icon: "Briefcase" },
+  { id: "impact", label: "實際成果", desc: "一個故事、三個數字、三種改變", icon: "BarChart3" },
+  { id: "ecosystem", label: "共好生態圈", desc: "顧問、供應鏈、企業與國際網絡", icon: "Globe2" },
+]
+
 const sustainability = {
+  chapters,
   meta: {
     title: "共好永續力",
     description: "陪跑、連結、創造影響力。共好玟化陪伴企業、社會組織與公益機構，從永續藍圖走向真正的永續影響力。",
@@ -12,8 +29,12 @@ const sustainability = {
     subtitle: "我們相信，永續不該只是一份報告，而是一種能被實踐、被分享、被持續滋養的影響力。",
     description:
       "共好玟化陪伴企業、社會組織與公益機構，從「永續藍圖」走向「真正的永續影響力」，建立具備共學、共創與生態圈精神的永續循環。",
+    // Toggle for the folded description
+    more: "我們陪誰、怎麼陪",
     primaryCta: "預約 15 分鐘 Coffee Chat",
     secondaryCta: "了解我們的方法",
+    // The four parts of the arch = the page's through-line
+    map: ["人", "信念", "方法", "成果"],
   },
   toc: {
     title: "本頁章節",
@@ -21,8 +42,12 @@ const sustainability = {
   whoWeAre: {
     label: "我們是誰",
     title: "社會工作 × 永續管理 × 國際認證",
+    // The client's two paragraphs, split after the first sentence: `lead` is always
+    // visible, `paragraphs` sit behind the read-more toggle.
+    lead: "共好玟化組織發展顧問有限公司成立於 2022 年，由一群跨領域專業者共同組成。",
+    readMore: "讀完整介紹",
     paragraphs: [
-      "共好玟化組織發展顧問有限公司成立於 2022 年，由一群跨領域專業者共同組成。我們的創辦人吳玟樺（Evvon），擁有 15 年以上社會永續、醫療與公益機構的專案實戰經驗，並具備跨域專業資格。",
+      "我們的創辦人吳玟樺（Evvon），擁有 15 年以上社會永續、醫療與公益機構的專案實戰經驗，並具備跨域專業資格。",
       "社會工作 × 永續管理 × 國際認證——這份跨域積累，是共好玟化最深的底氣。我們不只提供永續的「理論」，更陪企業把承諾化為「行動」：從釐清願景、制定策略，到產出真正有靈魂的永續白皮書，我們始終站在客戶身邊一起跑。",
     ],
     credentialsTitle: "創辦人專業資格",
@@ -108,6 +133,9 @@ const sustainability = {
       "環境、社會、經濟並不是互相拉扯的取捨。綠色採購能減少資源消耗與碳排，直接降低營運成本；良好的社會形象與利害關係人信任，則會累積成品牌溢價與長期競爭力。當企業把永續放進營運核心，這些投入就會回流成實質的財務回報。",
       "而真正讓環境表現轉化為經濟回報的，是企業的「動態能力」，也就是跨組織協作、帶動整條供應鏈一起轉型的能力。內部符合規範只是基本盤；能驅動供應鏈一起升級的企業，才拿得到真正的競爭優勢。",
     ],
+    readMore: "讀完整論述",
+    // The two half-arches and their keystone (terms from the client's text)
+    diagram: { left: "社會與環境", keystone: "動態能力", right: "經濟效益" },
     layersIntro: "我們用「議題 → 系統 → 商模」三層架構，協助企業把這件事做出來：",
     layers: [
       { name: "議題", description: "從社會與環境意義的切角切入（綠色採購、供應鏈碳足跡、公平貿易），對準企業真正的痛點。" },
@@ -135,6 +163,7 @@ const sustainability = {
     before: "有數據之前，這支手錶是一個有意義來源的美麗產品，",
     after: "有數據之後，它是買家可以寫進報告、合作夥伴可以圍繞它建立關係的證據。",
     quantTitle: "量化成果",
+    notesLabel: "數字怎麼算",
     qualTitle: "質化成果",
     qualItems: [
       { title: "被國際看見", description: "海廢手錶品牌透過永續白皮書整理數據與故事，站上國際青年論壇舞台。" },

@@ -1,6 +1,23 @@
+import type { ChapterDef } from "@/lib/chapters"
+
 // /sustainability copy. Client text from docs/tasks/sitemap-rev1/S01–S06;
 // terminology follows G01 (see scripts/check-terms.mjs).
+// Page sections in page order: the single source for the navbar dropdown and the
+// in-page ChapterNav. Every id must be a section id on the page (scripts/check-anchors.mjs).
+// Each label is also that section's kicker. Merged in pages-v2: values → vision,
+// sdgs → approach, theory → difference (docs/redesign/pages-v2/sustainability/).
+const chapters: readonly ChapterDef[] = [
+  { id: "who-we-are", label: "Who We Are", desc: "Our founder, team and credentials", icon: "UserRound" },
+  { id: "vision", label: "Vision & Mission", desc: "Where we are heading, and five core values", icon: "Compass" },
+  { id: "approach", label: "Our Approach", desc: "The IOOI model, three pillars and the SDGs", icon: "Route" },
+  { id: "difference", label: "Our Difference", desc: "Four capabilities and the dual-benefit theory", icon: "Scale" },
+  { id: "services", label: "Services", desc: "Advisory, Sustainability White Papers, CO-ESG Academy", icon: "Briefcase" },
+  { id: "impact", label: "Results", desc: "One story, three numbers, three shifts", icon: "BarChart3" },
+  { id: "ecosystem", label: "Gung-Ho Ecosystem", desc: "Advisors, supply chains, businesses and global networks", icon: "Globe2" },
+]
+
 const sustainability = {
+  chapters,
   meta: {
     title: "Sustainability",
     description: "Guide, connect, create impact. Gung-Ho Culture walks alongside businesses, social organisations and charities on the journey from a sustainability blueprint to genuine sustainability impact.",
@@ -12,8 +29,12 @@ const sustainability = {
     subtitle: "We believe sustainability should be more than a report: it should be impact that can be practised, shared and continually nurtured.",
     description:
       "Gung-Ho Culture walks alongside businesses, social organisations and charities as they move from a sustainability blueprint to genuine sustainability impact, building a cycle grounded in co-learning, co-creation and an ecosystem mindset.",
+    // Toggle for the folded description
+    more: "Who we work with, and how",
     primaryCta: "Book a 15-minute Coffee Chat",
     secondaryCta: "Explore our approach",
+    // The four parts of the arch = the page's through-line
+    map: ["People", "Beliefs", "Method", "Results"],
   },
   toc: {
     title: "On this page",
@@ -21,8 +42,12 @@ const sustainability = {
   whoWeAre: {
     label: "Who We Are",
     title: "Social work × Sustainability management × International certification",
+    // The client's two paragraphs, split after the first sentence: `lead` is always
+    // visible, `paragraphs` sit behind the read-more toggle.
+    lead: "Gung-Ho Culture Organisational Development Consulting Co., Ltd. was founded in 2022 by a multidisciplinary team of professionals.",
+    readMore: "Read the full introduction",
     paragraphs: [
-      "Gung-Ho Culture Organisational Development Consulting Co., Ltd. was founded in 2022 by a multidisciplinary team of professionals. Our founder, Evvon Wu, brings more than 15 years of hands-on project experience across social sustainability, healthcare and the charitable sector, along with professional qualifications spanning several disciplines.",
+      "Our founder, Evvon Wu, brings more than 15 years of hands-on project experience across social sustainability, healthcare and the charitable sector, along with professional qualifications spanning several disciplines.",
       "Social work × sustainability management × international certification: this cross-disciplinary depth is Gung-Ho Culture's greatest strength. We do not just offer sustainability theory; we help companies turn commitments into action. From clarifying vision and shaping strategy to producing a Sustainability White Paper with real substance, we stay alongside our clients every step of the way.",
     ],
     credentialsTitle: "Founder's credentials",
@@ -90,7 +115,7 @@ const sustainability = {
     ],
   },
   difference: {
-    label: "What Sets Us Apart",
+    label: "Our Difference",
     title: "Where four capabilities meet",
     intro: "Among the many ESG consultancies, Gung-Ho Culture stands out through the meeting of four capabilities:",
     items: [
@@ -108,6 +133,9 @@ const sustainability = {
       "Environmental, social and economic goals are not trade-offs pulling against one another. Green procurement reduces resource use and carbon emissions, directly cutting operating costs; a strong social reputation and stakeholder trust build into brand premium and long-term competitiveness. When companies place sustainability at the core of their operations, these investments flow back as tangible financial returns.",
       "What truly turns environmental performance into economic return is a company's dynamic capability: the ability to collaborate across organisations and bring the whole supply chain along in transformation. Internal compliance is only the baseline; real competitive advantage belongs to companies that can drive their supply chains to improve together.",
     ],
+    readMore: "Read the full argument",
+    // The two half-arches and their keystone (terms from the client's text)
+    diagram: { left: "Society & environment", keystone: "Dynamic capability", right: "Economic value" },
     layersIntro: "We use a three-layer framework of Issue → System → Business model to help companies make this happen:",
     layers: [
       { name: "Issue", description: "Start from a social or environmental angle (green procurement, supply-chain carbon footprint, fair trade) that targets the company's real pain points." },
@@ -135,6 +163,7 @@ const sustainability = {
     before: "Before the data, the watch was a beautiful product with a meaningful origin.",
     after: "After the data, it became evidence that buyers can cite in their reports and partners can build relationships around.",
     quantTitle: "Quantitative results",
+    notesLabel: "How the numbers are counted",
     qualTitle: "Qualitative results",
     qualItems: [
       { title: "Recognised internationally", description: "An ocean-waste watch brand organised its data and story in a Sustainability White Paper and took the stage at an international youth forum." },

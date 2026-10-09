@@ -1,31 +1,47 @@
 import {
-  Compass,
-  Briefcase,
+  ArrowRight,
+  Award,
   BarChart3,
-  Globe2,
-  CalendarDays,
-  GraduationCap,
-  Repeat,
-  History,
-  FileSearch,
-  Handshake,
-  MessageCircle,
-  Lightbulb,
-  TrendingUp,
-  Shield,
-  Mic2,
-  Sparkles,
+  BookOpen,
+  Briefcase,
   Building2,
-  Users,
+  CalendarDays,
+  Coffee,
+  Compass,
+  FileSearch,
+  FileText,
+  Flag,
+  Footprints,
+  Globe2,
+  GraduationCap,
+  Handshake,
+  HeartHandshake,
   HelpCircle,
+  History,
+  Layers,
+  Lightbulb,
   Mail,
-  UserRound,
+  Map,
+  MessageCircle,
+  Mic2,
+  Newspaper,
+  Quote,
+  Repeat,
+  Rocket,
   Route,
   Scale,
-  Flag,
-  Newspaper,
+  Search,
+  Shield,
+  Sparkles,
+  Sprout,
+  Target,
+  TrendingUp,
+  UserRound,
+  Users,
+  Wallet,
   type LucideIcon,
 } from "lucide-react"
+import type { ChapterDef } from "@/lib/chapters"
 import type { Messages } from "@/i18n/messages"
 
 export interface NavItem {
@@ -42,68 +58,49 @@ export interface NavGroup {
   items: NavItem[]
 }
 
-// Dropdown menus for the main navigation.
-// Items are listed in the order their sections appear on the page, top to bottom —
-// when a page's sections are added, removed or reordered, update the list here.
-export function getNavGroups(locale: string, labels: Messages["nav"]): NavGroup[] {
-  const sustainability = `/${locale}/sustainability`
-  const events = `/${locale}/events`
-  const learning = `/${locale}/learning`
-  const consulting = `/${locale}/consulting`
+// Icons a chapter may name in its `icon` field.
+export const NAV_ICONS: Record<string, LucideIcon> = {
+  Award, BarChart3, BookOpen, Briefcase, Building2, CalendarDays, Coffee, Compass, FileSearch, FileText,
+  Flag, Footprints, Globe2, GraduationCap, Handshake, HeartHandshake, HelpCircle, History, Layers, Lightbulb,
+  Mail, Map, MessageCircle, Mic2, Newspaper, Quote, Repeat, Rocket, Route, Scale, Search, Shield, Sparkles,
+  Sprout, Target, TrendingUp, UserRound, Users, Wallet,
+}
 
-  return [
-    {
-      key: "sustainability",
-      label: labels.sustainability.label,
-      href: sustainability,
-      items: [
-        { title: labels.sustainability.whoWeAre, desc: labels.sustainability.whoWeAreDesc, href: `${sustainability}#who-we-are`, icon: UserRound },
-        { title: labels.sustainability.vision, desc: labels.sustainability.visionDesc, href: `${sustainability}#vision`, icon: Compass },
-        { title: labels.sustainability.approach, desc: labels.sustainability.approachDesc, href: `${sustainability}#approach`, icon: Route },
-        { title: labels.sustainability.theory, desc: labels.sustainability.theoryDesc, href: `${sustainability}#theory`, icon: Scale },
-        { title: labels.sustainability.services, desc: labels.sustainability.servicesDesc, href: `${sustainability}#services`, icon: Briefcase },
-        { title: labels.sustainability.practices, desc: labels.sustainability.practicesDesc, href: `${sustainability}#impact`, icon: BarChart3 },
-        { title: labels.sustainability.ecosystem, desc: labels.sustainability.ecosystemDesc, href: `${sustainability}#ecosystem`, icon: Globe2 },
-      ],
+// What the navbar needs from the dictionary: top-level names plus each page's chapters.
+export interface NavData {
+  labels: Messages["nav"]
+  chapters: Record<"sustainability" | "events" | "learning" | "consulting", readonly ChapterDef[]>
+}
+
+export function getNavData(messages: Messages): NavData {
+  return {
+    labels: messages.nav,
+    chapters: {
+      sustainability: messages.sustainability.chapters,
+      events: messages.events.chapters,
+      learning: messages.learning.chapters,
+      consulting: messages.consulting.chapters,
     },
-    {
-      key: "events",
-      label: labels.events.label,
-      href: events,
-      items: [
-        { title: labels.events.list, desc: labels.events.listDesc, href: `${events}#upcoming`, icon: CalendarDays },
-        { title: labels.events.workshops, desc: labels.events.workshopsDesc, href: `${events}#workshops`, icon: GraduationCap },
-        { title: labels.events.services, desc: labels.events.servicesDesc, href: `${events}#services`, icon: Repeat },
-        { title: labels.events.history, desc: labels.events.historyDesc, href: `${events}#history`, icon: History },
-        { title: labels.events.roadmap, desc: labels.events.roadmapDesc, href: `${events}#roadmap`, icon: Flag },
-        { title: labels.events.caseStudies, desc: labels.events.caseStudiesDesc, href: `${events}#cases`, icon: FileSearch },
-      ],
-    },
-    {
-      key: "learning",
-      label: labels.learning.label,
-      href: learning,
-      items: [
-        { title: labels.learning.innovation, desc: labels.learning.innovationDesc, href: `${learning}#innovation`, icon: Lightbulb },
-        { title: labels.learning.market, desc: labels.learning.marketDesc, href: `${learning}#market`, icon: TrendingUp },
-        { title: labels.learning.responsibility, desc: labels.learning.responsibilityDesc, href: `${learning}#responsibility`, icon: Shield },
-        { title: labels.learning.collaboration, desc: labels.learning.collaborationDesc, href: `${learning}#collaboration`, icon: Handshake },
-        { title: labels.learning.communication, desc: labels.learning.communicationDesc, href: `${learning}#communication`, icon: MessageCircle },
-        { title: labels.learning.interviews, desc: labels.learning.interviewsDesc, href: `${learning}#interviews`, icon: Mic2 },
-        { title: labels.learning.insights, desc: labels.learning.insightsDesc, href: `/${locale}/insights`, icon: Newspaper },
-      ],
-    },
-    {
-      key: "consulting",
-      label: labels.consulting.label,
-      href: consulting,
-      items: [
-        { title: labels.consulting.solutions, desc: labels.consulting.solutionsDesc, href: `${consulting}#solutions`, icon: Sparkles },
-        { title: labels.consulting.ngo, desc: labels.consulting.ngoDesc, href: `${consulting}#ngo`, icon: Building2 },
-        { title: labels.consulting.membership, desc: labels.consulting.membershipDesc, href: `${consulting}#membership`, icon: Users },
-        { title: labels.consulting.faq, desc: labels.consulting.faqDesc, href: `${consulting}#faq`, icon: HelpCircle },
-        { title: labels.consulting.contact, desc: labels.consulting.contactDesc, href: `${consulting}#contact`, icon: Mail },
-      ],
-    },
-  ]
+  }
+}
+
+// Dropdown menus for the main navigation. Each menu is the page's own chapter
+// list, in page order: the dropdown, the in-page ChapterNav and the page's
+// sections all come from `chapters` in that page's message file.
+export function getNavGroups(locale: string, { labels, chapters }: NavData): NavGroup[] {
+  const pages = ["sustainability", "events", "learning", "consulting"] as const
+  return pages.map((page) => {
+    const base = `/${locale}/${page}`
+    return {
+      key: page,
+      label: labels[page].label,
+      href: base,
+      items: chapters[page].map((c) => ({
+        title: c.label,
+        desc: c.desc,
+        href: c.route ? `/${locale}${c.route}` : `${base}#${c.id}`,
+        icon: NAV_ICONS[c.icon] ?? ArrowRight,
+      })),
+    }
+  })
 }

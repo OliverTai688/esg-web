@@ -1,86 +1,93 @@
-import type { ReactNode } from "react"
 import Image from "next/image"
-import { UserCheck, Link2, Building2, Globe } from "lucide-react"
 import type { Consultant } from "@/data/team"
+import { Quarter } from "@/components/geo/shapes"
+import { Tabs } from "@/components/ux/Tabs"
+import { cn } from "@/lib/utils"
 
 interface Role {
   title: string
   description: string
 }
 
-const ROLE_ICONS = [UserCheck, Link2, Building2, Globe]
+// One arc of the ring per role, clockwise from the top-left quarter. `turn`
+// rotates the role's quarter marker to the same corner of the ring.
+const ARCS = [
+  { color: "#F25232", offset: -184, bg: "bg-brand-orange", turn: "" },
+  { color: "#FAB40A", offset: -274, bg: "bg-brand-yellow", turn: "rotate-90" },
+  { color: "#4D515B", offset: -94, bg: "bg-brand-grey", turn: "-rotate-90" },
+  { color: "#8A8E97", offset: -4, bg: "bg-[#8A8E97]", turn: "rotate-180" },
+]
 
-// Hub-and-spoke diagram: the ESG共學坊 logo in the centre, four roles around it.
-// Desktop places roles on the four sides with dashed connectors; mobile stacks them.
+// The arch closed into a ring: four arcs around the registered ESG共學坊 logo,
+// one role at each corner (stacked under the ring on phones). The consultants
+// are a row of avatar tabs: pick a face to read that person's title and organisation.
 export function EcosystemHub({
   roles,
   centerLabel,
   consultants,
   consultantsTitle,
+  english = false,
 }: {
   roles: readonly Role[]
   centerLabel: string
   consultants: readonly Consultant[]
   consultantsTitle: string
+  /** Show the translated job titles. */
+  english?: boolean
 }) {
-  const [team, supply, business, global] = roles
-  const card = (role: Role, i: number, extra?: ReactNode) => {
-    const Icon = ROLE_ICONS[i]
-    return (
-      <div className="relative z-10 rounded-2xl border border-border bg-card p-5 shadow-[0_1px_0_rgba(31,32,34,0.04)]">
-        <div className="mb-3 flex items-center gap-3">
-          <span className="flex size-9 items-center justify-center rounded-xl bg-orange-soft text-primary">
-            <Icon className="size-[18px]" aria-hidden="true" />
-          </span>
-          <h3 className="font-bold text-ink">{role.title}</h3>
-        </div>
-        <p className="text-sm leading-relaxed text-muted-foreground">{role.description}</p>
-        {extra}
-      </div>
-    )
-  }
-
-  const avatars = (
-    <div className="mt-4">
-      <p className="mb-2 text-xs font-bold text-muted-foreground">{consultantsTitle}</p>
-      <ul className="flex flex-wrap gap-2">
-        {consultants.map((c) => (
-          <li key={c.name} className="group relative">
-            <Image
-              src={c.photo}
-              alt={`${c.name}｜${c.organization} ${c.role}`}
-              title={`${c.name}｜${c.organization} ${c.role}`}
-              width={44}
-              height={44}
-              className="size-11 rounded-full border-2 border-card object-cover ring-1 ring-border"
-            />
-          </li>
-        ))}
-      </ul>
-      <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{consultants.map((c) => c.name).join("・")}</p>
-    </div>
-  )
-
   return (
-    <div className="relative mx-auto max-w-5xl">
-      {/* Connectors (desktop only) */}
-      <svg aria-hidden="true" className="pointer-events-none absolute inset-0 hidden h-full w-full lg:block" preserveAspectRatio="none" viewBox="0 0 100 100">
-        <line x1="50" y1="50" x2="18" y2="22" stroke="#F25232" strokeOpacity=".35" strokeWidth=".25" strokeDasharray="1 1.2" vectorEffect="non-scaling-stroke" />
-        <line x1="50" y1="50" x2="82" y2="22" stroke="#F25232" strokeOpacity=".35" strokeWidth=".25" strokeDasharray="1 1.2" vectorEffect="non-scaling-stroke" />
-        <line x1="50" y1="50" x2="18" y2="80" stroke="#F25232" strokeOpacity=".35" strokeWidth=".25" strokeDasharray="1 1.2" vectorEffect="non-scaling-stroke" />
-        <line x1="50" y1="50" x2="82" y2="80" stroke="#F25232" strokeOpacity=".35" strokeWidth=".25" strokeDasharray="1 1.2" vectorEffect="non-scaling-stroke" />
-      </svg>
-      <div className="grid gap-5 lg:grid-cols-[1fr_auto_1fr] lg:grid-rows-[auto_auto] lg:items-center lg:gap-x-10 lg:gap-y-14">
-        <div className="lg:col-start-1 lg:row-start-1">{card(team, 0, avatars)}</div>
-        <div className="lg:col-start-3 lg:row-start-1">{card(supply, 1)}</div>
-        <div className="order-first flex justify-center lg:order-none lg:col-start-2 lg:row-span-2 lg:row-start-1">
-          <div className="relative flex size-56 flex-col items-center justify-center rounded-full border-[3px] border-coesg bg-card text-center shadow-[0_12px_40px_-12px_rgba(35,172,57,0.35)] sm:size-64">
-            <span aria-hidden="true" className="absolute inset-3 rounded-full border border-dashed border-coesg/40" />
-            <Image src="/brand/coesg-class.svg" alt={centerLabel} width={180} height={55} className="h-auto w-40 sm:w-44" />
-          </div>
+    <div>
+      <div className="mx-auto grid max-w-4xl gap-5 lg:grid-cols-[1fr_auto_1fr] lg:items-center lg:gap-x-12 lg:gap-y-14">
+        <div className="relative mx-auto size-52 sm:size-60 lg:col-start-2 lg:row-span-2 lg:row-start-1">
+          <svg viewBox="0 0 200 200" fill="none" className="size-full" aria-hidden="true">
+            {ARCS.map((arc) => (
+              <circle key={arc.offset} cx="100" cy="100" r="91" stroke={arc.color} strokeWidth="16" pathLength={360} strokeDasharray="82 278" strokeDashoffset={arc.offset} />
+            ))}
+          </svg>
+          <Image src="/brand/coesg-class.svg" alt={centerLabel} width={180} height={55} className="absolute inset-0 m-auto h-auto w-[58%]" />
         </div>
-        <div className="lg:col-start-1 lg:row-start-2">{card(business, 2)}</div>
-        <div className="lg:col-start-3 lg:row-start-2">{card(global, 3)}</div>
+        {roles.map((role, i) => {
+          const arc = ARCS[i % ARCS.length]
+          const left = i % 2 === 0
+          return (
+            <div
+              key={role.title}
+              className={cn(
+                "grid grid-cols-[auto_1fr] items-center gap-x-3 gap-y-1",
+                left ? "lg:col-start-1 lg:grid-cols-[1fr_auto] lg:text-right" : "lg:col-start-3",
+                i < 2 ? "lg:row-start-1" : "lg:row-start-2",
+              )}
+            >
+              <Quarter className={cn("size-[18px]", arc.bg, arc.turn, left && "lg:col-start-2 lg:row-start-1")} />
+              <h3 className="text-lg font-black text-ink">{role.title}</h3>
+              <p className={cn("col-start-2 text-sm leading-[1.75] text-muted-foreground", left && "lg:col-start-1")}>{role.description}</p>
+            </div>
+          )
+        })}
+      </div>
+
+      <div className="mx-auto mt-14 max-w-4xl">
+        <h3 className="text-sm font-bold tracking-[0.12em] text-muted-foreground">{consultantsTitle}</h3>
+        <Tabs
+          className="mt-3"
+          panelClassName="mt-4"
+          label={consultantsTitle}
+          items={consultants.map((c, i) => ({
+            id: `c${i}`,
+            label: (
+              <>
+                <Image src={c.photo} alt="" width={32} height={32} className="-ml-2.5 size-8 rounded-full object-cover" />
+                {c.name}
+              </>
+            ),
+            content: (
+              <p className="text-sm leading-[1.75] text-muted-foreground sm:text-base">
+                <strong className="mr-2 font-bold text-ink">{english ? c.roleEn : c.role}</strong>
+                {c.organization}
+              </p>
+            ),
+          }))}
+        />
       </div>
     </div>
   )

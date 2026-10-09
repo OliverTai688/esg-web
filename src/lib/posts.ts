@@ -18,7 +18,14 @@ export interface Post {
   cover?: string
   published: boolean
   content: string // rendered HTML
+  /** The article's h2 headings, for the table of contents. Ids match the rendered HTML. */
+  headings: PostHeading[]
   readingMinutes: number
+}
+
+export interface PostHeading {
+  id: string
+  text: string
 }
 
 export interface PostCategory {
@@ -54,7 +61,7 @@ export async function getAllPosts(): Promise<Post[]> {
     }
 
     const processed = await remark().use(html).process(content)
-    const contentHtml = processed.toString()
+    const { contentHtml, headings } = anchorHeadings(processed.toString())
 
     posts.push({
       slug,
@@ -68,6 +75,7 @@ export async function getAllPosts(): Promise<Post[]> {
       cover: data.cover,
       published: data.published,
       content: contentHtml,
+      headings,
       readingMinutes: estimateReadingMinutes(content),
     })
   }
@@ -111,6 +119,17 @@ export function getPostsByCategory(posts: Post[], categorySlug: string): Post[] 
   return posts.filter((post) => post.categorySlug === categorySlug)
 }
 
+// Gives every h2 an id so the table of contents can link to it.
+function anchorHeadings(rendered: string): { contentHtml: string; headings: PostHeading[] } {
+  const headings: PostHeading[] = []
+  const contentHtml = rendered.replace(/<h2>([\s\S]*?)<\/h2>/g, (_, inner: string) => {
+    const id = `section-${headings.length + 1}`
+    headings.push({ id, text: inner.replace(/<[^>]+>/g, "").trim() })
+    return `<h2 id="${id}">${inner}</h2>`
+  })
+  return { contentHtml, headings }
+}
+
 // Chinese is read at roughly 400 characters a minute; Latin words count as one character each.
 function estimateReadingMinutes(markdown: string): number {
   const text = markdown.replace(/[#>*_`\[\]()!-]/g, " ")
@@ -119,10 +138,17 @@ function estimateReadingMinutes(markdown: string): number {
   return Math.max(1, Math.round((cjk + words) / 400))
 }
 
-/** Posts in the same category first, then the most recent others */
-export function getRelatedPosts(posts: Post[], post: Post, count = 3): Post[] {
-  const others = posts.filter((p) => p.slug !== post.slug)
-  const same = others.filter((p) => p.categorySlug === post.categorySlug)
-  const rest = others.filter((p) => p.categorySlug !== post.categorySlug)
-  return [...same, ...rest].slice(0, count)
+/**
+ * The one article to read after `post`: the next older one in the same topic
+ * (wrapping round to the newest), or the newest article elsewhere when the
+ * topic has no other post.
+ */
+export function getNextPost(posts: Post[], post: Post): { post: Post; sameTopic: boolean } | undefined {
+  const topic = posts.filter((p) => p.categorySlug === post.categorySlug)
+  if (topic.length > 1) {
+    const i = topic.findIndex((p) => p.slug === post.slug)
+    return { post: topic[(i + 1) % topic.length], sameTopic: true }
+  }
+  const other = posts.find((p) => p.slug !== post.slug && p.categorySlug !== "announcements") ?? posts.find((p) => p.slug !== post.slug)
+  return other ? { post: other, sameTopic: false } : undefined
 }

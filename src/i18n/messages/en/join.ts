@@ -1,4 +1,7 @@
 // /join copy. Single goal: add the official LINE account.
+// The page has no chapters (it is a plain navbar link). Its numbers come from
+// `impact.track` in common.ts, never from this file (G06).
+// Layout decisions: docs/redesign/pages-v2/join/.
 const join = {
   meta: {
     title: "Join Us",
@@ -10,10 +13,9 @@ const join = {
     title: "Be part of the change",
     description: "Join Gung-Ho Culture's sustainability community and, alongside practitioners from every field, help good work get seen, understood and connected.",
     lineBtn: "Add our official LINE account",
+    // Accessible name of the QR code
     qrLabel: "Scan the QR code with your phone to join",
     lineId: "LINE ID",
-    copy: "Copy",
-    copied: "Copied",
     seconds: "Takes less than a minute",
   },
   benefits: {
@@ -35,14 +37,10 @@ const join = {
       { title: "Get involved", description: "Sign up for events, reply to messages and join the discussion as part of the sustainability ecosystem." },
     ],
   },
-  community: {
-    title: "The community you will join",
-  },
+  // The one secondary way out, under the closing LINE card
   alt: {
     title: "Still deciding?",
-    body: "See how we work first, or book a 15-minute Coffee Chat straight away.",
-    primary: "Book a Coffee Chat",
-    secondary: "About Gung-Ho Culture",
+    link: "See the events we have run",
   },
 }
 

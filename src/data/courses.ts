@@ -195,6 +195,12 @@ export function getCourseBySlug(slug: string): Course | undefined {
   return allCourses.find((course) => course.slug === slug);
 }
 
+/** The /events chapter (section id) a course belongs to: where its detail page links back to */
+export function courseChapter(course: Course): 'upcoming' | 'services' | 'history' {
+  if (course.status === '已結束') return 'history';
+  return course.type === 'consulting' || course.type === 'subscription' ? 'services' : 'upcoming';
+}
+
 /** Localised text fields for a course */
 export function courseText(course: Course, locale: string): CourseText & { instructor: string } {
   return locale === 'en' ? course.en : course;

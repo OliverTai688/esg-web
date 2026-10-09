@@ -1,6 +1,21 @@
+import type { ChapterDef } from "@/lib/chapters"
+
 // /consulting copy. Client text from docs/tasks/sitemap-rev1/C01–C04.
 // Prices show a single (highest) figure per C02; values await client confirmation.
+// Layout and wording decisions: docs/redesign/pages-v2/consulting/.
+// Every section's kicker (`label`) is also its chapter label below: keep them identical.
+// Page sections in page order: the single source for the navbar dropdown and the
+// in-page ChapterNav. Every id must be a section id on the page (scripts/check-anchors.mjs).
+const chapters: readonly ChapterDef[] = [
+  { id: "solutions", label: "Services", desc: "Pick a starting point, see the offer and price", icon: "Compass" },
+  { id: "ngo", label: "Non-Profit Partnerships", desc: "Two ways to work together, and who we have worked with", icon: "HeartHandshake" },
+  { id: "membership", label: "Membership", desc: "Free, monthly or project-based: three stages", icon: "Users" },
+  { id: "faq", label: "FAQ", desc: "Five things people ask before booking", icon: "HelpCircle" },
+  { id: "contact", label: "Contact", desc: "Book a Coffee Chat, or ask us on LINE", icon: "Mail" },
+]
+
 const consulting = {
+  chapters,
   meta: {
     title: "Work With Us",
     description: "Book a 15-minute Coffee Chat. Corporate ESG solutions, non-profit partnerships, membership plans and FAQs.",
@@ -12,23 +27,24 @@ const consulting = {
     description:
       "Let's talk about how to bring your expertise to light. Whether you are a brand owner, a supply-chain partner or part of the sustainability sector, we look forward to the conversation.",
     primaryCta: "Book a consultation slot",
-    secondaryCta: "View plans first",
     lineCta: "Ask us on LINE",
-    promise: ["Free", "15 minutes online", "No sales pitch, just clear next steps"],
+    // The page's equation: petal + block = quarter-disc. Open in the hero, answered at the form.
+    equation: { petal: "Purpose-led brands", block: "Businesses seeking partners", result: "A 15-minute chat first" },
   },
+  // "Where do I start?": the tabs of the solutions section. `key` picks the offers
+  // shown in the panel (see page.tsx); the order matches contactForm.topics.
   chooser: {
     title: "Not sure where to start?",
     options: [
-      { label: "I want to articulate my brand's sustainability value", target: "solutions", hint: "Sustainable Brand Advisory" },
-      { label: "I need a sustainability document for external audiences", target: "solutions", hint: "Sustainability White Paper" },
-      { label: "I want my team to learn about ESG", target: "solutions", hint: "Courses and workshops" },
-      { label: "We are a non-profit organisation", target: "ngo", hint: "Non-profit partnerships" },
-      { label: "I would like to start small", target: "membership", hint: "Membership plans" },
+      { key: "brand", tab: "Brand positioning", label: "I want to articulate my brand's sustainability value" },
+      { key: "paper", tab: "A public document", label: "I need a sustainability document for external audiences" },
+      { key: "team", tab: "Team learning", label: "I want my team to learn about ESG" },
+      { key: "npo", tab: "Non-profit", label: "We are a non-profit organisation" },
+      { key: "small", tab: "Start small", label: "I would like to start small" },
     ],
   },
   solutions: {
     label: "Services",
-    title: "Corporate ESG Solutions",
     description: "From talks to training workshops, and from one-to-one advisory to Sustainability White Papers, choose the best way to begin your sustainability journey.",
     priceNote: "Prices are indicative for individual services; final quotes depend on your needs and scale.",
     cta: "Book a consultation",
@@ -40,9 +56,13 @@ const consulting = {
     ],
   },
   ngo: {
-    label: "NPO Partnerships",
+    label: "Non-Profit Partnerships",
     title: "Partnering with Non-Profit Organisations",
     description: "Gung-Ho Culture works hand in hand with non-profit organisations, using expert advisory and resource connections to help more businesses see their social impact.",
+    // One line for the chooser panel, and the link from there to this section
+    summary: "Two models, the Charity Partner Programme and Cross-Sector Communication, that turn social impact into sustainability language businesses can read.",
+    jump: "See the two models",
+    more: "Full description",
     models: [
       {
         title: "Charity Partner Programme",
@@ -66,9 +86,13 @@ const consulting = {
   membership: {
     label: "Membership",
     title: "Choose the partner plan that suits you",
+    // Shown in the chooser panel that leads here
     description: "From joining our community for free to in-depth co-creation, choose according to where you are.",
+    jump: "See the three plans",
     recommended: "Recommended",
     audienceLabel: "Ideal for",
+    // {count} is replaced with the number of features
+    includes: "{count} things included",
     tierCta: "Enquire via LINE",
     tiers: [
       {
@@ -108,7 +132,7 @@ const consulting = {
   },
   faq: {
     label: "FAQ",
-    title: "Frequently Asked Questions",
+    title: "Before you book, you may want to know",
     items: [
       { question: "What is a Coffee Chat?", answer: "A free 15-minute online consultation, as relaxed as chatting over coffee. We listen to where you are now and help you find the best next step. Whether you take it is entirely up to you." },
       { question: "Who are Gung-Ho Culture's services for?", answer: "Our clients include agricultural brands, design firms, social enterprises, non-profits and large companies seeking sustainable supply chains. If you are doing meaningful work and want more people to see it, we would love to talk." },
@@ -125,7 +149,6 @@ const consulting = {
     description: "Complete the form below and we will be in touch shortly to arrange your Coffee Chat.",
     hours: "Monday to Friday, 09:00–18:00",
     altTitle: "Need a quicker reply?",
-    altBody: "Follow us on LINE and message us directly.",
   },
 }
 

@@ -1,16 +1,23 @@
 import Link from "next/link"
 import type { Metadata } from "next"
-import { ArrowRight, ArrowUpRight, CalendarClock, Check, Clock, MapPin, MessageCircle, Repeat, Briefcase, Flag } from "lucide-react"
+import { ArrowRight, ArrowUpRight, MessageCircle } from "lucide-react"
 import { Container } from "@/components/core/Container"
 import { Button } from "@/components/ui/button"
 import { SectionHeader } from "@/components/site/SectionHeader"
 import { ChapterNav } from "@/components/site/ChapterNav"
 import { CtaBand } from "@/components/site/CtaBand"
+import { ArchSeam, Disc, Half, Quarter, Seam } from "@/components/geo/shapes"
+import { Tabs } from "@/components/ux/Tabs"
+import { FoldList, ReadMore } from "@/components/ux/Fold"
+import { SnapRail } from "@/components/ux/SnapRail"
+import { FootprintTrail } from "@/components/events/FootprintTrail"
+import { Footprints, PartnerDisc, StepRing } from "@/components/events/steps"
 import { getMessages } from "@/i18n/messages"
 import type { Locale } from "@/i18n/config"
 import { workshops, services, courseText, courseStatusLabel } from "@/data/courses"
 import { site } from "@/lib/site"
 import { cn } from "@/lib/utils"
+import { pageChapters } from "@/lib/chapters"
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
@@ -18,250 +25,249 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return { title: t.events.meta.title, description: t.events.meta.description }
 }
 
-// Learning-map level colours. Text labels always accompany the colour (E02).
-const LEVEL_STYLES: Record<string, { dot: string; bar: string; text: string }> = {
-  blue: { dot: "bg-level-blue", bar: "before:bg-level-blue", text: "text-level-blue" },
-  green: { dot: "bg-level-green", bar: "before:bg-level-green", text: "text-level-green" },
-  yellow: { dot: "bg-brand-yellow", bar: "before:bg-brand-yellow", text: "text-level-yellow" },
-  red: { dot: "bg-level-red", bar: "before:bg-level-red", text: "text-level-red" },
+// Learning-map level colours. The level name always accompanies the colour (E02).
+const LEVEL_DISC: Record<string, string> = {
+  blue: "bg-level-blue text-white",
+  green: "bg-level-green text-white",
+  yellow: "bg-brand-yellow text-ink",
+  red: "bg-level-red text-white",
 }
 
+// The year disc grows with every year: the footprint accumulates.
+const YEAR_DISC = [
+  "size-24 text-2xl lg:size-32 lg:text-4xl",
+  "size-28 text-3xl lg:size-36 lg:text-4xl",
+  "size-32 text-3xl lg:size-40 lg:text-5xl",
+  "size-36 text-4xl lg:size-44 lg:text-5xl",
+  "size-40 text-4xl lg:size-48 lg:text-6xl",
+]
+
+// How far each service walks with you: once, one project, every month.
+const SERVICE_STEPS = [
+  { count: 1, tone: "bg-brand-orange" },
+  { count: 4, tone: "bg-brand-yellow" },
+  { count: 8, tone: "bg-brand-grey" },
+]
+
+// /events: footsteps on the bridge (docs/redesign/pages-v2/events/). One disc is
+// one step — dashed: not taken yet, solid: taken, growing: accumulated.
+// Seams are numbered as in 01-page-plan.md §6.
 export default async function EventsPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   const lang = locale === "en" ? "en" : "zh"
   const t = await getMessages(locale as Locale)
   const e = t.events
-  const nav = t.nav.events
 
+  // Each section's kicker is its chapter label, so the menu and the page cannot drift apart.
+  const kicker = Object.fromEntries(e.chapters.map((c) => [c.id, c.label]))
   const upcoming = workshops.filter((w) => w.status !== "已結束")
   const past = workshops.filter((w) => w.status === "已結束")
   const levelName = Object.fromEntries(e.learningMap.levels.map((l) => [l.key, l.name]))
 
-  const chapters = [
-    { id: "upcoming", label: nav.list },
-    { id: "workshops", label: nav.workshops },
-    { id: "services", label: nav.services },
-    { id: "history", label: nav.history },
-    { id: "roadmap", label: nav.roadmap },
-    { id: "cases", label: nav.caseStudies },
-  ]
+  // The timeline, regrouped by calendar year; each year keeps its phase header.
+  const years = e.history.phases.flatMap((phase) => {
+    const list: string[] = []
+    for (const entry of phase.entries) {
+      const year = entry.date.match(/\d{4}/)?.[0] ?? phase.period.slice(0, 4)
+      if (!list.includes(year)) list.push(year)
+    }
+    return list.map((year) => ({ year, phase, entries: phase.entries.filter((entry) => entry.date.includes(year)) }))
+  })
+
+  const external = <span className="sr-only">（{t.common.external}）</span>
 
   return (
-    <>
-      {/* ── Hero ── */}
-      <section className="relative overflow-hidden bg-surface-dark text-white">
-        {/* Footprint path motif */}
-        <svg aria-hidden="true" viewBox="0 0 800 300" className="pointer-events-none absolute -right-10 bottom-0 w-[720px] max-w-none opacity-40" fill="none">
-          <path d="M10 280 C 200 260, 260 120, 420 140 S 640 60, 790 20" stroke="#F25232" strokeWidth="3" strokeDasharray="2 14" strokeLinecap="round" />
-          {[[10, 280], [230, 200], [420, 140], [610, 80], [790, 20]].map(([x, y], i) => (
-            <circle key={i} cx={x} cy={y} r={i === 4 ? 10 : 6} fill={i === 4 ? "#FAB40A" : "#F25232"} />
-          ))}
-        </svg>
-        <Container className="relative py-20 md:py-28">
-          <p className="kicker-rule mb-6 text-[13px] font-bold tracking-[0.12em] text-brand-yellow">{e.hero.kicker}</p>
-          <h1 className="max-w-4xl text-[2.25rem] font-black leading-[1.25] sm:text-5xl lg:text-[3.5rem]">{e.hero.title}</h1>
-          <p className="mt-6 max-w-2xl text-base leading-[1.9] text-white/75 sm:text-lg">{e.hero.description}</p>
-          <dl className="mt-10 grid max-w-2xl grid-cols-2 gap-px overflow-hidden rounded-2xl bg-white/10 sm:grid-cols-4">
-            {t.impact.track.map((s) => (
-              <div key={s.label} className="flex flex-col-reverse bg-surface-dark p-4">
-                <dt className="text-xs text-white/65">{s.label}</dt>
-                <dd className="font-display text-2xl font-bold text-brand-yellow tabular-nums">{s.value}</dd>
-              </div>
-            ))}
-          </dl>
-          <p className="mt-2 text-xs text-white/50">{t.impact.trackNote}</p>
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <Button size="lg" asChild>
-              <a href="#workshops">
-                {e.hero.primaryCta}
-                <ArrowRight />
-              </a>
-            </Button>
-            <Button size="lg" variant="outlineInverse" asChild>
-              <a href="#history">{e.hero.secondaryCta}</a>
-            </Button>
-          </div>
-        </Container>
-      </section>
-
-      <ChapterNav chapters={chapters} label={e.label} />
-
-      {/* ── Upcoming: honest "next run in planning" state ── */}
-      <section id="upcoming" className="py-20 md:py-24">
-        <Container>
-          <SectionHeader kicker={e.upcoming.label} title={e.upcoming.title} description={e.upcoming.description} />
-          <div className="mt-10 grid gap-4 lg:grid-cols-[1fr_1fr_1fr_0.9fr]">
-            {upcoming.map((c) => {
-              const ct = courseText(c, locale)
-              return (
-                <Link
-                  key={c.slug}
-                  href={`/${locale}/events/${c.slug}`}
-                  className="group flex flex-col rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-0.5 hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  <span className="flex w-fit items-center gap-1.5 rounded-full bg-yellow-soft px-3 py-1 text-xs font-bold text-ink">
-                    <CalendarClock className="size-3.5" aria-hidden="true" />
-                    {courseStatusLabel[c.status][lang]}
-                  </span>
-                  <h3 className="mt-5 text-lg font-black leading-snug text-ink group-hover:text-primary">{ct.title}</h3>
-                  <p className="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-muted-foreground">{ct.description}</p>
-                  <ul className="mt-5 space-y-1.5 border-t border-border pt-4 text-xs text-muted-foreground">
-                    {ct.duration && (
-                      <li className="flex items-center gap-2">
-                        <Clock className="size-3.5" aria-hidden="true" />
-                        {ct.duration}
-                      </li>
-                    )}
-                    {ct.location && (
-                      <li className="flex items-center gap-2">
-                        <MapPin className="size-3.5" aria-hidden="true" />
-                        {ct.location}
-                      </li>
-                    )}
-                  </ul>
-                  <div className="mt-4 flex items-center justify-between">
-                    <span className="font-display text-lg font-bold text-ink">{c.price}</span>
-                    <span className="inline-flex items-center gap-1 text-sm font-bold text-primary">
-                      {e.upcoming.viewDetails}
-                      <ArrowRight className="size-4" aria-hidden="true" />
-                    </span>
-                  </div>
-                </Link>
-              )
-            })}
-            <div className="flex flex-col justify-between rounded-2xl bg-surface-dark p-6 text-white">
-              <div>
-                <p className="text-lg font-black">{e.upcoming.planning}</p>
-                <p className="mt-2 text-sm leading-relaxed text-white/70">{e.upcoming.planningNote}</p>
-              </div>
-              <div className="mt-6 flex flex-col gap-2.5">
-                <Button variant="line" asChild>
-                  <a href={site.line.url} target="_blank" rel="noopener noreferrer">
-                    <MessageCircle />
-                    {e.upcoming.notifyCta}
-                  </a>
-                </Button>
-                <Button variant="outlineInverse" asChild>
-                  <Link href={`/${locale}/consulting#contact`}>{e.upcoming.inquireCta}</Link>
-                </Button>
-              </div>
+    <div className="overflow-x-clip">
+      {/* S1 ── Hero: steps climb the bridge deck; the dashed disc is the next one */}
+      <section className="relative">
+        <div aria-hidden="true" className="absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(55%_60%_at_75%_10%,#FDEDE8_0%,transparent_70%)]" />
+        <Container className="relative grid items-center gap-10 pb-14 pt-14 md:pt-20 lg:grid-cols-[1.05fr_1fr] lg:pb-20">
+          <div>
+            <p className="kicker-rule text-[13px] font-bold tracking-[0.12em] text-primary">{e.hero.kicker}</p>
+            <h1 className="mt-6 text-[1.75rem] font-black leading-[1.3] text-ink sm:text-5xl lg:text-[2.75rem]">
+              {/* Break after the comma, never inside a word */}
+              {e.hero.title.split(/(?<=，)/).map((part) => (
+                <span key={part} className="inline-block">
+                  {part}
+                </span>
+              ))}
+            </h1>
+            <p className="mt-6 max-w-xl text-base leading-[1.9] text-muted-foreground sm:text-lg">{e.hero.description}</p>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <Button size="lg" variant="line" asChild>
+                <a href={site.line.url} target="_blank" rel="noopener noreferrer">
+                  <MessageCircle />
+                  {e.hero.primaryCta}
+                  {external}
+                </a>
+              </Button>
+              <Button size="lg" variant="outline" asChild>
+                <a href="#workshops">{e.hero.secondaryCta}</a>
+              </Button>
             </div>
           </div>
+          <div>
+            <FootprintTrail start={e.hero.trailStart} next={e.hero.trailNext} />
+            <dl className="mx-auto mt-8 grid max-w-[560px] grid-cols-4 divide-x divide-border border-y border-border py-4 text-center">
+              {t.impact.track.map((s) => (
+                <div key={s.label} className="flex flex-col-reverse px-1">
+                  <dt className="mt-1 text-xs text-muted-foreground">{s.label}</dt>
+                  <dd className="font-display text-xl font-bold text-ink tabular-nums sm:text-2xl">{s.value}</dd>
+                </div>
+              ))}
+            </dl>
+            <p className="mx-auto mt-2 max-w-[560px] text-xs text-muted-foreground">{t.impact.trackNote}</p>
+          </div>
         </Container>
       </section>
 
-      {/* ── Learning map: 3 levels × 8 modules ── */}
-      <section id="workshops" className="bg-card py-20 md:py-28">
+      <ChapterNav chapters={pageChapters(e.chapters)} label={e.label} />
+
+      {/* Seam 1 · static relay: the hero's dashed disc returns enlarged */}
+
+      {/* S2 ── Next cohort: the step that has not landed yet */}
+      <section id="upcoming" className="py-16 md:py-24">
         <Container>
-          <SectionHeader kicker={e.learningMap.label} title={e.learningMap.title} description={e.learningMap.intro} />
-          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 rounded-2xl bg-paper px-5 py-4">
-            <span className="font-display text-sm font-bold text-ink">{e.learningMap.levelsLine}</span>
-            <ul className="flex flex-wrap gap-x-5 gap-y-2">
-              {e.learningMap.levels.map((l) => (
-                <li key={l.key} className="flex items-center gap-2 text-sm">
-                  <span aria-hidden="true" className={cn("size-3 rounded-full", LEVEL_STYLES[l.key].dot)} />
-                  <span className="font-bold text-ink">{l.name}</span>
-                  <span className="text-muted-foreground">{l.description}</span>
-                </li>
-              ))}
+          <SectionHeader kicker={kicker.upcoming} title={e.upcoming.title} description={e.upcoming.description} />
+          <div className="mt-10 grid items-center gap-10 lg:grid-cols-[auto_1fr] lg:gap-16">
+            <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center lg:flex-col lg:items-center">
+              <StepRing className="size-44 px-6 text-lg font-black leading-snug text-ink sm:size-52">{courseStatusLabel["規劃中"][lang]}</StepRing>
+              <Button size="lg" variant="line" asChild>
+                <a href={site.line.url} target="_blank" rel="noopener noreferrer">
+                  <MessageCircle />
+                  {e.upcoming.notifyCta}
+                  {external}
+                </a>
+              </Button>
+            </div>
+            <ul className="divide-y divide-border border-y border-border">
+              {upcoming.map((c) => {
+                const ct = courseText(c, locale)
+                return (
+                  <li key={c.slug}>
+                    <Link
+                      href={`/${locale}/events/${c.slug}`}
+                      className="group flex min-h-16 items-center gap-4 py-4 outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    >
+                      <StepRing className="size-9" />
+                      <span className="min-w-0 flex-1">
+                        <span className="block font-bold leading-snug text-ink group-hover:text-primary">{ct.title}</span>
+                        <span className="mt-0.5 block text-[13px] text-muted-foreground">{[ct.duration, ct.location].filter(Boolean).join("・")}</span>
+                      </span>
+                      <span className="font-display text-[15px] font-bold text-ink">{c.price}</span>
+                      <ArrowRight className="size-4 shrink-0 text-primary" aria-hidden="true" />
+                      <span className="sr-only">{e.upcoming.viewDetails}</span>
+                    </Link>
+                  </li>
+                )
+              })}
             </ul>
           </div>
+        </Container>
+      </section>
 
-          <ol className="relative mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {e.learningMap.modules.map((m, i) => {
-              const style = LEVEL_STYLES[m.level]
-              return (
-                <li
-                  key={m.title}
-                  className={cn(
-                    "relative flex flex-col overflow-hidden rounded-2xl border border-border bg-paper p-6 pt-7 before:absolute before:inset-x-0 before:top-0 before:h-1.5",
-                    style.bar,
-                  )}
-                >
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="flex size-9 items-center justify-center rounded-full bg-ink font-display text-sm font-bold text-white">{i + 1}</span>
-                    <span className={cn("flex items-center gap-1.5 text-xs font-bold", style.text)}>
-                      <span aria-hidden="true" className={cn("size-2 rounded-full", style.dot)} />
-                      {levelName[m.level]}
-                    </span>
+      {/* Seam 2 · quiet: paper to white */}
+
+      {/* S3 ── Learning map: eight steps on one path, start anywhere */}
+      <section id="workshops" className="bg-card pt-16 md:pt-24">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+            <div className="lg:sticky lg:top-36 lg:self-start">
+              <SectionHeader kicker={kicker.workshops} title={e.learningMap.title} />
+              <p className="mt-5 font-display text-base font-bold text-ink">{e.learningMap.levelsLine}</p>
+              <ReadMore label={e.learningMap.introLabel} className="mt-3">
+                <p>{e.learningMap.intro}</p>
+                <ul className="space-y-1.5">
+                  {e.learningMap.levels.map((l) => (
+                    <li key={l.key} className="flex items-baseline gap-2">
+                      <span aria-hidden="true" className={cn("size-2.5 shrink-0 rounded-full", LEVEL_DISC[l.key])} />
+                      <span className="font-bold text-ink">{l.name}</span>
+                      {l.description}
+                    </li>
+                  ))}
+                </ul>
+              </ReadMore>
+            </div>
+            <FoldList
+              name="learning-map"
+              className="relative before:absolute before:bottom-7 before:left-[20px] before:top-7 before:border-l-[3px] before:border-dotted before:border-ink/20"
+              items={e.learningMap.modules.map((m, i) => ({
+                open: i === 0,
+                meta: (
+                  <span className={cn("relative flex size-11 items-center justify-center rounded-full text-sm font-bold ring-4 ring-card", LEVEL_DISC[m.level])}>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                ),
+                title: (
+                  <>
+                    <span className="block text-xs font-bold text-muted-foreground">{levelName[m.level]}</span>
+                    {m.title}
+                  </>
+                ),
+                content: (
+                  <div className="space-y-2 pl-[3.75rem]">
+                    <p className="font-bold text-primary">
+                      {m.theme}｜{m.subtitle}
+                    </p>
+                    <p className="text-ink/80">{m.description}</p>
+                    <p>
+                      <span className="font-bold text-ink">{e.learningMap.audienceLabel}｜</span>
+                      {m.audience}
+                    </p>
                   </div>
-                  <p className="mt-4 text-xs font-bold text-muted-foreground">{m.theme}</p>
-                  <h3 className="mt-1 text-lg font-black leading-snug text-ink">{m.title}</h3>
-                  <p className="mt-1 text-sm font-bold text-primary">{m.subtitle}</p>
-                  <p className="mt-3 flex-1 text-sm leading-[1.85] text-ink/75">{m.description}</p>
-                  <p className="mt-4 border-t border-border pt-3 text-xs leading-relaxed text-muted-foreground">
-                    <span className="font-bold text-ink">{e.learningMap.audienceLabel}｜</span>
-                    {m.audience}
-                  </p>
-                </li>
-              )
-            })}
-          </ol>
+                ),
+              }))}
+            />
+          </div>
 
-          <div className="mt-10 grid gap-6 rounded-3xl border border-border p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center">
-            <div>
-              <h3 className="text-sm font-bold text-muted-foreground">{e.learningMap.externalTitle}</h3>
-              <ul className="mt-3 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+          {/* Seam 3 · colour extension: this sand strip grows into the next section */}
+          <div className="-mx-6 mt-14 flex flex-col gap-x-8 gap-y-2 rounded-t-3xl bg-sand px-6 pb-2 pt-7 md:mx-0 md:flex-row md:flex-wrap md:items-center md:px-10">
+            <p className="font-bold text-ink">{e.learningMap.inquire}</p>
+            <Link href={`/${locale}/consulting#contact`} className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-primary underline-offset-4 hover:underline">
+              {e.learningMap.inquireCta}
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+            <ReadMore label={e.learningMap.externalTitle} className="md:ml-auto">
+              <ul>
                 {e.learningMap.externalLinks.map((link) => (
                   <li key={link.href}>
-                    <a
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 rounded-full bg-sand px-4 py-2 text-sm font-bold text-ink transition-colors hover:bg-orange-soft hover:text-[#A8321A]"
-                    >
+                    <a href={link.href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1.5 font-bold text-ink underline-offset-4 hover:text-primary hover:underline">
                       {link.label}
-                      <ArrowUpRight className="size-4" aria-hidden="true" />
-                      <span className="sr-only">（{t.common.external}）</span>
+                      <ArrowUpRight className="size-4 shrink-0" aria-hidden="true" />
+                      {external}
                     </a>
                   </li>
                 ))}
               </ul>
-            </div>
-            <div className="flex flex-col gap-2 lg:items-end">
-              <p className="text-sm font-bold text-ink">{e.learningMap.inquire}</p>
-              <Button asChild>
-                <Link href={`/${locale}/consulting#contact`}>
-                  {e.learningMap.inquireCta}
-                  <ArrowRight />
-                </Link>
-              </Button>
-            </div>
+            </ReadMore>
           </div>
         </Container>
       </section>
 
-      {/* ── Ongoing services ── */}
-      <section id="services" className="py-20 md:py-24">
+      {/* S4 ── Ongoing support: the dots say how far each one walks with you */}
+      <section id="services" className="bg-sand pb-32 pt-14 md:pb-44 md:pt-20">
         <Container>
-          <SectionHeader kicker={e.servicesSection.label} title={e.servicesSection.title} description={e.servicesSection.description} />
+          <SectionHeader kicker={kicker.services} title={e.servicesSection.title} description={e.servicesSection.description} />
           <ul className="mt-10 grid gap-4 md:grid-cols-3">
-            {services.map((s) => {
+            {services.map((s, i) => {
               const st = courseText(s, locale)
-              const Icon = s.type === "subscription" ? Repeat : Briefcase
+              const type = s.type === "subscription" ? e.servicesSection.subscription : e.servicesSection.consulting
+              const step = SERVICE_STEPS[i % SERVICE_STEPS.length]
               return (
                 <li key={s.slug}>
                   <Link
                     href={`/${locale}/events/${s.slug}`}
-                    className="group flex h-full flex-col rounded-2xl border border-border bg-card p-6 transition-all hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="group flex h-full flex-col rounded-2xl bg-card p-6 outline-none transition-transform hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-ring"
                   >
-                    <div className="flex items-center justify-between">
-                      <span className="flex size-10 items-center justify-center rounded-xl bg-orange-soft text-primary">
-                        <Icon className="size-5" aria-hidden="true" />
-                      </span>
-                      <span className="text-xs font-bold text-muted-foreground">
-                        {s.type === "subscription" ? e.servicesSection.subscription : e.servicesSection.consulting}
-                      </span>
-                    </div>
-                    <h3 className="mt-5 text-lg font-black text-ink group-hover:text-primary">{st.title}</h3>
-                    <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{st.description}</p>
-                    <div className="mt-5 flex items-center justify-between border-t border-border pt-4">
+                    <Footprints count={step.count} className={step.tone} />
+                    {type !== st.title && <p className="mt-5 text-xs font-bold text-muted-foreground">{[type, st.duration].filter(Boolean).join("・")}</p>}
+                    <h3 className={cn("text-lg font-black leading-snug text-ink group-hover:text-primary", type !== st.title ? "mt-1" : "mt-5")}>{st.title}</h3>
+                    <p className="mt-2 flex-1 text-sm leading-[1.85] text-muted-foreground">{st.description}</p>
+                    <span className="mt-5 flex items-center justify-between border-t border-border pt-4">
                       <span className="font-display text-lg font-bold text-ink">{s.price}</span>
-                      <span className="inline-flex items-center gap-1 text-sm font-bold text-primary">
-                        {e.servicesSection.viewMore}
-                        <ArrowRight className="size-4" aria-hidden="true" />
-                      </span>
-                    </div>
+                      <ArrowRight className="size-4 text-primary" aria-hidden="true" />
+                      <span className="sr-only">{e.servicesSection.viewMore}</span>
+                    </span>
                   </Link>
                 </li>
               )
@@ -270,154 +276,168 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
         </Container>
       </section>
 
-      {/* ── The road so far: two phases, dated entries ── */}
-      <section id="history" className="bg-sand py-20 md:py-28">
-        <Container>
-          <SectionHeader kicker={e.history.label} title={e.history.title} description={e.history.intro} />
-          <div className="mt-12 space-y-10">
-            {e.history.phases.map((phase, pi) => (
-              <div key={phase.name} className="overflow-hidden rounded-3xl bg-card">
-                <div className={cn("grid gap-4 p-6 sm:p-8 md:grid-cols-[auto_1fr] md:gap-8", pi === 0 ? "bg-ink text-white" : "bg-surface-dark text-white")}>
+      {/* S5 ── The road so far: the page's one dark, loud moment. Seam 4 is the arched top edge. */}
+      <section id="history" className="relative bg-surface-dark pb-24 text-white md:pb-28">
+        <ArchSeam className="bg-surface-dark" />
+        <Container className="pt-6">
+          <SectionHeader kicker={kicker.history} title={e.history.title} description={e.history.intro} tone="dark" />
+          <Tabs
+            tone="dark"
+            label={e.history.yearsLabel}
+            className="mt-10"
+            panelClassName="mt-10"
+            items={years.map(({ year, phase, entries }, i) => ({
+              id: year,
+              label: year,
+              meta: e.history.yearNotes[year],
+              content: (
+                <div className="grid gap-10 lg:grid-cols-[minmax(0,20rem)_1fr] lg:gap-16">
                   <div>
-                    <p className="font-display text-3xl font-bold text-brand-yellow">{phase.period}</p>
-                    <h3 className="mt-1 text-xl font-black">{phase.name}</h3>
+                    <span
+                      aria-hidden="true"
+                      className={cn("flex items-center justify-center rounded-full bg-brand-orange font-display font-bold text-ink", YEAR_DISC[Math.min(i, YEAR_DISC.length - 1)])}
+                    >
+                      {year}
+                    </span>
+                    <p className="mt-6 text-sm font-bold text-brand-yellow">
+                      {phase.name}
+                      <span className="ml-2 font-display text-white/65">{phase.period}</span>
+                    </p>
+                    <h3 className="mt-1 text-xl font-black">{phase.tagline}</h3>
+                    <p className="mt-3 text-sm leading-[1.9] text-white/75">{phase.intro}</p>
                   </div>
-                  <div>
-                    <p className="text-lg font-bold">{phase.tagline}</p>
-                    <p className="mt-2 text-sm leading-[1.85] text-white/70">{phase.intro}</p>
-                  </div>
-                </div>
-                <ol className="relative px-6 py-8 sm:px-8">
-                  <span aria-hidden="true" className="absolute bottom-8 left-[calc(1.5rem+5px)] top-8 w-0.5 bg-border sm:left-[calc(2rem+5px)] md:left-[calc(2rem+8.5rem+5px)]" />
-                  {phase.entries.map((entry) => {
-                    const href = "href" in entry ? entry.href : undefined
-                    return (
-                      <li key={entry.date + entry.text.slice(0, 6)} className="relative grid gap-2 pb-7 pl-8 last:pb-0 md:grid-cols-[8.5rem_1fr] md:gap-6 md:pl-0">
-                        <span className="w-fit rounded-full bg-orange-soft px-3 py-1 font-display text-sm font-bold text-[#A8321A] md:mt-0.5 md:justify-self-start">{entry.date}</span>
-                        <span aria-hidden="true" className="absolute left-0 top-2 size-3 rounded-full border-2 border-card bg-brand-orange md:left-[8.5rem]" />
-                        <p className="text-[15px] leading-[1.85] text-ink/85 md:pl-8">
-                          {entry.text}
+                  <ol className="space-y-7">
+                    {entries.map((entry) => {
+                      const href = "href" in entry ? entry.href : undefined
+                      return (
+                        <li key={entry.date + entry.text.slice(0, 6)}>
+                          <span className="inline-block rounded-full bg-white/10 px-3 py-1 font-display text-sm font-bold text-brand-yellow">{entry.date}</span>
+                          <p className="mt-2.5 text-base leading-[1.9] text-white/85">{entry.text}</p>
                           {href && (
-                            <a href={href} target="_blank" rel="noopener noreferrer" className="ml-2 inline-flex items-center gap-0.5 text-sm font-bold text-primary underline-offset-4 hover:underline">
+                            <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1 text-sm font-bold text-brand-yellow underline-offset-4 hover:underline">
                               {e.history.linkLabel}
-                              <ArrowUpRight className="size-3.5" aria-hidden="true" />
-                              <span className="sr-only">（{t.common.external}）</span>
+                              <ArrowUpRight className="size-4" aria-hidden="true" />
+                              {external}
                             </a>
                           )}
-                        </p>
-                      </li>
-                    )
-                  })}
-                </ol>
-              </div>
-            ))}
-          </div>
+                        </li>
+                      )
+                    })}
+                  </ol>
+                </div>
+              ),
+            }))}
+          />
 
           {past.length > 0 && (
-            <div id="past" className="mt-12">
-              <h3 className="text-sm font-bold text-muted-foreground">{e.past.label}</h3>
-              <ul className="mt-4 grid gap-3 md:grid-cols-2">
-                {past.map((c) => {
-                  const ct = courseText(c, locale)
-                  return (
-                    <li key={c.slug}>
-                      <Link href={`/${locale}/events/${c.slug}`} className="flex items-center gap-4 rounded-2xl bg-card p-5 transition-colors hover:bg-paper">
-                        <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-sand">
-                          <Check className="size-5 text-ink" aria-hidden="true" />
+            <div className="mt-12 border-t border-white/15 pt-5">
+              <h3 className="text-xs font-bold tracking-[0.12em] text-white/65">{e.history.pastLabel}</h3>
+              <ul>
+                {past.map((c) => (
+                  <li key={c.slug}>
+                    <Link href={`/${locale}/events/${c.slug}`} className="group flex min-h-12 items-center gap-4 py-2 outline-none focus-visible:ring-2 focus-visible:ring-brand-yellow">
+                      <Disc className="size-3 bg-white/50" />
+                      <span className="flex flex-1 flex-wrap items-baseline gap-x-4 gap-y-0.5">
+                        <span className="font-bold group-hover:text-brand-yellow">{courseText(c, locale).title}</span>
+                        <span className="text-sm text-white/65">
+                          {c.date?.replaceAll("-", ".")}・{e.history.ended}
                         </span>
-                        <span className="flex-1">
-                          <span className="block font-bold text-ink">{ct.title}</span>
-                          <span className="text-xs text-muted-foreground">
-                            {c.date?.replaceAll("-", ".")}・{e.past.ended}
-                          </span>
-                        </span>
-                        <ArrowRight className="size-4 text-muted-foreground" aria-hidden="true" />
-                      </Link>
-                    </li>
-                  )
-                })}
+                      </span>
+                      <ArrowRight className="size-4 shrink-0 text-brand-yellow" aria-hidden="true" />
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           )}
         </Container>
       </section>
 
-      {/* ── Roadmap + commitment ── */}
-      <section id="roadmap" className="py-20 md:py-28">
-        <Container>
-          <SectionHeader kicker={e.roadmap.label} title={e.roadmap.title} description={e.roadmap.intro} />
-          <ol className="mt-12 grid gap-4 lg:grid-cols-3">
-            {e.roadmap.horizons.map((h, i) => (
-              <li key={h.name} className={cn("flex flex-col rounded-2xl p-7", i === 0 ? "bg-surface-dark text-white" : "border border-border bg-card")}>
-                <div className="flex items-center justify-between">
-                  <span className={cn("font-display text-sm font-bold", i === 0 ? "text-brand-yellow" : "text-primary")}>
-                    {h.name}・{h.period}
-                  </span>
-                  {i === 0 && (
-                    <span className="flex items-center gap-1.5 rounded-full bg-brand-yellow px-2.5 py-1 text-xs font-bold text-ink">
-                      <Flag className="size-3.5" aria-hidden="true" />
-                      {e.roadmap.currentLabel}
-                    </span>
-                  )}
-                </div>
-                <h3 className="mt-3 text-2xl font-black">{h.title}</h3>
-                <ul className="mt-5 space-y-3">
-                  {h.items.map((item) => (
-                    <li key={item} className={cn("flex gap-3 text-sm leading-[1.85]", i === 0 ? "text-white/80" : "text-ink/80")}>
-                      <span aria-hidden="true" className={cn("mt-2.5 h-0.5 w-3 shrink-0", i === 0 ? "bg-brand-yellow" : "bg-brand-orange")} />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ol>
+      {/* Seam 5 · shape relay: the latest year's disc rolls on into the roadmap */}
+      <Seam>
+        <Disc className="ml-[10vw] size-14 sm:size-20" />
+      </Seam>
 
-          <figure id="commitment" className="mt-8 grid gap-6 rounded-3xl bg-orange-soft p-7 sm:p-10 lg:grid-cols-[auto_1fr] lg:items-start lg:gap-10">
-            <p className="text-sm font-bold tracking-[0.12em] text-[#A8321A]">{e.commitment.label}</p>
+      {/* S6 ── Roadmap: quarter → half → full disc, then our own commitment */}
+      <section id="roadmap" className="pt-24 md:pt-32">
+        <Container>
+          <SectionHeader kicker={kicker.roadmap} title={e.roadmap.title} description={e.roadmap.intro} />
+          <Tabs
+            label={e.roadmap.horizonsLabel}
+            className="mt-10"
+            items={e.roadmap.horizons.map((h, i) => ({
+              id: h.name,
+              label: (
+                <span className="flex items-center gap-2">
+                  {i === 0 ? <Quarter className="size-4" /> : i === 1 ? <Half className="h-2 w-4" /> : <Disc className="size-4" />}
+                  {h.name}
+                </span>
+              ),
+              meta: h.period,
+              content: (
+                <div>
+                  <h3 className="flex flex-wrap items-center gap-3 text-2xl font-black text-ink">
+                    {h.title}
+                    {i === 0 && <span className="rounded-full bg-brand-yellow px-2.5 py-1 text-xs font-bold text-ink">{e.roadmap.currentLabel}</span>}
+                  </h3>
+                  <ul className="mt-5 grid gap-x-10 gap-y-3 md:grid-cols-2">
+                    {h.items.map((item) => (
+                      <li key={item} className="flex gap-3 text-[15px] leading-[1.85] text-ink/80">
+                        <span aria-hidden="true" className="mt-3 h-0.5 w-3 shrink-0 bg-brand-orange" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ),
+            }))}
+          />
+
+          {/* Seam 6 · overlap: the commitment card sits on the boundary with the case stories */}
+          <figure className="relative z-10 -mb-14 mt-12 overflow-hidden rounded-3xl bg-orange-soft p-7 pr-16 sm:p-10 sm:pr-28">
+            <Disc className="absolute -right-8 -top-8 size-24 sm:size-32" />
+            <figcaption className="text-[13px] font-bold tracking-[0.12em] text-[#A8321A]">{e.commitment.label}</figcaption>
             <blockquote>
-              <p className="text-xl font-black leading-[1.6] text-ink sm:text-2xl">{e.commitment.lead}</p>
-              <p className="mt-4 text-base leading-[1.9] text-ink/80">{e.commitment.body}</p>
+              <p className="mt-3 max-w-2xl text-xl font-black leading-[1.6] text-ink sm:text-2xl">{e.commitment.lead}</p>
+              <ReadMore label={e.commitment.readMore} className="mt-2 [&>div]:text-ink/80">
+                <p className="max-w-2xl text-base">{e.commitment.body}</p>
+              </ReadMore>
             </blockquote>
           </figure>
         </Container>
       </section>
 
-      {/* ── Case stories (no numbers, per client) ── */}
-      <section id="cases" className="bg-card py-20 md:py-28">
+      {/* S7 ── Case stories (no numbers, per client): two halves close into one disc */}
+      <section id="cases" className="bg-card pb-20 pt-32 md:pb-28 md:pt-36">
         <Container>
-          <SectionHeader kicker={e.cases.label} title={e.cases.title} description={e.cases.description} />
-          <ul className="mt-12 grid gap-4 md:grid-cols-3">
-            {e.cases.items.map((c, i) => {
-              const [left, right] = c.partners.split(" × ")
-              return (
-                <li key={c.title} className="flex flex-col overflow-hidden rounded-2xl border border-border bg-paper">
-                  {/* Partner lock-up stands in for a photo until images are cleared */}
-                  <div className={cn("flex aspect-[16/9] flex-col items-center justify-center gap-2 p-6 text-center", i === 1 ? "bg-surface-dark text-white" : i === 0 ? "bg-orange-soft text-ink" : "bg-yellow-soft text-ink")}>
-                    <span className="text-lg font-black leading-snug">{left}</span>
-                    <span aria-hidden="true" className="font-display text-2xl font-bold text-brand-orange">×</span>
-                    <span className="text-lg font-black leading-snug">{right}</span>
-                  </div>
-                  <div className="flex flex-1 flex-col p-6">
-                    <p className="text-xs font-bold text-muted-foreground">
-                      {e.cases.partnersLabel}｜{c.partners}
-                    </p>
-                    <h3 className="mt-2 text-lg font-black leading-snug text-ink">{c.title}</h3>
-                    <p className="mt-3 text-sm leading-[1.9] text-ink/75">{c.description}</p>
-                  </div>
-                </li>
-              )
-            })}
-          </ul>
+          <SectionHeader kicker={kicker.cases} title={e.cases.title} description={e.cases.description} />
+          <SnapRail label={kicker.cases} prevLabel={e.cases.prev} nextLabel={e.cases.next} className="mt-10">
+            {e.cases.items.map((c, i) => (
+              // `relative` keeps the sr-only label inside the rail's scroll box (it is absolutely positioned)
+              <article key={c.title} className="relative h-full rounded-2xl bg-paper p-6 sm:p-7">
+                {/* Stands in for a photo until the case images are cleared (G07) */}
+                <PartnerDisc turn={i} />
+                <h3 className="mt-6 text-lg font-black leading-snug text-ink">{c.title}</h3>
+                <p className="mt-2 text-sm font-bold text-muted-foreground">
+                  <span className="sr-only">{e.cases.partnersLabel}：</span>
+                  {c.partners}
+                </p>
+                <ReadMore label={e.cases.readStory} className="mt-1 [&>div]:text-ink/80">
+                  <p>{c.description}</p>
+                </ReadMore>
+              </article>
+            ))}
+          </SnapRail>
         </Container>
       </section>
 
+      {/* S8 ── Closing: the shared arch closes over the flame (seam 7) */}
       <CtaBand
         title={e.cta.title}
         description={e.cta.description}
-        primary={{ label: e.cta.primaryLabel, href: `/${locale}/consulting#contact` }}
-        secondary={{ label: e.cta.secondaryLabel, href: site.line.url, external: true, line: true }}
+        primary={{ label: e.cta.primaryLabel, href: site.line.url, external: true, line: true }}
+        secondary={{ label: e.cta.secondaryLabel, href: `/${locale}/consulting#contact` }}
       />
-    </>
+    </div>
   )
 }

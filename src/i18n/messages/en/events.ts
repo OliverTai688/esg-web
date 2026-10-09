@@ -1,6 +1,21 @@
+import type { ChapterDef } from "@/lib/chapters"
+
 // /events copy. Client text from docs/tasks/sitemap-rev1/E01–E04.
 // Terminology follows G01; "CO-ESG Academy" is the English name for ESG共學坊.
+// Page sections in page order: the single source for the navbar dropdown, the
+// in-page ChapterNav and each section's kicker (the page reads the label from here).
+// Every id must be a section id on the page (scripts/check-anchors.mjs).
+const chapters: readonly ChapterDef[] = [
+  { id: "upcoming", label: "Next Cohort", desc: "Three courses in planning: hear first", icon: "CalendarDays" },
+  { id: "workshops", label: "Learning Map", desc: "Three stages, eight modules: find your start", icon: "Map" },
+  { id: "services", label: "Ongoing Support", desc: "Advisory services and subscriptions", icon: "Repeat" },
+  { id: "history", label: "Road So Far", desc: "From our founding in 2022, year by year", icon: "Footprints" },
+  { id: "roadmap", label: "Roadmap", desc: "Short-, medium- and long-term goals and our commitment", icon: "Flag" },
+  { id: "cases", label: "Case Stories", desc: "Three stories of cross-sector partnership", icon: "Handshake" },
+]
+
 const events = {
+  chapters,
   meta: {
     title: "Our Journey",
     description: "From community talks to an international stage bringing together 30 countries: Gung-Ho Culture's courses, learning map, milestones and roadmap.",
@@ -10,24 +25,22 @@ const events = {
     kicker: "Our Journey",
     title: "Every step is a real footprint of sustainability in action",
     description: "From cross-sector connections at CO-ESG Academy to international forums, Gung-Ho Culture continues to host high-quality sustainability events that bring like-minded partners together.",
-    primaryCta: "Open the Sustainability Learning Map",
-    secondaryCta: "See our story so far",
+    primaryCta: "Get course dates on LINE",
+    secondaryCta: "Open the Learning Map",
+    // Labels under the footprint trail: where it starts, and the step not taken yet
+    trailStart: "2022",
+    trailNext: "Next step",
   },
   upcoming: {
-    label: "Events",
-    title: "Upcoming Courses & Events",
-    description: "Our next cohort is being planned. Follow us on LINE to hear first when registration opens; for in-house corporate training or bespoke courses, get in touch directly.",
-    planning: "Next cohort in planning",
-    planningNote: "LINE followers will be notified first once dates are announced",
+    title: "Be the first to know when dates are set",
+    description: "Our next cohort is being planned. Follow us on LINE and we will tell you first when registration opens.",
     notifyCta: "Get early notice on LINE",
-    inquireCta: "Enquire about in-house training",
     viewDetails: "View course details",
-    open: "Now booking",
   },
   learningMap: {
-    label: "Sustainability Learning Map",
     title: "Find the right starting point for your sustainability journey",
     levelsLine: "Explore → Apply → Integrate",
+    introLabel: "About the Learning Map",
     intro:
       "Whether you are new to ESG or an experienced practitioner looking to deepen your expertise, you will find the right starting point here. Each thematic module is self-contained and can be taken on its own; complete the full programme to build systematic, practical sustainability capability.",
     // Level-to-colour mapping is our inference from the client's colour dots (E02, pending confirmation).
@@ -57,7 +70,6 @@ const events = {
     inquireCta: "Enquire about bespoke courses",
   },
   servicesSection: {
-    label: "Ongoing support",
     title: "Advisory & Subscriptions",
     description: "More than one-off events: we provide ongoing expert support throughout your sustainability journey.",
     consulting: "Advisory services",
@@ -65,11 +77,11 @@ const events = {
     viewMore: "Learn more",
   },
   history: {
-    label: "Our Story So Far",
-    title: "From community talks to an international stage of 30 countries",
+    title: "A road built one step at a time",
     intro: "From talk after talk in local communities to an international stage bringing together 30 countries: this is the path Gung-Ho Culture has built, step by step.",
-    showAll: "Show all milestones",
-    showLess: "Show less",
+    yearsLabel: "Year",
+    // One short note per year for the year tabs (ours, not client copy)
+    yearNotes: { "2022": "Founded", "2023": "Into communities", "2024": "Platform live", "2025": "Across Taiwan", "2026": "World stage" } as Record<string, string>,
     phases: [
       {
         name: "Exploration & Foundations",
@@ -104,15 +116,12 @@ const events = {
       },
     ],
     linkLabel: "Forum website",
-  },
-  past: {
-    label: "Past Events",
-    title: "Highlights",
+    pastLabel: "Past events",
     ended: "Ended",
   },
   roadmap: {
-    label: "Roadmap",
     title: "Our Roadmap",
+    horizonsLabel: "Horizon",
     intro: "Sustainability is a long road. We hold ourselves to the same standards we ask of others, turning our commitments into milestones that can be reviewed.",
     horizons: [
       {
@@ -157,12 +166,15 @@ const events = {
     label: "Our Sustainability Commitment",
     lead: "As advisors who guide companies through sustainability disclosure, we believe we must practise what we preach.",
     body: "Gung-Ho Culture is committed to embedding sustainability in its own operations and, through co-learning and co-creation, working with every partner to make impact the key to shaping the future.",
+    readMore: "Read the full commitment",
   },
   cases: {
-    label: "Case Studies",
     title: "Real partnership results",
     description: "Behind every case lies a meeting of ideas and the realisation of shared value.",
     partnersLabel: "Partners",
+    readStory: "Read this story",
+    prev: "Previous story",
+    next: "Next story",
     items: [
       {
         title: "Sustainable products on corporate procurement lists",
@@ -182,13 +194,14 @@ const events = {
     ],
   },
   cta: {
-    title: "Ready to begin your sustainability journey?",
-    description: "Whether you are a brand owner new to ESG or a corporate partner looking to deepen your sustainability strategy, we have courses and services to suit you.",
-    primaryLabel: "Book a 15-minute Coffee Chat",
-    secondaryLabel: "Follow us on LINE",
+    title: "The next footprint is yours",
+    description: "We will tell you on LINE as soon as course dates are set. Want your whole team to learn together? Talk to us about in-house training.",
+    primaryLabel: "Get course dates on LINE",
+    secondaryLabel: "Enquire about in-house training",
   },
   detail: {
-    back: "Back to Our Journey",
+    // Followed by the chapter the course belongs to, e.g. Back to “Next Cohort”
+    backTo: "Back to",
     instructor: "Instructor",
     duration: "Duration",
     date: "Date",
@@ -196,8 +209,11 @@ const events = {
     capacity: "Places",
     price: "Fee",
     highlights: "Course highlights",
-    status: "Status",
-    enroll: "Enquire or register via LINE",
+    // LINE is the next step for every status; the wording follows the status
+    waitlist: "Join the waitlist on LINE",
+    enquire: "Enquire on LINE",
+    notify: "Get course dates on LINE",
+    map: "See the Learning Map",
     consult: "Book a Coffee Chat",
     dateTbd: "Next cohort in planning",
     related: "Other courses",

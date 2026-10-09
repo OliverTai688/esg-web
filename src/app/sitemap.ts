@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next'
-import { getAllPosts } from '@/lib/posts'
+import { getAllPosts, getCategories } from '@/lib/posts'
 import { workshops, services } from '@/data/courses'
 
 const BASE_URL = 'https://coesg.tw'
@@ -32,11 +32,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: 'monthly',
         priority: 0.6,
       })
+    }
+  }
+
+  // Topic landing pages
+  for (const locale of locales) {
+    for (const category of getCategories(posts)) {
       entries.push({
-        url: `${BASE_URL}/${locale}/learning/${post.slug}`,
-        lastModified: new Date(post.date),
+        url: `${BASE_URL}/${locale}/learning/category/${category.slug}`,
+        lastModified: new Date(),
         changeFrequency: 'monthly',
-        priority: 0.6,
+        priority: 0.5,
       })
     }
   }

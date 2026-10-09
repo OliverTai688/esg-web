@@ -168,15 +168,16 @@
     letter-spacing: -0.01em;
   }
   p { text-wrap: pretty; }
-  [id] { scroll-margin-top: 84px; }
+  /* Anchor targets land just below the sticky header (68px), or below the header
+     plus the chapter pills on pages that have a ChapterNav. */
+  html:has([data-chapter-nav]) { --anchor-offset: 122px; }
+  [id] { scroll-margin-top: var(--anchor-offset, 68px); }
   ::selection { background: #FDDCD2; color: #1F2022; }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
   }
   html {
     @apply font-sans scroll-smooth;
-    /* Keep #anchor targets clear of the 60px sticky header */
-    scroll-padding-top: 72px;
   }
 }
 
@@ -319,3 +320,4 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 }
+

@@ -5,15 +5,18 @@ export interface Consultant {
   name: string
   organization: string
   role: string
+  /** Our own translation of the title for the English page. Organisation names
+      stay as printed: the client has not supplied official English names. */
+  roleEn: string
   photo: string
 }
 
 export const consultants: Consultant[] = [
-  { name: "吳玟樺", organization: "共好玟化組織發展顧問有限公司・ESG共學坊", role: "創辦人", photo: "/team/consultant-01.jpg" },
-  { name: "蕭冠宇", organization: "中華徵信所企業股份有限公司", role: "永續長", photo: "/team/consultant-02.jpg" },
-  { name: "王欽泉", organization: "鑫判科技股份有限公司", role: "首席策略合夥人", photo: "/team/consultant-03.jpg" },
-  { name: "朱建毓", organization: "樂活永續股份有限公司", role: "共同創辦人", photo: "/team/consultant-04.jpg" },
-  { name: "劉建成", organization: "齊禾設計有限公司", role: "設計總監", photo: "/team/consultant-05.jpg" },
-  { name: "吳宗曄", organization: "樂活永續股份有限公司", role: "執行長", photo: "/team/consultant-06.jpg" },
-  { name: "陳宜均", organization: "綠策院有限公司", role: "創辦人", photo: "/team/consultant-07.jpg" },
+  { name: "吳玟樺", organization: "共好玟化組織發展顧問有限公司・ESG共學坊", role: "創辦人", roleEn: "Founder", photo: "/team/consultant-01.jpg" },
+  { name: "蕭冠宇", organization: "中華徵信所企業股份有限公司", role: "永續長", roleEn: "Chief Sustainability Officer", photo: "/team/consultant-02.jpg" },
+  { name: "王欽泉", organization: "鑫判科技股份有限公司", role: "首席策略合夥人", roleEn: "Chief Strategy Partner", photo: "/team/consultant-03.jpg" },
+  { name: "朱建毓", organization: "樂活永續股份有限公司", role: "共同創辦人", roleEn: "Co-founder", photo: "/team/consultant-04.jpg" },
+  { name: "劉建成", organization: "齊禾設計有限公司", role: "設計總監", roleEn: "Design Director", photo: "/team/consultant-05.jpg" },
+  { name: "吳宗曄", organization: "樂活永續股份有限公司", role: "執行長", roleEn: "Chief Executive Officer", photo: "/team/consultant-06.jpg" },
+  { name: "陳宜均", organization: "綠策院有限公司", role: "創辦人", roleEn: "Founder", photo: "/team/consultant-07.jpg" },
 ]

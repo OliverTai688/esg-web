@@ -1,14 +1,20 @@
 import type { Metadata } from "next"
-import { ArrowRight, ArrowDown, Check, ChevronDown, Clock, Coffee, Mail, MessageCircle, Sparkles, HeartHandshake, Users } from "lucide-react"
+import { ArrowDown, ArrowRight, Check, Clock, Mail, MessageCircle } from "lucide-react"
 import { Container } from "@/components/core/Container"
 import { Button } from "@/components/ui/button"
 import { SectionHeader } from "@/components/site/SectionHeader"
 import { ChapterNav } from "@/components/site/ChapterNav"
 import { ContactForm } from "@/components/site/ContactForm"
+import { Equation } from "@/components/consulting/Equation"
+import { OfferCard, OfferMarkShape, type OfferMark } from "@/components/consulting/OfferCard"
+import { ArchSeam, Disc, Half, Petal, Quarter } from "@/components/geo/shapes"
+import { Tabs } from "@/components/ux/Tabs"
+import { FoldList, ReadMore } from "@/components/ux/Fold"
 import { getMessages } from "@/i18n/messages"
 import type { Locale } from "@/i18n/config"
 import { site } from "@/lib/site"
 import { cn } from "@/lib/utils"
+import { pageChapters } from "@/lib/chapters"
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
@@ -16,43 +22,90 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return { title: t.consulting.meta.title, description: t.consulting.meta.description }
 }
 
+// Starting point → the services its panel shows (keys of solutions.items),
+// and the shape that marks which end of the bridge it stands on.
+const STARTS: Record<string, { offers: readonly string[]; mark: OfferMark }> = {
+  brand: { offers: ["consulting"], mark: "petal" },
+  paper: { offers: ["whitepaper"], mark: "petal" },
+  team: { offers: ["training", "workshop"], mark: "block" },
+  npo: { offers: [], mark: "petal" },
+  small: { offers: [], mark: "quarter" },
+}
+
+// /consulting: the bridge closes here (docs/redesign/pages-v2/consulting/).
+// One equation runs through the page — petal + block = quarter-disc — open in
+// the hero, answered at the form: choose a starting point → remove doubts → send.
 export default async function ConsultingPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   const t = await getMessages(locale as Locale)
   const c = t.consulting
-  const nav = t.nav.consulting
 
-  const chapters = [
-    { id: "solutions", label: nav.solutions },
-    { id: "ngo", label: nav.ngo },
-    { id: "membership", label: nav.membership },
-    { id: "faq", label: nav.faq },
-    { id: "contact", label: nav.contact },
-  ]
+  const chapters = pageChapters(c.chapters)
+  const quote = (text: string) => (locale === "en" ? `“${text}”` : `「${text}」`)
+  // The chooser options are in the same order as the form's topics, so a
+  // "book" button can hand its starting point over to the form.
+  const topicOf = (key: string) => c.chooser.options.findIndex((o) => o.key === key)
+
+  const starts = c.chooser.options.map((o, i) => {
+    const start = STARTS[o.key] ?? STARTS.brand
+    const offers = start.offers.map((k) => c.solutions.items.find((s) => s.key === k)).filter((s) => s !== undefined)
+    return {
+      id: o.key,
+      label: (
+        <>
+          <OfferMarkShape mark={start.mark} className="size-3.5" />
+          {o.tab}
+        </>
+      ),
+      content: (
+        <>
+          <p className="text-[15px] font-bold text-muted-foreground">{quote(o.label)}</p>
+          <div className="mt-4 space-y-3">
+            {offers.map((s) => (
+              <OfferCard key={s.key} mark={start.mark} unit={s.unit} badge={s.highlight || undefined} title={s.title} description={s.description} price={s.price} />
+            ))}
+            {o.key === "npo" && <OfferCard mark={start.mark} unit={c.ngo.models[0].features[0]} title={c.ngo.label} description={c.ngo.summary} />}
+            {o.key === "small" && (
+              <OfferCard mark={start.mark} unit={c.membership.tiers.map((tier) => tier.price).join("・")} title={c.membership.label} description={c.membership.description} />
+            )}
+          </div>
+          <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2">
+            {o.key === "small" ? (
+              <Button variant="outline" asChild>
+                <a href="#membership">
+                  {c.membership.jump}
+                  <ArrowDown />
+                </a>
+              </Button>
+            ) : (
+              <Button asChild>
+                <a href="#contact" data-contact-topic={i}>
+                  {c.solutions.cta}
+                  <ArrowRight />
+                </a>
+              </Button>
+            )}
+            {o.key === "npo" && (
+              <a href="#ngo" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-primary underline-offset-4 hover:underline">
+                {c.ngo.jump}
+                <ArrowDown className="size-4" aria-hidden="true" />
+              </a>
+            )}
+          </div>
+        </>
+      ),
+    }
+  })
 
   return (
-    <>
-      {/* ── Hero: the Coffee Chat promise + "where do I start?" chooser ── */}
-      <section className="relative overflow-hidden">
-        <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(50%_70%_at_85%_10%,#FEF5DC_0%,transparent_70%)]" />
-        <Container className="relative grid gap-12 py-16 md:py-24 lg:grid-cols-[1.15fr_1fr] lg:items-center">
+    <div className="overflow-x-clip">
+      {/* S1 ── Hero: the equation, not solved yet */}
+      <section>
+        <Container className="grid items-center gap-12 pb-16 pt-14 md:pt-20 lg:grid-cols-[1.1fr_1fr] lg:pb-24">
           <div>
             <p className="kicker-rule text-[13px] font-bold tracking-[0.12em] text-primary">{c.hero.kicker}</p>
-            <h1 className="mt-5 flex flex-wrap items-center gap-3 text-[2.25rem] font-black leading-[1.25] text-ink sm:text-5xl">
-              <span className="flex size-12 items-center justify-center rounded-2xl bg-orange-soft text-primary sm:size-14">
-                <Coffee className="size-6 sm:size-7" aria-hidden="true" />
-              </span>
-              {c.hero.title}
-            </h1>
+            <h1 className="mt-5 text-[2.25rem] font-black leading-[1.25] text-ink sm:text-5xl">{c.hero.title}</h1>
             <p className="mt-6 max-w-xl text-base leading-[1.9] text-muted-foreground sm:text-lg">{c.hero.description}</p>
-            <ul className="mt-6 flex flex-wrap gap-2">
-              {c.hero.promise.map((p) => (
-                <li key={p} className="flex items-center gap-1.5 rounded-full bg-card px-3.5 py-1.5 text-sm font-bold text-ink shadow-[0_1px_0_rgba(31,32,34,0.06)]">
-                  <Check className="size-4 text-primary" aria-hidden="true" />
-                  {p}
-                </li>
-              ))}
-            </ul>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Button size="lg" asChild>
                 <a href="#contact">
@@ -60,7 +113,7 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
                   <ArrowDown />
                 </a>
               </Button>
-              <Button size="lg" variant="line" asChild>
+              <Button size="lg" variant="outline" asChild>
                 <a href={site.line.url} target="_blank" rel="noopener noreferrer">
                   <MessageCircle />
                   {c.hero.lineCta}
@@ -68,163 +121,135 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
               </Button>
             </div>
           </div>
-          <nav aria-label={c.chooser.title} className="rounded-3xl bg-surface-dark p-6 text-white sm:p-8">
-            <p className="text-lg font-black">{c.chooser.title}</p>
-            <ul className="mt-5 space-y-2">
-              {c.chooser.options.map((o) => (
-                <li key={o.label}>
-                  <a href={`#${o.target}`} className="group flex items-center justify-between gap-4 rounded-xl border border-white/10 px-4 py-3.5 transition-colors hover:border-brand-yellow/60 hover:bg-white/[0.04]">
-                    <span>
-                      <span className="block text-[15px] font-bold">{o.label}</span>
-                      <span className="text-xs text-white/60">→ {o.hint}</span>
-                    </span>
-                    <ArrowRight className="size-4 shrink-0 text-brand-yellow transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <Equation labels={c.hero.equation} />
         </Container>
       </section>
 
       <ChapterNav chapters={chapters} label={c.label} />
 
-      {/* ── Solutions: one (highest) price per service ── */}
+      {/* S2 ── Services: pick a starting point, see only its offer.
+          Seam 1 · shape relay: the hero's petal comes back as the tab mark and the card's corner. */}
       <section id="solutions" className="bg-card py-20 md:py-24">
-        <Container>
-          <SectionHeader kicker={c.solutions.label} title={c.solutions.title} description={c.solutions.description} />
-          <ul className="mt-10 grid gap-4 md:grid-cols-2">
-            {c.solutions.items.map((s) => (
-              <li key={s.key} className={cn("relative flex min-w-0 flex-col rounded-2xl p-6 sm:p-7", s.highlight ? "bg-surface-dark text-white" : "border border-border bg-paper")}>
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <span className={cn("text-xs font-bold", s.highlight ? "text-white/60" : "text-muted-foreground")}>{s.unit}</span>
-                    <h3 className="mt-1 text-xl font-black">{s.title}</h3>
-                  </div>
-                  {s.highlight && <span className="shrink-0 rounded-full bg-brand-yellow px-2.5 py-1 text-xs font-bold text-ink">{s.highlight}</span>}
-                </div>
-                <p className={cn("mt-3 flex-1 text-sm leading-[1.9]", s.highlight ? "text-white/75" : "text-muted-foreground")}>{s.description}</p>
-                <div className={cn("mt-6 flex flex-wrap items-center justify-between gap-4 border-t pt-5", s.highlight ? "border-white/15" : "border-border")}>
-                  <span className={cn("font-display text-2xl font-bold", s.highlight ? "text-brand-yellow" : "text-ink")}>{s.price}</span>
-                  <Button size="sm" variant={s.highlight ? "inverse" : "outline"} asChild>
-                    <a href="#contact">
-                      {c.solutions.cta}
-                      <ArrowRight />
-                    </a>
-                  </Button>
-                </div>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-4 text-xs text-muted-foreground">{c.solutions.priceNote}</p>
+        <Container className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">
+          <SectionHeader kicker={c.solutions.label} title={c.chooser.title} description={c.solutions.description} />
+          <div className="min-w-0">
+            <Tabs items={starts} label={c.chooser.title} />
+            <p className="mt-6 text-xs leading-relaxed text-muted-foreground">{c.solutions.priceNote}</p>
+          </div>
         </Container>
       </section>
 
-      {/* ── NPO cooperation ── */}
-      <section id="ngo" className="py-20 md:py-24">
+      {/* Seam 2 · quiet */}
+
+      {/* S3 ── Non-profits: petals only. Two models as two facing petals. */}
+      <section id="ngo" className="pb-28 pt-20 md:pb-36 md:pt-24">
         <Container>
           <SectionHeader kicker={c.ngo.label} title={c.ngo.title} description={c.ngo.description} />
-          <div className="mt-10 grid gap-4 md:grid-cols-2">
-            {c.ngo.models.map((m, i) => {
-              const Icon = i === 0 ? HeartHandshake : Sparkles
-              return (
-                <div key={m.title} className="rounded-2xl border border-border bg-card p-7">
-                  <span className="flex size-11 items-center justify-center rounded-xl bg-orange-soft text-primary">
-                    <Icon className="size-5" aria-hidden="true" />
-                  </span>
-                  <h3 className="mt-5 text-xl font-black text-ink">{m.title}</h3>
-                  <p className="mt-3 text-sm leading-[1.9] text-muted-foreground">{m.description}</p>
-                  <ul className="mt-5 flex flex-wrap gap-2 border-t border-border pt-5">
-                    {m.features.map((f) => (
-                      <li key={f} className="rounded-full bg-sand px-3 py-1 text-xs font-bold text-ink">
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )
-            })}
-          </div>
-          <div className="mt-10">
-            <h3 className="text-sm font-bold text-muted-foreground">{c.ngo.casesTitle}</h3>
-            <ul className="mt-4 grid gap-3 sm:grid-cols-3">
-              {c.ngo.cases.map((n) => (
-                <li key={n.name} className="flex items-center gap-4 rounded-2xl bg-sand p-5">
-                  <span aria-hidden="true" className="flex size-12 shrink-0 items-center justify-center rounded-full bg-card text-lg font-black text-[#A8321A]">
-                    {n.name.slice(0, 1)}
-                  </span>
-                  <span>
-                    <span className="block font-bold text-ink">{n.name}</span>
-                    <span className="text-xs text-muted-foreground">
-                      {n.type}・{n.focus}
-                    </span>
-                  </span>
-                </li>
-              ))}
-            </ul>
-            <p className="mt-3 text-xs text-muted-foreground">{c.ngo.casesNote}</p>
-          </div>
-        </Container>
-      </section>
-
-      {/* ── Membership tiers + coming-soon waitlist ── */}
-      <section id="membership" className="bg-sand py-20 md:py-24">
-        <Container>
-          <SectionHeader kicker={c.membership.label} title={c.membership.title} description={c.membership.description} align="center" />
-          <ul className="mx-auto mt-12 grid max-w-5xl gap-4 md:grid-cols-3 md:items-stretch">
-            {c.membership.tiers.map((tier) => (
+          <ul className="mt-10 grid gap-3 md:grid-cols-2">
+            {c.ngo.models.map((m, i) => (
               <li
-                key={tier.title}
-                className={cn(
-                  "relative flex flex-col rounded-3xl bg-card p-7",
-                  tier.recommended ? "shadow-[0_24px_60px_-28px_rgba(192,57,26,0.55)] ring-2 ring-primary md:-my-3 md:py-10" : "border border-border",
-                )}
+                key={m.title}
+                className={cn("px-7 pb-3 pt-8 sm:px-9", i === 0 ? "rounded-tr-[4rem] rounded-bl-[4rem] bg-card" : "rounded-tl-[4rem] rounded-br-[4rem] bg-yellow-soft")}
               >
-                {tier.recommended && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-3 py-1 text-xs font-bold text-white">{c.membership.recommended}</span>
-                )}
-                <h3 className="text-lg font-black text-ink">{tier.title}</h3>
-                <p className="mt-2 font-display text-3xl font-bold text-ink">{tier.price}</p>
-                <p className="mt-2 text-sm font-bold text-primary">{tier.tagline}</p>
-                <ul className="mt-6 flex-1 space-y-3 border-t border-border pt-6">
-                  {tier.features.map((f) => (
-                    <li key={f} className="flex gap-2.5 text-sm text-ink/85">
-                      <Check className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
+                <h3 className="text-xl font-black text-ink">{m.title}</h3>
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {m.features.map((f) => (
+                    <li key={f} className={cn("rounded-full px-3 py-1 text-xs font-bold text-ink", i === 0 ? "bg-sand" : "bg-card")}>
                       {f}
                     </li>
                   ))}
                 </ul>
-                <p className="mt-6 flex gap-2 rounded-xl bg-paper px-3.5 py-2.5 text-xs leading-relaxed text-muted-foreground">
-                  <Users className="mt-0.5 size-3.5 shrink-0" aria-hidden="true" />
-                  <span>
-                    <span className="font-bold text-ink">{c.membership.audienceLabel}｜</span>
-                    {tier.audience}
-                  </span>
-                </p>
-                <Button className="mt-5" variant={tier.recommended ? "default" : "outline"} asChild>
-                  <a href={site.line.url} target="_blank" rel="noopener noreferrer">
-                    {c.membership.tierCta}
-                  </a>
-                </Button>
+                <ReadMore label={c.ngo.more} className="mt-2">
+                  <p className="pb-4">{m.description}</p>
+                </ReadMore>
               </li>
             ))}
           </ul>
+          <h3 className="mt-12 text-sm font-bold text-muted-foreground">{c.ngo.casesTitle}</h3>
+          <ul className="mt-4 grid gap-4 sm:grid-cols-3">
+            {c.ngo.cases.map((n, i) => (
+              <li key={n.name} className="flex items-center gap-4">
+                <Petal className={cn("size-9", i % 2 === 1 && "-scale-x-100")} />
+                <span>
+                  <span className="block font-bold text-ink">{n.name}</span>
+                  <span className="text-xs text-muted-foreground">
+                    {n.type}・{n.focus}
+                  </span>
+                </span>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
+            <p className="text-xs text-muted-foreground">{c.ngo.casesNote}</p>
+            <Button asChild>
+              <a href="#contact" data-contact-topic={topicOf("npo")}>
+                {c.solutions.cta}
+                <ArrowRight />
+              </a>
+            </Button>
+          </div>
+        </Container>
+      </section>
 
-          <div className="mx-auto mt-10 grid max-w-5xl gap-6 rounded-3xl border-2 border-dashed border-ink/20 bg-card p-7 sm:p-9 md:grid-cols-[1fr_auto] md:items-center">
+      {/* S4 ── Membership: the quarter grows (quarter → half → disc).
+          Seam 3 is the sand section's arched top. */}
+      <section id="membership" className="relative bg-sand">
+        <ArchSeam className="bg-sand" />
+        <Container className="relative pt-4">
+          <SectionHeader kicker={c.membership.label} title={c.membership.title} align="center" />
+          <ul className="mx-auto mt-12 grid max-w-5xl gap-4 md:grid-cols-3">
+            {c.membership.tiers.map((tier, i) => (
+              <li key={tier.title} className={cn("flex flex-col rounded-3xl bg-card px-7 pb-2 pt-7", tier.recommended && "ring-2 ring-primary")}>
+                <div className="flex h-11 items-center justify-between">
+                  {i === 0 ? <Quarter className="size-11" /> : i === 1 ? <Half className="h-[1.375rem] w-11" /> : <Disc className="size-11" />}
+                  {tier.recommended && <span className="rounded-full bg-primary px-3 py-1 text-xs font-bold text-white">{c.membership.recommended}</span>}
+                </div>
+                <h3 className="mt-5 text-lg font-black text-ink">{tier.title}</h3>
+                <p className="mt-1 font-display text-3xl font-bold text-ink">{tier.price}</p>
+                <p className="mt-2 text-sm font-bold text-primary">{tier.tagline}</p>
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  <span className="font-bold text-ink">{c.membership.audienceLabel}｜</span>
+                  {tier.audience}
+                </p>
+                <ReadMore label={c.membership.includes.replace("{count}", String(tier.features.length))} className="mt-4 border-t border-border pt-1">
+                  <ul className="space-y-2 pb-4">
+                    {tier.features.map((f) => (
+                      <li key={f} className="flex gap-2.5 text-ink/85">
+                        <Check className="mt-1 size-4 shrink-0 text-primary" aria-hidden="true" />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                </ReadMore>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-6 flex justify-center">
+            <Button size="lg" variant="line" asChild>
+              <a href={site.line.url} target="_blank" rel="noopener noreferrer">
+                <MessageCircle />
+                {c.membership.tierCta}
+              </a>
+            </Button>
+          </div>
+
+          {/* Seam 4 · overlap: the plan that is not finished yet sits across the
+              boundary, its ring still open (turns into place as it scrolls in). */}
+          <div className="relative z-10 mx-auto -mb-12 mt-12 grid max-w-5xl gap-6 rounded-3xl border border-border bg-card p-7 sm:p-9 md:grid-cols-[auto_1fr_auto] md:items-center md:gap-8">
+            <span aria-hidden="true" className="scroll-turn-in block size-16 rounded-full border-[6px] border-dashed border-brand-orange" />
             <div>
-              <p className="flex items-center gap-2 text-sm font-bold text-primary">
-                <span className="rounded-full bg-brand-yellow px-2.5 py-0.5 text-xs text-ink">{c.membership.comingSoon.badge}</span>
+              <h3 className="flex flex-wrap items-center gap-2 text-lg font-black text-ink">
+                <span className="rounded-full bg-brand-yellow px-2.5 py-0.5 text-xs font-bold text-ink">{c.membership.comingSoon.badge}</span>
                 {c.membership.comingSoon.title}
-              </p>
-              {c.membership.comingSoon.body.map((p, i) => (
-                <p key={p.slice(0, 10)} className={cn("mt-3 leading-[1.85]", i === 0 ? "text-lg font-bold text-ink" : "text-sm text-muted-foreground")}>
+              </h3>
+              {c.membership.comingSoon.body.map((p) => (
+                <p key={p.slice(0, 10)} className="mt-2 text-sm leading-[1.85] text-muted-foreground">
                   {p}
                 </p>
               ))}
             </div>
-            <Button size="lg" variant="line" asChild>
+            <Button variant="outline" asChild>
               <a href={site.line.url} target="_blank" rel="noopener noreferrer">
-                <MessageCircle />
                 {c.membership.comingSoon.cta}
               </a>
             </Button>
@@ -232,67 +257,60 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
         </Container>
       </section>
 
-      {/* ── FAQ ── */}
-      <section id="faq" className="py-20 md:py-24">
-        <Container className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+      {/* S5 ── FAQ: no shapes, the quietest stretch before the bridge closes */}
+      <section id="faq" className="pb-20 pt-28 md:pb-24 md:pt-32">
+        <Container className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">
           <div>
             <SectionHeader kicker={c.faq.label} title={c.faq.title} />
-            <p className="mt-6 text-sm text-muted-foreground">{c.faq.more}</p>
-            <a href={`mailto:${site.supportEmail}`} className="mt-1 inline-flex items-center gap-1.5 text-sm font-bold text-primary underline-offset-4 hover:underline">
-              <Mail className="size-4" aria-hidden="true" />
-              {c.faq.moreCta}（{site.supportEmail}）
-            </a>
+            <p className="mt-4 text-sm text-muted-foreground">
+              {c.faq.more}
+              <a href={`mailto:${site.supportEmail}`} className="ml-2 inline-flex min-h-11 items-center gap-1.5 font-bold text-primary underline-offset-4 hover:underline">
+                <Mail className="size-4" aria-hidden="true" />
+                {c.faq.moreCta}
+              </a>
+            </p>
           </div>
-          <div className="divide-y divide-border border-y border-border">
-            {c.faq.items.map((f, i) => (
-              <details key={f.question} className="group" open={i === 0}>
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-base font-bold text-ink [&::-webkit-details-marker]:hidden">
-                  {f.question}
-                  <ChevronDown className="size-5 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" aria-hidden="true" />
-                </summary>
-                <p className="pb-6 pr-10 text-sm leading-[1.9] text-muted-foreground">{f.answer}</p>
-              </details>
-            ))}
-          </div>
+          <FoldList name="consulting-faq" items={c.faq.items.map((f) => ({ title: f.question, content: f.answer }))} />
         </Container>
       </section>
 
-      {/* ── Contact: form + LINE alternative ── */}
-      <section id="contact" className="bg-surface-dark py-20 text-white md:py-24">
-        <Container className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
-          <div>
-            <p className="kicker-rule text-[13px] font-bold tracking-[0.12em] text-brand-yellow">{c.contact.label}</p>
-            <h2 className="mt-4 text-3xl font-black leading-[1.3] sm:text-4xl">{c.contact.title}</h2>
-            <p className="mt-4 leading-[1.9] text-white/75">{c.contact.description}</p>
-            <ul className="mt-8 space-y-3 text-sm text-white/80">
-              <li className="flex items-center gap-3">
-                <Mail className="size-4 text-brand-yellow" aria-hidden="true" />
-                <a href={`mailto:${site.supportEmail}`} className="underline-offset-4 hover:underline">
-                  {site.supportEmail}
-                </a>
-              </li>
-              <li className="flex items-center gap-3">
-                <Clock className="size-4 text-brand-yellow" aria-hidden="true" />
-                {c.contact.hours}
-              </li>
-            </ul>
-            <div className="mt-10 rounded-2xl border border-white/15 p-6">
-              <p className="font-bold">{c.contact.altTitle}</p>
-              <p className="mt-1 text-sm text-white/70">{c.contact.altBody}</p>
-              <Button className="mt-4" variant="line" asChild>
-                <a href={site.line.url} target="_blank" rel="noopener noreferrer">
-                  <MessageCircle />
-                  {t.footer.lineCta}
-                </a>
-              </Button>
+      {/* S6 ── Contact: the equation is solved. The page's one dark moment is a
+          block on paper, not a band, so it does not merge with the dark footer.
+          Seam 5 · recombine: petal and block slide together as it scrolls in. */}
+      <section id="contact" className="pb-16 md:pb-24">
+        <Container className="px-3 md:px-8">
+          <div className="grid gap-10 rounded-[2rem] bg-surface-dark px-5 pb-5 pt-9 text-white sm:p-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12 lg:p-14">
+            <div>
+              <SectionHeader kicker={c.contact.label} title={c.contact.title} description={c.contact.description} tone="dark" size="md" />
+              <Equation solved animate tone="dark" className="mt-8 justify-start" />
+              <ul className="mt-6 text-sm text-white/80">
+                <li>
+                  <a href={`mailto:${site.supportEmail}`} className="inline-flex min-h-11 items-center gap-3 underline-offset-4 hover:underline">
+                    <Mail className="size-4 text-brand-yellow" aria-hidden="true" />
+                    {site.supportEmail}
+                  </a>
+                </li>
+                <li className="flex min-h-9 items-center gap-3">
+                  <Clock className="size-4 shrink-0 text-brand-yellow" aria-hidden="true" />
+                  {c.contact.hours}
+                </li>
+              </ul>
+              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-white/15 pt-6">
+                <p className="font-bold">{c.contact.altTitle}</p>
+                <Button variant="line" asChild>
+                  <a href={site.line.url} target="_blank" rel="noopener noreferrer">
+                    <MessageCircle />
+                    {t.footer.lineCta}
+                  </a>
+                </Button>
+              </div>
+            </div>
+            <div className="rounded-3xl bg-card p-6 text-ink sm:p-8">
+              <ContactForm labels={t.contactForm} to={site.supportEmail} />
             </div>
           </div>
-          <div className="rounded-3xl bg-card p-6 text-ink sm:p-8">
-            <ContactForm labels={t.contactForm} to={site.supportEmail} />
-          </div>
         </Container>
       </section>
-
-    </>
+    </div>
   )
 }

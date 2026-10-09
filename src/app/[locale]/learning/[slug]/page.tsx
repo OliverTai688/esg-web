@@ -4,7 +4,7 @@ import { ArticleView } from "@/components/site/ArticleView"
 import { getMessages } from "@/i18n/messages"
 import { site } from "@/lib/site"
 import { i18n, type Locale } from "@/i18n/config"
-import { getAllPosts, getAllSlugs, getPostBySlug, getRelatedPosts } from "@/lib/posts"
+import { getAllPosts, getAllSlugs, getNextPost, getPostBySlug } from "@/lib/posts"
 
 export async function generateStaticParams() {
   const slugs = await getAllSlugs()
@@ -28,6 +28,6 @@ export default async function LearningArticlePage({ params }: { params: Promise<
   const t = await getMessages(locale as Locale)
   const post = await getPostBySlug(slug)
   if (!post) notFound()
-  const related = getRelatedPosts(await getAllPosts(), post)
-  return <ArticleView post={post} related={related} locale={locale} l={t.learning} />
+  const next = getNextPost(await getAllPosts(), post)
+  return <ArticleView post={post} next={next} locale={locale} l={t.learning} />
 }

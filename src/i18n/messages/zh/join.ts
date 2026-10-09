@@ -1,4 +1,7 @@
 // /join copy. Single goal: add the official LINE account.
+// The page has no chapters (it is a plain navbar link). Its numbers come from
+// `impact.track` in common.ts, never from this file (G06).
+// Layout decisions: docs/redesign/pages-v2/join/.
 const join = {
   meta: {
     title: "加入我們",
@@ -10,10 +13,9 @@ const join = {
     title: "成為改變的一份子",
     description: "加入共好玟化的永續社群，與來自不同領域的實踐者一起，讓好的事被看見、被理解、被連結。",
     lineBtn: "加入 LINE 官方帳號",
+    // Accessible name of the QR code
     qrLabel: "用手機掃描 QR Code 加入",
     lineId: "LINE ID",
-    copy: "複製",
-    copied: "已複製",
     seconds: "一分鐘完成",
   },
   benefits: {
@@ -35,14 +37,10 @@ const join = {
       { title: "參與互動", description: "報名活動、回覆訊息、加入討論，成為永續生態圈的一份子。" },
     ],
   },
-  community: {
-    title: "你會加入的社群",
-  },
+  // The one secondary way out, under the closing LINE card
   alt: {
     title: "還在評估？",
-    body: "先看看我們怎麼做，或直接預約 15 分鐘 Coffee Chat。",
-    primary: "預約 Coffee Chat",
-    secondary: "認識共好玟化",
+    link: "先看看我們辦過的活動",
   },
 }
 

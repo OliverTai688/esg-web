@@ -1,6 +1,21 @@
+import type { ChapterDef } from "@/lib/chapters"
+
 // /events copy. Client text from docs/tasks/sitemap-rev1/E01–E04.
 // terminology follows G01 (see scripts/check-terms.mjs).
+// Page sections in page order: the single source for the navbar dropdown, the
+// in-page ChapterNav and each section's kicker (the page reads the label from here).
+// Every id must be a section id on the page (scripts/check-anchors.mjs).
+const chapters: readonly ChapterDef[] = [
+  { id: "upcoming", label: "下一梯次", desc: "三門課規劃中，開課先通知你", icon: "CalendarDays" },
+  { id: "workshops", label: "永續學習地圖", desc: "三個層次、八個主題，找你的起點", icon: "Map" },
+  { id: "services", label: "持續服務", desc: "顧問諮詢與訂閱方案", icon: "Repeat" },
+  { id: "history", label: "我們走過的路", desc: "2022 成立至今，一年一年看", icon: "Footprints" },
+  { id: "roadmap", label: "發展藍圖", desc: "近、中、遠程目標與永續承諾", icon: "Flag" },
+  { id: "cases", label: "合作案例", desc: "三個跨界合作的故事", icon: "Handshake" },
+]
+
 const events = {
+  chapters,
   meta: {
     title: "永續足跡",
     description: "從走入社區的講座，到登上 30 國齊聚的國際舞台——共好玟化的課程、學習地圖、足跡與發展藍圖。",
@@ -10,24 +25,22 @@ const events = {
     kicker: "永續足跡",
     title: "每一步，都是永續行動的真實足跡",
     description: "從ESG共學坊的跨產業連結到國際論壇，共好玟化持續舉辦高品質的永續活動，串連理念相符的夥伴。",
-    primaryCta: "打開永續學習地圖",
-    secondaryCta: "看我們走過的路",
+    primaryCta: "加入 LINE 收開課通知",
+    secondaryCta: "打開永續學習地圖",
+    // Labels under the footprint trail: where it starts, and the step not taken yet
+    trailStart: "2022",
+    trailNext: "下一步",
   },
   upcoming: {
-    label: "活動列表",
-    title: "近期課程與活動",
-    description: "下一梯次課程正在規劃中。加入官方 LINE，開課時第一時間通知你；企業包班與客製課程可直接洽詢。",
-    planning: "下一梯次規劃中",
-    planningNote: "日期公布後將於官方 LINE 優先通知",
+    title: "日期一公布，第一個通知你",
+    description: "下一梯次課程正在規劃中。加入官方 LINE，開課時第一時間通知你。",
     notifyCta: "加入 LINE 搶先通知",
-    inquireCta: "洽詢企業包班",
     viewDetails: "查看課程內容",
-    open: "開放預約",
   },
   learningMap: {
-    label: "永續學習地圖",
     title: "找到最適合你的永續起點",
     levelsLine: "探索 → 實作 → 整合",
+    introLabel: "關於學習地圖",
     intro:
       "無論你是剛接觸 ESG 的新手，還是已有基礎想深化實力的實踐者，都能從這裡找到最適合你的起點。每個主題模組獨立完整，可依需求單獨選修；完整走過全程，則能建立系統性的永續實戰能力。",
     // Level-to-colour mapping is our inference from the client's colour dots (E02, pending confirmation).
@@ -57,7 +70,6 @@ const events = {
     inquireCta: "洽詢客製課程",
   },
   servicesSection: {
-    label: "持續服務",
     title: "顧問諮詢與訂閱方案",
     description: "不只是一次性活動——我們提供持續性的專業支援，陪伴你的永續旅程。",
     consulting: "顧問服務",
@@ -65,11 +77,11 @@ const events = {
     viewMore: "了解更多",
   },
   history: {
-    label: "我們走過的路",
-    title: "從社區講座，到 30 國齊聚的國際舞台",
+    title: "一步一步，走出來的路",
     intro: "從走入社區的一場場講座，到登上 30 國齊聚的國際舞台——這是共好玟化一步步累積的軌跡。",
-    showAll: "展開全部足跡",
-    showLess: "收合",
+    yearsLabel: "年份",
+    // One short note per year for the year tabs (ours, not client copy)
+    yearNotes: { "2022": "成立", "2023": "走入社區", "2024": "平台上線", "2025": "走遍全台", "2026": "國際舞台" } as Record<string, string>,
     phases: [
       {
         name: "探索扎根期",
@@ -104,15 +116,12 @@ const events = {
       },
     ],
     linkLabel: "論壇網站",
-  },
-  past: {
-    label: "已結束活動",
-    title: "精彩回顧",
+    pastLabel: "已結束活動",
     ended: "已結束",
   },
   roadmap: {
-    label: "發展藍圖",
     title: "我們的發展藍圖",
+    horizonsLabel: "階段",
     intro: "永續是一條長路。我們以同樣的標準要求自己，把承諾化為可被檢視的階段目標。",
     horizons: [
       {
@@ -157,12 +166,15 @@ const events = {
     label: "我們的永續承諾",
     lead: "身為陪伴企業做永續揭露的顧問，我們相信——自己也必須是實踐者。",
     body: "共好玟化承諾將永續精神落實於自身營運，並持續以共學、共創的方式，與每一位夥伴一起，讓影響力成為引領未來的關鍵。",
+    readMore: "讀完整承諾",
   },
   cases: {
-    label: "合作案例",
     title: "真實的合作成果",
     description: "每一個案例背後，都是理念的碰撞與價值的實現。",
     partnersLabel: "合作夥伴",
+    readStory: "讀這個故事",
+    prev: "上一則",
+    next: "下一則",
     items: [
       {
         title: "永續商品走進企業採購清單",
@@ -182,13 +194,14 @@ const events = {
     ],
   },
   cta: {
-    title: "準備好開始你的永續旅程了嗎？",
-    description: "無論你是初次接觸 ESG 的品牌主，還是想深化永續策略的企業夥伴，我們都有適合你的課程與服務。",
-    primaryLabel: "預約 15 分鐘 Coffee Chat",
-    secondaryLabel: "加入官方 LINE",
+    title: "下一個足跡，換你踏出",
+    description: "開課日期一公布，LINE 第一個通知你；團隊想一起學，直接談企業包班。",
+    primaryLabel: "加入 LINE 收開課通知",
+    secondaryLabel: "洽詢企業包班",
   },
   detail: {
-    back: "返回永續足跡",
+    // Followed by the chapter the course belongs to, e.g. 返回「下一梯次」
+    backTo: "返回",
     instructor: "講師",
     duration: "時數",
     date: "日期",
@@ -196,8 +209,11 @@ const events = {
     capacity: "名額",
     price: "費用",
     highlights: "課程重點",
-    status: "狀態",
-    enroll: "透過 LINE 報名詢問",
+    // LINE is the next step for every status; the wording follows the status
+    waitlist: "加 LINE 候補下一梯次",
+    enquire: "透過 LINE 洽詢",
+    notify: "加入 LINE 收開課通知",
+    map: "看永續學習地圖",
     consult: "預約 Coffee Chat",
     dateTbd: "下一梯次規劃中",
     related: "其他課程",

@@ -10,23 +10,47 @@ export interface Chapter {
 
 // Sticky in-page navigation for long pages. Highlights the chapter in view and
 // scrolls the active pill into view on narrow screens.
-export function ChapterNav({ chapters, label }: { chapters: readonly Chapter[]; label: string }) {
+export function ChapterNav({
+  chapters,
+  label,
+  listClassName,
+}: {
+  chapters: readonly Chapter[]
+  label: string
+  /** Overrides the pill row's width, e.g. `max-w-3xl` to line up with an article column. */
+  listClassName?: string
+}) {
   const [active, setActive] = React.useState(chapters[0]?.id)
   const listRef = React.useRef<HTMLUListElement>(null)
 
+  // The active chapter is the last one whose top has passed the line just below
+  // the sticky header + pills — the same line anchor links land on, so the pill
+  // that was clicked is always the one that lights up.
   React.useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
-        if (visible[0]) setActive(visible[0].target.id)
-      },
-      { rootMargin: "-120px 0px -60% 0px" },
-    )
-    chapters.forEach((c) => {
-      const el = document.getElementById(c.id)
-      if (el) observer.observe(el)
-    })
-    return () => observer.disconnect()
+    const update = () => {
+      const line = (listRef.current?.parentElement?.getBoundingClientRect().bottom ?? 120) + 24
+      let current = chapters[0]?.id
+      for (const c of chapters) {
+        const el = document.getElementById(c.id)
+        if (el && el.getBoundingClientRect().top <= line) current = c.id
+      }
+      // At the very bottom the last chapter may be too short to reach the line
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
+        const last = chapters.filter((c) => document.getElementById(c.id)).at(-1)
+        const el = last && document.getElementById(last.id)
+        if (el && el.getBoundingClientRect().top < window.innerHeight * 0.6) current = last.id
+      }
+      setActive(current)
+    }
+    update()
+    window.addEventListener("scroll", update, { passive: true })
+    window.addEventListener("resize", update)
+    window.addEventListener("hashchange", update)
+    return () => {
+      window.removeEventListener("scroll", update)
+      window.removeEventListener("resize", update)
+      window.removeEventListener("hashchange", update)
+    }
   }, [chapters])
 
   React.useEffect(() => {
@@ -36,22 +60,23 @@ export function ChapterNav({ chapters, label }: { chapters: readonly Chapter[]; 
   }, [active])
 
   return (
-    <nav aria-label={label} className="sticky top-[68px] z-40 border-b border-border/70 bg-background/90 backdrop-blur-lg">
-      <ul ref={listRef} className="mx-auto flex max-w-[1120px] gap-1 overflow-x-auto px-4 py-2.5 md:px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <nav aria-label={label} data-chapter-nav className="sticky top-[68px] z-40 border-b border-border/70 bg-background/90 backdrop-blur-lg">
+      <ul ref={listRef} className={cn("mx-auto flex max-w-[1120px] gap-1 overflow-x-auto px-4 py-1 md:px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden", listClassName)}>
         {chapters.map((c, i) => (
           <li key={c.id} data-id={c.id} className="shrink-0">
-            <a
-              href={`#${c.id}`}
-              aria-current={active === c.id ? "true" : undefined}
-              className={cn(
-                "flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[13px] font-medium transition-colors",
-                active === c.id ? "bg-ink text-white" : "text-muted-foreground hover:bg-ink/[0.05] hover:text-ink",
-              )}
-            >
-              <span className={cn("font-display text-[11px] tabular-nums", active === c.id ? "text-brand-yellow" : "text-muted-foreground")}>
-                {String(i + 1).padStart(2, "0")}
+            {/* 44px touch target around a smaller visual pill */}
+            <a href={`#${c.id}`} aria-current={active === c.id ? "true" : undefined} className="group flex min-h-11 items-center outline-none">
+              <span
+                className={cn(
+                  "flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[13px] font-medium transition-colors group-focus-visible:ring-2 group-focus-visible:ring-ring",
+                  active === c.id ? "bg-ink text-white" : "text-muted-foreground group-hover:bg-ink/[0.05] group-hover:text-ink",
+                )}
+              >
+                <span className={cn("font-display text-[11px] tabular-nums", active === c.id ? "text-brand-yellow" : "text-muted-foreground")}>
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                {c.label}
               </span>
-              {c.label}
             </a>
           </li>
         ))}

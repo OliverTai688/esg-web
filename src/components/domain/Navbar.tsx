@@ -8,15 +8,14 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Container } from "@/components/core/Container"
 import { Button } from "@/components/ui/button"
 import { LocaleSwitcher } from "@/components/domain/LocaleSwitcher"
-import { Menu, X, ChevronDown } from "lucide-react"
+import { Menu, X, ChevronDown, ArrowRight } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { getNavGroups, type NavGroup } from "@/lib/nav"
+import { getNavGroups, type NavData, type NavGroup } from "@/lib/nav"
 import type { Locale } from "@/i18n/config"
-import type { Messages } from "@/i18n/messages"
 
 interface NavbarProps {
   locale: Locale
-  labels: Messages["nav"]
+  nav: NavData
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -102,6 +101,41 @@ const mobileSubMenuVariants = {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
+   NavItemLink — a menu item. When its section is on the page we are already
+   on, it is a plain in-page anchor: the browser's own hash navigation always
+   scrolls and keeps a clean URL, which the client router does not guarantee
+   for a same-page hash change.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+function NavItemLink({
+  href,
+  samePage,
+  onClick,
+  className,
+  children,
+}: {
+  href: string
+  samePage: boolean
+  onClick: () => void
+  className: string
+  children: React.ReactNode
+}) {
+  const hash = href.indexOf("#")
+  if (samePage && hash >= 0) {
+    return (
+      <a href={href.slice(hash)} onClick={onClick} className={className}>
+        {children}
+      </a>
+    )
+  }
+  return (
+    <Link href={href} onClick={onClick} className={className}>
+      {children}
+    </Link>
+  )
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
    DesktopNavGroup — top-level link + disclosure button + single-column menu
    The label navigates to the page; the chevron (or hover) opens the menu.
    ═══════════════════════════════════════════════════════════════════════ */
@@ -110,6 +144,7 @@ function DesktopNavGroup({
   group,
   locale,
   isActive,
+  isCurrentPage,
   isOpen,
   onOpen,
   onClose,
@@ -118,6 +153,7 @@ function DesktopNavGroup({
   group: NavGroup
   locale: Locale
   isActive: boolean
+  isCurrentPage: boolean
   isOpen: boolean
   onOpen: () => void
   onClose: () => void
@@ -222,8 +258,9 @@ function DesktopNavGroup({
                   const Icon = item.icon
                   return (
                     <motion.li key={item.href} variants={itemVariants}>
-                      <Link
+                      <NavItemLink
                         href={item.href}
+                        samePage={isCurrentPage}
                         onClick={onClose}
                         className="group/nav-item flex items-start gap-3.5 rounded-xl p-3 outline-none transition-colors duration-200 hover:bg-primary/[0.04] focus-visible:bg-primary/[0.06] active:scale-[0.98]"
                       >
@@ -238,7 +275,7 @@ function DesktopNavGroup({
                             {item.desc}
                           </p>
                         </div>
-                      </Link>
+                      </NavItemLink>
                     </motion.li>
                   )
                 })}
@@ -257,7 +294,8 @@ function DesktopNavGroup({
 
 const CLOSE_DELAY = 150
 
-const Navbar = ({ locale, labels }: NavbarProps) => {
+const Navbar = ({ locale, nav }: NavbarProps) => {
+  const { labels } = nav
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const [scrolled, setScrolled] = React.useState(false)
   const [scrollProgress, setScrollProgress] = React.useState(0)
@@ -271,12 +309,22 @@ const Navbar = ({ locale, labels }: NavbarProps) => {
   React.useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 8)
+      // On pages that mark a reading target (articles), the line shows progress
+      // through that element; elsewhere, through the whole page.
+      const target = document.querySelector<HTMLElement>("[data-reading-target]")
+      if (target) {
+        // 0 when the target's top reaches mid-screen, 1 when its bottom does
+        const rect = target.getBoundingClientRect()
+        setScrollProgress(Math.min(Math.max((window.innerHeight / 2 - rect.top) / rect.height, 0), 1))
+        return
+      }
       const max = document.documentElement.scrollHeight - window.innerHeight
       if (max > 0) setScrollProgress(Math.min(window.scrollY / max, 1))
     }
+    onScroll()
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
-  }, [])
+  }, [pathname])
 
   // ── Body scroll lock for mobile ──
   React.useEffect(() => {
@@ -313,7 +361,7 @@ const Navbar = ({ locale, labels }: NavbarProps) => {
   // ── Route matching ──
   const isGroupActive = (href: string) => pathname?.startsWith(href) ?? false
 
-  const navGroups = React.useMemo(() => getNavGroups(locale, labels), [locale, labels])
+  const navGroups = React.useMemo(() => getNavGroups(locale, nav), [locale, nav])
 
   return (
     <header
@@ -359,6 +407,7 @@ const Navbar = ({ locale, labels }: NavbarProps) => {
                 group={group}
                 locale={locale}
                 isActive={isGroupActive(group.href)}
+                isCurrentPage={pathname === group.href}
                 isOpen={activeMenu === group.key}
                 onOpen={() => openMenu(group.key)}
                 onClose={closeMenu}
@@ -397,7 +446,7 @@ const Navbar = ({ locale, labels }: NavbarProps) => {
             className="rounded-full px-5 h-9 text-[13px] font-semibold shadow-[0_1px_3px_rgba(0,0,0,0.1),0_0_0_1px_rgba(0,0,0,0.04)] hover:shadow-[0_3px_12px_rgba(0,0,0,0.12),0_0_0_1px_rgba(0,0,0,0.04)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
             asChild
           >
-            <Link href={`/${locale}/consulting`}>{labels.cta}</Link>
+            <Link href={`/${locale}/consulting#contact`}>{labels.cta}</Link>
           </Button>
         </div>
 
@@ -488,12 +537,23 @@ const Navbar = ({ locale, labels }: NavbarProps) => {
                             className="overflow-hidden"
                           >
                             <div className="ml-4 pl-3.5 border-l-[1.5px] border-primary/10 pb-2 space-y-0.5">
+                              <motion.div variants={itemVariants}>
+                                <Link
+                                  href={group.href}
+                                  onClick={() => setMobileOpen(false)}
+                                  className="flex min-h-11 items-center gap-2 rounded-xl px-3 text-sm font-bold text-primary transition-colors hover:bg-primary/[0.04] active:bg-primary/[0.06]"
+                                >
+                                  {labels.overview}
+                                  <ArrowRight size={14} strokeWidth={2.2} aria-hidden="true" />
+                                </Link>
+                              </motion.div>
                               {group.items.map((item) => {
                                 const Icon = item.icon
                                 return (
                                   <motion.div key={item.href} variants={itemVariants}>
-                                    <Link
+                                    <NavItemLink
                                       href={item.href}
+                                      samePage={pathname === group.href}
                                       onClick={() => setMobileOpen(false)}
                                       className="flex items-start gap-3 rounded-xl px-3 py-2.5 transition-colors hover:bg-primary/[0.04] active:bg-primary/[0.06]"
                                     >
@@ -508,7 +568,7 @@ const Navbar = ({ locale, labels }: NavbarProps) => {
                                           {item.desc}
                                         </p>
                                       </div>
-                                    </Link>
+                                    </NavItemLink>
                                   </motion.div>
                                 )
                               })}
@@ -553,7 +613,7 @@ const Navbar = ({ locale, labels }: NavbarProps) => {
                   asChild
                 >
                   <Link
-                    href={`/${locale}/consulting`}
+                    href={`/${locale}/consulting#contact`}
                     onClick={() => setMobileOpen(false)}
                   >
                     {labels.cta}

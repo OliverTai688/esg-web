@@ -4,6 +4,7 @@ import { i18n, type Locale } from "@/i18n/config"
 import { getMessages } from "@/i18n/messages"
 import { Navbar } from "@/components/domain/Navbar"
 import { Footer } from "@/components/domain/Footer"
+import { getNavData } from "@/lib/nav"
 import { site } from "@/lib/site"
 import "../globals.css";
 
@@ -83,6 +84,7 @@ export default async function LocaleLayout({
   return (
     <html
       lang={typedLocale}
+      data-scroll-behavior="smooth"
       className={`${notoSansTC.variable} ${geistMono.variable} ${dmSans.variable} h-full antialiased scroll-smooth`}
       suppressHydrationWarning
     >
@@ -124,7 +126,7 @@ export default async function LocaleLayout({
         >
           {dict.nav.skipToContent}
         </a>
-        <Navbar locale={typedLocale} labels={dict.nav} />
+        <Navbar locale={typedLocale} nav={getNavData(dict)} />
         <main id="main" className="flex-1">
           {children}
         </main>
