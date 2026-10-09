@@ -199,6 +199,42 @@
     to { opacity: 1; transform: none; }
   }
 
+  /* ── Home geometry motion (docs/redesign/home-v2/03-decisions.md) ──
+     Every shape is complete at rest; motion only plays where supported and
+     the visitor has not asked for reduced motion. */
+  @media (prefers-reduced-motion: no-preference) {
+    .petal-pop {
+      animation: petal-pop 700ms cubic-bezier(.2,.8,.2,1) both;
+      animation-delay: calc(var(--i, 0) * 70ms + 150ms);
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+  }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .scroll-turn-in {
+        animation: turn-in linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 100%;
+      }
+      .scroll-gather {
+        animation: gather ease-out both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 80%;
+      }
+      .scroll-draw {
+        stroke-dasharray: 1;
+        animation: draw-line ease-out both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 100%;
+      }
+    }
+  }
+  @keyframes petal-pop { from { opacity: 0; transform: scale(.2) rotate(-30deg); } to { opacity: 1; transform: none; } }
+  @keyframes turn-in { from { transform: rotate(-90deg) scale(.85); } to { transform: none; } }
+  @keyframes gather { from { transform: translate(var(--gx, 0), var(--gy, 0)) rotate(var(--gr, 0deg)); } to { transform: none; } }
+  @keyframes draw-line { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+
   /* Kicker rule used before section labels */
   .kicker-rule::before {
     content: "";

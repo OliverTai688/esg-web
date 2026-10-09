@@ -88,6 +88,7 @@ const home = {
     moreLink: "About Gung-Ho Culture",
   },
   evidence: {
+    ringCaption: "Every number\nhas a story",
     label: "Evidence of impact",
     title: "Measurable impact, real partnership results",
     description: "Every number has a story behind it.",

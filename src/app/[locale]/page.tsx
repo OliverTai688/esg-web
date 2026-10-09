@@ -1,13 +1,15 @@
 import Link from "next/link"
 import type { Metadata } from "next"
-import { ArrowRight, ArrowUpRight, ChevronDown, Search, Link2, Globe2 } from "lucide-react"
+import { ArrowRight, ArrowUpRight, ChevronDown } from "lucide-react"
 import { Container } from "@/components/core/Container"
 import { Button } from "@/components/ui/button"
 import { SectionHeader } from "@/components/site/SectionHeader"
-import { BridgeArc } from "@/components/site/BridgeArc"
-import { CtaBand } from "@/components/site/CtaBand"
-import { TestimonialWall } from "@/components/site/TestimonialWall"
-import Marquee from "@/components/magicui/marquee"
+import { FlameMark } from "@/components/site/FlameMark"
+import { HeroPetalArc } from "@/components/home/HeroPetalArc"
+import { ProblemMosaic } from "@/components/home/ProblemMosaic"
+import { EvidenceRing } from "@/components/home/EvidenceRing"
+import { TestimonialFlower } from "@/components/home/TestimonialFlower"
+import { CtaArcs } from "@/components/home/CtaArcs"
 import { getMessages } from "@/i18n/messages"
 import type { Locale } from "@/i18n/config"
 import { formatImpactMetric, cn } from "@/lib/utils"
@@ -32,134 +34,141 @@ function withBold(text: string) {
   )
 }
 
-const PAIN_ICONS = [Search, Link2, Globe2]
-
+// Home page: a bridge being built, top to bottom (docs/redesign/home-v2/).
+// Shape roles — petal: value-driven partners (yellow), block: enterprises (grey),
+// arc: what 共好玟化 does (orange). Seams are numbered as in 03-decisions.md.
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   const t = await getMessages(locale as Locale)
   const h = t.home
 
-  const audienceHrefs: Record<string, string> = {
-    brand: `/${locale}/consulting#solutions`,
-    enterprise: `/${locale}/sustainability#ecosystem`,
-    learner: `/${locale}/events#workshops`,
+  // Door colours follow the colour roles: partners yellow, enterprises grey,
+  // 共好玟化's own ESG共學坊 orange. Text stays ink or white for AA contrast.
+  const doors: Record<string, { href: string; surface: string; text: string; sub: string; cta: string }> = {
+    brand: { href: `/${locale}/consulting#solutions`, surface: "bg-brand-yellow", text: "text-ink", sub: "text-ink/80", cta: "text-ink" },
+    enterprise: { href: `/${locale}/sustainability#ecosystem`, surface: "bg-brand-grey", text: "text-white", sub: "text-white/90", cta: "text-white" },
+    learner: { href: `/${locale}/events#workshops`, surface: "bg-brand-orange", text: "text-ink", sub: "text-ink", cta: "text-ink" },
   }
-  const partnerNames = h.partners.groups.flatMap((g) => g.names)
+  const doorOrder = ["brand", "learner", "enterprise"]
+  const audiences = doorOrder.map((k) => h.audiences.items.find((a) => a.key === k)).filter((a) => a !== undefined)
+  const partnerTone = ["bg-brand-yellow", "bg-brand-grey", "bg-brand-orange"]
 
   return (
-    <>
-      {/* 01 ── Hero: one statement, the bridge between two sides, three numbers */}
-      <section className="relative overflow-hidden">
-        <div aria-hidden="true" className="absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(60%_60%_at_50%_0%,#FDEDE8_0%,transparent_70%)]" />
-        <Container className="relative pt-16 pb-12 text-center md:pt-24">
-          <p className="kicker-rule mx-auto text-[13px] font-bold tracking-[0.12em] text-primary">{h.hero.label}</p>
-          <h1 className="mx-auto mt-6 max-w-4xl text-[2rem] font-black leading-[1.3] text-ink sm:text-5xl lg:text-[3.5rem]">
-            {h.hero.titleLead}
-            <br className="hidden sm:block" />
-            <span className="text-primary">{h.hero.titleEmphasis}</span>
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg font-bold leading-relaxed text-ink/85">{h.hero.subTitle}</p>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-[1.9] text-muted-foreground">{h.hero.description}</p>
-          <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
-            <Button size="lg" asChild>
-              <Link href={`/${locale}/consulting#contact`}>
-                {h.hero.primaryCta}
-                <ArrowRight />
-              </Link>
-            </Button>
-            <Button size="lg" variant="outline" asChild>
-              <Link href={`/${locale}/sustainability`}>{h.hero.secondaryCta}</Link>
-            </Button>
-          </div>
-
-          {/* The bridge: who is on each end */}
-          <div className="relative mx-auto mt-14 max-w-3xl">
-            <BridgeArc />
-            <div className="mt-3 flex items-start justify-between gap-4 text-left text-xs font-bold text-ink/80 sm:text-sm">
-              <span className="max-w-[40%]">{h.hero.bridgeLeft}</span>
-              <span className="hidden rounded-full bg-ink px-3 py-1 text-white sm:inline-block">{h.hero.bridgeCenter}</span>
-              <span className="max-w-[40%] text-right">{h.hero.bridgeRight}</span>
+    <div className="overflow-x-clip">
+      {/* S1 ── Hero: the bridge appears for the first time */}
+      <section className="relative">
+        <div aria-hidden="true" className="absolute inset-x-0 top-0 h-[560px] bg-[radial-gradient(55%_60%_at_75%_10%,#FDEDE8_0%,transparent_70%)]" />
+        <Container className="relative grid items-center gap-12 pb-16 pt-14 md:pt-20 lg:grid-cols-[1.05fr_1fr] lg:gap-10 lg:pb-24">
+          <div>
+            <p className="kicker-rule text-[13px] font-bold tracking-[0.12em] text-primary">{h.hero.label}</p>
+            <h1 className="mt-6 text-[2rem] font-black leading-[1.3] text-ink sm:text-5xl lg:text-[3.25rem]">
+              {h.hero.titleLead}
+              <span className="text-primary">{h.hero.titleEmphasis}</span>
+            </h1>
+            <p className="mt-6 max-w-xl text-lg font-bold leading-relaxed text-ink/85">{h.hero.subTitle}</p>
+            <p className="mt-4 max-w-xl text-base leading-[1.9] text-muted-foreground">{h.hero.description}</p>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <Button size="lg" asChild>
+                <Link href={`/${locale}/consulting#contact`}>
+                  {h.hero.primaryCta}
+                  <ArrowRight />
+                </Link>
+              </Button>
+              <Button size="lg" variant="outline" asChild>
+                <Link href={`/${locale}/sustainability`}>{h.hero.secondaryCta}</Link>
+              </Button>
             </div>
           </div>
-
-          <dl className="mx-auto mt-12 grid max-w-3xl grid-cols-3 divide-x divide-border border-y border-border py-6">
-            {t.impact.metrics.map((m) => (
-              <div key={m.label} className="flex flex-col-reverse px-2">
-                <dt className="mt-1 text-xs text-muted-foreground sm:text-sm">{m.label}</dt>
-                <dd className="font-display text-2xl font-bold text-ink tabular-nums sm:text-4xl">{formatImpactMetric(m)}</dd>
-              </div>
-            ))}
-          </dl>
+          <div>
+            <HeroPetalArc left={h.hero.bridgeLeft} right={h.hero.bridgeRight} center={h.hero.bridgeCenter} />
+            <dl className="mx-auto mt-10 grid max-w-[560px] grid-cols-3 divide-x divide-border border-y border-border py-5 text-center">
+              {t.impact.metrics.map((m) => (
+                <div key={m.label} className="flex flex-col-reverse px-2">
+                  <dt className="mt-1 text-xs text-muted-foreground sm:text-sm">{m.label}</dt>
+                  <dd className="font-display text-2xl font-bold text-ink tabular-nums sm:text-3xl">{formatImpactMetric(m)}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </Container>
       </section>
 
-      {/* 02 ── Trust strip: who has worked with us (names until logos are cleared) */}
-      <section aria-label={h.partners.label} className="border-y border-border bg-card py-6">
-        <p className="mb-3 text-center text-xs font-bold tracking-[0.12em] text-muted-foreground">{h.partners.label}</p>
-        <Marquee pauseOnHover repeat={3} className="[--duration:60s] [--gap:2.5rem] [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)]">
-          {partnerNames.map((name) => (
-            <span key={name} className="flex items-center gap-2.5 whitespace-nowrap text-base font-bold text-ink/70">
-              <span aria-hidden="true" className="size-1.5 rounded-full bg-brand-orange" />
-              {name}
-            </span>
-          ))}
-        </Marquee>
+      {/* Seam 1 · shape relay: the arch's last petal lands on the boundary */}
+      <div aria-hidden="true" className="pointer-events-none relative z-10 h-0">
+        <span className="absolute right-[8%] top-0 size-10 -translate-y-1/2 rotate-45 rounded-tr-full rounded-bl-full bg-brand-yellow sm:size-14 lg:right-[22%]" />
+      </div>
+
+      {/* S2 ── Partners: three groups, each card marked by a petal in its role colour */}
+      <section aria-labelledby="partners-heading" className="border-y border-border bg-card py-16 md:py-20">
+        <Container>
+          <h2 id="partners-heading" className="kicker-rule text-[13px] font-bold tracking-[0.12em] text-primary">
+            {h.partners.label}
+          </h2>
+          <ul className="mt-8 grid gap-4 md:grid-cols-3">
+            {h.partners.groups.map((g, i) => (
+              <li key={g.title} className="relative overflow-hidden rounded-2xl bg-paper p-6 pt-8">
+                <span aria-hidden="true" className={cn("absolute -right-4 -top-4 size-16 rounded-tr-full rounded-bl-full opacity-90", partnerTone[i], i === 1 && "-scale-x-100")} />
+                <p className="font-display text-xs font-bold text-muted-foreground">0{i + 1}</p>
+                <h3 className="mt-1 text-lg font-black text-ink">{g.title}</h3>
+                <ul className="mt-4 space-y-2 border-t border-border pt-4 text-sm text-ink/80">
+                  {g.names.map((n) => (
+                    <li key={n} className="flex gap-2">
+                      <span aria-hidden="true" className={cn("mt-2 size-1.5 shrink-0 rounded-full", partnerTone[i])} />
+                      {n}
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </Container>
       </section>
 
-      {/* 03 ── Problem → our answer */}
-      <section id="problem" className="py-20 md:py-28">
+      {/* Seam 2 · quiet: both sections are low volume */}
+
+      {/* S3 ── Problem: three questions and one answer close into a disc */}
+      <section id="problem" className="pb-28 pt-20 md:pb-36 md:pt-28">
         <Container>
           <SectionHeader kicker={h.problem.label} title={h.problem.title} description={h.problem.description} />
-          <ol className="mt-12 grid gap-4 md:grid-cols-3">
-            {h.problem.painPoints.map((p, i) => {
-              const Icon = PAIN_ICONS[i]
-              return (
-                <li key={p.title} className="relative flex flex-col rounded-2xl border border-border bg-card p-6 sm:p-7">
-                  <span aria-hidden="true" data-n={`0${i + 1}`} className="absolute right-6 top-5 font-display text-4xl font-bold text-sand after:content-[attr(data-n)]" />
-                  <span className="flex size-11 items-center justify-center rounded-xl bg-orange-soft text-primary">
-                    <Icon className="size-5" aria-hidden="true" />
-                  </span>
-                  <p className="mt-5 text-xs font-bold text-primary">{p.label}</p>
-                  <h3 className="mt-1.5 text-xl font-black leading-snug text-ink">{p.title}</h3>
-                  <p className="mt-3 text-sm leading-[1.9] text-muted-foreground">{p.description}</p>
-                </li>
-              )
-            })}
-          </ol>
-          <div className="mt-5 grid gap-6 rounded-3xl bg-surface-dark p-7 text-white sm:p-10 lg:grid-cols-[1.4fr_1fr] lg:items-center">
-            <div>
-              <p className="text-xs font-bold tracking-[0.12em] text-brand-yellow">{h.problem.solutionLabel}</p>
-              <h3 className="mt-2 text-2xl font-black sm:text-3xl">{h.problem.solutionTitle}</h3>
-              <p className="mt-4 text-sm leading-[1.9] text-white/75 sm:text-base">{h.problem.solutionDescription}</p>
-            </div>
-            <ul className="grid grid-cols-2 gap-2.5">
-              {h.problem.solutionPillars.map((pillar) => (
-                <li key={pillar} className="rounded-xl border border-white/15 px-4 py-3 text-center text-sm font-bold">
-                  {pillar}
-                </li>
-              ))}
-            </ul>
+          <div className="mt-12">
+            <ProblemMosaic
+              painPoints={h.problem.painPoints}
+              solution={{ label: h.problem.solutionLabel, title: h.problem.solutionTitle, description: h.problem.solutionDescription, pillars: h.problem.solutionPillars }}
+            />
           </div>
         </Container>
       </section>
 
-      {/* 04 ── Story: Sayun = bridge */}
-      <section id="story" className="relative overflow-hidden bg-surface-dark py-20 text-white md:py-28">
-        <Container className="relative">
+      {/* S4 ── Story: the bridge is named. Seam 3 is the arched top edge. */}
+      <section id="story" className="relative bg-surface-dark pb-32 text-white md:pb-40">
+        <div aria-hidden="true" className="absolute inset-x-0 bottom-full h-[clamp(48px,9vw,140px)] rounded-t-[50%_100%] bg-surface-dark" />
+        <Container className="relative pt-6">
           <p className="kicker-rule text-[13px] font-bold tracking-[0.12em] text-brand-yellow">{h.story.label}</p>
-          <div className="mt-8 grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
-            <div>
-              <p lang="tay" className="font-display text-7xl font-bold leading-none text-brand-yellow sm:text-8xl">Sayun</p>
+          <div className="mt-8 grid gap-14 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
+            <div className="flex flex-col items-start">
+              {/* Two mirrored flames lean together into an arch over the name */}
+              <div aria-hidden="true" className="flex items-end gap-1">
+                <FlameMark className="w-20 -rotate-12 sm:w-28" />
+                <FlameMark className="w-20 -scale-x-100 -rotate-12 sm:w-28" />
+              </div>
+              <p lang="tay" className="mt-4 font-display text-7xl font-bold leading-none text-brand-yellow sm:text-8xl">
+                Sayun
+              </p>
               <h2 className="mt-5 text-2xl font-black sm:text-3xl">{h.story.headline}</h2>
-              {h.story.nameMeaning !== h.story.headline && locale !== "en" && (
-                <p className="mt-2 font-display text-sm tracking-[0.15em] text-white/60">{h.story.nameMeaning}</p>
-              )}
-              <BridgeArc tone="dark" className="mt-10 max-w-sm" />
-              <ol className="mt-6 flex flex-wrap items-center gap-2 text-sm font-bold">
+              {locale !== "en" && <p className="mt-2 font-display text-sm tracking-[0.15em] text-white/65">{h.story.nameMeaning}</p>}
+              {/* Society → business → environment as three rising blocks */}
+              <ol className="mt-10 flex w-full max-w-sm items-end gap-2">
                 {h.story.chain.map((c, i) => (
-                  <li key={c} className="flex items-center gap-2">
-                    <span className="rounded-full bg-white/10 px-3 py-1.5">{c}</span>
-                    {i < h.story.chain.length - 1 && <ArrowRight className="size-4 text-brand-orange" aria-hidden="true" />}
+                  <li
+                    key={c}
+                    className={cn(
+                      "flex flex-1 items-end rounded-t-2xl px-3 pb-3 text-xs font-bold sm:text-sm",
+                      i === 0 && "h-16 bg-brand-orange text-ink",
+                      i === 1 && "h-24 bg-brand-yellow text-ink",
+                      i === 2 && "h-32 bg-white/90 text-ink",
+                    )}
+                  >
+                    {c}
                   </li>
                 ))}
               </ol>
@@ -170,7 +179,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               <ul className="mt-6 space-y-3">
                 {h.story.bullets.map((b) => (
                   <li key={b} className="flex gap-3 text-sm leading-[1.85] text-white/80">
-                    <span aria-hidden="true" className="mt-2.5 h-0.5 w-4 shrink-0 bg-brand-orange" />
+                    <span aria-hidden="true" className="mt-1.5 size-3 shrink-0 rounded-tr-full rounded-bl-full bg-brand-orange" />
                     {b}
                   </li>
                 ))}
@@ -198,69 +207,87 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </Container>
       </section>
 
-      {/* 05 ── Evidence: number + story + footnote */}
-      <section id="evidence" className="py-20 md:py-28">
-        <Container>
-          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <SectionHeader kicker={h.evidence.label} title={h.evidence.title} description={h.evidence.description} />
+      {/* S5 ── Evidence. Seam 4: the dial straddles the boundary and turns into place. */}
+      <section id="evidence" className="relative bg-card pb-20 md:pb-28">
+        <div className="relative z-10 -mt-[5.5rem] sm:-mt-28">
+          <EvidenceRing caption={h.evidence.ringCaption} />
+        </div>
+        <Container className="mt-10">
+          <SectionHeader kicker={h.evidence.label} title={h.evidence.title} description={h.evidence.description} align="center" />
+          <ol className="mx-auto mt-12 max-w-4xl divide-y divide-border border-y border-border">
+            {h.evidence.cards.map((card, i) => {
+              const m = t.impact.metrics[i]
+              return (
+                <li key={card.title} className="grid gap-4 py-8 sm:grid-cols-[13rem_1fr] sm:gap-10">
+                  <div className="flex items-start gap-3">
+                    <span aria-hidden="true" className={cn("mt-2 h-10 w-1.5 shrink-0 rounded-full", i === 0 ? "bg-brand-orange" : i === 1 ? "bg-brand-yellow" : "bg-[#8A8E97]")} />
+                    <div>
+                      <p className="font-display text-5xl font-bold text-ink tabular-nums">
+                        {formatImpactMetric(m)}
+                        <sup className="ml-1 text-sm text-muted-foreground">{i + 1}</sup>
+                      </p>
+                      <p className="mt-1 text-sm font-bold text-ink">{m.label}</p>
+                    </div>
+                  </div>
+                  <div>
+                    <span className="rounded-full bg-yellow-soft px-3 py-1 text-xs font-bold text-ink">{card.tag}</span>
+                    <h3 className="mt-3 text-lg font-black text-ink">{card.title}</h3>
+                    <p className="mt-2 text-sm leading-[1.9] text-muted-foreground">{card.description}</p>
+                  </div>
+                </li>
+              )
+            })}
+          </ol>
+          <div className="mx-auto mt-6 flex max-w-4xl flex-col justify-between gap-4 sm:flex-row sm:items-start">
+            <ol className="space-y-1 text-xs leading-relaxed text-muted-foreground">
+              {t.impact.metrics.map((m, i) => (
+                <li key={m.label}>
+                  <sup>{i + 1}</sup> {m.note}
+                </li>
+              ))}
+              <li>{h.evidence.sourceNote}</li>
+            </ol>
             <Link href={`/${locale}/events#history`} className="inline-flex shrink-0 items-center gap-1.5 text-sm font-bold text-primary underline-offset-4 hover:underline">
               {h.evidence.moreLink}
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
-          <ol className="mt-12 grid gap-4 md:grid-cols-3">
-            {h.evidence.cards.map((card, i) => {
-              const m = t.impact.metrics[i]
-              return (
-                <li key={card.title} className="flex flex-col rounded-2xl border border-border bg-card p-7">
-                  <span className="w-fit rounded-full bg-yellow-soft px-3 py-1 text-xs font-bold text-ink">{card.tag}</span>
-                  <p className="mt-6 font-display text-5xl font-bold text-primary tabular-nums">
-                    {formatImpactMetric(m)}
-                    <sup className="ml-1 text-sm text-muted-foreground">{i + 1}</sup>
-                  </p>
-                  <p className="mt-1 text-sm font-bold text-ink">{m.label}</p>
-                  <h3 className="mt-6 border-t border-border pt-5 text-lg font-black text-ink">{card.title}</h3>
-                  <p className="mt-2 text-sm leading-[1.9] text-muted-foreground">{card.description}</p>
-                </li>
-              )
-            })}
-          </ol>
-          <ol className="mt-6 space-y-1 text-xs leading-relaxed text-muted-foreground">
-            {t.impact.metrics.map((m, i) => (
-              <li key={m.label}>
-                <sup>{i + 1}</sup> {m.note}
-              </li>
-            ))}
-            <li>{h.evidence.sourceNote}</li>
-          </ol>
         </Container>
       </section>
 
-      {/* 06 ── Who we serve → where we are heading */}
-      <section id="audiences" className="bg-sand py-20 md:py-28">
-        <Container>
-          <SectionHeader kicker={h.audiences.label} title={h.audiences.title} description={h.audiences.description} />
-          <div className="mt-12 grid gap-4 md:grid-cols-3">
-            {h.audiences.items.map((a, i) => (
-              <Link
-                key={a.key}
-                href={audienceHrefs[a.key] ?? `/${locale}`}
-                className={cn(
-                  "group flex flex-col rounded-2xl p-7 transition-all hover:-translate-y-1 hover:shadow-[0_16px_40px_-20px_rgba(31,32,34,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                  i === 1 ? "bg-surface-dark text-white" : "bg-card text-ink",
-                )}
-              >
-                <span className={cn("font-display text-sm font-bold", i === 1 ? "text-brand-yellow" : "text-primary")}>0{i + 1}</span>
-                <h3 className="mt-3 text-xl font-black leading-snug">{a.title}</h3>
-                <p className={cn("mt-3 flex-1 text-sm leading-[1.9]", i === 1 ? "text-white/75" : "text-muted-foreground")}>{a.description}</p>
-                <span className={cn("mt-6 inline-flex items-center gap-1.5 text-sm font-bold", i === 1 ? "text-brand-yellow" : "text-primary")}>
-                  {a.cta}
-                  <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" />
-                </span>
-              </Link>
-            ))}
-          </div>
+      {/* S6 ── Audiences. Seam 5 is the sand section's domed top. */}
+      <section id="audiences" className="relative bg-sand pb-20 md:pb-28">
+        <div aria-hidden="true" className="absolute inset-x-0 bottom-full h-[clamp(40px,7vw,110px)] rounded-t-[50%_100%] bg-sand" />
+        <Container className="relative pt-4">
+          <SectionHeader kicker={h.audiences.label} title={h.audiences.title} description={h.audiences.description} align="center" />
+          {/* One dome cut into three doors; on phones each door keeps its own arch */}
+          <ul className="mt-12 grid gap-4 md:grid-cols-3 md:gap-0 md:overflow-hidden md:rounded-b-3xl md:rounded-t-[50%_9rem]">
+            {audiences.map((a, i) => {
+              const d = doors[a.key]
+              return (
+                <li key={a.key}>
+                  <Link
+                    href={d.href}
+                    className={cn(
+                      "group flex h-full flex-col rounded-t-[50%_4.5rem] rounded-b-2xl px-7 pb-8 pt-16 transition-[filter] hover:brightness-[1.04] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-ink/40 md:rounded-none md:pb-10",
+                      i === 1 ? "md:pt-24" : "md:pt-32",
+                      d.surface,
+                    )}
+                  >
+                    <span className={cn("font-display text-sm font-bold", d.sub)}>0{i + 1}</span>
+                    <h3 className={cn("mt-2 text-xl font-black leading-snug", d.text)}>{a.title}</h3>
+                    <p className={cn("mt-3 flex-1 text-sm leading-[1.9]", d.sub)}>{a.description}</p>
+                    <span className={cn("mt-6 inline-flex items-center gap-1.5 text-sm font-bold underline-offset-4 group-hover:underline", d.cta)}>
+                      {a.cta}
+                      <ArrowUpRight className="size-4" aria-hidden="true" />
+                    </span>
+                  </Link>
+                </li>
+              )
+            })}
+          </ul>
 
+          {/* Roadmap: quarter → half → full disc */}
           <div className="mt-16 rounded-3xl bg-card p-7 sm:p-10">
             <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
               <h3 className="text-xl font-black text-ink sm:text-2xl">{h.audiences.roadmapTitle}</h3>
@@ -269,11 +296,18 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
             </div>
-            <ol className="relative mt-8 grid gap-8 md:grid-cols-3">
-              <span aria-hidden="true" className="absolute left-0 right-0 top-[7px] hidden h-0.5 bg-gradient-to-r from-brand-orange via-brand-yellow to-border md:block" />
+            <ol className="mt-8 grid gap-8 md:grid-cols-3">
               {h.audiences.roadmap.map((r, i) => (
-                <li key={r.period} className="relative">
-                  <span aria-hidden="true" className={cn("block size-4 rounded-full border-4 border-card", i === 0 ? "bg-brand-orange" : i === 1 ? "bg-brand-yellow" : "bg-brand-grey")} />
+                <li key={r.period}>
+                  <span
+                    aria-hidden="true"
+                    className={cn(
+                      "block bg-brand-orange",
+                      i === 0 && "size-10 rounded-tl-full",
+                      i === 1 && "h-5 w-10 rounded-t-full",
+                      i === 2 && "size-10 rounded-full",
+                    )}
+                  />
                   <p className="mt-4 font-display text-sm font-bold text-muted-foreground">{r.period}</p>
                   <p className="mt-1 text-lg font-black text-ink">{r.title}</p>
                   <p className="mt-2 text-sm leading-[1.85] text-muted-foreground">{r.description}</p>
@@ -284,25 +318,25 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </Container>
       </section>
 
-      {/* 07 ── Client feedback: logo wall + dialog */}
+      {/* S7 ── Client feedback. Seam 6: petals gather into the flower as it scrolls in. */}
       <section id="testimonials" className="py-20 md:py-28">
         <Container>
-          <SectionHeader kicker={h.trust.label} title={h.trust.title} description={h.trust.description} align="center" />
-          <div className="mx-auto mt-12 max-w-5xl">
-            <TestimonialWall items={h.trust.testimonials} openLabel={h.trust.openLabel} closeLabel={h.trust.closeLabel} />
+          <SectionHeader kicker={h.trust.label} title={h.trust.title} description={h.trust.description} />
+          <div className="mt-12">
+            <TestimonialFlower items={h.trust.testimonials} openLabel={h.trust.openLabel} closeLabel={h.trust.closeLabel} />
           </div>
         </Container>
       </section>
 
-      {/* 08 ── The other end of the bridge */}
-      <CtaBand
+      {/* S8 ── CTA. Seam 7: the two arcs draw in and close at the flame. */}
+      <CtaArcs
         kicker={h.cta.label}
         title={h.cta.title}
         description={h.cta.description}
         steps={h.cta.steps}
         primary={{ label: h.cta.primaryLabel, href: `/${locale}/consulting#contact` }}
-        secondary={{ label: h.cta.secondaryLabel, href: site.line.url, external: true, line: true }}
+        secondary={{ label: h.cta.secondaryLabel, href: site.line.url }}
       />
-    </>
+    </div>
   )
 }

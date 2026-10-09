@@ -88,6 +88,7 @@ const home = {
     moreLink: "認識共好玟化",
   },
   evidence: {
+    ringCaption: "每個數字\n都有一則故事",
     label: "永續行動證據",
     title: "可量化的影響力，真實的合作成果",
     description: "每一個數字，都對應一則可以說得出來的故事。",
