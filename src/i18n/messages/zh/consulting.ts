@@ -8,7 +8,7 @@ import type { ChapterDef } from "@/lib/chapters"
 // in-page ChapterNav. Every id must be a section id on the page (scripts/check-anchors.mjs).
 const chapters: readonly ChapterDef[] = [
   { id: "solutions", label: "服務項目", desc: "選一個起點，看對應的方案與價格", icon: "Compass" },
-  { id: "ngo", label: "非營利合作", desc: "兩種合作模式與合作過的機構", icon: "HeartHandshake" },
+  { id: "ngo", label: "非營利合作", desc: "兩種合作模式與四個合作案例", icon: "HeartHandshake" },
   { id: "membership", label: "會員方案", desc: "免費、月費、專案，三個階段", icon: "Users" },
   { id: "faq", label: "常見問題", desc: "預約前最常被問的五件事", icon: "HelpCircle" },
   { id: "contact", label: "聯絡表單", desc: "預約諮詢，或用 LINE 直接問", icon: "Mail" },
@@ -76,11 +76,69 @@ const consulting = {
       },
     ],
     casesTitle: "合作過的非營利與公益機構",
-    casesNote: "案例內容整理中，將陸續公開。",
+    caseMore: "看這個案例",
+    quoteLabel: "對方怎麼說",
+    // Summarised from the client's own files (docs/tasks/sitemap-rev1/assets-status.md):
+    // 白永恩 = published interview, 愛慈 = the foundation's SDG annual, 康復之友 = workshop
+    // result posters, 天成 = workshop feedback notes. `key` is the photo in public/cases/npo/.
     cases: [
-      { name: "愛慈基金會", type: "社會福利基金會", focus: "工作坊與永續白皮書案例" },
-      { name: "台東康復之友", type: "身心障礙服務", focus: "永續輔導成果" },
-      { name: "天成醫院", type: "醫療機構", focus: "工作坊與回饋" },
+      {
+        key: "beunen",
+        name: "白永恩神父社會福利基金會",
+        type: "身心障礙、社區長者與兒童發展服務",
+        headline: "從領導者陪飛，到金崙小作所的品牌改造",
+        alt: "白永恩基金會同仁圍著貼滿便利貼的桌面討論",
+        points: [
+          "領導者陪飛：為新任執行長安排為期一年的一對一教練晤談，建立與團隊的信任與溝通。",
+          "GROW 共識工作坊：總會與分辦公室的領導團隊，一起練習從目標、現況、選項走到行動方案。",
+          "品牌社會行銷：台東金崙小作所從產品量產、Logo 與包裝設計到空間改造、增設門市，為在地身心障礙者創造更多就業機會。",
+          "流程優化：用心智圖整理行政流程與檔案，把資深同仁的經驗交接下去，也因應政府評鑑。",
+        ],
+        quote: "有了共好傳授的完善工作方法輔助後，組織地基更加扎實，面對公部門各項需求也更加有餘裕，工作效率與服務品質都因此而大幅提升！",
+        quoteBy: "鍾榕榕，白永恩基金會執行長",
+      },
+      {
+        key: "mercy",
+        name: "愛慈社會福利基金會",
+        type: "毒害寶寶與特殊需求兒少安置",
+        headline: "用 SDGs 重新說一次 25 年的照護工作",
+        alt: "顧問在愛慈社會福利基金會會議室為同仁上課",
+        points: [
+          "透過系列課程協助跨部門溝通，由同仁把日常照護工作對應到 SDGs，寫成自己的對外文件。",
+          "2025 年出版年度專刊〈走向永續的照護行動〉，以 SDG 2、3、4、10、17 五個目標整理服務成果。",
+          "成果用數據說話：寶寶中心 2024 年提供 3,147 人日的安置服務、安排 125 次門診。",
+        ],
+        quote: "永續發展幫助助人工作者跳脫不僅是『認真做好事』，而是要『知道為何而做、且做得有意義和價值』。",
+        quoteBy: "愛慈基金會執行長，年度專刊",
+      },
+      {
+        key: "kangfu",
+        name: "臺東縣康復之友協會",
+        type: "精神康復者社會參與",
+        headline: "四組活動，推回同一個永續主軸",
+        alt: "顧問在康復之友協會的活動空間帶領工作坊",
+        points: [
+          "兩天工作坊，用 IOOI 事件鏈拆解四個案例：非洲鼓團與舞團、手工皂製作、手工皂義賣、社辦二手義賣。",
+          "四組的選擇匯聚成兩個共識：讓服務對象走出去（SDG 10.2）、讓社群正確理解協會（SDG 10.3）。",
+          "釐清工作與活動是手段、不是目的；與企業對話時，要把「為什麼需要這些投入」講清楚。",
+        ],
+        quote: "永續目標是拿來找合作伙伴一起達到的，不要自己硬幹。",
+        quoteBy: "吳玟樺 Evvon，工作坊總結",
+      },
+      {
+        key: "tiancheng",
+        name: "天成醫院",
+        type: "醫療機構",
+        headline: "六組主管，把日常工作對回 SDGs",
+        alt: "天成醫院同仁與醫師圍著海報用便利貼討論",
+        points: [
+          "永續工作坊中，六個小組各自提出願景、利害關係人、對應的 SDGs 與一年後的目標。",
+          "主題涵蓋在地化經營、幸福企業、節能減碳、性別平權與教學卓越。",
+          "學員訂出可衡量的目標，例如一年內降低院內能源消耗 10%、基層起薪的性別差距低於 3%。",
+        ],
+        quote: "這次課程讓我們學會『整合』——把日常工作中分散的永續實踐，放到正確的位置、對應正確的目標。",
+        quoteBy: "天成醫院院長",
+      },
     ],
   },
   membership: {

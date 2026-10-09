@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import Image from "next/image"
 import { ArrowDown, ArrowRight, Check, Clock, Mail, MessageCircle } from "lucide-react"
 import { Container } from "@/components/core/Container"
 import { Button } from "@/components/ui/button"
@@ -165,22 +166,42 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
               </li>
             ))}
           </ul>
-          <h3 className="mt-12 text-sm font-bold text-muted-foreground">{c.ngo.casesTitle}</h3>
-          <ul className="mt-4 grid gap-4 sm:grid-cols-3">
+          {/* Real cases from the client's files: photo and one line up front,
+              the detail and the quote behind each card's toggle. */}
+          <h3 className="mt-14 text-sm font-bold text-muted-foreground">{c.ngo.casesTitle}</h3>
+          <ul className="mt-5 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
             {c.ngo.cases.map((n, i) => (
-              <li key={n.name} className="flex items-center gap-4">
-                <Petal className={cn("size-9", i % 2 === 1 && "-scale-x-100")} />
-                <span>
-                  <span className="block font-bold text-ink">{n.name}</span>
-                  <span className="text-xs text-muted-foreground">
-                    {n.type}・{n.focus}
-                  </span>
-                </span>
+              <li key={n.key}>
+                <Image
+                  src={`/cases/npo/${n.key}.jpg`}
+                  alt={n.alt}
+                  width={1200}
+                  height={800}
+                  sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 92vw"
+                  className={cn("aspect-[3/2] w-full object-cover", i % 2 === 0 ? "rounded-tr-[3rem] rounded-bl-[3rem]" : "rounded-tl-[3rem] rounded-br-[3rem]")}
+                />
+                <h4 className="mt-4 font-black text-ink">{n.name}</h4>
+                <p className="mt-2 text-sm leading-[1.8] text-ink/85">{n.headline}</p>
+                <ReadMore label={c.ngo.caseMore} className="mt-1">
+                  <p className="text-xs font-bold text-ink/80">{n.type}</p>
+                  <ul className="space-y-2">
+                    {n.points.map((point) => (
+                      <li key={point.slice(0, 12)} className="flex gap-2.5">
+                        <Petal className="mt-2 size-2.5" />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                  <figure className="border-l-2 border-brand-orange pl-4">
+                    <figcaption className="sr-only">{c.ngo.quoteLabel}</figcaption>
+                    <blockquote className="text-ink">{quote(n.quote)}</blockquote>
+                    <p className="mt-2 text-xs">— {n.quoteBy}</p>
+                  </figure>
+                </ReadMore>
               </li>
             ))}
           </ul>
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
-            <p className="text-xs text-muted-foreground">{c.ngo.casesNote}</p>
+          <div className="mt-10 flex justify-end">
             <Button asChild>
               <a href="#contact" data-contact-topic={topicOf("npo")}>
                 {c.solutions.cta}
