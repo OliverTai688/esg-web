@@ -17,6 +17,7 @@ import { pageChapters } from "@/lib/chapters"
 import { getAllPosts, getCategories, getPostsByCategory } from "@/lib/posts"
 import { learningSections, categoryLabel, topicOf } from "@/lib/learning-sections"
 import { site } from "@/lib/site"
+import { CoesgBand } from "@/components/site/CoesgBand"
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
@@ -187,6 +188,9 @@ export default async function LearningPage({ params }: { params: Promise<{ local
           />
         </Container>
       </section>
+
+      {/* The sub-brand's own block: ESG共學坊 logos and the store, in ESG共學坊 green */}
+      <CoesgBand labels={t.coesg} externalLabel={t.common.external} />
 
       {/* S5 ── Closing band. Seam 4: its two arcs draw in over the flame. */}
       <CtaBand

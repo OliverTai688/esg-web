@@ -26,6 +26,6 @@ export const site = {
   },
   // Default social share image (public/og-image.png, 1200×630)
   ogImage: { url: "/og-image.png", width: 1200, height: 630, alt: "共好玟化 CO-ESG：陪跑｜連結｜創造影響力" },
-  // Sustainability store. The client will supply the link; until then store buttons go to the home page.
-  storeUrl: null as string | null,
+  // ESG共學坊 store (client, 2026-10-09). It is the ESG共學坊 platform's own site.
+  storeUrl: "https://coesg.tw/",
 } as const

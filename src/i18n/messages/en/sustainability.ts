@@ -167,8 +167,8 @@ const sustainability = {
     qualTitle: "Qualitative results",
     qualItems: [
       { title: "Recognised internationally", description: "An ocean-waste watch brand organised its data and story in a Sustainability White Paper and took the stage at an international youth forum." },
-      { title: "From reactive to proactive", description: "An industry partner moved from ad hoc, reactive corporate partnerships to proactive, strategic engagement." },
-      { title: "Rediscovering purpose", description: "While preparing their report, brand owners gained fresh clarity on how their work connects to sustainability." },
+      { title: "From reactive to proactive", description: "台灣休閒農場學會 moved from ad hoc, reactive corporate partnerships to proactive, strategic engagement." },
+      { title: "A value proposition businesses can read", description: "思凡自然農場 completed a white paper on its sustainability positioning and now has a value proposition it can state clearly to businesses." },
     ],
   },
   ecosystem: {

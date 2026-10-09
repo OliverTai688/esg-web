@@ -16,6 +16,8 @@ import { getMessages } from "@/i18n/messages"
 import type { Locale } from "@/i18n/config"
 import { workshops, services, courseText, courseStatusLabel } from "@/data/courses"
 import { site } from "@/lib/site"
+import { ClientLogo } from "@/components/site/ClientLogo"
+import { getClient } from "@/data/clients"
 import { cn } from "@/lib/utils"
 import { pageChapters } from "@/lib/chapters"
 
@@ -108,15 +110,14 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
           </div>
           <div>
             <FootprintTrail start={e.hero.trailStart} next={e.hero.trailNext} />
-            <dl className="mx-auto mt-8 grid max-w-[560px] grid-cols-4 divide-x divide-border border-y border-border py-4 text-center">
-              {t.impact.track.map((s) => (
+            <dl className="mx-auto mt-8 grid max-w-[560px] grid-cols-2 divide-x divide-border border-y border-border py-4 text-center">
+              {t.impact.reach.map((s) => (
                 <div key={s.label} className="flex flex-col-reverse px-1">
-                  <dt className="mt-1 text-xs text-muted-foreground">{s.label}</dt>
-                  <dd className="font-display text-xl font-bold text-ink tabular-nums sm:text-2xl">{s.value}</dd>
+                  <dt className="mt-1 text-sm text-muted-foreground">{s.label}</dt>
+                  <dd className="font-display text-3xl font-bold text-ink tabular-nums sm:text-4xl">{s.value}</dd>
                 </div>
               ))}
             </dl>
-            <p className="mx-auto mt-2 max-w-[560px] text-xs text-muted-foreground">{t.impact.trackNote}</p>
           </div>
         </Container>
       </section>
@@ -178,10 +179,10 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
               <ReadMore label={e.learningMap.introLabel} className="mt-3">
                 <p>{e.learningMap.intro}</p>
                 <ul className="space-y-1.5">
-                  {e.learningMap.levels.map((l) => (
+                  {e.learningMap.levels.map((l, i) => (
                     <li key={l.key} className="flex items-baseline gap-2">
-                      <span aria-hidden="true" className={cn("size-2.5 shrink-0 rounded-full", LEVEL_DISC[l.key])} />
-                      <span className="font-bold text-ink">{l.name}</span>
+                      {i === 0 ? <Quarter className="size-2.5" /> : i === 1 ? <Half className="h-[5px] w-2.5" /> : <Disc className="size-2.5" />}
+                      <span className="shrink-0 font-bold text-ink">{l.name}</span>
                       {l.description}
                     </li>
                   ))}
@@ -200,7 +201,7 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
                 ),
                 title: (
                   <>
-                    <span className="block text-xs font-bold text-muted-foreground">{levelName[m.level]}</span>
+                    <span className="block text-xs font-bold text-muted-foreground">{levelName[m.stage]}</span>
                     {m.title}
                   </>
                 ),
@@ -236,6 +237,20 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
                       <ArrowUpRight className="size-4 shrink-0" aria-hidden="true" />
                       {external}
                     </a>
+                  </li>
+                ))}
+              </ul>
+            </ReadMore>
+            <ReadMore label={e.learningMap.farmCourse.label}>
+              <p className="font-bold text-ink">{e.learningMap.farmCourse.title}</p>
+              <p>{e.learningMap.farmCourse.meta}</p>
+              <p>{e.learningMap.farmCourse.focus}</p>
+              <ul className="space-y-1.5 pb-4">
+                {e.learningMap.farmCourse.modules.map((m) => (
+                  <li key={m.name}>
+                    <span className="font-bold text-ink">{m.name}</span>
+                    {locale === "en" ? ": " : "："}
+                    {m.items.join(locale === "en" ? "; " : "、")}
                   </li>
                 ))}
               </ul>
@@ -415,13 +430,25 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
             {e.cases.items.map((c, i) => (
               // `relative` keeps the sr-only label inside the rail's scroll box (it is absolutely positioned)
               <article key={c.title} className="relative h-full rounded-2xl bg-paper p-6 sm:p-7">
-                {/* Stands in for a photo until the case images are cleared (G07) */}
+                {/* Stands in for a photo: the client has not supplied photos of these three cases yet (E04) */}
                 <PartnerDisc turn={i} />
                 <h3 className="mt-6 text-lg font-black leading-snug text-ink">{c.title}</h3>
                 <p className="mt-2 text-sm font-bold text-muted-foreground">
                   <span className="sr-only">{e.cases.partnersLabel}：</span>
                   {c.partners}
                 </p>
+                {c.logos.length > 0 && (
+                  <ul className="mt-3 flex gap-2">
+                    {c.logos.map((id) => {
+                      const client = getClient(id)
+                      return client ? (
+                        <li key={id}>
+                          <ClientLogo client={client} english={locale === "en"} className="h-12 w-24" />
+                        </li>
+                      ) : null
+                    })}
+                  </ul>
+                )}
                 <ReadMore label={e.cases.readStory} className="mt-1 [&>div]:text-ink/80">
                   <p>{c.description}</p>
                 </ReadMore>

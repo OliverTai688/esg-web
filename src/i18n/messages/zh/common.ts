@@ -36,6 +36,20 @@ const common = {
       { value: "10+", label: "個縣市" },
     ],
     trackNote: "累計至 2025 年",
+    // The two figures the client asked for on the /events hero (change request p.17).
+    // 150+ counts every kind of event to date; `track` above splits the 2025 total by type.
+    reach: [
+      { value: "150+", label: "場活動" },
+      { value: "50+", label: "合作品牌" },
+    ],
+  },
+  // The ESG共學坊 sub-brand band and its store link (site.storeUrl).
+  coesg: {
+    kicker: "ESG共學坊",
+    title: "逛逛 ESG共學坊商城",
+    body: "課程（CLASS）、商城（STORE）與講座（TALKS），都在 ESG共學坊。",
+    storeCta: "前往 ESG共學坊商城",
+    logos: { class: "ESG共學坊 CLASS", store: "ESG共學坊 STORE", talks: "ESG共學坊 TALKS" },
   },
   footer: {
     brand: "共好",
@@ -44,6 +58,7 @@ const common = {
     copyright: "© 2026 共好玟化 CO-ESG. All Rights Reserved.",
     lineCta: "加入官方 LINE",
     navTitle: "網站導覽",
+    store: "ESG共學坊商城",
     contactTitle: "聯絡我們",
     supportEmail: "客服信箱",
     company: {

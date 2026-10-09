@@ -43,29 +43,43 @@ const events = {
     introLabel: "關於學習地圖",
     intro:
       "無論你是剛接觸 ESG 的新手，還是已有基礎想深化實力的實踐者，都能從這裡找到最適合你的起點。每個主題模組獨立完整，可依需求單獨選修；完整走過全程，則能建立系統性的永續實戰能力。",
-    // Level-to-colour mapping is our inference from the client's colour dots (E02, pending confirmation).
+    // The client names three levels: 探索 → 實作 → 整合. Which topics sit in which level
+    // is our reading of the topic content (E02); each module's `level` is the colour of
+    // the dot the client put in front of that topic and only colours its number.
     levels: [
-      { key: "blue", name: "共識與整合", description: "起點與總結" },
-      { key: "green", name: "探索", description: "讀懂永續、說出影響力" },
-      { key: "yellow", name: "實作", description: "品牌策略、商業模式" },
-      { key: "red", name: "進階", description: "碳管理、認證與市場對接" },
+      { key: "explore", name: "探索", description: "主題一至三：建立共識、讀懂永續、說出影響力" },
+      { key: "practice", name: "實作", description: "主題四至七：品牌策略、商業模式、碳管理、認證與市場對接" },
+      { key: "integrate", name: "整合", description: "主題八：把各主題的成果整合成自己的永續影響力文件" },
     ],
     audienceLabel: "適合",
     modules: [
-      { level: "blue", theme: "主題一", title: "永續共識與組織對話", subtitle: "跨部門永續共識營", description: "永續轉型從組織內部開始。這個工作坊幫助不同部門的夥伴建立共同語言，讓永續不再只是某個部門的任務。", audience: "剛起步的組織、想推動內部文化轉變的管理者、跨部門協作需求者" },
-      { level: "green", theme: "主題二", title: "讀懂永續，掌握趨勢", subtitle: "永續知能與 ESG 管理基礎", description: "從氣候變遷到法規趨勢，了解 ESG 如何影響你的行業，找到屬於你的永續切入點與風險因應策略。", audience: "想建立永續基礎概念的各行業從業者、管理階層、業主" },
-      { level: "green", theme: "主題三", title: "說出影響力", subtitle: "永續報告書與 SROI 衡量", description: "學會用國際通用語言（GRI、SROI）描述你的組織影響力，讓利害關係人看見你的價值，不只是說故事，而是有憑據的說。", audience: "想製作永續報告、影響力報告或提案書的人" },
-      { level: "yellow", theme: "主題四", title: "永續品牌策略", subtitle: "品牌定位 × SDGs × 使用者設計", description: "把永續轉化為品牌競爭力。從市場定位到服務設計，學習如何讓你的品牌在永續浪潮中被看見、被選擇。", audience: "品牌經營者、行銷人員、想強化品牌差異化的業主" },
-      { level: "yellow", theme: "主題五", title: "商業模式創新", subtitle: "循環經濟 × 服務化 × 永續變現", description: "不只做好事，也要做成好生意。這個模組帶你重新設計商業模式，從資源循環到服務創新，找到永續的獲利路徑。", audience: "創業者、想升級商業模式的經營者、產品開發人員" },
-      { level: "red", theme: "主題六", title: "碳管理與環境韌性", subtitle: "碳盤查 × 減碳策略 × 氣候風險", description: "從盤查到行動，建立組織的碳管理能力，同時利用自然解方強化面對氣候衝擊的韌性。", audience: "有減碳目標或供應鏈壓力的組織、想進行碳足跡評估的業主" },
-      { level: "red", theme: "主題七", title: "認證攻略與市場對接", subtitle: "永續認證 × 綠色供應鏈 × 企業合作提案", description: "了解各類永續認證的申請路徑，對接企業 ESG 採購需求，設計讓品牌進入供應鏈的合作提案。", audience: "想拓展 B2B 合作、進入綠色採購市場的業者" },
-      { level: "blue", theme: "主題八", title: "影響力整合與成果展現", subtitle: "數據蒐集 × 影響力報告 × 永續白皮書", description: "整合你在各主題的學習成果，透過問卷設計、數據分析與報告撰寫，完成屬於自己組織的永續影響力文件。", audience: "已有一定永續基礎、想產出具體成果的學習者" },
+      { stage: "explore", level: "blue", theme: "主題一", title: "永續共識與組織對話", subtitle: "跨部門永續共識營", description: "永續轉型從組織內部開始。這個工作坊幫助不同部門的夥伴建立共同語言，讓永續不再只是某個部門的任務。", audience: "剛起步的組織、想推動內部文化轉變的管理者、跨部門協作需求者" },
+      { stage: "explore", level: "green", theme: "主題二", title: "讀懂永續，掌握趨勢", subtitle: "永續知能與 ESG 管理基礎", description: "從氣候變遷到法規趨勢，了解 ESG 如何影響你的行業，找到屬於你的永續切入點與風險因應策略。", audience: "想建立永續基礎概念的各行業從業者、管理階層、業主" },
+      { stage: "explore", level: "green", theme: "主題三", title: "說出影響力", subtitle: "永續報告書與 SROI 衡量", description: "學會用國際通用語言（GRI、SROI）描述你的組織影響力，讓利害關係人看見你的價值，不只是說故事，而是有憑據的說。", audience: "想製作永續報告、影響力報告或提案書的人" },
+      { stage: "practice", level: "yellow", theme: "主題四", title: "永續品牌策略", subtitle: "品牌定位 × SDGs × 使用者設計", description: "把永續轉化為品牌競爭力。從市場定位到服務設計，學習如何讓你的品牌在永續浪潮中被看見、被選擇。", audience: "品牌經營者、行銷人員、想強化品牌差異化的業主" },
+      { stage: "practice", level: "yellow", theme: "主題五", title: "商業模式創新", subtitle: "循環經濟 × 服務化 × 永續變現", description: "不只做好事，也要做成好生意。這個模組帶你重新設計商業模式，從資源循環到服務創新，找到永續的獲利路徑。", audience: "創業者、想升級商業模式的經營者、產品開發人員" },
+      { stage: "practice", level: "red", theme: "主題六", title: "碳管理與環境韌性", subtitle: "碳盤查 × 減碳策略 × 氣候風險", description: "從盤查到行動，建立組織的碳管理能力，同時利用自然解方強化面對氣候衝擊的韌性。", audience: "有減碳目標或供應鏈壓力的組織、想進行碳足跡評估的業主" },
+      { stage: "practice", level: "red", theme: "主題七", title: "認證攻略與市場對接", subtitle: "永續認證 × 綠色供應鏈 × 企業合作提案", description: "了解各類永續認證的申請路徑，對接企業 ESG 採購需求，設計讓品牌進入供應鏈的合作提案。", audience: "想拓展 B2B 合作、進入綠色採購市場的業者" },
+      { stage: "integrate", level: "blue", theme: "主題八", title: "影響力整合與成果展現", subtitle: "數據蒐集 × 影響力報告 × 永續白皮書", description: "整合你在各主題的學習成果，透過問卷設計、數據分析與報告撰寫，完成屬於自己組織的永續影響力文件。", audience: "已有一定永續基礎、想產出具體成果的學習者" },
     ],
     externalTitle: "延伸課程",
     externalLinks: [
       { label: "ESG 永續思維品牌與社會影響力策略班（預錄課程）", href: "https://shanyun.havppen.com/course/esg" },
-      { label: "ESG 永續農創師課程", href: "https://www.accupass.com/event/2507150923051155509773" },
+      { label: "ESG 永續農創師課程（2025 梯次報名頁）", href: "https://www.accupass.com/event/2507150923051155509773" },
     ],
+    // 2026 run of the same course, from the client's syllabus document (public outline only).
+    farmCourse: {
+      label: "2026 農創師課程內容",
+      title: "ESG 永續農創師培育課程｜2026 夏季梯次",
+      meta: "與台灣休閒農業學會合辦・7 堂・2026 年 7 月 7 日至 9 月 29 日，隔週二上課",
+      focus: "今年主軸是生物多樣性與生態友善；每堂產出一章「場域永續白皮書」，最後一堂向企業提案。",
+      modules: [
+        { name: "模組一｜永續知能與報告書", items: ["休閒農業與 ESG 永續管理", "永續報告書與影響力衡量"] },
+        { name: "模組二｜休閒農業品牌與商業模式", items: ["休閒農業永續品牌建立", "休閒農業商業模式落地"] },
+        { name: "模組三｜生態資源管理與綠色供應鏈", items: ["農業生態資本與氣候韌性", "永續認證與綠色供應鏈商機"] },
+        { name: "模組四｜永續影響力行動", items: ["成果發表"] },
+      ],
+    },
     inquire: "想為團隊規劃主題組合？",
     inquireCta: "洽詢客製課程",
   },
@@ -175,20 +189,24 @@ const events = {
     readStory: "讀這個故事",
     prev: "上一則",
     next: "下一則",
+    // `logos` are ids in src/data/clients.ts for the partners whose logo file we have.
     items: [
       {
         title: "永續商品走進企業採購清單",
         partners: "星芽社會企業 × 思凡自然農場",
+        logos: ["jooin-now", "sifan-farm"],
         description: "透過共好玟化ESG共學坊講師平台，促成星芽社會企業與思凡自然農場的合作連結，將兼具社會價值與品質的永續產品與禮品，連結企業禮贈品採購。",
       },
       {
         title: "機能襪與印花的故事",
         partners: "RAFAC 機能襪 × 處處花版",
+        logos: [] as string[],
         description: "兩個有共同理念的品牌互相對話，RAFAC 機能襪的機能工藝，遇上處處花版的印花美學，透過共好玟化促成聯名商品合作，讓日常生活用品也能承載設計與自然的永續精神。",
       },
       {
         title: "一座小島，一場跨越國界的對話",
         partners: "中華少年成長基金會 × 大慶旅遊",
+        logos: ["bliss-travel"],
         description: "透過共好玟化ESG共學坊講師平台串聯，由中華少年成長基金會董事長主辦，偕同大慶旅遊合辦 2026 SDGs Impact Developers Conference – Penghu，將講師平台裡的連結，轉化為一場有國際迴響的行動。",
       },
     ],

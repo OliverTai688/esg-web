@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { MessageCircle } from "lucide-react"
+import { ArrowUpRight, MessageCircle } from "lucide-react"
 import { Container } from "@/components/core/Container"
 import { site } from "@/lib/site"
 import type { Locale } from "@/i18n/config"
@@ -74,6 +74,12 @@ export function Footer({ locale, dict }: FooterProps) {
                   </Link>
                 </li>
               ))}
+              <li>
+                <a href={site.storeUrl} target="_blank" rel="noopener noreferrer" className={`${linkClass} inline-flex items-center gap-1`}>
+                  {footer.store}
+                  <ArrowUpRight size={14} aria-hidden="true" />
+                </a>
+              </li>
             </ul>
           </nav>
 

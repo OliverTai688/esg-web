@@ -165,10 +165,12 @@ const sustainability = {
     quantTitle: "量化成果",
     notesLabel: "數字怎麼算",
     qualTitle: "質化成果",
+    // Each item is one partner's own account: the watch brand from the client's copy for
+    // this section, the other two from the client's feedback file (docs/data/6. 客戶回饋).
     qualItems: [
       { title: "被國際看見", description: "海廢手錶品牌透過永續白皮書整理數據與故事，站上國際青年論壇舞台。" },
-      { title: "從被動到主動", description: "產業夥伴從零散被動的企業合作，轉變為更主動、有策略的窗口溝通。" },
-      { title: "喚醒初衷", description: "品牌主在做報告的同時，重新想清楚自己在做的事與永續的關聯。" },
+      { title: "從被動到主動", description: "台灣休閒農場學會從過去零散被動的企業合作，轉變為更主動、有策略的窗口溝通。" },
+      { title: "說清楚自己的價值", description: "思凡自然農場完成永續定位白皮書，建立可向企業清楚溝通的價值主張。" },
     ],
   },
   ecosystem: {

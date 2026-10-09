@@ -36,6 +36,17 @@ const common = {
       { value: "10+", label: "cities and counties" },
     ],
     trackNote: "Cumulative to 2025",
+    reach: [
+      { value: "150+", label: "events" },
+      { value: "50+", label: "partner brands" },
+    ],
+  },
+  coesg: {
+    kicker: "CO-ESG Academy",
+    title: "Visit the CO-ESG Academy store",
+    body: "Classes, the store and talks are all at CO-ESG Academy.",
+    storeCta: "Go to the CO-ESG store",
+    logos: { class: "CO-ESG CLASS", store: "CO-ESG STORE", talks: "CO-ESG TALKS" },
   },
   footer: {
     brand: "Gung-Ho ",
@@ -44,6 +55,7 @@ const common = {
     copyright: "© 2026 Gung-Ho Culture CO-ESG. All Rights Reserved.",
     lineCta: "Follow us on LINE",
     navTitle: "Site Map",
+    store: "CO-ESG store",
     contactTitle: "Contact Us",
     supportEmail: "Support email",
     company: {
