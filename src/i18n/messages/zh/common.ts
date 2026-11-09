@@ -24,7 +24,7 @@ const common = {
   // Headline impact numbers — the only place these figures live (G06).
   impact: {
     metrics: [
-      { value: 1000, prefix: "", suffix: "萬", label: "資源挹注", note: "一家品牌設計公司在永續白皮書完成後一年內取得的政府補助、天使投資與銀行貸款" },
+      { value: 1000, prefix: "", suffix: "萬", label: "資源挹注", note: "一家科技公司在永續白皮書完成後一年內取得的政府補助、天使投資與銀行貸款" },
       { value: 130, prefix: "", suffix: "+", label: "跨產業合作", note: "透過顧問輔導與ESG共學坊講師平台促成的合作" },
       { value: 8, prefix: "", suffix: "+", label: "國際論壇", note: "協助企業與夥伴登上的國際論壇舞台" },
     ],
@@ -54,11 +54,14 @@ const common = {
   footer: {
     brand: "共好",
     brandAccent: "玟化",
-    tagline: "CO-ESG ｜ 永續品牌的專業橋樑",
+    tagline: "CO-ESG｜點亮你獨特的專業價值",
     copyright: "© 2026 共好玟化 CO-ESG. All Rights Reserved.",
     lineCta: "加入官方 LINE",
+    social: "社群媒體",
+    newWindow: "（另開新視窗）",
     navTitle: "網站導覽",
     store: "ESG共學坊商城",
+    tools: "線上工具",
     contactTitle: "聯絡我們",
     supportEmail: "客服信箱",
     company: {
@@ -93,7 +96,7 @@ const common = {
     messagePlaceholder: "請簡單描述您的合作需求或想聊的主題...",
     submit: "送出預約",
     // Shown after the mail client is asked to open: the form itself sends nothing.
-    success: "已開啟您的郵件軟體，寄出後即完成。沒有跳出視窗？請改用官方 LINE，或直接寄信到 pt@coesg.tw。",
+    success: "已開啟您的郵件軟體，寄出後即完成。沒有跳出視窗？請改用官方 LINE，或直接寄信到 gho001@coesg.tw。",
     mailNote: "按下送出後，會開啟您的郵件軟體並帶入內容，寄出即完成。",
     mailSubject: "Coffee Chat 預約",
     required: "必填",
@@ -104,6 +107,8 @@ const common = {
     viewAll: "查看全部",
     backHome: "返回首頁",
     external: "另開新視窗",
+    // Appended to a link name for screen readers; zh uses full-width brackets, en half-width (EN4)
+    externalParen: "（另開新視窗）",
     minRead: "分鐘閱讀",
     onThisPage: "本頁內容",
     comingSoon: "即將推出",

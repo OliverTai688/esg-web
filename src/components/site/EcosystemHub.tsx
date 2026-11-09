@@ -12,9 +12,9 @@ interface Role {
 // One arc of the ring per role, clockwise from the top-left quarter. `turn`
 // rotates the role's quarter marker to the same corner of the ring.
 const ARCS = [
-  { color: "#F25232", offset: -184, bg: "bg-brand-orange", turn: "" },
-  { color: "#FAB40A", offset: -274, bg: "bg-brand-yellow", turn: "rotate-90" },
-  { color: "#4D515B", offset: -94, bg: "bg-brand-grey", turn: "-rotate-90" },
+  { color: "#E8532A", offset: -184, bg: "bg-brand-orange", turn: "" },
+  { color: "#F9A500", offset: -274, bg: "bg-brand-yellow", turn: "rotate-90" },
+  { color: "#595959", offset: -94, bg: "bg-brand-grey", turn: "-rotate-90" },
   { color: "#8A8E97", offset: -4, bg: "bg-[#8A8E97]", turn: "rotate-180" },
 ]
 

@@ -19,7 +19,7 @@ const petals = Array.from({ length: COUNT }, (_, i) => {
   const y = CY - R * Math.sin(theta)
   const rotate = 90 - (theta * 180) / Math.PI
   // Yellow toward the partners' end, orange toward the enterprise end.
-  const fill = i < COUNT / 2 ? (i % 2 ? "#F25232" : "#FAB40A") : i % 2 ? "#FAB40A" : "#F25232"
+  const fill = i < COUNT / 2 ? (i % 2 ? "#E8532A" : "#F9A500") : i % 2 ? "#F9A500" : "#E8532A"
   return { x, y, rotate, fill, i }
 })
 
@@ -38,8 +38,8 @@ export function HeroPetalArc({ left, right, center }: { left: string; right: str
         {/* Keystone: the full flame mark */}
         <image href="/brand/gungho-mark.svg" x={CX - 34} y={CY - R - 52} width="68" height="88" className="petal-pop" style={{ ["--i" as string]: COUNT }} />
         {/* Piers */}
-        <circle cx="72" cy={CY + 8} r="9" fill="#FAB40A" />
-        <circle cx="528" cy={CY + 8} r="9" fill="#F25232" />
+        <circle cx="72" cy={CY + 8} r="9" fill="#F9A500" />
+        <circle cx="528" cy={CY + 8} r="9" fill="#E8532A" />
       </svg>
       <figcaption className="mt-3 grid grid-cols-[1fr_auto_1fr] items-start gap-3 text-xs font-bold text-ink/80 sm:text-sm">
         <span>{left}</span>

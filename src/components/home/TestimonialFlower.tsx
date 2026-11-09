@@ -64,7 +64,7 @@ export function TestimonialFlower({
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-link focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           {openLabel}
           <ArrowRight className="size-4" aria-hidden="true" />
@@ -85,7 +85,7 @@ export function TestimonialFlower({
                   setActive(i)
                   setOpen(true)
                 }}
-                aria-label={`${openLabel}：${item.name}`}
+                aria-label={`${openLabel}${/[\u4e00-\u9fff]/.test(openLabel) ? "：" : ": "}${item.name}`}
                 aria-pressed={active === i}
                 className={cn(
                   "flex aspect-square w-full flex-col items-center justify-center gap-1.5 p-4 text-center transition-transform duration-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/60",
@@ -124,7 +124,7 @@ export function TestimonialFlower({
                   <Image src={currentLogo.src} alt={currentLogo.alt} fill sizes="80px" className="object-contain p-1.5" />
                 </span>
               ) : (
-                <span aria-hidden="true" className="flex size-12 items-center justify-center rounded-tr-full rounded-bl-full bg-orange-soft text-xl font-black text-[#A8321A]">
+                <span aria-hidden="true" className="flex size-12 items-center justify-center rounded-tr-full rounded-bl-full bg-orange-soft text-xl font-black text-primary">
                   {current.name.slice(0, 1)}
                 </span>
               )}

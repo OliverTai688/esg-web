@@ -3,12 +3,11 @@ import { ArrowLeft, ArrowRight } from "lucide-react"
 import { Container } from "@/components/core/Container"
 import { ChapterNav } from "@/components/site/ChapterNav"
 import { CtaBand } from "@/components/site/CtaBand"
-import { Petal } from "@/components/geo/shapes"
 import { FlowerGlyph } from "@/components/learning/FlowerGlyph"
 import type { Post } from "@/lib/posts"
 import type { Messages } from "@/i18n/messages"
 import { learningBackHref, categoryLabel, topicOf } from "@/lib/learning-sections"
-import { site } from "@/lib/site"
+import { site, contactFor } from "@/lib/site"
 
 // A table of contents only earns its place from this many headings up.
 const TOC_MIN_HEADINGS = 3
@@ -60,7 +59,7 @@ export function ArticleView({
             </Link>
             <Link
               href={`/${locale}/learning/category/${post.categorySlug}`}
-              className="mt-4 flex min-h-11 w-fit items-center gap-2.5 text-sm font-bold text-primary underline-offset-4 hover:underline"
+              className="mt-4 flex min-h-11 w-fit items-center gap-2.5 text-sm font-bold text-link"
             >
               <FlowerGlyph topic={topicOf(post.categorySlug)} className="size-9" />
               {label(post.categorySlug, post.category)}
@@ -68,12 +67,12 @@ export function ArticleView({
             <h1 className="mt-2 text-[1.75rem] font-black leading-[1.45] text-ink sm:text-4xl sm:leading-[1.4]">{post.title}</h1>
             <p className="mt-5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-sm text-muted-foreground">
               <span>
-                <span className="sr-only">{a.by}：</span>
+                <span className="sr-only">{a.by}{locale === "en" ? ": " : "："}</span>
                 <span className="font-bold text-ink">{post.author}</span>
               </span>
               <span aria-hidden="true">·</span>
               <span>
-                <span className="sr-only">{a.published}：</span>
+                <span className="sr-only">{a.published}{locale === "en" ? ": " : "："}</span>
                 <time dateTime={post.date}>{post.date.replaceAll("-", ".")}</time>
               </span>
               <span aria-hidden="true">·</span>
@@ -114,10 +113,6 @@ export function ArticleView({
 
       {next && (
         <>
-          {/* Seam · shape relay: a petal lands on the boundary and grows into the next article's card */}
-          <div aria-hidden="true" className="pointer-events-none relative z-10 h-0">
-            <Petal className="absolute right-[10%] top-0 size-9 -translate-y-1/2 bg-brand-orange sm:size-12 lg:right-[24%]" />
-          </div>
           <section aria-labelledby="next-heading" className="bg-sand py-14 md:py-20">
             <Container className="max-w-3xl">
               <Link
@@ -145,7 +140,7 @@ export function ArticleView({
         title={a.endTitle}
         description={a.endBody}
         primary={{ label: a.endPrimary, href: `/${locale}/consulting#contact` }}
-        secondary={{ label: a.endSecondary, href: site.line.url, external: true, line: true }}
+        secondary={{ label: a.endSecondary, ...contactFor(locale, "follow") }}
       />
     </div>
   )

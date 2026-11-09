@@ -11,7 +11,7 @@ const chapters: readonly ChapterDef[] = [
   { id: "ngo", label: "Non-Profit Partnerships", desc: "Two ways to work together, and four case studies", icon: "HeartHandshake" },
   { id: "membership", label: "Membership", desc: "Free, monthly or project-based: three stages", icon: "Users" },
   { id: "faq", label: "FAQ", desc: "Five things people ask before booking", icon: "HelpCircle" },
-  { id: "contact", label: "Contact", desc: "Book a Coffee Chat, or ask us on LINE", icon: "Mail" },
+  { id: "contact", label: "Contact", desc: "Book a Coffee Chat, or email us", icon: "Mail" },
 ]
 
 const consulting = {
@@ -25,9 +25,9 @@ const consulting = {
     kicker: "Work With Us",
     title: "Book a 15-minute Coffee Chat",
     description:
-      "Let's talk about how to bring your expertise to light. Whether you are a brand owner, a supply-chain partner or part of the sustainability sector, we look forward to the conversation.",
+      "Let's talk about how to bring your value to light. Whether you are a brand owner, a supply-chain partner or part of the sustainability sector, we look forward to the conversation.",
     primaryCta: "Book a consultation slot",
-    lineCta: "Ask us on LINE",
+    lineCta: "Email us",
     // The page's equation: petal + block = quarter-disc. Open in the hero, answered at the form.
     equation: { petal: "Purpose-led brands", block: "Businesses seeking partners", result: "A 15-minute chat first" },
   },
@@ -111,7 +111,7 @@ const consulting = {
       },
       {
         key: "kangfu",
-        name: "臺東縣康復之友協會",
+        name: "The Association for the Mentally Ill, Taitung",
         type: "Social participation for people recovering from mental illness",
         headline: "Four activities, traced back to one sustainability theme",
         alt: "A consultant leading a workshop in the association's activity room",
@@ -125,7 +125,7 @@ const consulting = {
       },
       {
         key: "tiancheng",
-        name: "天成醫院",
+        name: "Ten-Chen General Hospital (Zhongli)",
         type: "Healthcare provider",
         headline: "Six teams of managers map daily work back to the SDGs",
         alt: "Hospital staff and doctors working on a poster with sticky notes",
@@ -135,7 +135,7 @@ const consulting = {
           "Participants set measurable targets, such as cutting the hospital's energy use by 10% in a year and keeping the gender gap in entry-level pay below 3%.",
         ],
         quote: "This course taught us to integrate: to put the sustainability practices scattered through our daily work in the right place, against the right goals.",
-        quoteBy: "Superintendent, 天成醫院",
+        quoteBy: "Superintendent, Ten-Chen General Hospital (Zhongli)",
       },
     ],
   },
@@ -149,13 +149,13 @@ const consulting = {
     audienceLabel: "Ideal for",
     // {count} is replaced with the number of features
     includes: "{count} things included",
-    tierCta: "Enquire via LINE",
+    tierCta: "Enquire by email",
     tiers: [
       {
         title: "Essential Partner",
         price: "Free",
         tagline: "Get connected and start exploring sustainability",
-        features: ["Join our LINE sustainability community", "Weekly sustainability trends digest", "Priority notice of events and courses"],
+        features: ["Sustainability updates on LinkedIn", "Weekly sustainability trends digest", "Priority notice of events and courses"],
         audience: "Anyone ready to get started",
         recommended: false,
       },

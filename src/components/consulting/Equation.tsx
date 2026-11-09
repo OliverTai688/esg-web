@@ -33,7 +33,7 @@ export function Equation({
   return (
     <div
       role={labels ? "img" : undefined}
-      aria-label={labels ? `${labels.petal} ＋ ${labels.block} ＝ ${labels.result}` : undefined}
+      aria-label={labels ? `${labels.petal} + ${labels.block} = ${labels.result}` : undefined}
       aria-hidden={labels ? undefined : true}
       className={cn("flex items-start justify-center gap-[clamp(0.4rem,2vw,1.25rem)]", className)}
     >
@@ -42,14 +42,14 @@ export function Equation({
         {labels && <p className={caption}>{labels.petal}</p>}
       </div>
       <span aria-hidden="true" className={operator}>
-        ＋
+        +
       </span>
       <div className={term}>
         <Block className={cn(box, dark && "bg-[#8A8E97]", labels && "petal-pop [--i:2]", animate && "scroll-gather [--gx:2.5rem]")} />
         {labels && <p className={caption}>{labels.block}</p>}
       </div>
       <span aria-hidden="true" className={operator}>
-        ＝
+        =
       </span>
       <div className={term}>
         {solved ? (

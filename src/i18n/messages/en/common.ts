@@ -24,7 +24,7 @@ const common = {
   // Headline impact numbers — the only place these figures live (G06).
   impact: {
     metrics: [
-      { value: 10, prefix: "NT$", suffix: "M", label: "Funding Secured", note: "Government grants, angel investment and bank loans secured by a brand design firm within a year of completing its Sustainability White Paper" },
+      { value: 10, prefix: "NT$", suffix: "M", label: "Funding Secured", note: "Government grants, angel investment and bank loans secured by a technology company within a year of completing its Sustainability White Paper" },
       { value: 130, prefix: "", suffix: "+", label: "Cross-Sector Partnerships", note: "Partnerships brokered through our advisory work and the CO-ESG Academy speaker platform" },
       { value: 8, prefix: "", suffix: "+", label: "International Forums", note: "International forum stages our clients and partners have reached with our support" },
     ],
@@ -45,17 +45,20 @@ const common = {
     kicker: "CO-ESG Academy",
     title: "Visit the CO-ESG Academy store",
     body: "Classes, the store and talks are all at CO-ESG Academy.",
-    storeCta: "Go to the CO-ESG store",
+    storeCta: "Go to the CO-ESG Store",
     logos: { class: "CO-ESG CLASS", store: "CO-ESG STORE", talks: "CO-ESG TALKS" },
   },
   footer: {
     brand: "Gung-Ho ",
     brandAccent: "Culture",
-    tagline: "CO-ESG | The professional bridge for sustainable brands",
+    tagline: "CO-ESG | Bring your value to light.",
     copyright: "© 2026 Gung-Ho Culture CO-ESG. All Rights Reserved.",
-    lineCta: "Follow us on LINE",
+    lineCta: "Follow us on LinkedIn",
+    social: "Social media",
+    newWindow: " (opens in a new window)",
     navTitle: "Site Map",
-    store: "CO-ESG store",
+    store: "CO-ESG Store",
+    tools: "Online tools",
     contactTitle: "Contact Us",
     supportEmail: "Support email",
     company: {
@@ -90,7 +93,7 @@ const common = {
     messagePlaceholder: "Briefly describe what you are looking for or what you would like to discuss...",
     submit: "Send request",
     // Shown after the mail client is asked to open: the form itself sends nothing.
-    success: "Your email app should now be open — send the message to finish. Nothing opened? Use our official LINE or write to pt@coesg.tw.",
+    success: "Your email app should now be open — send the message to finish. Nothing opened? Write to gho001@coesg.tw.",
     mailNote: "Clicking send will open your email client with your message pre-filled; simply send it to complete your request.",
     mailSubject: "Coffee Chat booking",
     required: "Required",
@@ -101,6 +104,7 @@ const common = {
     viewAll: "View all",
     backHome: "Back to home",
     external: "Opens in a new window",
+    externalParen: " (opens in a new window)",
     minRead: "min read",
     onThisPage: "On this page",
     comingSoon: "Coming soon",

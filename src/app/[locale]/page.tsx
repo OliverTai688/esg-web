@@ -4,10 +4,8 @@ import { ArrowRight, ArrowUpRight } from "lucide-react"
 import { Container } from "@/components/core/Container"
 import { Button } from "@/components/ui/button"
 import { SectionHeader } from "@/components/site/SectionHeader"
-import { FlameMark } from "@/components/site/FlameMark"
 import { HeroPetalArc } from "@/components/home/HeroPetalArc"
 import { ProblemMosaic } from "@/components/home/ProblemMosaic"
-import { EvidenceRing } from "@/components/home/EvidenceRing"
 import { StoryDialog } from "@/components/home/StoryDialog"
 import { TestimonialFlower } from "@/components/home/TestimonialFlower"
 import { CtaArcs } from "@/components/home/CtaArcs"
@@ -17,12 +15,13 @@ import { clients, clientLogo, clientName, getClient, type Client } from "@/data/
 import { getMessages } from "@/i18n/messages"
 import type { Locale } from "@/i18n/config"
 import { formatImpactMetric, cn } from "@/lib/utils"
-import { site } from "@/lib/site"
+import { contactFor } from "@/lib/site"
+import { alternatesFor } from "@/lib/seo"
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   const t = await getMessages(locale as Locale)
-  return { title: { absolute: t.home.meta.title }, description: t.home.hero.subTitle }
+  return { title: { absolute: t.home.meta.title }, description: t.home.hero.subTitle, alternates: alternatesFor(locale) }
 }
 
 // Renders **bold** spans inside client-supplied story paragraphs.
@@ -114,11 +113,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </Container>
       </section>
 
-      {/* Seam 1 · shape relay: the arch's last petal lands on the boundary */}
-      <div aria-hidden="true" className="pointer-events-none relative z-10 h-0">
-        <span className="absolute right-[8%] top-0 size-10 -translate-y-1/2 rotate-45 rounded-tr-full rounded-bl-full bg-brand-yellow sm:size-14 lg:right-[22%]" />
-      </div>
-
       {/* S2 ── Partners: three groups of client logos, each card marked by a petal in its role colour */}
       <section aria-labelledby="partners-heading" className="border-y border-border bg-card py-16 md:py-20">
         <Container>
@@ -187,12 +181,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           <p className="kicker-rule text-[13px] font-bold tracking-[0.12em] text-brand-yellow">{h.story.label}</p>
           <div className="mt-8 grid gap-14 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
             <div className="flex flex-col items-start">
-              {/* Two mirrored flames lean together into an arch over the name */}
-              <div aria-hidden="true" className="flex items-end gap-1">
-                <FlameMark className="w-20 -rotate-12 sm:w-28" />
-                <FlameMark className="w-20 -scale-x-100 -rotate-12 sm:w-28" />
-              </div>
-              <p lang="tay" className="mt-4 font-display text-7xl font-bold leading-none text-brand-yellow sm:text-8xl">
+              <p lang="tay" className="font-display text-7xl font-bold leading-none text-brand-yellow sm:text-8xl">
                 Sayun
               </p>
               <h2 className="mt-5 text-2xl font-black sm:text-3xl">{h.story.headline}</h2>
@@ -230,7 +219,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                   <p key={p.slice(0, 16)}>{withBold(p)}</p>
                 ))}
                 <p className="pt-2 font-bold text-ink">
-                  — {h.story.founderName}，{h.story.founderTitle}
+                  — {h.story.founderName}{english ? ", " : "，"}{h.story.founderTitle}
                 </p>
               </StoryDialog>
               <Link href={`/${locale}/sustainability#who-we-are`} className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-brand-yellow underline-offset-4 hover:underline">
@@ -242,12 +231,9 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </Container>
       </section>
 
-      {/* S5 ── Evidence. Seam 4: the dial straddles the boundary and turns into place. */}
-      <section id="evidence" className="relative bg-card pb-20 md:pb-28">
-        <div className="relative z-10 -mt-[5.5rem] sm:-mt-28">
-          <EvidenceRing caption={h.evidence.ringCaption} />
-        </div>
-        <Container className="mt-10">
+      {/* S5 ── Evidence */}
+      <section id="evidence" className="relative bg-card py-20 md:py-28">
+        <Container>
           <SectionHeader kicker={h.evidence.label} title={h.evidence.title} description={h.evidence.description} align="center" />
           <ol className="mx-auto mt-12 max-w-4xl divide-y divide-border border-y border-border">
             {h.evidence.cards.map((card, i) => {
@@ -282,7 +268,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               ))}
               <li>{h.evidence.sourceNote}</li>
             </ol>
-            <Link href={`/${locale}/events#history`} className="inline-flex min-h-11 shrink-0 items-center gap-1.5 text-sm font-bold text-primary underline-offset-4 hover:underline">
+            <Link href={`/${locale}/events#history`} className="inline-flex min-h-11 shrink-0 items-center gap-1.5 text-sm font-bold text-link">
               {h.evidence.moreLink}
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
@@ -326,7 +312,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           <div className="mt-16 rounded-3xl bg-card p-7 sm:p-10">
             <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
               <h3 className="text-xl font-black text-ink sm:text-2xl">{h.audiences.roadmapTitle}</h3>
-              <Link href={`/${locale}/events#roadmap`} className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-primary underline-offset-4 hover:underline">
+              <Link href={`/${locale}/events#roadmap`} className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-link">
                 {h.audiences.roadmapLink}
                 <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
@@ -370,7 +356,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         description={h.cta.description}
         steps={h.cta.steps}
         primary={{ label: h.cta.primaryLabel, href: `/${locale}/consulting#contact` }}
-        secondary={{ label: h.cta.secondaryLabel, href: site.line.url }}
+        secondary={{ label: h.cta.secondaryLabel, ...contactFor(locale, "follow") }}
       />
     </div>
   )

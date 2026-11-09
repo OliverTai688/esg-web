@@ -14,7 +14,7 @@ const P = [
   [529, -22],
   [786, 118],
 ] as const
-const COLORS = ["#8A8E97", "#FAB40A", "#F25232", "#C0391A"]
+const COLORS = ["#8A8E97", "#F9A500", "#E8532A", "#E8532A"]
 const BORDERS = ["border-[#8A8E97]", "border-brand-yellow", "border-brand-orange", "border-primary"]
 const SLICE = 0.02 // gap between pieces, in t
 

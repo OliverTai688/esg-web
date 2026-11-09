@@ -59,7 +59,7 @@ export function Seam({ children, className }: { children: React.ReactNode; class
  * A single arc (the bridge), drawn as an SVG stroke so it can be any colour and
  * weight. `draw` makes it draw itself in as it scrolls into view.
  */
-export function Arc({ className, color = "#F25232", weight = 22, draw = false }: ShapeProps & { color?: string; weight?: number; draw?: boolean }) {
+export function Arc({ className, color = "#E8532A", weight = 22, draw = false }: ShapeProps & { color?: string; weight?: number; draw?: boolean }) {
   return (
     <svg viewBox="0 0 400 210" fill="none" aria-hidden="true" className={cn("h-auto w-full", className)}>
       <path d="M12 198 C 12 80, 110 12, 200 12 S 388 80, 388 198" stroke={color} strokeWidth={weight} strokeLinecap="round" pathLength={1} className={draw ? "scroll-draw" : undefined} />

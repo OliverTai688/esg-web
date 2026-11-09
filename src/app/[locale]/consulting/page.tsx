@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Image from "next/image"
-import { ArrowDown, ArrowRight, Check, Clock, Mail, MessageCircle } from "lucide-react"
+import { ArrowDown, ArrowRight, Check, Clock, Mail } from "lucide-react"
 import { Container } from "@/components/core/Container"
 import { Button } from "@/components/ui/button"
 import { SectionHeader } from "@/components/site/SectionHeader"
@@ -14,13 +14,15 @@ import { FoldList, ReadMore } from "@/components/ux/Fold"
 import { getMessages } from "@/i18n/messages"
 import type { Locale } from "@/i18n/config"
 import { site } from "@/lib/site"
+import { ChannelButton } from "@/components/site/ChannelButton"
 import { cn } from "@/lib/utils"
 import { pageChapters } from "@/lib/chapters"
+import { alternatesFor } from "@/lib/seo"
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   const t = await getMessages(locale as Locale)
-  return { title: t.consulting.meta.title, description: t.consulting.meta.description }
+  return { title: t.consulting.meta.title, description: t.consulting.meta.description, alternates: alternatesFor(locale, "/consulting") }
 }
 
 // Starting point → the services its panel shows (keys of solutions.items),
@@ -87,7 +89,7 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
               </Button>
             )}
             {o.key === "npo" && (
-              <a href="#ngo" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-primary underline-offset-4 hover:underline">
+              <a href="#ngo" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-link">
                 {c.ngo.jump}
                 <ArrowDown className="size-4" aria-hidden="true" />
               </a>
@@ -114,12 +116,9 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
                   <ArrowDown />
                 </a>
               </Button>
-              <Button size="lg" variant="outline" asChild>
-                <a href={site.line.url} target="_blank" rel="noopener noreferrer">
-                  <MessageCircle />
-                  {c.hero.lineCta}
-                </a>
-              </Button>
+              <ChannelButton locale={locale} purpose="ask" variant="outline">
+                {c.hero.lineCta}
+              </ChannelButton>
             </div>
           </div>
           <Equation labels={c.hero.equation} />
@@ -229,7 +228,7 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
                 <p className="mt-1 font-display text-3xl font-bold text-ink">{tier.price}</p>
                 <p className="mt-2 text-sm font-bold text-primary">{tier.tagline}</p>
                 <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
-                  <span className="font-bold text-ink">{c.membership.audienceLabel}｜</span>
+                  <span className="font-bold text-ink">{c.membership.audienceLabel}{locale === "en" ? ": " : "｜"}</span>
                   {tier.audience}
                 </p>
                 <ReadMore label={c.membership.includes.replace("{count}", String(tier.features.length))} className="mt-4 border-t border-border pt-1">
@@ -246,12 +245,9 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
             ))}
           </ul>
           <div className="mt-6 flex justify-center">
-            <Button size="lg" variant="line" asChild>
-              <a href={site.line.url} target="_blank" rel="noopener noreferrer">
-                <MessageCircle />
-                {c.membership.tierCta}
-              </a>
-            </Button>
+            <ChannelButton locale={locale} purpose="ask">
+              {c.membership.tierCta}
+            </ChannelButton>
           </div>
 
           {/* Seam 4 · overlap: the plan that is not finished yet sits across the
@@ -269,11 +265,9 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
                 </p>
               ))}
             </div>
-            <Button variant="outline" asChild>
-              <a href={site.line.url} target="_blank" rel="noopener noreferrer">
-                {c.membership.comingSoon.cta}
-              </a>
-            </Button>
+            <ChannelButton locale={locale} purpose="ask" variant="outline" size="default">
+              {c.membership.comingSoon.cta}
+            </ChannelButton>
           </div>
         </Container>
       </section>
@@ -285,7 +279,7 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
             <SectionHeader kicker={c.faq.label} title={c.faq.title} />
             <p className="mt-4 text-sm text-muted-foreground">
               {c.faq.more}
-              <a href={`mailto:${site.supportEmail}`} className="ml-2 inline-flex min-h-11 items-center gap-1.5 font-bold text-primary underline-offset-4 hover:underline">
+              <a href={`mailto:${site.supportEmail}`} className="ml-2 inline-flex min-h-11 items-center gap-1.5 font-bold text-link">
                 <Mail className="size-4" aria-hidden="true" />
                 {c.faq.moreCta}
               </a>
@@ -295,16 +289,14 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
         </Container>
       </section>
 
-      {/* S6 ── Contact: the equation is solved. The page's one dark moment is a
-          block on paper, not a band, so it does not merge with the dark footer.
-          Seam 5 · recombine: petal and block slide together as it scrolls in. */}
+      {/* S6 ── Contact. The page's one dark moment is a block on paper, not a
+          band, so it does not merge with the dark footer. */}
       <section id="contact" className="pb-16 md:pb-24">
         <Container className="px-3 md:px-8">
           <div className="grid gap-10 rounded-[2rem] bg-surface-dark px-5 pb-5 pt-9 text-white sm:p-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12 lg:p-14">
             <div>
               <SectionHeader kicker={c.contact.label} title={c.contact.title} description={c.contact.description} tone="dark" size="md" />
-              <Equation solved animate tone="dark" className="mt-8 justify-start" />
-              <ul className="mt-6 text-sm text-white/80">
+              <ul className="mt-8 text-sm text-white/80">
                 <li>
                   <a href={`mailto:${site.supportEmail}`} className="inline-flex min-h-11 items-center gap-3 underline-offset-4 hover:underline">
                     <Mail className="size-4 text-brand-yellow" aria-hidden="true" />
@@ -318,12 +310,9 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
               </ul>
               <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-white/15 pt-6">
                 <p className="font-bold">{c.contact.altTitle}</p>
-                <Button variant="line" asChild>
-                  <a href={site.line.url} target="_blank" rel="noopener noreferrer">
-                    <MessageCircle />
-                    {t.footer.lineCta}
-                  </a>
-                </Button>
+                <ChannelButton locale={locale} purpose="follow" size="default" variant={locale === "en" ? "outlineInverse" : "line"}>
+                  {t.footer.lineCta}
+                </ChannelButton>
               </div>
             </div>
             <div className="rounded-3xl bg-card p-6 text-ink sm:p-8">

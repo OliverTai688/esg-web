@@ -14,6 +14,17 @@ const RULES = [
   { pattern: /(?<!ESG)共學坊/g, hint: "use ESG共學坊 (with ESG, no space)" },
   { pattern: /媒合/g, hint: "use 溝通 / 對接 / 連結" },
   { pattern: /matchmak/gi, hint: "use communication / connection" },
+  // rev2 #8 #9: official names
+  { pattern: /台灣休閒農業學會|台灣休閒農場學會|臺灣休閒農場學會/g, hint: "use 臺灣休閒農業學會" },
+  { pattern: /(?<!臺北市)萬華社區大學/g, hint: "use 臺北市萬華社區大學" },
+  { pattern: /台北市政府/g, hint: "use 臺北市政府" },
+  { pattern: /思凡自然農場/g, hint: "use 思凡自然農園" },
+  { pattern: /永續定位白皮書/g, hint: "use 永續白皮書" },
+  { pattern: /品牌設計公司/g, hint: "use 科技公司 (rev2 #9)" },
+  { pattern: /brand design firm/gi, hint: "use a technology company (rev2 EN #9)" },
+  { pattern: /Gung Ho Culture/g, hint: "use Gung-Ho Culture (with a hyphen)" },
+  { pattern: /pt@coesg\.tw/g, hint: "use gho001@coesg.tw (rev2 #6)" },
+  { pattern: /永續影響力的專業橋樑|陪跑｜連結｜創造影響力/g, hint: "use the rev2 slogans (#1)" },
 ]
 
 function* walk(dir) {

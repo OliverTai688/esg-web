@@ -25,7 +25,7 @@ const events = {
     kicker: "Our Journey",
     title: "Every step is a real footprint of sustainability in action",
     description: "From cross-sector connections at CO-ESG Academy to international forums, Gung-Ho Culture continues to host high-quality sustainability events that bring like-minded partners together.",
-    primaryCta: "Get course dates on LINE",
+    primaryCta: "Email us for course dates",
     secondaryCta: "Open the Learning Map",
     // Labels under the footprint trail: where it starts, and the step not taken yet
     trailStart: "2022",
@@ -33,8 +33,8 @@ const events = {
   },
   upcoming: {
     title: "Be the first to know when dates are set",
-    description: "Our next cohort is being planned. Follow us on LINE and we will tell you first when registration opens.",
-    notifyCta: "Get early notice on LINE",
+    description: "Our next cohort is being planned. Email us and we will tell you when registration opens. Courses are taught in Mandarin.",
+    notifyCta: "Email us for course dates",
     viewDetails: "View course details",
   },
   learningMap: {
@@ -67,7 +67,7 @@ const events = {
     farmCourse: {
       label: "2026 Agri-Creator course outline",
       title: "ESG Sustainable Agri-Creator Programme | Summer 2026",
-      meta: "With 台灣休閒農業學會 · 7 sessions · 7 July to 29 September 2026, every other Tuesday",
+      meta: "With Taiwan Leisure Agriculture Association · 7 sessions · 7 July to 29 September 2026, every other Tuesday",
       focus: "This year's focus is biodiversity and nature-friendly farming. Each session produces one chapter of a site sustainability white paper, and the final session is a pitch to businesses.",
       modules: [
         { name: "Module 1 | Sustainability literacy and reporting", items: ["Leisure farming and ESG management", "Sustainability reports and impact measurement"] },
@@ -101,7 +101,7 @@ const events = {
         entries: [
           { date: "2022.05", text: "Gung-Ho Culture is founded (registered capital NT$50,000) to drive social impact through sustainability and ESG knowledge." },
           { date: "2023.05", text: "Launches civic-week sustainability talks at Sanying and Nangang Community Colleges." },
-          { date: "2023.10", text: "Completes its first Sustainability White Paper, partnering with 齊禾設計 (Qihe Design) to produce a white paper on eggshell-paper egg trays for 勤億蛋品." },
+          { date: "2023.10", text: "Completes its first Sustainability White Paper, partnering with Chihe Design to produce a white paper on eggshell-paper egg trays for Chinyi Eggs Technology Co., Ltd." },
           { date: "2023.11", text: "Launches CO-ESG Academy as an in-person club at Wanhua Community College; the same month, completes its first capital increase (NT$50,000 → NT$1 million)." },
         ],
       },
@@ -112,10 +112,10 @@ const events = {
         intro: "CO-ESG Academy moved from in-person to an online platform, our services extended into agriculture and business, and our impact began to reach from Taiwan to the wider world.",
         entries: [
           { date: "2024.03", text: "The CO-ESG Academy platform launches, taking the in-person club online as a learning platform." },
-          { date: "2024.06", text: "Enters agricultural sustainability with courses at 綠合農場, training more than 30 small-farm brands and generating over NT$500,000 in single-day market sales." },
+          { date: "2024.06", text: "Enters agricultural sustainability with courses at Greenunion Agricultural, training more than 30 small-farm brands and generating over NT$500,000 in single-day market sales." },
           { date: "2024.11", text: "Invited as Strategy Director by 13+ start-up programmes to lead sustainable brand development workshops; Sustainability White Paper services scale up in parallel." },
           { date: "2025", text: "Surpasses 100 talks, 30+ workshops and 500+ participants trained, serving more than 10 cities and counties across Taiwan, including the country's three largest leisure farms." },
-          { date: "Spring–Summer 2025", text: "Partners with the 台灣休閒農業學會 to launch Taiwan's first ESG Sustainable Agri-Innovator certification course." },
+          { date: "Spring–Summer 2025", text: "Partners with the Taiwan Leisure Agriculture Association to launch Taiwan's first ESG Sustainable Agri-Innovator certification course." },
           { date: "2025.05", text: "Co-organises a talk on strengthening charitable impact, and exhibits as a sustainability advisor at Secutech Taipei." },
           { date: "2025.07", text: "Completes a second, larger capital increase (NT$1 million → NT$4 million), the largest to date." },
           { date: "2025.08", text: "Invited for the first time to an international SDGs forum (Global Youth Leadership Programme SDGs Forum, Taipei).", href: "https://www.youthsdgs.org/" },
@@ -188,28 +188,28 @@ const events = {
     items: [
       {
         title: "Sustainable products on corporate procurement lists",
-        partners: "星芽社會企業 × 思凡自然農場",
+        partners: "Jooin Now × Selvans Social Farm",
         logos: ["jooin-now", "sifan-farm"],
-        description: "Through the CO-ESG Academy speaker platform, Gung-Ho Culture connected 星芽社會企業 with 思凡自然農場, bringing high-quality sustainable products and gifts with genuine social value into corporate gift procurement.",
+        description: "Through the CO-ESG Academy speaker platform, Gung-Ho Culture connected Jooin Now with Selvans Social Farm, bringing high-quality sustainable products and gifts with genuine social value into corporate gift procurement.",
       },
       {
         title: "A story of functional socks and prints",
-        partners: "RAFAC Functional Socks × 處處花版",
+        partners: "RAFAC SOCKS × Showy Pattern Art",
         logos: [] as string[],
-        description: "Two brands with shared values began a conversation: RAFAC's functional craftsmanship met 處處花版's print aesthetics. Gung-Ho Culture brokered a co-branded product, showing that everyday items can carry the spirit of design, nature and sustainability.",
+        description: "Two brands with shared values began a conversation: RAFAC's functional craftsmanship met Showy Pattern Art's print aesthetics. Gung-Ho Culture brokered a co-branded product, showing that everyday items can carry the spirit of design, nature and sustainability.",
       },
       {
         title: "One small island, one conversation across borders",
-        partners: "中華少年成長基金會 × 大慶旅遊",
+        partners: "Youthbud × Bliss Travel",
         logos: ["bliss-travel"],
-        description: "Connected through the CO-ESG Academy speaker platform, the Chairman of the 中華少年成長基金會 hosted, with 大慶旅遊 as co-organiser, the 2026 SDGs Impact Developers Conference – Penghu, turning connections made on the platform into action with international resonance.",
+        description: "Connected through the CO-ESG Academy speaker platform, the Chairman of Youthbud hosted, with Bliss Travel as co-organiser, the 2026 SDGs Impact Developers Conference – Penghu, turning connections made on the platform into action with international resonance.",
       },
     ],
   },
   cta: {
     title: "The next footprint is yours",
-    description: "We will tell you on LINE as soon as course dates are set. Want your whole team to learn together? Talk to us about in-house training.",
-    primaryLabel: "Get course dates on LINE",
+    description: "Email us and we will tell you as soon as course dates are set. Want your whole team to learn together? Talk to us about in-house training.",
+    primaryLabel: "Email us for course dates",
     secondaryLabel: "Enquire about in-house training",
   },
   detail: {
@@ -222,10 +222,10 @@ const events = {
     capacity: "Places",
     price: "Fee",
     highlights: "Course highlights",
-    // LINE is the next step for every status; the wording follows the status
-    waitlist: "Join the waitlist on LINE",
-    enquire: "Enquire on LINE",
-    notify: "Get course dates on LINE",
+    // Email is the next step for every status (the English site has no LINE, R17)
+    waitlist: "Email us to join the waitlist",
+    enquire: "Email us",
+    notify: "Email us for course dates",
     map: "See the Learning Map",
     consult: "Book a Coffee Chat",
     dateTbd: "Next cohort in planning",

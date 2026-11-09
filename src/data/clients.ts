@@ -19,8 +19,8 @@ export interface Client {
 
 export const clients: readonly Client[] = [
   // Brands and businesses
-  { id: "sifan-farm", name: "思凡自然農場", group: "business" },
-  { id: "jooin-now", name: "星芽社會企業", nameEn: "JOOIN NOW", group: "business" },
+  { id: "sifan-farm", name: "思凡自然農園", nameEn: "Selvans Social Farm", group: "business" },
+  { id: "jooin-now", name: "星芽社會企業", nameEn: "Jooin Now", group: "business" },
   { id: "chihe", name: "齊禾品牌顧問", nameEn: "CHIHE Branding Consultancy", group: "business" },
   { id: "chinyi", name: "勤億蛋品", nameEn: "CHINYI", group: "business" },
   { id: "tuer-life", name: "兔耳生活", nameEn: "TOUR Eco-Fair Studio", group: "business" },

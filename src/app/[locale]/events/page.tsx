@@ -1,30 +1,32 @@
 import Link from "next/link"
 import type { Metadata } from "next"
-import { ArrowRight, ArrowUpRight, MessageCircle } from "lucide-react"
+import { ArrowRight, ArrowUpRight } from "lucide-react"
 import { Container } from "@/components/core/Container"
 import { Button } from "@/components/ui/button"
 import { SectionHeader } from "@/components/site/SectionHeader"
 import { ChapterNav } from "@/components/site/ChapterNav"
 import { CtaBand } from "@/components/site/CtaBand"
-import { ArchSeam, Disc, Half, Quarter, Seam } from "@/components/geo/shapes"
+import { ArchSeam, Disc, Half, Quarter } from "@/components/geo/shapes"
 import { Tabs } from "@/components/ux/Tabs"
 import { FoldList, ReadMore } from "@/components/ux/Fold"
 import { SnapRail } from "@/components/ux/SnapRail"
 import { FootprintTrail } from "@/components/events/FootprintTrail"
-import { Footprints, PartnerDisc, StepRing } from "@/components/events/steps"
+import { Footprints, StepRing } from "@/components/events/steps"
 import { getMessages } from "@/i18n/messages"
 import type { Locale } from "@/i18n/config"
 import { workshops, services, courseText, courseStatusLabel } from "@/data/courses"
-import { site } from "@/lib/site"
+import { contactFor } from "@/lib/site"
+import { ChannelButton } from "@/components/site/ChannelButton"
 import { ClientLogo } from "@/components/site/ClientLogo"
 import { getClient } from "@/data/clients"
 import { cn } from "@/lib/utils"
 import { pageChapters } from "@/lib/chapters"
+import { alternatesFor } from "@/lib/seo"
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   const t = await getMessages(locale as Locale)
-  return { title: t.events.meta.title, description: t.events.meta.description }
+  return { title: t.events.meta.title, description: t.events.meta.description, alternates: alternatesFor(locale, "/events") }
 }
 
 // Learning-map level colours. The level name always accompanies the colour (E02).
@@ -76,7 +78,7 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
     return list.map((year) => ({ year, phase, entries: phase.entries.filter((entry) => entry.date.includes(year)) }))
   })
 
-  const external = <span className="sr-only">（{t.common.external}）</span>
+  const external = <span className="sr-only">{t.common.externalParen}</span>
 
   return (
     <div className="overflow-x-clip">
@@ -96,13 +98,9 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
             </h1>
             <p className="mt-6 max-w-xl text-base leading-[1.9] text-muted-foreground sm:text-lg">{e.hero.description}</p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Button size="lg" variant="line" asChild>
-                <a href={site.line.url} target="_blank" rel="noopener noreferrer">
-                  <MessageCircle />
-                  {e.hero.primaryCta}
-                  {external}
-                </a>
-              </Button>
+              <ChannelButton locale={locale} purpose="notify" externalLabel={t.common.externalParen}>
+                {e.hero.primaryCta}
+              </ChannelButton>
               <Button size="lg" variant="outline" asChild>
                 <a href="#workshops">{e.hero.secondaryCta}</a>
               </Button>
@@ -133,13 +131,9 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
           <div className="mt-10 grid items-center gap-10 lg:grid-cols-[auto_1fr] lg:gap-16">
             <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center lg:flex-col lg:items-center">
               <StepRing className="size-44 px-6 text-lg font-black leading-snug text-ink sm:size-52">{courseStatusLabel["規劃中"][lang]}</StepRing>
-              <Button size="lg" variant="line" asChild>
-                <a href={site.line.url} target="_blank" rel="noopener noreferrer">
-                  <MessageCircle />
-                  {e.upcoming.notifyCta}
-                  {external}
-                </a>
-              </Button>
+              <ChannelButton locale={locale} purpose="notify" externalLabel={t.common.externalParen}>
+                {e.upcoming.notifyCta}
+              </ChannelButton>
             </div>
             <ul className="divide-y divide-border border-y border-border">
               {upcoming.map((c) => {
@@ -208,11 +202,11 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
                 content: (
                   <div className="space-y-2 pl-[3.75rem]">
                     <p className="font-bold text-primary">
-                      {m.theme}｜{m.subtitle}
+                      {m.theme}{locale === "en" ? " | " : "｜"}{m.subtitle}
                     </p>
                     <p className="text-ink/80">{m.description}</p>
                     <p>
-                      <span className="font-bold text-ink">{e.learningMap.audienceLabel}｜</span>
+                      <span className="font-bold text-ink">{e.learningMap.audienceLabel}{locale === "en" ? ": " : "｜"}</span>
                       {m.audience}
                     </p>
                   </div>
@@ -224,7 +218,7 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
           {/* Seam 3 · colour extension: this sand strip grows into the next section */}
           <div className="-mx-6 mt-14 flex flex-col gap-x-8 gap-y-2 rounded-t-3xl bg-sand px-6 pb-2 pt-7 md:mx-0 md:flex-row md:flex-wrap md:items-center md:px-10">
             <p className="font-bold text-ink">{e.learningMap.inquire}</p>
-            <Link href={`/${locale}/consulting#contact`} className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-primary underline-offset-4 hover:underline">
+            <Link href={`/${locale}/consulting#contact`} className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-link">
               {e.learningMap.inquireCta}
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
@@ -368,11 +362,6 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
         </Container>
       </section>
 
-      {/* Seam 5 · shape relay: the latest year's disc rolls on into the roadmap */}
-      <Seam>
-        <Disc className="ml-[10vw] size-14 sm:size-20" />
-      </Seam>
-
       {/* S6 ── Roadmap: quarter → half → full disc, then our own commitment */}
       <section id="roadmap" className="pt-24 md:pt-32">
         <Container>
@@ -409,9 +398,8 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
           />
 
           {/* Seam 6 · overlap: the commitment card sits on the boundary with the case stories */}
-          <figure className="relative z-10 -mb-14 mt-12 overflow-hidden rounded-3xl bg-orange-soft p-7 pr-16 sm:p-10 sm:pr-28">
-            <Disc className="absolute -right-8 -top-8 size-24 sm:size-32" />
-            <figcaption className="text-[13px] font-bold tracking-[0.12em] text-[#A8321A]">{e.commitment.label}</figcaption>
+          <figure className="relative z-10 -mb-14 mt-12 overflow-hidden rounded-3xl bg-orange-soft p-7 sm:p-10">
+            <figcaption className="text-[13px] font-bold tracking-[0.12em] text-[#595959]">{e.commitment.label}</figcaption>
             <blockquote>
               <p className="mt-3 max-w-2xl text-xl font-black leading-[1.6] text-ink sm:text-2xl">{e.commitment.lead}</p>
               <ReadMore label={e.commitment.readMore} className="mt-2 [&>div]:text-ink/80">
@@ -422,19 +410,17 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
         </Container>
       </section>
 
-      {/* S7 ── Case stories (no numbers, per client): two halves close into one disc */}
+      {/* S7 ── Case stories (no numbers, per client) */}
       <section id="cases" className="bg-card pb-20 pt-32 md:pb-28 md:pt-36">
         <Container>
           <SectionHeader kicker={kicker.cases} title={e.cases.title} description={e.cases.description} />
           <SnapRail label={kicker.cases} prevLabel={e.cases.prev} nextLabel={e.cases.next} className="mt-10">
-            {e.cases.items.map((c, i) => (
+            {e.cases.items.map((c) => (
               // `relative` keeps the sr-only label inside the rail's scroll box (it is absolutely positioned)
               <article key={c.title} className="relative h-full rounded-2xl bg-paper p-6 sm:p-7">
-                {/* Stands in for a photo: the client has not supplied photos of these three cases yet (E04) */}
-                <PartnerDisc turn={i} />
-                <h3 className="mt-6 text-lg font-black leading-snug text-ink">{c.title}</h3>
+                <h3 className="text-lg font-black leading-snug text-ink">{c.title}</h3>
                 <p className="mt-2 text-sm font-bold text-muted-foreground">
-                  <span className="sr-only">{e.cases.partnersLabel}：</span>
+                  <span className="sr-only">{e.cases.partnersLabel}{locale === "en" ? ": " : "："}</span>
                   {c.partners}
                 </p>
                 {c.logos.length > 0 && (
@@ -462,7 +448,7 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
       <CtaBand
         title={e.cta.title}
         description={e.cta.description}
-        primary={{ label: e.cta.primaryLabel, href: site.line.url, external: true, line: true }}
+        primary={{ label: e.cta.primaryLabel, ...contactFor(locale, "notify") }}
         secondary={{ label: e.cta.secondaryLabel, href: `/${locale}/consulting#contact` }}
       />
     </div>

@@ -60,7 +60,7 @@ const sustainability = {
   vision: {
     label: "願景與使命",
     visionLabel: "願景",
-    visionText: "成為推動企業與社會永續轉型的催化劑，激發個人與組織的專業價值，共創更美好的未來。",
+    visionText: "成為推動企業與社會永續轉型的催化劑，點亮個人與組織獨特的專業價值，共創更美好的未來。",
     missionLabel: "使命",
     missionText:
       "致力成為企業與個人在永續發展領域的長期夥伴，透過教育、顧問服務與技術支持，加速邁向永續目標。我們不僅提供知識與工具，更激發行動力，促使各界在自身領域中推動永續轉型。",
@@ -169,8 +169,8 @@ const sustainability = {
     // this section, the other two from the client's feedback file (docs/data/6. 客戶回饋).
     qualItems: [
       { title: "被國際看見", description: "海廢手錶品牌透過永續白皮書整理數據與故事，站上國際青年論壇舞台。" },
-      { title: "從被動到主動", description: "台灣休閒農場學會從過去零散被動的企業合作，轉變為更主動、有策略的窗口溝通。" },
-      { title: "說清楚自己的價值", description: "思凡自然農場完成永續定位白皮書，建立可向企業清楚溝通的價值主張。" },
+      { title: "從被動到主動", description: "臺灣休閒農業學會從過去零散被動的企業合作，轉變為更主動、有策略的窗口溝通。" },
+      { title: "說清楚自己的價值", description: "思凡自然農園完成永續白皮書，建立可向企業清楚溝通的價值主張。" },
     ],
   },
   ecosystem: {

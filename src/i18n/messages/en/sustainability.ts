@@ -44,7 +44,7 @@ const sustainability = {
     title: "Social work × Sustainability management × International certification",
     // The client's two paragraphs, split after the first sentence: `lead` is always
     // visible, `paragraphs` sit behind the read-more toggle.
-    lead: "Gung-Ho Culture Organisational Development Consulting Co., Ltd. was founded in 2022 by a multidisciplinary team of professionals.",
+    lead: "Gung-Ho Culture Ltd. was founded in 2022 by a multidisciplinary team of professionals.",
     readMore: "Read the full introduction",
     paragraphs: [
       "Our founder, Evvon Wu, brings more than 15 years of hands-on project experience across social sustainability, healthcare and the charitable sector, along with professional qualifications spanning several disciplines.",
@@ -60,7 +60,7 @@ const sustainability = {
   vision: {
     label: "Vision & Mission",
     visionLabel: "Vision",
-    visionText: "To be a catalyst for the sustainability transformation of business and society, unlocking the professional value of individuals and organisations to build a better future together.",
+    visionText: "To be a catalyst for the sustainability transformation of business and society. We help individuals and organisations bring their unique value to light and build a better future together.",
     missionLabel: "Mission",
     missionText:
       "To be a long-term partner for businesses and individuals in sustainable development, accelerating progress towards sustainability goals through education, advisory services and technical support. We provide not only knowledge and tools but also the drive to act, empowering every sector to lead sustainability transformation in its own field.",
@@ -167,8 +167,8 @@ const sustainability = {
     qualTitle: "Qualitative results",
     qualItems: [
       { title: "Recognised internationally", description: "An ocean-waste watch brand organised its data and story in a Sustainability White Paper and took the stage at an international youth forum." },
-      { title: "From reactive to proactive", description: "台灣休閒農場學會 moved from ad hoc, reactive corporate partnerships to proactive, strategic engagement." },
-      { title: "A value proposition businesses can read", description: "思凡自然農場 completed a white paper on its sustainability positioning and now has a value proposition it can state clearly to businesses." },
+      { title: "From reactive to proactive", description: "Taiwan Leisure Agriculture Association moved from ad hoc, reactive corporate partnerships to proactive, strategic engagement." },
+      { title: "A value proposition businesses can read", description: "Selvans Social Farm completed its Sustainability White Paper and now has a value proposition it can state clearly to businesses." },
     ],
   },
   ecosystem: {

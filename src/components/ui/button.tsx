@@ -9,7 +9,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground shadow-sm hover:bg-[#A8321A] hover:shadow-md",
+        default: "bg-primary text-primary-foreground shadow-sm hover:brightness-95 hover:shadow-md",
         destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline: "border border-ink/20 bg-transparent text-foreground hover:border-ink/40 hover:bg-ink/[0.04]",
         // On dark surfaces
@@ -17,8 +17,8 @@ const buttonVariants = cva(
         outlineInverse: "border border-white/35 bg-transparent text-white hover:bg-white/10 hover:border-white/60",
         secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-ink/[0.05]",
-        link: "text-primary underline-offset-4 hover:underline",
-        accent: "bg-accent text-accent-foreground shadow-sm hover:bg-[#F0A800]",
+        link: "text-link",
+        accent: "bg-accent text-accent-foreground shadow-sm hover:brightness-95",
         line: "bg-[#06C755] text-[#073B1A] shadow-sm hover:brightness-105",
       },
       size: {
@@ -28,6 +28,9 @@ const buttonVariants = cva(
         icon: "h-11 w-11",
       },
     },
+    // White on CIS orange #E8532A is about 3.7:1, which passes only as large text:
+    // filled orange buttons always use bold 19px (rev2 #2③).
+    compoundVariants: [{ variant: "default", className: "text-[19px]" }],
     defaultVariants: {
       variant: "default",
       size: "default",

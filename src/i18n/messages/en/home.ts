@@ -1,10 +1,10 @@
 // Home page copy. Section order follows docs/redesign/03-decisions.md.
 const home = {
   meta: {
-    title: "Gung-Ho Culture CO-ESG | The Professional Bridge for Sustainable Brands",
+    title: "Gung-Ho Culture CO-ESG | Your Bridge to Sustainable Value",
   },
   hero: {
-    label: "The professional bridge for sustainable brands",
+    label: "Bring your value to light.",
     title: "So many are doing meaningful work, yet struggle to get the market to notice",
     titleLead: "So many are doing meaningful work,",
     titleEmphasis: "yet struggle to get the market to notice",
@@ -22,9 +22,9 @@ const home = {
     showAll: "See all {n}",
     othersLabel: "And",
     groups: [
-      { key: "business", title: "Brands & Businesses", others: ["RAFAC Functional Socks", "處處花版"] },
-      { key: "public", title: "Public Sector & Schools", others: ["Taipei City Government", "台灣休閒農業學會", "Wanhua Community College"] },
-      { key: "nonprofit", title: "Non-Profit & International", others: ["中華少年成長基金會", "台東康復之友", "UN-SDGs Impact Developers Conference", "Global Youth Leadership Programme"] },
+      { key: "business", title: "Brands & Businesses", others: ["RAFAC SOCKS", "Showy Pattern Art"] },
+      { key: "public", title: "Public Sector & Schools", others: ["Taipei City Government", "Taiwan Leisure Agriculture Association", "Wanhua Community College"] },
+      { key: "nonprofit", title: "Non-Profit & International", others: ["Youthbud", "The Association for the Mentally Ill, Taitung", "UN-SDGs Impact Developers Conference", "Global Youth Leadership Programme"] },
     ],
   },
   problem: {
@@ -52,7 +52,7 @@ const home = {
       },
     ],
     solutionLabel: "Our answer",
-    solutionTitle: "A professional bridge for the sustainability ecosystem",
+    solutionTitle: "Your bridge to sustainable value",
     solutionDescription:
       "Through advisory services, Sustainability White Papers, CO-ESG Academy and our communication platform, Gung-Ho Culture helps businesses understand sustainability value from every sector, helps markets recognise it, and helps like-minded partners find each other. Say it clearly, and you will be seen.",
     solutionPillars: ["Advisory", "Sustainability White Paper", "CO-ESG Academy", "Communication Platform"],
@@ -89,7 +89,6 @@ const home = {
     moreLink: "About Gung-Ho Culture",
   },
   evidence: {
-    ringCaption: "Every number\nhas a story",
     label: "Evidence of impact",
     title: "Measurable impact, real partnership results",
     description: "Every number has a story behind it.",
@@ -99,7 +98,7 @@ const home = {
         tag: "Revenue impact",
         title: "Funding unlocked by a Sustainability White Paper",
         description:
-          "With a Sustainability White Paper written with Gung-Ho Culture, a brand design firm secured government grants, angel investment and bank loans totalling nearly NT$10 million within a single year.",
+          "A technology company wrote a Sustainability White Paper with Gung-Ho Culture. Within a year, it secured government grants, angel investment and bank loans totalling nearly NT$10 million.",
       },
       {
         tag: "Case study",
@@ -161,7 +160,7 @@ const home = {
       {
         highlight: "At its core, ESG is still about people, and the value Gung-Ho Culture brings fits that perfectly.",
         quote: "They start from the founder's perspective and help you see how your work connects to sustainability. While preparing the report, they also reawaken your original motivation for doing it.",
-        name: "思凡自然農場",
+        name: "Selvans Social Farm",
         client: "sifan-farm",
         title: "Owner, natural farm",
         tag: "ESG Report",
@@ -169,7 +168,7 @@ const home = {
       {
         highlight: "Professional, warm and dependable. The whole collaboration felt reassuring.",
         quote: "They make complex sustainability topics feel far less daunting. People from different backgrounds can meet and exchange ideas, opening up new partnerships and possibilities.",
-        name: "兔耳生活有限公司",
+        name: "Tour Life",
         client: "tuer-life",
         title: "Brand Founder",
         tag: "Brand Sustainability",
@@ -177,7 +176,7 @@ const home = {
       {
         highlight: "We moved from ad hoc, reactive corporate partnerships to proactive, strategic engagement.",
         quote: "True to its name, Gung-Ho Culture is a partner that helps everyone thrive together, integrating and translating knowledge.",
-        name: "台灣休閒農業學會",
+        name: "Taiwan Leisure Agriculture Association",
         client: "",
         title: "Industry Partner",
         tag: "Supply Chain",
@@ -185,7 +184,7 @@ const home = {
       {
         highlight: "Gung-Ho Culture are experts in strengthening corporate ESG.",
         quote: "They offer perspectives clients would never have thought of, while building further on what clients already have, bringing together environmental, social and economic value.",
-        name: "齊禾品牌顧問",
+        name: "Chihe Design",
         client: "chihe",
         title: "Co-founder",
         tag: "Advisory",
@@ -198,7 +197,7 @@ const home = {
     description:
       "Book a 15-minute Coffee Chat and let's talk about how to make what you do clear, visible and understood.",
     primaryLabel: "Book a 15-minute Coffee Chat",
-    secondaryLabel: "Follow us on LINE first",
+    secondaryLabel: "Follow us on LinkedIn",
     steps: ["Leave your details", "A 15-minute online chat", "Receive tailored next steps"],
   },
 }

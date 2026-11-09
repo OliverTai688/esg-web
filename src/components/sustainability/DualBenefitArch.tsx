@@ -14,8 +14,8 @@ export function DualBenefitArch({
   return (
     <figure className={cn("max-w-[460px]", className)}>
       <svg viewBox="0 0 460 150" fill="none" className="block h-auto w-full" aria-hidden="true">
-        <path d="M14 138 C 14 70, 110 26, 208 22" stroke="#FAB40A" strokeWidth="20" strokeLinecap="round" pathLength={1} className="scroll-draw" />
-        <path d="M446 138 C 446 70, 350 26, 252 22" stroke="#F25232" strokeWidth="20" strokeLinecap="round" pathLength={1} className="scroll-draw" />
+        <path d="M14 138 C 14 70, 110 26, 208 22" stroke="#F9A500" strokeWidth="20" strokeLinecap="round" pathLength={1} className="scroll-draw" />
+        <path d="M446 138 C 446 70, 350 26, 252 22" stroke="#E8532A" strokeWidth="20" strokeLinecap="round" pathLength={1} className="scroll-draw" />
         <rect x="216" y="6" width="28" height="32" fill="#FFFFFF" />
       </svg>
       <figcaption className="mt-2 grid grid-cols-[1fr_auto_1fr] items-start gap-2 text-xs font-bold text-white sm:text-sm">

@@ -62,9 +62,9 @@ const learning = {
   },
   cta: {
     title: "Finished reading? What next?",
-    body: "Want to apply these ideas in your own organisation? Find the right topic on the Learning Map, or follow us on LINE for new articles and course updates.",
+    body: "Want to apply these ideas in your own organisation? Find the right topic on the Learning Map, or email us with your questions.",
     primary: "Open the Sustainability Learning Map",
-    secondary: "Follow us on LINE",
+    secondary: "Email us",
   },
   article: {
     by: "Author",
@@ -75,9 +75,9 @@ const learning = {
     next: "Next on this topic",
     nextOther: "Read next",
     endTitle: "Finished reading? What next?",
-    endBody: "Still exploring? Follow us on LINE for new articles. Have a specific question? Book a 15-minute Coffee Chat.",
+    endBody: "Still exploring? Follow us on LinkedIn for new articles. Have a specific question? Book a 15-minute Coffee Chat.",
     endPrimary: "Book a 15-minute Coffee Chat",
-    endSecondary: "Follow us on LINE",
+    endSecondary: "Follow us on LinkedIn",
   },
   insights: {
     meta: {
@@ -104,9 +104,9 @@ const learning = {
       title: "The same articles, arranged by topic",
     },
     mediaTitle: "Media and partnership enquiries",
-    mediaBody: "For interviews, talks and forum partnerships, fill in the contact form or message our official LINE account.",
+    mediaBody: "For interviews, talks and forum partnerships, fill in the contact form or email us.",
     mediaPrimary: "Send an enquiry",
-    mediaSecondary: "Follow us on LINE",
+    mediaSecondary: "Email us",
   },
 }
 

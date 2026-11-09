@@ -193,7 +193,7 @@ function DesktopNavGroup({
           href={group.href}
           onClick={onClose}
           className={cn(
-            "relative py-2 pl-4 pr-1 text-[13.5px] font-medium tracking-[-0.01em] transition-colors duration-200 rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-primary/30",
+            "relative whitespace-nowrap py-2 pl-2 pr-1 xl:pl-4 text-[13.5px] font-medium tracking-[-0.01em] transition-colors duration-200 rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-primary/30",
             isActive
               ? "text-primary"
               : isOpen
@@ -419,7 +419,7 @@ const Navbar = ({ locale, nav }: NavbarProps) => {
             <Link
               href={`/${locale}/join`}
               className={cn(
-                "relative px-4 py-2 text-[13.5px] font-medium tracking-[-0.01em] rounded-lg transition-colors duration-200 outline-none focus-visible:ring-2 focus-visible:ring-primary/30",
+                "relative whitespace-nowrap px-2.5 xl:px-4 py-2 text-[13.5px] font-medium tracking-[-0.01em] rounded-lg transition-colors duration-200 outline-none focus-visible:ring-2 focus-visible:ring-primary/30",
                 isGroupActive(`/${locale}/join`)
                   ? "text-primary"
                   : "text-muted-foreground hover:text-foreground"
@@ -443,7 +443,7 @@ const Navbar = ({ locale, nav }: NavbarProps) => {
           <Button
             variant="default"
             size="sm"
-            className="rounded-full px-5 h-9 text-[13px] font-semibold shadow-[0_1px_3px_rgba(0,0,0,0.1),0_0_0_1px_rgba(0,0,0,0.04)] hover:shadow-[0_3px_12px_rgba(0,0,0,0.12),0_0_0_1px_rgba(0,0,0,0.04)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+            className="rounded-full px-4 xl:px-5 h-10 shadow-[0_1px_3px_rgba(0,0,0,0.1),0_0_0_1px_rgba(0,0,0,0.04)] hover:shadow-[0_3px_12px_rgba(0,0,0,0.12),0_0_0_1px_rgba(0,0,0,0.04)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
             asChild
           >
             <Link href={`/${locale}/consulting#contact`}>{labels.cta}</Link>
@@ -541,7 +541,7 @@ const Navbar = ({ locale, nav }: NavbarProps) => {
                                 <Link
                                   href={group.href}
                                   onClick={() => setMobileOpen(false)}
-                                  className="flex min-h-11 items-center gap-2 rounded-xl px-3 text-sm font-bold text-primary transition-colors hover:bg-primary/[0.04] active:bg-primary/[0.06]"
+                                  className="flex min-h-11 items-center gap-2 rounded-xl px-3 text-sm font-bold text-brand-grey transition-colors [&_svg]:text-primary hover:bg-primary/[0.04] active:bg-primary/[0.06]"
                                 >
                                   {labels.overview}
                                   <ArrowRight size={14} strokeWidth={2.2} aria-hidden="true" />
@@ -609,7 +609,7 @@ const Navbar = ({ locale, nav }: NavbarProps) => {
                 <Button
                   variant="default"
                   size="lg"
-                  className="w-full rounded-full py-5 text-[15px] font-semibold shadow-[0_2px_8px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.12)] transition-all"
+                  className="w-full rounded-full py-5 shadow-[0_2px_8px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.12)] transition-all"
                   asChild
                 >
                   <Link

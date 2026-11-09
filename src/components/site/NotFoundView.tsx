@@ -28,9 +28,9 @@ export function NotFoundView({ messages }: { messages: { zh: NotFoundMessages; e
     <section className="py-20 md:py-28">
       <Container className="flex flex-col items-center text-center">
         <svg viewBox="0 0 240 96" className="h-auto w-52 sm:w-64" aria-hidden="true">
-          <path d="M10 96 C 10 52, 44 24, 78 16" fill="none" stroke="#FAB40A" strokeWidth="12" strokeLinecap="round" />
-          <path d="M230 96 C 230 52, 196 24, 162 16" fill="none" stroke="#F25232" strokeWidth="12" strokeLinecap="round" />
-          <path d="M96 12 C 112 9, 128 9, 144 12" fill="none" stroke="#4D515B" strokeOpacity="0.45" strokeWidth="3" strokeLinecap="round" strokeDasharray="2 9" />
+          <path d="M10 96 C 10 52, 44 24, 78 16" fill="none" stroke="#F9A500" strokeWidth="12" strokeLinecap="round" />
+          <path d="M230 96 C 230 52, 196 24, 162 16" fill="none" stroke="#E8532A" strokeWidth="12" strokeLinecap="round" />
+          <path d="M96 12 C 112 9, 128 9, 144 12" fill="none" stroke="#595959" strokeOpacity="0.45" strokeWidth="3" strokeLinecap="round" strokeDasharray="2 9" />
         </svg>
         <p className="kicker-rule mt-10 font-display text-[13px] font-bold tracking-[0.12em] text-primary">{t.kicker}</p>
         <h1 className="mt-3 text-[1.75rem] font-black leading-[1.3] text-ink sm:text-4xl">{t.title}</h1>

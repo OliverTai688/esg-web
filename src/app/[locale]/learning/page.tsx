@@ -8,21 +8,21 @@ import { ChapterNav } from "@/components/site/ChapterNav"
 import { toSummary } from "@/components/site/PostCard"
 import { PostFilter } from "@/components/site/PostFilter"
 import { CtaBand } from "@/components/site/CtaBand"
-import { ArchSeam, Petal } from "@/components/geo/shapes"
-import { FlowerGlyph } from "@/components/learning/FlowerGlyph"
+import { ArchSeam } from "@/components/geo/shapes"
 import { TopicExplorer } from "@/components/learning/TopicExplorer"
 import { getMessages } from "@/i18n/messages"
 import type { Locale } from "@/i18n/config"
 import { pageChapters } from "@/lib/chapters"
 import { getAllPosts, getCategories, getPostsByCategory } from "@/lib/posts"
-import { learningSections, categoryLabel, topicOf } from "@/lib/learning-sections"
-import { site } from "@/lib/site"
+import { learningSections, categoryLabel } from "@/lib/learning-sections"
+import { contactFor } from "@/lib/site"
 import { CoesgBand } from "@/components/site/CoesgBand"
+import { alternatesFor } from "@/lib/seo"
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   const t = await getMessages(locale as Locale)
-  return { title: t.learning.meta.title, description: t.learning.meta.description }
+  return { title: t.learning.meta.title, description: t.learning.meta.description, alternates: alternatesFor(locale, "/learning") }
 }
 
 // Topic hub (docs/redesign/pages-v2/learning/). One shape carries the page, the
@@ -77,7 +77,7 @@ export default async function LearningPage({ params }: { params: Promise<{ local
               </li>
             ))}
           </ul>
-          <Link href={href} className="mt-3 inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-primary underline-offset-4 hover:underline">
+          <Link href={href} className="mt-3 inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-link">
             {l.topics.viewTopic}
             <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
@@ -136,7 +136,7 @@ export default async function LearningPage({ params }: { params: Promise<{ local
       {featured && (
         <section id="featured" className="relative bg-surface-dark pb-20 text-white md:pb-28">
           <ArchSeam className="bg-surface-dark" />
-          <Container className="grid items-end gap-10 pt-4 lg:grid-cols-[1fr_auto]">
+          <Container className="pt-4">
             <div>
               <p className="kicker-rule text-[13px] font-bold tracking-[0.12em] text-brand-yellow">{l.featured.label}</p>
               <article className="mt-8 max-w-3xl rounded-tr-[clamp(4.5rem,16vw,9.5rem)] rounded-bl-[clamp(4.5rem,16vw,9.5rem)] bg-brand-yellow px-7 py-10 text-ink sm:px-12 sm:py-14">
@@ -160,22 +160,16 @@ export default async function LearningPage({ params }: { params: Promise<{ local
                 </Button>
               </article>
             </div>
-            <FlowerGlyph topic={topicOf(featured.categorySlug)} tone="dark" className="hidden size-56 lg:block" />
           </Container>
         </section>
       )}
-
-      {/* Seam 3 · shape relay: a petal lands on the boundary and becomes the rows' topic mark */}
-      <div aria-hidden="true" className="pointer-events-none relative z-10 h-0">
-        <Petal className="absolute right-[9%] top-0 size-10 -translate-y-1/2 bg-brand-orange sm:size-16 lg:right-[14%]" />
-      </div>
 
       {/* S4 ── All articles: petals in rows */}
       <section id="articles" className="bg-sand py-16 md:py-24">
         <Container>
           <div className="mb-8 flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
             <SectionHeader kicker={l.articles.label} title={l.articles.title} size="md" />
-            <Link href={`/${locale}/insights`} className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-primary underline-offset-4 hover:underline">
+            <Link href={`/${locale}/insights`} className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-link">
               {l.articles.toInsights}
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
@@ -197,7 +191,7 @@ export default async function LearningPage({ params }: { params: Promise<{ local
         title={l.cta.title}
         description={l.cta.body}
         primary={{ label: l.cta.primary, href: `/${locale}/events#workshops` }}
-        secondary={{ label: l.cta.secondary, href: site.line.url, external: true, line: true }}
+        secondary={{ label: l.cta.secondary, ...contactFor(locale, "ask") }}
       />
     </div>
   )

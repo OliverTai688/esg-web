@@ -7,13 +7,16 @@
 /* ═══════════════════════════════════════════════════════════════════════
    共好玟化 CO-ESG Design System (rev2, 2026-10)
    ─────────────────────────────────────────────────────────────────────
-   Colours come from the 共好玟化 CIS (print values converted to screen,
-   candidate A in docs/tasks/sitemap-rev1/G02). Roles:
+   Colours are the 共好玟化 CIS standard colours (rev2-202610 #2):
+   orange #E8532A (Pantone 165C), yellow #F9A500 (Pantone 7548C),
+   grey #595959 (Pantone Cool Gray 11C). Roles:
      70% — warm paper + white surfaces, ink text
      20% — dark cool-grey surfaces (replaces the old full-bleed green)
      10% — orange (CTA, links, key numbers) + yellow (tags, highlights)
-   Contrast (WCAG AA): primary #C0391A with white 5.5:1, on sand 4.7:1; ink on paper 15.6:1;
-   yellow is never used as text on light surfaces.
+   Contrast (WCAG AA): white on orange #E8532A is 3.7:1 and orange on paper 3.5:1,
+   so orange passes only for large text. Filled orange buttons use bold 19px;
+   small text links use grey #595959 text with an orange underline (.text-link).
+   Grey on paper 6.6:1; ink on paper 15.6:1. Yellow is never text on light surfaces.
    ESG共學坊 references keep their own CLASS green via [data-brand="coesg"].
    ═══════════════════════════════════════════════════════════════════════ */
 
@@ -35,9 +38,9 @@
   --color-ring: var(--ring);
 
   /* CIS brand colours — use for fills, icons and display text ≥ 24px */
-  --color-brand-orange: #F25232;
-  --color-brand-yellow: #FAB40A;
-  --color-brand-grey: #4D515B;
+  --color-brand-orange: #E8532A;
+  --color-brand-yellow: #F9A500;
+  --color-brand-grey: #595959;
   --color-ink: #1F2022;
   --color-paper: #FBF8F4;
   --color-sand: #F4EEE6;
@@ -95,7 +98,7 @@
   --popover-foreground: #1F2022;
 
   /* Primary: orange-strong — buttons, links, focus (white text 5.5:1) */
-  --primary: #C0391A;
+  --primary: #E8532A;
   --primary-foreground: #FFFFFF;
 
   /* Secondary: warm sand surface */
@@ -103,7 +106,7 @@
   --secondary-foreground: #1F2022;
 
   /* Accent: CIS yellow — tags and highlights, always with ink text */
-  --accent: #FAB40A;
+  --accent: #F9A500;
   --accent-foreground: #1F2022;
 
   --muted: #F4EEE6;
@@ -114,7 +117,7 @@
 
   --success: #23843A;
   --success-foreground: #FFFFFF;
-  --warning: #FAB40A;
+  --warning: #F9A500;
   --warning-foreground: #1F2022;
   --info: #2F6FB3;
   --info-foreground: #FFFFFF;
@@ -124,24 +127,24 @@
 
   --border: #E9E3DA;
   --input: #DCD5CB;
-  --ring: #C0391A;
+  --ring: #E8532A;
 
   --radius: 0.75rem;
 
-  --chart-1: #F25232;
-  --chart-2: #FAB40A;
-  --chart-3: #4D515B;
+  --chart-1: #E8532A;
+  --chart-2: #F9A500;
+  --chart-3: #595959;
   --chart-4: #2F6FB3;
   --chart-5: #23843A;
 
   --sidebar: #FFFFFF;
   --sidebar-foreground: #1F2022;
-  --sidebar-primary: #C0391A;
+  --sidebar-primary: #E8532A;
   --sidebar-primary-foreground: #FFFFFF;
   --sidebar-accent: #F4EEE6;
   --sidebar-accent-foreground: #1F2022;
   --sidebar-border: #E9E3DA;
-  --sidebar-ring: #C0391A;
+  --sidebar-ring: #E8532A;
 }
 
 /* ESG共學坊 sub-brand scope */
@@ -168,6 +171,14 @@
     letter-spacing: -0.01em;
   }
   p { text-wrap: pretty; }
+  /* Chinese body paragraphs are justified, last line left (rev2 #3). Single lines
+     are unaffected (justify never stretches a last line); centred and right-aligned
+     blocks keep their alignment. English stays left-aligned (EN rule R12). */
+  :lang(zh) p:not([class*="text-center"], [class*="text-right"], [class*="text-center"] *, [class*="text-right"] *),
+  :lang(zh) .prose li {
+    text-align: justify;
+    text-align-last: start;
+  }
   /* Anchor targets land just below the sticky header (68px), or below the header
      plus the chapter pills on pages that have a ChapterNav. */
   html:has([data-chapter-nav]) { --anchor-offset: 122px; }
@@ -244,9 +255,21 @@
     height: 2px;
     margin-right: 0.75rem;
     vertical-align: middle;
-    background: linear-gradient(90deg, #F25232 70%, #FAB40A 70%);
+    background: linear-gradient(90deg, #E8532A 70%, #F9A500 70%);
   }
 
+}
+
+/* Small text links (14–16px): grey text, orange underline and arrow (rev2 #2③) */
+@utility text-link {
+  color: var(--color-brand-grey);
+  text-decoration-line: underline;
+  text-decoration-color: var(--color-brand-orange);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+  transition: color 150ms;
+  &:hover { color: var(--color-ink); }
+  & svg { color: var(--color-brand-orange); }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -268,7 +291,7 @@
 .prose blockquote {
   @apply my-6 pl-5 border-l-4 border-primary/30 italic text-muted-foreground;
 }
-.prose a { @apply text-primary underline underline-offset-2 hover:text-primary/80 transition-colors; }
+.prose a { @apply text-link; }
 .prose img { @apply rounded-lg my-8; }
 .prose hr { @apply my-10 border-border; }
 .prose code { @apply text-sm bg-muted px-1.5 py-0.5 rounded font-mono; }

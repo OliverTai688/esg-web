@@ -8,7 +8,7 @@ import { SectionHeader } from "@/components/site/SectionHeader"
 import { ChapterNav } from "@/components/site/ChapterNav"
 import { CtaBand } from "@/components/site/CtaBand"
 import { EcosystemHub } from "@/components/site/EcosystemHub"
-import { ArchSeam, Block, Disc, Half, Quarter, Seam } from "@/components/geo/shapes"
+import { ArchSeam, Disc, Half, Quarter } from "@/components/geo/shapes"
 import { FoldList, ReadMore } from "@/components/ux/Fold"
 import { Tabs } from "@/components/ux/Tabs"
 import { HeroArch } from "@/components/sustainability/HeroArch"
@@ -20,11 +20,12 @@ import type { Locale } from "@/i18n/config"
 import { formatImpactMetric, cn } from "@/lib/utils"
 import { consultants } from "@/data/team"
 import { pageChapters } from "@/lib/chapters"
+import { alternatesFor } from "@/lib/seo"
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   const t = await getMessages(locale as Locale)
-  return { title: t.sustainability.meta.title, description: t.sustainability.meta.description }
+  return { title: t.sustainability.meta.title, description: t.sustainability.meta.description, alternates: alternatesFor(locale, "/sustainability") }
 }
 
 const KICKER = "kicker-rule text-[13px] font-bold tracking-[0.12em]"
@@ -62,7 +63,7 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
                   <span key={part} className={last ? "block text-primary" : "inline-block"}>
                     {i > 0 && !last && (
                       <span aria-hidden="true" className="mx-2.5 font-normal text-ink/20 sm:mx-4">
-                        ｜
+                        {english ? "|" : "｜"}
                       </span>
                     )}
                     {part}
@@ -104,7 +105,6 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
             <div className="flex items-end gap-7 lg:block">
               {/* The founder in an arch-topped doorway, standing on a block */}
               <div className="relative w-32 shrink-0 sm:w-40 lg:w-[220px]">
-                <Block className="absolute -bottom-3 -right-3 size-14 bg-brand-yellow lg:-bottom-[18px] lg:-right-[18px] lg:size-20" />
                 <Image
                   src="/team/consultant-01.jpg"
                   alt={t.home.story.founderName}
@@ -139,7 +139,7 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
             <h3 className="mt-6 text-sm font-bold text-muted-foreground">{s.whoWeAre.credentialsTitle}</h3>
             <ul className="mt-3 grid max-w-xl grid-cols-2 gap-[3px]">
               {s.whoWeAre.credentials.map((c, i) => (
-                <li key={c} className={cn("flex min-h-13 items-center px-4 py-2 text-sm font-bold leading-snug text-[#A8321A]", i % 3 === 0 ? "bg-[#FBE0D8]" : "bg-orange-soft")}>
+                <li key={c} className={cn("flex min-h-13 items-center px-4 py-2 text-sm font-bold leading-snug text-[#595959]", i % 3 === 0 ? "bg-[#FBE0D8]" : "bg-orange-soft")}>
                   {c}
                 </li>
               ))}
@@ -147,11 +147,6 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
           </div>
         </Container>
       </section>
-
-      {/* Seam 2 · shape relay: the pier's top stone becomes the first voussoir */}
-      <Seam className="mx-auto max-w-[1120px] px-6 md:px-8">
-        <Block className="size-7 bg-brand-orange sm:size-11" />
-      </Seam>
 
       {/* ── 2 Vision & mission, with the five values as the stones of an arch ── */}
       <section id="vision" className="bg-sand pb-20 pt-16 md:pb-24 md:pt-20">
@@ -284,7 +279,7 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
             <SectionHeader kicker={s.services.label} title={s.services.title} description={s.services.description} />
             <Link
               href={`/${locale}/consulting#solutions`}
-              className="inline-flex min-h-11 shrink-0 items-center gap-1.5 text-sm font-bold text-primary underline-offset-4 hover:underline"
+              className="inline-flex min-h-11 shrink-0 items-center gap-1.5 text-sm font-bold text-link"
             >
               {s.services.cta}
               <ArrowRight className="size-4" aria-hidden="true" />
@@ -323,9 +318,9 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
 
           <div className="mt-8">
             <svg viewBox="0 0 800 96" fill="none" className="block h-auto w-full" aria-hidden="true">
-              <path d="M170 90 C 290 -16, 510 -16, 630 90" stroke="#F25232" strokeWidth="14" strokeLinecap="round" />
+              <path d="M170 90 C 290 -16, 510 -16, 630 90" stroke="#E8532A" strokeWidth="14" strokeLinecap="round" />
               <circle cx="170" cy="86" r="10" fill="#8A8E97" />
-              <circle cx="630" cy="86" r="10" fill="#F25232" />
+              <circle cx="630" cy="86" r="10" fill="#E8532A" />
             </svg>
             <div className="-mt-1 grid grid-cols-2 gap-3 md:gap-[22%]">
               <p className="rounded-b-2xl border-t-[5px] border-[#8A8E97] bg-card p-4 text-sm leading-[1.75] text-muted-foreground sm:p-5 sm:text-base">{s.proof.before}</p>
@@ -381,11 +376,6 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
           />
         </Container>
       </section>
-
-      {/* Seam 7 · shape relay: the arch's orange end lands on the boundary and grows into the ring */}
-      <Seam className="mx-auto flex max-w-[1120px] justify-end px-6 md:px-8">
-        <Disc className="size-6 sm:size-9" />
-      </Seam>
 
       {/* ── 7 Ecosystem: the arch closes into a ring ── */}
       <section id="ecosystem" className="py-20 md:py-24">

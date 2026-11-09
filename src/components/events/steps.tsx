@@ -26,20 +26,3 @@ export function Footprints({ count, className }: { count: number; className?: st
     </span>
   )
 }
-
-const TURN = ["", "rotate-90", "-scale-x-100"]
-
-/**
- * Two partners' steps meeting: two half discs close into one, with 共好玟化 as
- * the orange dot between them. `turn` varies the pose (0°, 90°, mirrored).
- * The halves slide together as the card scrolls in; at rest the disc is whole.
- */
-export function PartnerDisc({ turn = 0, className }: { turn?: number; className?: string }) {
-  return (
-    <span aria-hidden="true" className={cn("relative flex w-fit", TURN[turn % TURN.length], className)}>
-      <span className="scroll-gather h-24 w-12 rounded-l-full bg-brand-yellow" style={{ ["--gx" as string]: "-45%" }} />
-      <span className="scroll-gather h-24 w-12 rounded-r-full bg-brand-grey" style={{ ["--gx" as string]: "45%" }} />
-      <span className="absolute left-1/2 top-1/2 size-6 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-orange ring-4 ring-paper" />
-    </span>
-  )
-}

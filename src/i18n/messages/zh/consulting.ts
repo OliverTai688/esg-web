@@ -25,7 +25,7 @@ const consulting = {
     kicker: "合作洽詢",
     title: "預約 15 分鐘 Coffee Chat",
     description:
-      "讓我們聊聊如何點亮你的專業價值。無論你是品牌主、供應鏈夥伴、還是永續產業的參與者，我們都期待與你對話。",
+      "讓我們聊聊如何點亮你獨特的專業價值。無論你是品牌主、供應鏈夥伴、還是永續產業的參與者，我們都期待與你對話。",
     primaryCta: "預約諮詢時段",
     lineCta: "用 LINE 直接問",
     // The page's equation: petal + block = quarter-disc. Open in the hero, answered at the form.

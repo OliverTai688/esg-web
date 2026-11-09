@@ -1,15 +1,16 @@
 import Link from "next/link"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { ArrowLeft, ArrowRight, MessageCircle } from "lucide-react"
+import { ArrowLeft, ArrowRight } from "lucide-react"
 import { Container } from "@/components/core/Container"
 import { Button } from "@/components/ui/button"
 import { StepRing } from "@/components/events/steps"
 import { getMessages } from "@/i18n/messages"
 import { i18n, type Locale } from "@/i18n/config"
 import { getCourseBySlug, workshops, services, courseText, courseStatusLabel, courseChapter } from "@/data/courses"
-import { site } from "@/lib/site"
+import { ChannelButton } from "@/components/site/ChannelButton"
 import { cn } from "@/lib/utils"
+import { alternatesFor } from "@/lib/seo"
 
 interface EventDetailPageProps {
   params: Promise<{ locale: string; slug: string }>
@@ -24,7 +25,7 @@ export async function generateMetadata({ params }: EventDetailPageProps): Promis
   const course = getCourseBySlug(slug)
   if (!course) return {}
   const ct = courseText(course, locale)
-  return { title: ct.title, description: ct.description }
+  return { title: ct.title, description: ct.description, alternates: alternatesFor(locale, `/events/${slug}`) }
 }
 
 // One footprint up close (docs/redesign/pages-v2/events/01-page-plan.md §9).
@@ -76,15 +77,11 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
             <div>
               <h1 className="max-w-3xl text-3xl font-black leading-[1.3] text-ink sm:text-5xl">{ct.title}</h1>
               <p className="mt-5 max-w-2xl text-base leading-[1.9] text-muted-foreground sm:text-lg">{ct.description}</p>
-              {/* Next step: LINE first for every status; then the learning map, or a Coffee Chat for advisory services */}
+              {/* Next step: LINE (English: email) first for every status; then the learning map, or a Coffee Chat for advisory services */}
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Button size="lg" variant="line" asChild>
-                  <a href={site.line.url} target="_blank" rel="noopener noreferrer">
-                    <MessageCircle />
-                    {planned ? d.waitlist : ended ? d.notify : d.enquire}
-                    <span className="sr-only">（{t.common.external}）</span>
-                  </a>
-                </Button>
+                <ChannelButton locale={locale} purpose={planned || ended ? "notify" : "ask"} externalLabel={t.common.externalParen}>
+                  {planned ? d.waitlist : ended ? d.notify : d.enquire}
+                </ChannelButton>
                 <Button size="lg" variant="outline" asChild>
                   {chapterId === "services" ? (
                     <Link href={`/${locale}/consulting#contact`}>
@@ -149,7 +146,7 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
               <ul className="mt-2 flex flex-col gap-x-8 sm:flex-row sm:flex-wrap">
                 {related.map((r) => (
                   <li key={r.slug}>
-                    <Link href={`/${locale}/events/${r.slug}`} className="inline-flex min-h-11 items-center gap-1.5 font-bold text-primary underline-offset-4 hover:underline">
+                    <Link href={`/${locale}/events/${r.slug}`} className="inline-flex min-h-11 items-center gap-1.5 font-bold text-link">
                       {courseText(r, locale).title}
                       <ArrowRight className="size-4" aria-hidden="true" />
                     </Link>

@@ -1,10 +1,10 @@
 // Home page copy. Section order follows docs/redesign/03-decisions.md.
 const home = {
   meta: {
-    title: "共好玟化 CO-ESG | 永續品牌的專業橋樑",
+    title: "共好玟化 CO-ESG｜永續價值的專業橋樑",
   },
   hero: {
-    label: "永續品牌的專業橋樑",
+    label: "點亮你獨特的專業價值",
     title: "很多人正在做有意義的事，卻不知道怎麼讓市場看見",
     titleLead: "很多人正在做有意義的事，",
     titleEmphasis: "卻不知道怎麼讓市場看見",
@@ -26,7 +26,7 @@ const home = {
     othersLabel: "以及",
     groups: [
       { key: "business", title: "品牌與企業", others: ["RAFAC 機能襪", "處處花版"] },
-      { key: "public", title: "公部門與學校", others: ["台北市政府", "台灣休閒農業學會", "萬華社區大學"] },
+      { key: "public", title: "公部門與學校", others: ["臺北市政府", "臺灣休閒農業學會", "臺北市萬華社區大學"] },
       { key: "nonprofit", title: "非營利與國際", others: ["中華少年成長基金會", "台東康復之友", "UN-SDGs Impact Developers Conference", "Global Youth Leadership Programme"] },
     ],
   },
@@ -55,7 +55,7 @@ const home = {
       },
     ],
     solutionLabel: "我們的答案",
-    solutionTitle: "成為永續生態圈的專業橋樑",
+    solutionTitle: "成為永續價值的專業橋樑",
     solutionDescription:
       "共好玟化透過顧問輔導、永續白皮書服務、ESG共學坊與溝通平台，讓不同領域的永續價值能被企業理解、被市場看見、也能找到理念相符的合作夥伴。說清楚，才能被看見。",
     solutionPillars: ["顧問輔導", "永續白皮書", "ESG共學坊", "溝通平台"],
@@ -92,7 +92,6 @@ const home = {
     moreLink: "認識共好玟化",
   },
   evidence: {
-    ringCaption: "每個數字\n都有一則故事",
     label: "永續行動證據",
     title: "可量化的影響力，真實的合作成果",
     description: "每一個數字，都對應一則可以說得出來的故事。",
@@ -102,7 +101,7 @@ const home = {
         tag: "營業額助益",
         title: "永續白皮書帶來的經濟資源",
         description:
-          "透過共好玟化協助撰寫永續白皮書，讓一家品牌設計公司在一年內獲得政府補助、天使投資與銀行貸款，累計近 1000 萬的經濟資源挹注。",
+          "透過共好玟化協助撰寫永續白皮書，讓一家科技公司在一年內獲得政府補助、天使投資與銀行貸款，累計近 1000 萬的經濟資源挹注。",
       },
       {
         tag: "合作案例",
@@ -166,7 +165,7 @@ const home = {
       {
         highlight: "ESG 本質仍然是以人為核心，共好玟化提供的價值非常契合。",
         quote: "從創辦者的角度切入，協助你想清楚自己在做的事與永續的關聯。幫企業做報告的同時，也喚醒人對永續的初衷。",
-        name: "思凡自然農場",
+        name: "思凡自然農園",
         client: "sifan-farm",
         title: "自然農園負責人",
         tag: "ESG 報告",
@@ -182,7 +181,7 @@ const home = {
       {
         highlight: "從零散被動的企業合作，轉變為更主動、有策略的窗口溝通。",
         quote: "如同名字一樣的『共好』夥伴，共好玟化是知識整合與轉譯的角色。",
-        name: "台灣休閒農場學會",
+        name: "臺灣休閒農業學會",
         client: "",
         title: "產業合作夥伴",
         tag: "供應鏈",
