@@ -1,7 +1,8 @@
 import Image from "next/image"
 import type { Consultant } from "@/data/team"
+import type { Client } from "@/data/clients"
 import { Quarter } from "@/components/geo/shapes"
-import { Tabs } from "@/components/ux/Tabs"
+import { ClientLogo } from "@/components/site/ClientLogo"
 import { cn } from "@/lib/utils"
 
 interface Role {
@@ -19,22 +20,33 @@ const ARCS = [
 ]
 
 // The arch closed into a ring: four arcs around the registered ESG共學坊 logo,
-// one role at each corner (stacked under the ring on phones). The consultants
-// are a row of avatar tabs: pick a face to read that person's title and organisation.
+// one role at each corner (stacked under the ring on phones). Under it, in order:
+// the ESG共學坊 partner logos (rev2 #32), the partner-network paragraph (#33) and
+// the advisory team (#34), all ten people as cards with name, organisation and
+// title, and expertise. The team block is #team (linked from other pages).
 export function EcosystemHub({
   roles,
   centerLabel,
+  partners,
+  partnersTitle,
+  network,
   consultants,
   consultantsTitle,
+  expertiseLabel,
   english = false,
 }: {
   roles: readonly Role[]
   centerLabel: string
+  partners: readonly Client[]
+  partnersTitle: string
+  network: { title: string; body: string }
   consultants: readonly Consultant[]
   consultantsTitle: string
-  /** Show the translated job titles. */
+  expertiseLabel: string
+  /** Show the English names, organisations and expertise. */
   english?: boolean
 }) {
+  const lang = english ? "en" : "zh"
   return (
     <div>
       <div className="mx-auto grid max-w-4xl gap-5 lg:grid-cols-[1fr_auto_1fr] lg:items-center lg:gap-x-12 lg:gap-y-14">
@@ -66,28 +78,44 @@ export function EcosystemHub({
         })}
       </div>
 
-      <div className="mx-auto mt-14 max-w-4xl">
+      <div className="mx-auto mt-16 max-w-5xl">
+        <h3 className="text-sm font-bold tracking-[0.12em] text-muted-foreground">{partnersTitle}</h3>
+        <ul className="mt-4 grid grid-flow-dense grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-6">
+          {partners.map((c) => (
+            <li key={c.id} className={cn(c.wide && "col-span-2")}>
+              <ClientLogo client={c} english={english} className="h-16" />
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="mx-auto mt-16 max-w-5xl">
+        <h3 className="text-xl font-black leading-[1.5] text-ink sm:text-2xl">{network.title}</h3>
+        <p className="mt-3 max-w-[68ch] text-base leading-[1.9] text-ink/80">{network.body}</p>
+      </div>
+
+      <div id="team" className="mx-auto mt-12 max-w-5xl">
         <h3 className="text-sm font-bold tracking-[0.12em] text-muted-foreground">{consultantsTitle}</h3>
-        <Tabs
-          className="mt-3"
-          panelClassName="mt-4"
-          label={consultantsTitle}
-          items={consultants.map((c, i) => ({
-            id: `c${i}`,
-            label: (
-              <>
-                <Image src={c.photo} alt="" width={32} height={32} className="-ml-2.5 size-8 rounded-full object-cover" />
-                {c.name}
-              </>
-            ),
-            content: (
-              <p className="text-sm leading-[1.75] text-muted-foreground sm:text-base">
-                <strong className="mr-2 font-bold text-ink">{english ? c.roleEn : c.role}</strong>
-                {c.organization}
+        <ul className="mt-5 grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-5 lg:gap-x-5">
+          {consultants.map((c) => (
+            <li key={c.id}>
+              <Image
+                src={c.photo}
+                alt={c.name[lang]}
+                width={320}
+                height={400}
+                sizes="(min-width: 1024px) 190px, (min-width: 640px) 30vw, 45vw"
+                className="aspect-[4/5] w-full rounded-t-[50%_30%] rounded-b-lg bg-sand object-cover"
+              />
+              <h4 className="mt-3 text-base font-black text-ink">{c.name[lang]}</h4>
+              <p className="mt-0.5 text-xs leading-[1.6] text-muted-foreground sm:text-sm">{c.org[lang]}</p>
+              <p className="mt-2 text-xs leading-[1.6] text-ink/80 sm:text-sm">
+                <span className="sr-only">{expertiseLabel}{english ? ": " : "："}</span>
+                {c.expertise[lang]}
               </p>
-            ),
-          }))}
-        />
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   )

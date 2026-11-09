@@ -8,19 +8,23 @@ import { SectionHeader } from "@/components/site/SectionHeader"
 import { ChapterNav } from "@/components/site/ChapterNav"
 import { CtaBand } from "@/components/site/CtaBand"
 import { EcosystemHub } from "@/components/site/EcosystemHub"
-import { ArchSeam, Disc, Half, Quarter } from "@/components/geo/shapes"
+import { ArchSeam } from "@/components/geo/shapes"
 import { FoldList, ReadMore } from "@/components/ux/Fold"
 import { Tabs } from "@/components/ux/Tabs"
 import { HeroArch } from "@/components/sustainability/HeroArch"
 import { ValuesArch } from "@/components/sustainability/ValuesArch"
 import { IooiSpan } from "@/components/sustainability/IooiSpan"
 import { DualBenefitArch } from "@/components/sustainability/DualBenefitArch"
+import { Credentials } from "@/components/sustainability/Credentials"
 import { getMessages } from "@/i18n/messages"
 import type { Locale } from "@/i18n/config"
 import { formatImpactMetric, cn } from "@/lib/utils"
 import { consultants } from "@/data/team"
+import { clientsIn } from "@/data/clients"
 import { pageChapters } from "@/lib/chapters"
 import { alternatesFor } from "@/lib/seo"
+
+const SILVERLINING_URL = "https://www.silverliningesg.com/"
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
@@ -30,12 +34,6 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 const KICKER = "kicker-rule text-[13px] font-bold tracking-[0.12em]"
 const METRIC_RULES = ["border-brand-orange", "border-brand-yellow", "border-[#8A8E97]"]
-// Issue → system → business model grows like the roadmap: quarter → half → disc.
-const LAYER_SHAPES = [
-  <Quarter key="q" className="size-5 bg-brand-yellow" />,
-  <Half key="h" className="h-2.5 w-5 bg-brand-yellow" />,
-  <Disc key="d" className="size-5 bg-brand-yellow" />,
-]
 
 // /sustainability: the bridge taken apart to show why it stands
 // (docs/redesign/pages-v2/sustainability/). One arch state per section —
@@ -103,14 +101,18 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
           <SectionHeader kicker={s.whoWeAre.label} title={s.whoWeAre.title} className="lg:col-start-2" />
           <figure className="lg:col-start-1 lg:row-span-2 lg:row-start-1">
             <div className="flex items-end gap-7 lg:block">
-              {/* The founder in an arch-topped doorway, standing on a block */}
+              {/* The founder in an arch-topped doorway. rev2 #26: the photo is a square
+                  head-and-shoulders shot with the face left of centre and the hair close
+                  to the top edge, so the frame is 4:5 anchored top-left (face centred) and
+                  the arch is elliptical (50% / 30%) so its curve clears the head. */}
               <div className="relative w-32 shrink-0 sm:w-40 lg:w-[220px]">
                 <Image
                   src="/team/consultant-01.jpg"
                   alt={t.home.story.founderName}
                   width={300}
                   height={300}
-                  className="relative aspect-[3/4] w-full rounded-t-full object-cover"
+                  sizes="(min-width: 1024px) 220px, 160px"
+                  className="relative aspect-[4/5] w-full rounded-t-[50%_30%] object-cover object-left-top"
                 />
               </div>
               <figcaption className="lg:mt-9">
@@ -131,19 +133,31 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
           <div className="lg:col-start-2">
             <p className="max-w-[60ch] text-base leading-[1.9] text-ink/85 sm:text-[17px]">{s.whoWeAre.lead}</p>
             <ReadMore label={s.whoWeAre.readMore} className="mt-1 max-w-[68ch]">
-              {s.whoWeAre.paragraphs.map((p) => (
-                <p key={p.slice(0, 12)}>{p}</p>
+              {s.whoWeAre.paragraphs.map((p, i) => (
+                <p key={p.slice(0, 12)}>
+                  {p}
+                  {/* Rev2 section 3, partner #9: the founder's current advisory role */}
+                  {i === 0 && (
+                    <>
+                      {english ? " " : ""}
+                      {s.whoWeAre.affiliation.before}
+                      <a href={SILVERLINING_URL} target="_blank" rel="noopener noreferrer" className="text-link font-bold">
+                        {s.whoWeAre.affiliation.link}
+                      </a>
+                      {s.whoWeAre.affiliation.after}
+                    </>
+                  )}
+                </p>
               ))}
             </ReadMore>
-            {/* Credentials: the four foundation stones of the pier */}
+            {/* Credentials (rev2 #27): six stones of the pier, each opening its certificate */}
             <h3 className="mt-6 text-sm font-bold text-muted-foreground">{s.whoWeAre.credentialsTitle}</h3>
-            <ul className="mt-3 grid max-w-xl grid-cols-2 gap-[3px]">
-              {s.whoWeAre.credentials.map((c, i) => (
-                <li key={c} className={cn("flex min-h-13 items-center px-4 py-2 text-sm font-bold leading-snug text-[#595959]", i % 3 === 0 ? "bg-[#FBE0D8]" : "bg-orange-soft")}>
-                  {c}
-                </li>
-              ))}
-            </ul>
+            <Credentials
+              items={s.whoWeAre.credentials}
+              openLabel={s.whoWeAre.credentialOpen}
+              closeLabel={s.whoWeAre.credentialClose}
+              className="mt-3 max-w-2xl"
+            />
           </div>
         </Container>
       </section>
@@ -194,14 +208,39 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
       <section id="approach" className="pb-28 pt-16 md:pb-36 md:pt-20">
         <Container>
           <SectionHeader kicker={s.approach.label} title={s.approach.title} description={s.approach.intro} />
-          <IooiSpan steps={s.approach.steps} className="mt-8" />
+          <IooiSpan steps={s.approach.steps} caption={s.approach.caption} className="mt-8" />
           <div className="mt-14 grid gap-12 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
             <div>
               <h3 className="text-base font-bold text-ink">{s.approach.pillarsIntro}</h3>
               <FoldList
                 name="pillars"
                 className="mt-4"
-                items={s.approach.pillars.map((p) => ({ meta: p.number, title: p.title, content: p.description }))}
+                items={s.approach.pillars.map((p) => ({
+                  meta: p.number,
+                  title: p.title,
+                  content: (
+                    <>
+                      <p>{p.description}</p>
+                      {/* rev2 #30: the services under this pillar, linked to their tabs */}
+                      <p className="mt-2 font-bold text-ink">
+                        {p.related.label}
+                        {english ? ": " : "："}
+                        {p.related.items.map((r, i) => (
+                          <span key={r.name}>
+                            {i > 0 && (english ? ", " : "、")}
+                            {r.href ? (
+                              <a href={r.href} className="text-link">
+                                {r.name}
+                              </a>
+                            ) : (
+                              r.name
+                            )}
+                          </span>
+                        ))}
+                      </p>
+                    </>
+                  ),
+                }))}
               />
             </div>
             <div>
@@ -234,7 +273,7 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
              Seam 4 is its arched top edge. ── */}
       <section id="difference" className="relative bg-surface-dark text-white">
         <ArchSeam className="translate-y-px bg-surface-dark" />
-        <Container className="relative pt-6">
+        <Container className="relative pb-20 pt-6 md:pb-24">
           <div className="grid gap-14 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
             <div>
               <SectionHeader tone="dark" kicker={s.difference.label} title={s.difference.title} description={s.difference.intro} />
@@ -246,50 +285,53 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
               />
               <p className="mt-6 text-base font-bold leading-[1.85] text-white">{s.difference.closing}</p>
             </div>
-            {/* Sub-anchor kept for old #theory links */}
+            {/* rev2 #29: the Dual-Impact Leverage Model, as in chapter 2 of the book.
+                Sub-anchor kept for old #theory links. */}
             <div id="theory" className="scroll-mt-[8.5rem]">
-              <p className="text-[13px] font-bold tracking-[0.12em] text-brand-yellow">{s.theory.label}</p>
-              <h3 className="mt-3 text-2xl font-black leading-[1.5] sm:text-[1.75rem]">{s.theory.title}</h3>
+              <h3 className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-2xl font-black leading-[1.4] sm:text-[1.75rem]">
+                {s.theory.title}
+                {s.theory.nameEn && <span className="font-display text-sm font-bold text-white/65 sm:text-base">{s.theory.nameEn}</span>}
+              </h3>
+              <p className="mt-3 text-lg font-black leading-[1.6] text-brand-yellow sm:text-xl">{s.theory.slogan}</p>
               <DualBenefitArch labels={s.theory.diagram} className="mt-7" />
-              <ReadMore tone="dark" label={s.theory.readMore} className="mt-3">
+              {/* Folded: the first two sentences only; the rest and the source open below */}
+              <p className="mt-7 text-sm leading-[1.9] text-white/80 sm:text-base">{s.theory.lead}</p>
+              <ReadMore tone="dark" label={s.theory.readMore} className="mt-1" contentClassName="sm:text-base">
                 {s.theory.paragraphs.map((p) => (
                   <p key={p.slice(0, 12)}>{p}</p>
                 ))}
+                <p className="text-right text-xs text-white/60 sm:text-sm">
+                  {s.theory.source.before}
+                  <cite className={english ? "italic" : "not-italic"}>{s.theory.source.book}</cite>
+                  {s.theory.source.after}
+                </p>
               </ReadMore>
-              <p className="mt-4 text-sm font-bold leading-[1.8] text-white">{s.theory.layersIntro}</p>
-              <FoldList
-                tone="dark"
-                name="layers"
-                className="mt-4"
-                items={s.theory.layers.map((layer, i) => ({ meta: LAYER_SHAPES[i], title: layer.name, content: layer.description }))}
-              />
             </div>
           </div>
-          {/* Seam 5 · overlap: the theory's conclusion straddles into the services section */}
-          <p className="relative z-10 mt-10 max-w-2xl translate-y-1/2 rounded-bl-[2rem] rounded-tr-[2rem] bg-brand-yellow px-6 py-5 text-base font-black leading-[1.7] text-ink sm:px-8 sm:py-6 sm:text-lg">
-            {s.theory.closing}
-          </p>
         </Container>
       </section>
 
       {/* ── 5 Services: one arch-topped door, four tabs ── */}
-      <section id="services" className="bg-card pb-28 pt-28 md:pb-36 md:pt-32">
+      <section id="services" className="bg-card pb-28 pt-16 md:pb-36 md:pt-20">
         <Container>
           <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <SectionHeader kicker={s.services.label} title={s.services.title} description={s.services.description} />
-            <Link
-              href={`/${locale}/consulting#solutions`}
-              className="inline-flex min-h-11 shrink-0 items-center gap-1.5 text-sm font-bold text-link"
-            >
-              {s.services.cta}
-              <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
+            {/* rev2 #30: prices live only in the solutions table on /consulting */}
+            <Button className="shrink-0" asChild>
+              <Link href={`/${locale}/consulting#solutions`}>
+                {s.services.cta}
+                <ArrowRight aria-hidden="true" />
+              </Link>
+            </Button>
           </div>
+          {/* Each tab has a fixed anchor (#services-whitepaper, -course, -workshop,
+              -supply-chain): opening the page at one selects that tab. */}
           <Tabs
             className="mt-8"
             label={s.services.label}
-            items={s.services.items.map((item, i) => ({
-              id: `service-${i}`,
+            items={s.services.items.map((item) => ({
+              id: item.id,
+              anchor: `services-${item.id}`,
               label: (
                 <>
                   {item.title}
@@ -312,7 +354,11 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
       <section id="impact" className="relative bg-sand pb-20 md:pb-24">
         <ArchSeam className="translate-y-px bg-sand" />
         <Container className="relative pt-4">
-          <p className={cn(KICKER, "text-primary")}>{s.proof.label}</p>
+          {/* rev2 #31: the label is tagged as a white paper case */}
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <p className={cn(KICKER, "text-primary")}>{s.proof.label}</p>
+            <span className="inline-flex rounded-full bg-ink px-3 py-1 text-xs font-bold text-white">{s.proof.tag}</span>
+          </div>
           <h2 className="mt-4 max-w-4xl text-2xl font-black leading-[1.5] text-ink sm:text-[2rem]">{s.proof.title}</h2>
           <p className="mt-4 text-base leading-[1.85] text-muted-foreground sm:text-lg">{s.proof.lead}</p>
 
@@ -326,11 +372,19 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
               <p className="rounded-b-2xl border-t-[5px] border-[#8A8E97] bg-card p-4 text-sm leading-[1.75] text-muted-foreground sm:p-5 sm:text-base">{s.proof.before}</p>
               <p className="rounded-b-2xl border-t-[5px] border-brand-orange bg-card p-4 text-sm font-bold leading-[1.75] text-ink sm:p-5 sm:text-base">{s.proof.after}</p>
             </div>
+            <Button className="mt-6" asChild>
+              <Link href={`/${locale}/events/impact-whitepaper#cases`}>
+                {s.proof.casesCta}
+                <ArrowRight aria-hidden="true" />
+              </Link>
+            </Button>
           </div>
 
+          {/* rev2 #31: the cumulative figures are the company's, not ModuLab's */}
+          <h3 className="mt-14 border-t border-ink/10 pt-8 text-xl font-black text-ink sm:text-2xl">{s.proof.totalsTitle}</h3>
           <Tabs
-            className="mt-12"
-            label={s.proof.label}
+            className="mt-5"
+            label={s.proof.totalsTitle}
             items={[
               {
                 id: "quant",
@@ -365,7 +419,7 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
                   <ul className="grid gap-3 md:grid-cols-3">
                     {s.proof.qualItems.map((q) => (
                       <li key={q.title} className="rounded-2xl bg-card p-5">
-                        <h3 className="text-lg font-black text-ink">{q.title}</h3>
+                        <h4 className="text-lg font-black text-ink">{q.title}</h4>
                         <p className="mt-2 text-sm leading-[1.8] text-muted-foreground">{q.description}</p>
                       </li>
                     ))}
@@ -382,7 +436,17 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
         <Container>
           <SectionHeader kicker={s.ecosystem.label} title={s.ecosystem.title} description={s.ecosystem.description} align="center" />
           <div className="mt-12">
-            <EcosystemHub roles={s.ecosystem.roles} centerLabel={s.ecosystem.center} consultants={consultants} consultantsTitle={s.ecosystem.consultantsTitle} english={english} />
+            <EcosystemHub
+              roles={s.ecosystem.roles}
+              centerLabel={s.ecosystem.center}
+              partners={clientsIn("ecosystem")}
+              partnersTitle={s.ecosystem.partnersTitle}
+              network={s.ecosystem.network}
+              consultants={consultants}
+              consultantsTitle={s.ecosystem.consultantsTitle}
+              expertiseLabel={s.ecosystem.expertiseLabel}
+              english={english}
+            />
           </div>
         </Container>
       </section>

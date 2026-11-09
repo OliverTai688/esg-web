@@ -37,6 +37,15 @@ const join = {
       { title: "參與互動", description: "報名活動、回覆訊息、加入討論，成為永續生態圈的一份子。" },
     ],
   },
+  // rev2 #50: Email 訂閱, in the closing card under the LINE button. Sent by email
+  // to gho001@coesg.tw (same list as the whitepaper download, #53). The client
+  // gave no Chinese wording: label and note are our draft for confirmation.
+  subscribe: {
+    label: "你的 Email",
+    submit: "訂閱",
+    note: "我們會不定期寄送永續趨勢、課程與活動消息，你可以隨時來信取消訂閱。",
+    success: "謝謝你的訂閱！",
+  },
   // The one secondary way out, under the closing LINE card
   alt: {
     title: "還在評估？",

@@ -104,24 +104,24 @@ const mobileSubMenuVariants = {
    NavItemLink — a menu item. When its section is on the page we are already
    on, it is a plain in-page anchor: the browser's own hash navigation always
    scrolls and keeps a clean URL, which the client router does not guarantee
-   for a same-page hash change.
+   for a same-page hash change. "Same page" is judged per item, since a menu
+   can also hold an entry on another page (共好永續力 → 首頁 #testimonials).
    ═══════════════════════════════════════════════════════════════════════ */
 
 function NavItemLink({
   href,
-  samePage,
   onClick,
   className,
   children,
 }: {
   href: string
-  samePage: boolean
   onClick: () => void
   className: string
   children: React.ReactNode
 }) {
+  const pathname = usePathname()
   const hash = href.indexOf("#")
-  if (samePage && hash >= 0) {
+  if (hash >= 0 && pathname === href.slice(0, hash)) {
     return (
       <a href={href.slice(hash)} onClick={onClick} className={className}>
         {children}
@@ -144,7 +144,6 @@ function DesktopNavGroup({
   group,
   locale,
   isActive,
-  isCurrentPage,
   isOpen,
   onOpen,
   onClose,
@@ -153,7 +152,6 @@ function DesktopNavGroup({
   group: NavGroup
   locale: Locale
   isActive: boolean
-  isCurrentPage: boolean
   isOpen: boolean
   onOpen: () => void
   onClose: () => void
@@ -260,7 +258,6 @@ function DesktopNavGroup({
                     <motion.li key={item.href} variants={itemVariants}>
                       <NavItemLink
                         href={item.href}
-                        samePage={isCurrentPage}
                         onClick={onClose}
                         className="group/nav-item flex items-start gap-3.5 rounded-xl p-3 outline-none transition-colors duration-200 hover:bg-primary/[0.04] focus-visible:bg-primary/[0.06] active:scale-[0.98]"
                       >
@@ -407,7 +404,6 @@ const Navbar = ({ locale, nav }: NavbarProps) => {
                 group={group}
                 locale={locale}
                 isActive={isGroupActive(group.href)}
-                isCurrentPage={pathname === group.href}
                 isOpen={activeMenu === group.key}
                 onOpen={() => openMenu(group.key)}
                 onClose={closeMenu}
@@ -553,7 +549,6 @@ const Navbar = ({ locale, nav }: NavbarProps) => {
                                   <motion.div key={item.href} variants={itemVariants}>
                                     <NavItemLink
                                       href={item.href}
-                                      samePage={pathname === group.href}
                                       onClick={() => setMobileOpen(false)}
                                       className="flex items-start gap-3 rounded-xl px-3 py-2.5 transition-colors hover:bg-primary/[0.04] active:bg-primary/[0.06]"
                                     >

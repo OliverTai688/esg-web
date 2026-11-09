@@ -91,16 +91,17 @@ export function getNavGroups(locale: string, { labels, chapters }: NavData): Nav
   const pages = ["sustainability", "events", "learning", "consulting"] as const
   return pages.map((page) => {
     const base = `/${locale}/${page}`
-    return {
-      key: page,
-      label: labels[page].label,
-      href: base,
-      items: chapters[page].map((c) => ({
-        title: c.label,
-        desc: c.desc,
-        href: c.route ? `/${locale}${c.route}` : `${base}#${c.id}`,
-        icon: NAV_ICONS[c.icon] ?? ArrowRight,
-      })),
+    const items: NavItem[] = chapters[page].map((c) => ({
+      title: c.label,
+      desc: c.desc,
+      href: c.route ? `/${locale}${c.route}` : `${base}#${c.id}`,
+      icon: NAV_ICONS[c.icon] ?? ArrowRight,
+    }))
+    // rev2 #22: 客戶回饋 lives on the home page, so it is not one of the page's chapters.
+    if (page === "sustainability") {
+      const { label, desc } = labels.sustainability.testimonials
+      items.push({ title: label, desc, href: `/${locale}#testimonials`, icon: Quote })
     }
+    return { key: page, label: labels[page].label, href: base, items }
   })
 }

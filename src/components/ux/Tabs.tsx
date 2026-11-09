@@ -9,6 +9,12 @@ export interface TabItem {
   /** Small text after the label, e.g. a count or a year. */
   meta?: React.ReactNode
   content: React.ReactNode
+  /**
+   * Optional fixed anchor (without "#"). The tab button carries it as its DOM id,
+   * and opening the page at `#<anchor>` (or following an in-page link to it)
+   * selects this tab.
+   */
+  anchor?: string
 }
 
 // A fragment sent from a server component arrives here as a keyless array;
@@ -18,6 +24,7 @@ const node = (value: React.ReactNode) => (Array.isArray(value) ? React.Children.
 // Tabs that show one panel at a time. Every panel is in the HTML (inactive ones
 // carry `hidden`), so the copy stays indexable and in-page search can find it.
 // Keyboard: ←/→ move between tabs, Home/End jump to the ends.
+// Items with an `anchor` can be opened from the URL hash (see TabItem.anchor).
 export function Tabs({
   items,
   label,
@@ -40,6 +47,25 @@ export function Tabs({
   const [active, setActive] = React.useState(defaultId ?? items[0]?.id)
   const refs = React.useRef<Record<string, HTMLButtonElement | null>>({})
   const dark = tone === "dark"
+
+  // Open the tab whose anchor is in the URL: on load (also after a client-side
+  // navigation, where the URL is already updated when this effect runs) and when
+  // the hash changes. Does nothing for tabs without anchors.
+  const anchors = items.map((t) => t.anchor ?? "").join(" ")
+  React.useEffect(() => {
+    if (!anchors.trim()) return
+    const list = anchors.split(" ")
+    const sync = () => {
+      const hash = decodeURIComponent(window.location.hash.slice(1))
+      const i = hash ? list.indexOf(hash) : -1
+      if (i >= 0) setActive(items[i].id)
+    }
+    sync()
+    window.addEventListener("hashchange", sync)
+    return () => window.removeEventListener("hashchange", sync)
+    // `anchors` stands for the items' anchors; ids only change with them
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [anchors])
 
   const onKeyDown = (event: React.KeyboardEvent) => {
     const i = items.findIndex((t) => t.id === active)
@@ -76,7 +102,7 @@ export function Tabs({
               }}
               type="button"
               role="tab"
-              id={`${uid}-tab-${t.id}`}
+              id={t.anchor ?? `${uid}-tab-${t.id}`}
               aria-selected={selected}
               aria-controls={`${uid}-panel-${t.id}`}
               tabIndex={selected ? 0 : -1}
@@ -109,7 +135,7 @@ export function Tabs({
           key={t.id}
           role="tabpanel"
           id={`${uid}-panel-${t.id}`}
-          aria-labelledby={`${uid}-tab-${t.id}`}
+          aria-labelledby={t.anchor ?? `${uid}-tab-${t.id}`}
           hidden={t.id !== active}
           tabIndex={0}
           className={cn("mt-6 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4", panelClassName)}

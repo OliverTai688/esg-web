@@ -74,10 +74,12 @@
 
 未做、留給後續工作包：
 
-- 第 7 項使用者條款、隱私權政策頁（等條文；頁尾連結隨頁面一起加）。
-- 英文顧問 NPO 案例的「鍾榕榕」英文名（第三、四節沒有，需問客戶）；天成／天晟醫院名稱與內文（第 47 項，隨 WP-B 照片牆）。
-- 加入我們頁 Email 訂閱欄（第 50 項，WP-F）。
+- 第 7 項、第 47 項、第 50 項已在 WP-B／F 完成，見 acceptance.md。
 - 文章「訂閱 3 步驟」暫留 ESG共學坊 LINE：文章只用文字寫「加入ESG共學坊官方 LINE」，沒有連結，維持原樣；`site.academyLine` 已備好，新金流上線時連同文章一起處理。
+
+#### WP-B～WP-H 完成狀態（2026-11-09，未 commit）
+
+WP-B、C、D、E、F、G 與 H 第二階段（EN6、EN7 與英文內頁）已完成，WP-I 中不依賴網域的部分（robots.txt、llms.txt、markdown 版、JSON-LD）也已完成。逐項驗收結果、驗收時修正的問題與待客戶回覆事項見 [acceptance.md](acceptance.md)。素材處理結果見 [assets-status.md](assets-status.md) 第四節；素材路徑約定見 [asset-paths.md](asset-paths.md)。
 
 ### WP-B 方案總表與品項重構
 

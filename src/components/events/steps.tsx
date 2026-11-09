@@ -15,14 +15,3 @@ export function StepRing({ className, children }: { className?: string; children
     </span>
   )
 }
-
-/** How far a service walks with you: one dot per step. */
-export function Footprints({ count, className }: { count: number; className?: string }) {
-  return (
-    <span aria-hidden="true" className="flex gap-1.5">
-      {Array.from({ length: count }, (_, i) => (
-        <span key={i} className={cn("size-3 rounded-full bg-brand-orange", className)} />
-      ))}
-    </span>
-  )
-}

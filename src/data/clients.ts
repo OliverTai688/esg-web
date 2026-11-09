@@ -1,15 +1,19 @@
-// Clients and partners whose logo the client supplied (Drive folder "客戶logo",
-// sorted by the client into 企業／政府／校園／非營利, plus the partner logos in the
-// website pack). Files are built by scripts/build-assets.mjs into public/clients/.
-// Order inside a group is display order: the first three rows show before "see all"
-// (see logosInView in the home page), so keep the best-known names at the top.
-// `nameEn` is given only where the organisation prints an English name on its logo.
-export type ClientGroup = "business" | "public" | "nonprofit"
+// Logo lists (rev2 section 3; English names from EN section 3, R5). Three groups:
+// - client:    服務客戶, home page logo wall (20)
+// - partner:   合作夥伴, home page logo wall (10)
+// - ecosystem: 共好生態圈夥伴 / ESG共學坊夥伴, /sustainability (12, the first three stay first)
+// Only these organisations appear on the site; logos of anyone else were removed.
+// Logo files are built from assets-raw/rev2-202610/06-Logo/ into public/clients/<id>.webp.
+// `fullName` is the registered name, for alt text checks and the client's records.
+export type ClientGroup = "client" | "partner" | "ecosystem"
 
 export interface Client {
   id: string
+  /** Name shown on the site (網站顯示名稱). */
   name: string
-  nameEn?: string
+  nameEn: string
+  fullName: string
+  url?: string
   group: ClientGroup
   /** A long wordmark (about 3:1 or wider): give it a double-width tile. */
   wide?: boolean
@@ -18,58 +22,53 @@ export interface Client {
 }
 
 export const clients: readonly Client[] = [
-  // Brands and businesses
-  { id: "sifan-farm", name: "思凡自然農園", nameEn: "Selvans Social Farm", group: "business" },
-  { id: "jooin-now", name: "星芽社會企業", nameEn: "Jooin Now", group: "business" },
-  { id: "chihe", name: "齊禾品牌顧問", nameEn: "CHIHE Branding Consultancy", group: "business" },
-  { id: "chinyi", name: "勤億蛋品", nameEn: "CHINYI", group: "business" },
-  { id: "tuer-life", name: "兔耳生活", nameEn: "TOUR Eco-Fair Studio", group: "business" },
-  { id: "bliss-travel", name: "大慶旅遊", nameEn: "Bliss Travel", group: "business", wide: true },
-  { id: "greenunion", name: "綠合農業發展", nameEn: "Greenunion Agricultural", group: "business" },
-  { id: "cts", name: "華視", nameEn: "CTS", group: "business" },
-  { id: "chunghwa-telecom", name: "中華電信", nameEn: "Chunghwa Telecom", group: "business", wide: true },
-  { id: "bamzd", name: "鑫判科技", nameEn: "BeAmazed Tech", group: "business" },
-  { id: "lohasustain", name: "樂活永續", nameEn: "LohaSustain", group: "business" },
-  { id: "everlab", name: "everlab", group: "business" },
-  { id: "bean-melody", name: "豆韻", nameEn: "Bean Melody", group: "business" },
-  { id: "share-water", name: "享喝水", nameEn: "Share Water", group: "business" },
-  { id: "shangyun-design", name: "上云設計", group: "business" },
-  { id: "jestone", name: "拾石", nameEn: "Jestone", group: "business" },
-  { id: "xinchun", name: "新春", group: "business" },
-  { id: "ariya", name: "ARIYA", group: "business" },
-  { id: "ciao-ciao-flora", name: "花神降臨", nameEn: "ciao ciao flora", group: "business" },
-  { id: "anything-handcrafted", name: "本舖", nameEn: "Anything Handcrafted", group: "business" },
-  { id: "zhezhe-cup", name: "折折杯", group: "business" },
-  { id: "key-of-kid", name: "金鑰創鑄", nameEn: "KEY OF KID", group: "business" },
-  { id: "qingxingtang", name: "清星堂企劃", group: "business", wide: true },
-  { id: "cpml", name: "華人勞基企業集團", nameEn: "CPML", group: "business" },
-  { id: "harts", name: "依杰 HART's", nameEn: "HART's", group: "business" },
-  { id: "rest", name: "rest", group: "business" },
-  { id: "beebest", name: "BeeBest", group: "business", wide: true },
-  { id: "dancecology", name: "舞蹈生態系", nameEn: "Dancecology", group: "business", wide: true },
-  { id: "winjus-law", name: "允捷法律事務所", nameEn: "WinJus Law Firm", group: "business", wide: true },
-  { id: "heart-valley", name: "心之谷永續教育園區", nameEn: "Heart Valley ESG Education Park", group: "business" },
-  { id: "hand", name: "汗得", nameEn: "HAND", group: "business", wide: true },
-  { id: "dixiao", name: "滴鴞", nameEn: "de Hsiao Co.", group: "business" },
-  { id: "hegu-design", name: "禾谷設計", nameEn: "HEGU DESIGN", group: "business" },
-  // Public sector, schools and community colleges
-  { id: "cpc", name: "中國生產力中心", nameEn: "China Productivity Center", group: "public", wide: true },
-  { id: "sanying-cc", name: "三鶯社區大學", nameEn: "SanYing Community College", group: "public", wide: true },
-  { id: "nangang-cc", name: "臺北市南港社區大學", nameEn: "Taipei Nangang Community College", group: "public", wide: true },
-  { id: "keelung-vocational", name: "國立基隆高級商工職業學校", nameEn: "National Keelung Commercial & Industrial Vocational Senior High School", group: "public", wide: true },
-  { id: "new-era", name: "新紀元大學學院", nameEn: "New Era University College", group: "public", dark: true, wide: true },
-  { id: "bottle-cap-factory", name: "瓶蓋工廠台北製造所", group: "public" },
-  // Non-profits
-  { id: "beunen", name: "白永恩神父社會福利基金會", nameEn: "Beunen Foundation", group: "nonprofit" },
-  { id: "mercy", name: "愛慈社會福利基金會", nameEn: "The Garden of Mercy Foundation", group: "nonprofit", wide: true },
-  { id: "ican", name: "台北市自閉兒社會福利基金會", nameEn: "Taipei Autism Children Social Welfare Foundation", group: "nonprofit" },
-  { id: "greenman", name: "綠超人行動促進會", nameEn: "Greenman Association", group: "nonprofit", wide: true },
-  { id: "mingyi", name: "明怡", group: "nonprofit" },
-  { id: "achang", name: "阿昌清潔庇護工場", group: "nonprofit" },
-  { id: "wanhua-flaneurs", name: "萬華附近走走", nameEn: "Wanhua Flaneurs", group: "nonprofit" },
-  { id: "dazhen", name: "達真國際青年教練發展協會", group: "nonprofit", wide: true },
-  { id: "imc", name: "中華民國 IMC 聯合會", nameEn: "International Management Council", group: "nonprofit" },
-  { id: "taichung-lecturers", name: "臺中市企業講師協會", nameEn: "Corporate Lecturers Association", group: "nonprofit", wide: true },
+  // ── 服務客戶 ──
+  { id: "toucheng-farm", name: "頭城休閒農場", nameEn: "Toucheng Leisure Farm", fullName: "頭城休閒農場股份有限公司", url: "https://www.tcfarm.com.tw", group: "client" },
+  { id: "taku", name: "大古鑄鐵", nameEn: "TAKU Ironware", fullName: "大古鑄鐵股份有限公司", url: "https://www.taku-art.com", group: "client", wide: true },
+  { id: "wecan", name: "帷可策略", nameEn: "WeCan", fullName: "帷可策略股份有限公司", url: "https://www.wecanstrategy.com.tw", group: "client" },
+  { id: "modulab", name: "ModuLab", nameEn: "ModuLab", fullName: "ModuLab（INFANTRY 團隊新品牌）", group: "client" },
+  { id: "chinyi", name: "勤億蛋品", nameEn: "Chinyi Eggs Technology Co., Ltd.", fullName: "勤億蛋品科技股份有限公司", group: "client" },
+  { id: "cts", name: "華視", nameEn: "Chinese Television System (CTS)", fullName: "中華電視股份有限公司", url: "https://www.cts.com.tw/", group: "client" },
+  { id: "chunghwa-telecom", name: "中華電信", nameEn: "Chunghwa Telecom", fullName: "中華電信股份有限公司", url: "https://www.cht.com.tw/", group: "client", wide: true },
+  { id: "tcmg", name: "天晟醫院", nameEn: "Ten-Chen General Hospital (Zhongli)", fullName: "南桃園天成醫療社團法人天晟醫院", url: "https://www.tcmg.com.tw/", group: "client", wide: true },
+  { id: "beunen", name: "白永恩神父社會福利基金會", nameEn: "Beunen Foundation", fullName: "財團法人天主教白永恩神父社會福利基金會", url: "https://www.beunen.org.tw/", group: "client", wide: true },
+  { id: "mercy", name: "愛慈社會福利基金會", nameEn: "The Garden of Mercy Foundation", fullName: "財團法人台北市愛慈社會福利基金會", url: "https://www.aidscare.org.tw/", group: "client", wide: true },
+  { id: "taitung-mental-health", name: "臺東縣康復之友協會", nameEn: "The Association for the Mentally Ill, Taitung", fullName: "社團法人臺東縣康復之友協會", url: "https://www.facebook.com/arttoaccompany/", group: "client" },
+  { id: "sifan-farm", name: "思凡自然農園", nameEn: "Selvans Social Farm", fullName: "思凡社會性農業發展企業社", url: "https://www.selvansimpact.com/", group: "client" },
+  { id: "tuer-life", name: "兔耳生活", nameEn: "Tour Life", fullName: "兔耳生活有限公司", url: "https://tourlifeart.com/", group: "client" },
+  { id: "bliss-travel", name: "大慶旅運社", nameEn: "Bliss Travel", fullName: "大慶旅運社有限公司", url: "https://www.blissingtravel.com/", group: "client" },
+  { id: "new-era", name: "新紀元大學學院", nameEn: "New Era University College", fullName: "新紀元大學學院 New Era University College（馬來西亞）", url: "https://newera.edu.my/", group: "client", wide: true, dark: true },
+  { id: "bottle-cap-factory", name: "瓶蓋工廠台北製造所", nameEn: "POPOP Taipei", fullName: "瓶蓋工廠台北製造所 POPOP Taipei", url: "https://popoptaipei.com/", group: "client" },
+  { id: "true-roll", name: "實心蛋捲", nameEn: "True Roll", fullName: "實心食品有限公司", url: "https://www.trueroll.com.tw/", group: "client" },
+  { id: "taiwan-farm-association", name: "台灣休閒農業發展協會", nameEn: "Taiwan Leisure Farms Development Association", fullName: "台灣休閒農業發展協會", url: "https://www.taiwanfarm.org.tw/", group: "client", wide: true },
+  { id: "hoowei", name: "滬尾休閒農業區", nameEn: "Hui Wei Leisure Agriculture Area", fullName: "滬尾休閒農業區發展協會", url: "https://hoowei.org/", group: "client" },
+  { id: "huatan-jhs", name: "花壇國中", nameEn: "Huatan Junior High School", fullName: "彰化縣立花壇國民中學", url: "https://htjh.chc.edu.tw/", group: "client" },
+
+  // ── 合作夥伴 ──
+  { id: "tlaa", name: "臺灣休閒農業學會", nameEn: "Taiwan Leisure Agriculture Association", fullName: "臺灣休閒農業學會", url: "https://www.tlaa.org.tw/", group: "partner", wide: true },
+  { id: "gsa", name: "全球永續發展聯盟（GSA）", nameEn: "Global SDGs Alliance (GSA)", fullName: "Global SDGs Alliance（GSA）", url: "https://www.gsa.ngo/", group: "partner" },
+  { id: "taipei-gov", name: "臺北市政府", nameEn: "Taipei City Government", fullName: "臺北市政府", url: "https://www.gov.taipei/", group: "partner" },
+  { id: "sanying-cc", name: "新北市三鶯社區大學", nameEn: "SanYing Community College", fullName: "新北市三鶯社區大學", url: "https://sycc.org.tw/", group: "partner", wide: true },
+  { id: "nangang-cc", name: "臺北市南港社區大學", nameEn: "Nangang Community College, Taipei City", fullName: "臺北市南港社區大學", url: "https://nangang.org.tw/", group: "partner", wide: true },
+  { id: "wanhua-cc", name: "臺北市萬華社區大學", nameEn: "Wanhua Community College", fullName: "臺北市萬華社區大學", url: "https://twhcc.org.tw/", group: "partner", wide: true },
+  { id: "chihlee", name: "致理科技大學", nameEn: "Chihlee University of Technology", fullName: "致理科技大學 Chihlee University of Technology", url: "https://www.chihlee.edu.tw/", group: "partner" },
+  { id: "youthbud", name: "中華少年成長文教基金會", nameEn: "Youthbud", fullName: "財團法人新北市中華少年成長文教基金會", url: "https://www.youthbud.org/", group: "partner", wide: true },
+  { id: "silverlining", name: "銀色連線", nameEn: "silverlining", fullName: "銀色連線股份有限公司", url: "https://www.silverliningesg.com/", group: "partner" },
+  { id: "duofu", name: "多扶事業", nameEn: "Duofu Care & Service", fullName: "多扶事業股份有限公司", url: "http://www.duofu.com.tw/", group: "partner", wide: true },
+
+  // ── 共好生態圈夥伴（ESG共學坊夥伴） ──
+  { id: "everlab", name: "EverLab360", nameEn: "EverLab360", fullName: "綠策院有限公司", url: "https://everlab360.wordpress.com/", group: "ecosystem" },
+  { id: "jooin-now", name: "星芽社會企業", nameEn: "Jooin Now", fullName: "星芽社會企業股份有限公司", url: "https://www.jooinnow.io/", group: "ecosystem", wide: true },
+  { id: "cmicro-era", name: "微碳石代", nameEn: "Cmicro-Era Sustainability Consulting Company, Ltd.", fullName: "微碳石代永續顧問有限公司", url: "https://www.cmicroera.com/", group: "ecosystem", wide: true },
+  { id: "bamzd", name: "鑫判科技", nameEn: "BAMZD", fullName: "鑫判科技股份有限公司", url: "https://bamzd.com/", group: "ecosystem" },
+  { id: "chihe", name: "齊禾品牌顧問", nameEn: "Chihe Design", fullName: "齊禾設計有限公司", url: "https://chihedesign.com/", group: "ecosystem", wide: true },
+  { id: "hegu-design", name: "禾谷創意", nameEn: "HEGU DESIGN", fullName: "禾谷創意整合行銷有限公司", url: "https://www.hegu-design.com/", group: "ecosystem", wide: true },
+  { id: "lohasustain", name: "樂活永續", nameEn: "LohaSustain", fullName: "樂活永續股份有限公司", url: "https://lohasustain.tw", group: "ecosystem" },
+  { id: "hand", name: "汗得學社", nameEn: "HAND Initiative", fullName: "社團法人台灣汗得文化協會", url: "https://www.hand.org.tw/", group: "ecosystem" },
+  { id: "heart-valley", name: "心之谷永續教育園區", nameEn: "Heart Valley", fullName: "心之谷永續教育園區（經營：魚可國際文創事業有限公司）", url: "https://www.heartvalley.com.tw/", group: "ecosystem", wide: true },
+  { id: "rafac", name: "RAFAC 機能襪", nameEn: "RAFAC SOCKS", fullName: "RAFAC SOCKS", url: "https://rafac.cyberbiz.co/", group: "ecosystem", dark: true },
+  { id: "showy-pattern", name: "處處花版", nameEn: "Showy Pattern Art", fullName: "處處花版 Showy Pattern Art", url: "https://www.pinkoi.com/store/chuchulove", group: "ecosystem" },
+  { id: "winjus-law", name: "允捷法律事務所", nameEn: "Win Jus Law Firm", fullName: "允捷法律事務所 Win Jus Law Firm", url: "https://www.winjus.com/", group: "ecosystem", wide: true },
 ]
 
 export function clientLogo(id: string) {
@@ -80,6 +79,10 @@ export function getClient(id: string) {
   return clients.find((c) => c.id === id)
 }
 
+export function clientsIn(group: ClientGroup) {
+  return clients.filter((c) => c.group === group)
+}
+
 export function clientName(client: Client, english = false) {
-  return english ? (client.nameEn ?? client.name) : client.name
+  return english ? client.nameEn : client.name
 }

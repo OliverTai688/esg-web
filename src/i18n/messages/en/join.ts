@@ -39,6 +39,14 @@ const join = {
       { title: "Get involved", description: "Sign up for events, reply to messages and join the discussion as part of the sustainability ecosystem." },
     ],
   },
+  // rev2 #50 (EN): email subscription, in the closing card under the LinkedIn
+  // button. `success` is not in the client's copy: confirm with the client.
+  subscribe: {
+    label: "Your email",
+    submit: "Subscribe",
+    note: "We send updates in Chinese. You can unsubscribe at any time.",
+    success: "Thank you for subscribing.",
+  },
   // The one secondary way out, under the closing card
   alt: {
     title: "Still deciding?",

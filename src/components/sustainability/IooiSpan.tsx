@@ -1,60 +1,63 @@
+import { ArrowRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface Step {
   en: string
   zh: string
   description: string
+  /** Short line under the box (rev2 #28: 回答「…」). */
+  note?: string
+  /** Show the note in orange. */
+  accent?: boolean
 }
 
-// IOOI as one span built in four pieces, cool grey → deep orange. The control
-// points sit at thirds, so x is linear in t and each piece sits over its column.
-const P = [
-  [14, 118],
-  [271, -22],
-  [529, -22],
-  [786, 118],
-] as const
-const COLORS = ["#8A8E97", "#F9A500", "#E8532A", "#E8532A"]
-const BORDERS = ["border-[#8A8E97]", "border-brand-yellow", "border-brand-orange", "border-primary"]
-const SLICE = 0.02 // gap between pieces, in t
+// rev2 #28: the chain of events (IOOI) as in chapter 2 of the book: five boxes
+// of equal height, left to right, joined by arrows; stacked top to bottom on
+// phones. Header colours in order: grey, dark grey, yellow, orange, dark orange
+// (CIS). White text only on the darker three (contrast).
+const HEADS = [
+  "bg-[#8A8E97] text-ink",
+  "bg-brand-grey text-white",
+  "bg-brand-yellow text-ink",
+  "bg-brand-orange text-white",
+  "bg-[#B8401F] text-white",
+]
 
-const lerp = (a: readonly number[], b: readonly number[], t: number) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]
-
-// The part of the cubic between t0 and t1 (de Casteljau, twice).
-function piece(t0: number, t1: number) {
-  const split = (pts: readonly (readonly number[])[], t: number) => {
-    const a = lerp(pts[0], pts[1], t)
-    const b = lerp(pts[1], pts[2], t)
-    const c = lerp(pts[2], pts[3], t)
-    const d = lerp(a, b, t)
-    const e = lerp(b, c, t)
-    const f = lerp(d, e, t)
-    return { left: [pts[0], a, d, f], right: [f, e, c, pts[3]] }
-  }
-  const head = split(P, t1).left
-  const [a, b, c, d] = split(head, t0 / t1).right
-  const xy = (p: readonly number[]) => `${p[0].toFixed(1)} ${p[1].toFixed(1)}`
-  return `M${xy(a)} C${xy(b)} ${xy(c)} ${xy(d)}`
-}
-
-export function IooiSpan({ steps, className }: { steps: readonly Step[]; className?: string }) {
-  const n = steps.length
+export function IooiSpan({ steps, caption, className }: { steps: readonly Step[]; caption?: string; className?: string }) {
   return (
     <div className={className}>
-      <svg viewBox="0 0 800 130" fill="none" className="block h-auto w-full" aria-hidden="true">
+      <ol className="flex flex-col md:flex-row md:gap-7">
         {steps.map((step, i) => (
-          <path key={step.en} d={piece(i / n + (i ? SLICE / 2 : 0.004), (i + 1) / n - (i < n - 1 ? SLICE / 2 : 0))} stroke={COLORS[i % COLORS.length]} strokeWidth="24" />
-        ))}
-      </svg>
-      <ol className="mt-2 grid grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-4 md:gap-x-6">
-        {steps.map((step, i) => (
-          <li key={step.en} className={cn("border-t-[5px] pt-3", BORDERS[i % BORDERS.length])}>
-            <p className="text-xl font-black text-ink sm:text-2xl">{step.zh}</p>
-            {step.en !== step.zh && <p className="font-display text-sm font-bold text-muted-foreground">{step.en}</p>}
-            <p className="mt-2 text-sm leading-[1.7] text-ink/75">{step.description}</p>
+          <li key={step.en} className="relative flex flex-1 flex-col">
+            {i > 0 && (
+              <span
+                aria-hidden="true"
+                className="flex justify-center py-1.5 text-primary md:absolute md:-left-7 md:top-[calc(50%-1.25rem)] md:w-7 md:-translate-y-1/2 md:py-0"
+              >
+                <ArrowRight className="size-5 rotate-90 md:rotate-0" strokeWidth={3} />
+              </span>
+            )}
+            <div className="flex flex-1 flex-col overflow-hidden rounded-2xl bg-card ring-1 ring-border">
+              <div className={cn("flex items-baseline justify-between gap-2 px-4 py-3 md:flex-col-reverse md:items-start md:justify-start md:gap-0.5", HEADS[i % HEADS.length])}>
+                <p className="text-lg font-black leading-tight sm:text-xl">{step.zh}</p>
+                {step.en !== step.zh && <p className="font-display text-xs font-bold uppercase tracking-[0.1em]">{step.en}</p>}
+              </div>
+              <p className="flex-1 px-4 py-3.5 text-sm leading-[1.75] text-ink/80">{step.description}</p>
+            </div>
+            {/* Every column keeps the note row on wide screens, so the boxes stay the same height */}
+            <p
+              className={cn(
+                "mt-2 min-h-8 text-right text-sm font-bold leading-snug md:text-center",
+                step.accent ? "text-primary" : "text-brand-grey",
+                !step.note && "hidden md:block",
+              )}
+            >
+              {step.note}
+            </p>
           </li>
         ))}
       </ol>
+      {caption && <p className="mt-3 text-xs leading-[1.7] text-muted-foreground sm:text-sm">{caption}</p>}
     </div>
   )
 }

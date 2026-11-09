@@ -50,7 +50,13 @@ const learning = {
     // {n} is the number of articles in the current filter
     showAll: "顯示全部 {n} 篇",
     toInsights: "依時間看最新文章",
+    // EN6: the English site's heading for the list; unused on the Chinese site
+    titleInChinese: "",
   },
+  // EN6: the English site lists every article by its English title only, marked
+  // [in Chinese] and linking to the Chinese article. Empty on the Chinese site.
+  inChinese: "",
+  postTitles: {} as Record<string, string>,
   // `short` is the name on the topic's petal; keep it to one or two short lines
   sections: {
     innovation: { title: "創新策略", short: "創新策略", description: "探索永續轉型的創新方法，從商業模式到產品設計，重新定義品牌的永續競爭力。" },
@@ -60,10 +66,38 @@ const learning = {
     communication: { title: "溝通與換位思考", short: "溝通與換位思考", description: "培養跨界對話的溝通能力，學習如何用不同產業的語言傳達永續價值。" },
     interviews: { title: "人物專訪", short: "人物專訪", description: "永續實踐者的第一手故事，聆聽不同領域的先驅者如何將理念化為行動。" },
   },
+  // rev2 #41 #42 #43: the ESG共學坊 block at the bottom of /learning (src/components/site/CoesgBand.tsx).
+  // Three ways in: the store, the subscription and the online tools. No LINE here (#41③).
+  academy: {
+    kicker: "ESG共學坊",
+    title: "逛逛永續商城",
+    // #42: how to choose between the three entries (client copy)
+    intro: "想單買某一堂課，到永續商城；想每週持續學，訂閱 ESG共學坊（每週線上課與回放）；想先自己動手試試，用線上工具。",
+    store: {
+      title: "永續商城",
+      // 待客戶確認 (D5, rev2 #41①): our proposed wording, about courses only. Alternatives are in the rev2 report.
+      body: "ESG共學坊的永續課程都在永續商城，挑你需要的那一堂，單堂購買。",
+      cta: "前往永續商城",
+      logo: "ESG共學坊 CLASS",
+    },
+    // #42: from the old subscription page, without the price; subscribing happens in the store
+    subscription: {
+      title: "ESG共學坊訂閱",
+      body: "每週線上授課、影片回放、講師投影片、交流社群、課程優惠折扣，持續精進永續知識。",
+      cta: "前往永續商城",
+    },
+    // #43: links to site.toolsUrl
+    tools: {
+      title: "線上工具",
+      body: "用我們的自助線上工具，先自己動手試試。",
+      cta: "打開線上工具",
+    },
+  },
   cta: {
     title: "讀完了，下一步呢？",
-    body: "想把文章裡的觀念用在自己的組織？從學習地圖找到適合的主題，或加入官方 LINE 收到新文章與課程通知。",
-    primary: "打開永續學習地圖",
+    // rev2 #42: goes to the consulting page's solutions table, 「自己學、自己寫」
+    body: "想把文章裡的觀念用在自己的組織？從方案總表找到適合的課程，或加入官方 LINE 收到新文章與課程通知。",
+    primary: "看課程與方案",
     secondary: "加入官方 LINE",
   },
   article: {

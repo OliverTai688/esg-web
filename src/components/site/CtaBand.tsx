@@ -28,7 +28,7 @@ function Action({ action, variant }: { action: CtaAction; variant: "default" | "
     </>
   )
   return (
-    <Button size="lg" variant={action.channel === "line" && variant === "default" ? "line" : variant} asChild>
+    <Button size="lg" variant={action.channel === "line" && variant === "default" ? "line" : variant} className="h-auto min-h-13 whitespace-normal py-3 text-center" asChild>
       {action.external ? (
         <a href={action.href} target="_blank" rel="noopener noreferrer">
           {content}

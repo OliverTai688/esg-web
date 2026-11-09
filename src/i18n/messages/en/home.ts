@@ -8,6 +8,7 @@ const home = {
     title: "So many are doing meaningful work, yet struggle to get the market to notice",
     titleLead: "So many are doing meaningful work,",
     titleEmphasis: "yet struggle to get the market to notice",
+    lead: "We help small and medium-sized businesses, brands and non-profits respond to ESG requests from customers or corporate sponsors. We also help them write a Sustainability White Paper to share.",
     subTitle: "We help businesses understand, and markets recognise, sustainability value across every sector.",
     description:
       "Brands, farms, social enterprises and non-profits often have solid sustainability principles and are already putting them into practice, yet find it hard to explain to businesses what they can offer. Sustainability is the common language for that conversation. Gung-Ho Culture aims to be the bridge, making sure like-minded partners find each other.",
@@ -19,69 +20,75 @@ const home = {
   },
   partners: {
     label: "Partners and organisations we have worked with",
-    showAll: "See all {n}",
-    othersLabel: "And",
     groups: [
-      { key: "business", title: "Brands & Businesses", others: ["RAFAC SOCKS", "Showy Pattern Art"] },
-      { key: "public", title: "Public Sector & Schools", others: ["Taipei City Government", "Taiwan Leisure Agriculture Association", "Wanhua Community College"] },
-      { key: "nonprofit", title: "Non-Profit & International", others: ["Youthbud", "The Association for the Mentally Ill, Taitung", "UN-SDGs Impact Developers Conference", "Global Youth Leadership Programme"] },
+      { key: "client", title: "Clients" },
+      { key: "partner", title: "Partners" },
     ],
   },
   problem: {
     label: "The challenge we address",
-    title: "What lies between ideas and action?",
-    description: "Gung-Ho Culture works on three levels at once, helping brand owners, industry and the wider ecosystem find a common language for sustainability.",
-    painPoints: [
+    title: "Where are you stuck right now?",
+    situations: [
       {
-        label: "For brand owners and consumers",
-        title: "Great products that go unnoticed",
+        title: "“A major customer just sent me an ESG questionnaire.”",
         description:
-          "Many have excellent products and services but do not know how the corporate landscape works or where to find a way in. We help you clarify your positioning, shape your sustainability narrative and strengthen your competitiveness.",
+          "We help you understand what each question is really asking and match it to what you are already doing. Where you don’t yet meet a requirement, we answer honestly and set out what to strengthen first.",
+        cta: "See Sustainable Supply Chain Advisory",
+        link: "supplyChain",
       },
       {
-        label: "For industry",
-        title: "Opaque supply chains",
-        description:
-          "Suppliers that meet ESG procurement standards lack a suitable platform to be seen. We help build a channel through which supply chains and businesses can connect.",
+        title: "“I want to act on sustainability, but I’m worried it will cost a fortune.”",
+        description: "We start by mapping what you are already doing. Then we decide together where the money should go.",
+        cta: "Book a 15-minute Coffee Chat",
+        link: "contact",
       },
       {
-        label: "For global alignment",
-        title: "Keeping pace with international trends",
+        title: "“We’re a small business or organisation. We want to pitch to companies, or report on what our partnership achieved.”",
         description:
-          "ISO, GRI, TCFD, biodiversity, CBAM… With so many international standards and limited resources, companies need a translator. Gung-Ho Culture turns complex knowledge into clear communication, helping businesses align with global ESG practice.",
+          "We translate your products or services into the sustainability language companies understand. We then put this into a Sustainability White Paper you can use in your pitch. You can learn to write it yourself, or have an advisor write it with you.",
+        cta: "See Services & Pricing",
+        link: "solutions",
       },
     ],
     solutionLabel: "Our answer",
     solutionTitle: "Your bridge to sustainable value",
+    solutionClaim:
+      "Much of what you believe in and do every day is already good for people and the planet. That’s sustainability. It just hasn’t been put into words, or brought to light, yet.",
     solutionDescription:
-      "Through advisory services, Sustainability White Papers, CO-ESG Academy and our communication platform, Gung-Ho Culture helps businesses understand sustainability value from every sector, helps markets recognise it, and helps like-minded partners find each other. Say it clearly, and you will be seen.",
-    solutionPillars: ["Advisory", "Sustainability White Paper", "CO-ESG Academy", "Communication Platform"],
+      "We help businesses see the sustainability value created in every sector, help markets recognise it, and help like-minded partners find each other. We do this through the four services below, with CO-ESG Academy connecting our partners.",
+    solutionTagline: "Say it clearly, and you will be seen.",
+    services: [
+      { label: "Sustainability White Paper", anchor: "services-whitepaper" },
+      { label: "Sustainability Courses", anchor: "services-course" },
+      { label: "In-House Workshops for Organisations", anchor: "services-workshop" },
+      { label: "Sustainable Supply Chain Advisory", anchor: "services-supply-chain" },
+    ],
   },
   story: {
     label: "Our Story",
     title: "It began with an Atayal name",
     founderName: "Evvon (Sayun)",
     founderTitle: "Founder, Gung-Ho Culture",
-    headline: "Sayun means \"bridge\".",
-    nameMeaning: "Sayun means \"Bridge\"",
+    headline: "Sayun means “bridge”.",
+    nameMeaning: "Sayun means “Bridge”",
     summary:
-      "While working as a social worker, founder Evvon was given the name \"Sayun\" by an Atayal pastor from Nan'ao, Yilan, in the hope that she would connect different communities and cultures. Years later, as the sustainability wave swept in, she saw a gap: businesses had resources but lacked effective strategy, while NPOs had the expertise to tackle social problems but lacked a bridge to business. So she set out to build that bridge herself, extending her impact from a single organisation to an entire industry.",
+      "While working as a social worker, founder Evvon was given the name “Sayun” by an Atayal pastor from Nan’ao, Yilan, in the hope that she would connect different communities and cultures. Years later, as the sustainability wave swept in, she saw a gap: businesses had resources but lacked effective strategy, while NPOs had the expertise to tackle social problems but lacked a bridge to business. So she set out to build that bridge herself, extending her impact from a single organisation to an entire industry.",
     bullets: [
       "From social worker to bridge-builder, connecting businesses that have resources but lack strategy with social organisations that have expertise but lack connections.",
       "Sustainability must grow from the inside out: embed values in governance and build trust between people first, so that environmental efforts are never a one-off.",
       "Close trust between people is the deepest root of sustainability and the starting point of social resilience.",
-      "Sustainability is not a choice between profit and responsibility; it is social, environmental and economic value reinforcing one another. That is the dual benefit.",
+      "Sustainability is not a choice between profit and responsibility. When you create environmental and social value at the same time, economic value follows. That is Dual-Impact.",
     ],
     readMore: "Read the full story",
     readLess: "Show less",
-    // Wrap a phrase in **double asterisks** to render it bold.
+    // Wrap a phrase in **double asterisks** to render it bold, _underscores_ for italics.
     fullStory: [
-      "While working as a social worker, founder Evvon Wu met **Pastor Lin Ching-tai**, an Atayal minister best known as the lead actor in the film **Warriors of the Rainbow: Seediq Bale**.",
-      "Pastor Lin gave Evvon an Atayal name, Sayun, meaning \"bridge\". Between those who have resources and those who do not, there needs to be a bridge for communication.",
+      "While working as a social worker, founder Evvon Wu met **Rev. Nolay Piho**, an Atayal pastor from Nan’ao, Yilan, known for his leading role in the film **_Warriors of the Rainbow: Seediq Bale_**.",
+      "Rev. Nolay Piho gave Evvon an Atayal name, Sayun, meaning “bridge”. Between those who have resources and those who do not, there needs to be a bridge for communication.",
       "That name later became the core philosophy of Gung-Ho Culture.",
       "From social work to entrepreneurship, Evvon has always sought her own way of engaging with the world around her. One organisation can only reach so many people, but if its influence can spread across an entire industry, real change becomes possible.",
-      "As our name suggests, \"Gung-Ho\" means working together, so that everyone who joins can thrive together.",
-      "Gung-Ho Culture's value proposition is simple: sustainability is a system built on three shared benefits, environmental, social and economic.",
+      "As our name suggests, “Gung-Ho” means working together, so that everyone who joins can thrive together.",
+      "Gung-Ho Culture’s value proposition is simple: sustainability is a system built on three shared benefits, environmental, social and economic.",
       "When relationships between people are strong, society is resilient; when society is resilient, business can endure; and when business is viable, we have the capacity to care for the environment.",
       "That is why Gung-Ho Culture puts society first: people are at the heart of sustainability, and only when people thrive together can real impact follow.",
     ],
@@ -95,22 +102,19 @@ const home = {
     sourceNote: "Source: Gung-Ho Culture project records, updated regularly.",
     cards: [
       {
-        tag: "Revenue impact",
         title: "Funding unlocked by a Sustainability White Paper",
         description:
           "A technology company wrote a Sustainability White Paper with Gung-Ho Culture. Within a year, it secured government grants, angel investment and bank loans totalling nearly NT$10 million.",
       },
       {
-        tag: "Case study",
         title: "Cross-sector sustainability partnerships",
         description:
           "From international forums to corporate procurement lists, and from global sustainability conferences to co-branded products, Gung-Ho Culture continues to broker cross-sector partnerships through the CO-ESG Academy speaker platform.",
       },
       {
-        tag: "Advisory-led",
         title: "On the international stage",
         description:
-          "A single Sustainability White Paper took a brand that makes watches from ocean waste onto the stage of an international youth forum. To date we have helped 8 companies reach international forums, showing the world Taiwan's sustainability pioneers.",
+          "A single Sustainability White Paper took a brand that makes watches from ocean waste onto the stage of an international youth forum. To date we have helped 8 companies reach international forums, showing the world Taiwan’s sustainability pioneers.",
       },
     ],
     moreLink: "See our story so far",
@@ -118,14 +122,15 @@ const home = {
   audiences: {
     label: "Who we serve",
     title: "What kind of partner are you?",
-    description: "Gung-Ho Culture serves two main groups: brand owners with a long-term purpose, and large companies looking for a sustainable supply chain. CO-ESG Academy, meanwhile, brings learners and speakers together in one space.",
+    description:
+      "Gung-Ho Culture serves three groups: purpose-led brand owners and non-profits; small and medium-sized suppliers whose customers ask them to respond on ESG; and large companies looking for a sustainable supply chain. CO-ESG Academy, meanwhile, brings learners and speakers together in one space.",
     items: [
       {
         key: "brand",
-        title: "Purpose-led brand owners",
+        title: "Purpose-led brand owners and non-profits",
         description:
-          "You are already practising sustainability, or your business inherently creates social and environmental value. Whether you work in agriculture, design, wellbeing or the creative industries, we help you articulate that value clearly.",
-        cta: "Explore advisory and White Paper services",
+          "You are already practising sustainability, or your business inherently creates social and environmental value. Whether you work in agriculture, design, wellbeing, the creative industries or the non-profit sector, we help you articulate that value clearly.",
+        cta: "See Sustainability White Paper plans",
       },
       {
         key: "enterprise",
@@ -139,7 +144,14 @@ const home = {
         title: "Individuals and teams keen to learn",
         description:
           "CO-ESG Academy connects sustainability practitioners from every field, bringing speakers, brands and businesses together to exchange ideas and spark new partnerships and possibilities.",
-        cta: "Open the Sustainability Learning Map",
+        cta: "See courses and plans",
+      },
+      {
+        key: "supplier",
+        title: "Small and medium-sized suppliers asked to respond on ESG",
+        description:
+          "Has a major customer sent you an ESG questionnaire or sustainability requirements? Not sure where to start? We help you understand the questions and match them to what you are already doing.",
+        cta: "See Sustainable Supply Chain Advisory",
       },
     ],
     roadmapTitle: "Where we are heading next",
@@ -153,13 +165,13 @@ const home = {
   trust: {
     label: "What our partners say",
     title: "Client Testimonials",
-    description: "Genuine feedback from brand owners, social enterprises and industry partners. Select a partner's logo to read their full testimonial.",
+    description: "Genuine feedback from brand owners, social enterprises and industry partners. Select a partner’s logo to read their full testimonial.",
     openLabel: "Read testimonial",
     closeLabel: "Close",
     testimonials: [
       {
         highlight: "At its core, ESG is still about people, and the value Gung-Ho Culture brings fits that perfectly.",
-        quote: "They start from the founder's perspective and help you see how your work connects to sustainability. While preparing the report, they also reawaken your original motivation for doing it.",
+        quote: "They start from the founder’s perspective and help you see how your work connects to sustainability. While preparing the report, they also reawaken your original motivation for doing it.",
         name: "Selvans Social Farm",
         client: "sifan-farm",
         title: "Owner, natural farm",
@@ -177,7 +189,7 @@ const home = {
         highlight: "We moved from ad hoc, reactive corporate partnerships to proactive, strategic engagement.",
         quote: "True to its name, Gung-Ho Culture is a partner that helps everyone thrive together, integrating and translating knowledge.",
         name: "Taiwan Leisure Agriculture Association",
-        client: "",
+        client: "tlaa",
         title: "Industry Partner",
         tag: "Supply Chain",
       },
@@ -189,16 +201,37 @@ const home = {
         title: "Co-founder",
         tag: "Advisory",
       },
+      {
+        highlight: "I finally understood what value I can create for businesses.",
+        quote:
+          "I kept wondering what sustainability and ESG actually had to do with me. Before the course, I thought it was something big corporations talked about, with no connection to my own work. Once the course laid out the framework and the context, I finally understood what value I can create for businesses. I also learned what language to use when I talk to them. Hearing someone else explain it a hundred times is no substitute for experiencing it yourself.",
+        name: "Wellbeing industry | Event organiser",
+        client: "",
+        title: "",
+        tag: "",
+        outcomeLabel: "Outcome",
+        outcome:
+          "Helped a learner from another field find where their industry connects with sustainability, and build the language and direction to communicate with businesses.",
+      },
     ],
   },
   cta: {
     label: "Next step",
     title: "Ready for the market to notice you?",
     description:
-      "Book a 15-minute Coffee Chat and let's talk about how to make what you do clear, visible and understood.",
+      "Book a 15-minute Coffee Chat and let’s talk about how to make what you do clear, visible and understood.",
     primaryLabel: "Book a 15-minute Coffee Chat",
     secondaryLabel: "Follow us on LinkedIn",
     steps: ["Leave your details", "A 15-minute online chat", "Receive tailored next steps"],
+  },
+  book: {
+    title: "The New Language of Sustainability: The Dual-Impact Revolution",
+    coverAlt: "Cover of The New Language of Sustainability: The Dual-Impact Revolution",
+    meta: ["Author: Evvon Wu", "Publisher: Sbooker Publications", "Price: NT$380", "In Traditional Chinese"],
+    tagline: "You have done so much for sustainability. But has that effort really been seen?",
+    description:
+      "Evvon Wu draws on years of experience as a social worker, corporate advisor and social innovator. She helps you rethink sustainability: from responsibility to thriving together, from activities to real outcomes, and from measuring impact to scaling up resources. Business value and social value no longer have to be a trade-off.",
+    cta: "Buy the book",
   },
 }
 

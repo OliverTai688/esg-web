@@ -20,7 +20,8 @@ export function Footer({ locale, dict }: FooterProps) {
     { href: `/${locale}/sustainability`, label: nav.sustainability.label },
     { href: `/${locale}/events`, label: nav.events.label },
     { href: `/${locale}/learning`, label: nav.learning.label },
-    { href: `/${locale}/insights`, label: nav.learning.insights },
+    // /en/insights redirects to /en/learning (EN7), so English has no separate link
+    ...(locale === "en" ? [] : [{ href: `/${locale}/insights`, label: nav.learning.insights }]),
     { href: `/${locale}/consulting`, label: nav.consulting.label },
     { href: `/${locale}/join`, label: nav.join },
   ]
@@ -111,8 +112,15 @@ export function Footer({ locale, dict }: FooterProps) {
             <dl className="grid grid-cols-[auto_1fr] gap-x-5 gap-y-2.5 text-sm">
               <dt className="text-white/60">{footer.company.name}</dt>
               <dd className="text-white/85">
-                {site.legalName.zh}
-                <span className="block text-xs text-white/60">{site.legalName.en}</span>
+                {/* EN2: the English footer shows only the English registered name */}
+                {lang === "en" ? (
+                  site.legalName.en
+                ) : (
+                  <>
+                    {site.legalName.zh}
+                    <span className="block text-xs text-white/60">{site.legalName.en}</span>
+                  </>
+                )}
               </dd>
 
               <dt className="text-white/60">{footer.company.taxId}</dt>
@@ -155,8 +163,21 @@ export function Footer({ locale, dict }: FooterProps) {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-white/15 pt-6 text-xs font-medium text-white/60">
-          {footer.copyright}
+        <div className="mt-12 flex flex-col gap-3 border-t border-white/15 pt-6 text-xs font-medium text-white/60 sm:flex-row sm:items-center sm:justify-between">
+          <span>{footer.copyright}</span>
+          {/* rev2 #7: terms and privacy (EN2) */}
+          <ul className="flex flex-wrap gap-x-5">
+            <li>
+              <Link href={`/${locale}/terms`} className={`${linkClass} inline-flex min-h-11 items-center`}>
+                {footer.terms}
+              </Link>
+            </li>
+            <li>
+              <Link href={`/${locale}/privacy`} className={`${linkClass} inline-flex min-h-11 items-center`}>
+                {footer.privacy}
+              </Link>
+            </li>
+          </ul>
         </div>
       </Container>
     </footer>

@@ -95,9 +95,10 @@ export default async function LocaleLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              name: "共好玟化 CO-ESG",
+              // Launch checklist 11: the registered name, English name Gung-Ho Culture
+              name: site.legalName.zh,
               legalName: site.legalName.zh,
-              alternateName: site.legalName.en,
+              alternateName: ["Gung-Ho Culture", "共好玟化 CO-ESG"],
               url: site.url,
               description: "永續價值的專業橋樑",
               taxID: site.taxId,

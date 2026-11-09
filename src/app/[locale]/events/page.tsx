@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import type { Metadata } from "next"
 import { ArrowRight, ArrowUpRight } from "lucide-react"
 import { Container } from "@/components/core/Container"
@@ -11,10 +12,10 @@ import { Tabs } from "@/components/ux/Tabs"
 import { FoldList, ReadMore } from "@/components/ux/Fold"
 import { SnapRail } from "@/components/ux/SnapRail"
 import { FootprintTrail } from "@/components/events/FootprintTrail"
-import { Footprints, StepRing } from "@/components/events/steps"
+import { StepRing } from "@/components/events/steps"
 import { getMessages } from "@/i18n/messages"
 import type { Locale } from "@/i18n/config"
-import { workshops, services, courseText, courseStatusLabel } from "@/data/courses"
+import { workshops, courseText } from "@/data/courses"
 import { contactFor } from "@/lib/site"
 import { ChannelButton } from "@/components/site/ChannelButton"
 import { ClientLogo } from "@/components/site/ClientLogo"
@@ -29,12 +30,18 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return { title: t.events.meta.title, description: t.events.meta.description, alternates: alternatesFor(locale, "/events") }
 }
 
-// Learning-map level colours. The level name always accompanies the colour (E02).
-const LEVEL_DISC: Record<string, string> = {
-  blue: "bg-level-blue text-white",
-  green: "bg-level-green text-white",
-  yellow: "bg-brand-yellow text-ink",
-  red: "bg-level-red text-white",
+// Learning-map stage colours (rev2 #36): 探索 yellow, 實作 orange, 整合 dark grey.
+// The stage name always accompanies the colour (E02). Ink on yellow and orange,
+// white on grey, so the numbers keep their contrast.
+const STAGE_DISC: Record<string, string> = {
+  explore: "bg-level-explore text-ink",
+  practice: "bg-level-practice text-ink",
+  integrate: "bg-level-integrate text-white",
+}
+const STAGE_SWATCH: Record<string, string> = {
+  explore: "bg-level-explore",
+  practice: "bg-level-practice",
+  integrate: "bg-level-integrate",
 }
 
 // The year disc grows with every year: the footprint accumulates.
@@ -46,25 +53,24 @@ const YEAR_DISC = [
   "size-40 text-4xl lg:size-48 lg:text-6xl",
 ]
 
-// How far each service walks with you: once, one project, every month.
-const SERVICE_STEPS = [
-  { count: 1, tone: "bg-brand-orange" },
-  { count: 4, tone: "bg-brand-yellow" },
-  { count: 8, tone: "bg-brand-grey" },
-]
+// Course dates of past events: 2025.10.18 in Chinese, 18 Oct 2025 in English (R29).
+function eventDate(date: string, locale: string) {
+  if (locale !== "en") return date.replaceAll("-", ".")
+  const [y, m, d] = date.split("-").map(Number)
+  if (!y || !m || !d) return date
+  return new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" }).format(Date.UTC(y, m - 1, d))
+}
 
 // /events: footsteps on the bridge (docs/redesign/pages-v2/events/). One disc is
 // one step — dashed: not taken yet, solid: taken, growing: accumulated.
 // Seams are numbered as in 01-page-plan.md §6.
 export default async function EventsPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
-  const lang = locale === "en" ? "en" : "zh"
   const t = await getMessages(locale as Locale)
   const e = t.events
 
   // Each section's kicker is its chapter label, so the menu and the page cannot drift apart.
   const kicker = Object.fromEntries(e.chapters.map((c) => [c.id, c.label]))
-  const upcoming = workshops.filter((w) => w.status !== "已結束")
   const past = workshops.filter((w) => w.status === "已結束")
   const levelName = Object.fromEntries(e.learningMap.levels.map((l) => [l.key, l.name]))
 
@@ -102,7 +108,7 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
                 {e.hero.primaryCta}
               </ChannelButton>
               <Button size="lg" variant="outline" asChild>
-                <a href="#workshops">{e.hero.secondaryCta}</a>
+                <Link href={`/${locale}/consulting#solutions-self-learn`}>{e.hero.secondaryCta}</Link>
               </Button>
             </div>
           </div>
@@ -128,35 +134,26 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
       <section id="upcoming" className="py-16 md:py-24">
         <Container>
           <SectionHeader kicker={kicker.upcoming} title={e.upcoming.title} description={e.upcoming.description} />
+          {/* rev2 #35: one course, no price, the next cohort is being planned */}
           <div className="mt-10 grid items-center gap-10 lg:grid-cols-[auto_1fr] lg:gap-16">
-            <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center lg:flex-col lg:items-center">
-              <StepRing className="size-44 px-6 text-lg font-black leading-snug text-ink sm:size-52">{courseStatusLabel["規劃中"][lang]}</StepRing>
-              <ChannelButton locale={locale} purpose="notify" externalLabel={t.common.externalParen}>
-                {e.upcoming.notifyCta}
-              </ChannelButton>
-            </div>
-            <ul className="divide-y divide-border border-y border-border">
-              {upcoming.map((c) => {
-                const ct = courseText(c, locale)
-                return (
-                  <li key={c.slug}>
-                    <Link
-                      href={`/${locale}/events/${c.slug}`}
-                      className="group flex min-h-16 items-center gap-4 py-4 outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                    >
-                      <StepRing className="size-9" />
-                      <span className="min-w-0 flex-1">
-                        <span className="block font-bold leading-snug text-ink group-hover:text-primary">{ct.title}</span>
-                        <span className="mt-0.5 block text-[13px] text-muted-foreground">{[ct.duration, ct.location].filter(Boolean).join("・")}</span>
-                      </span>
-                      <span className="font-display text-[15px] font-bold text-ink">{c.price}</span>
-                      <ArrowRight className="size-4 shrink-0 text-primary" aria-hidden="true" />
-                      <span className="sr-only">{e.upcoming.viewDetails}</span>
-                    </Link>
-                  </li>
-                )
-              })}
-            </ul>
+            <StepRing className="size-44 px-6 text-lg font-black leading-snug text-ink sm:size-52">{e.upcoming.course.status}</StepRing>
+            <article className="rounded-2xl bg-card p-6 ring-1 ring-border sm:p-8">
+              <h3 className="text-xl font-black leading-snug text-ink sm:text-2xl">{e.upcoming.course.title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {[e.upcoming.course.meta, e.upcoming.course.language].filter(Boolean).join(" · ")}
+              </p>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <Button size="lg" variant="outline" asChild>
+                  <Link href={`/${locale}/events/whitepaper-workshop`}>
+                    {e.upcoming.viewDetails}
+                    <ArrowRight />
+                  </Link>
+                </Button>
+                <ChannelButton locale={locale} purpose="notify" externalLabel={t.common.externalParen}>
+                  {e.upcoming.notifyCta}
+                </ChannelButton>
+              </div>
+            </article>
           </div>
         </Container>
       </section>
@@ -164,7 +161,7 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
       {/* Seam 2 · quiet: paper to white */}
 
       {/* S3 ── Learning map: eight steps on one path, start anywhere */}
-      <section id="workshops" className="bg-card pt-16 md:pt-24">
+      <section id="workshops" className="bg-card pb-32 pt-16 md:pb-44 md:pt-24">
         <Container>
           <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
             <div className="lg:sticky lg:top-36 lg:self-start">
@@ -175,7 +172,13 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
                 <ul className="space-y-1.5">
                   {e.learningMap.levels.map((l, i) => (
                     <li key={l.key} className="flex items-baseline gap-2">
-                      {i === 0 ? <Quarter className="size-2.5" /> : i === 1 ? <Half className="h-[5px] w-2.5" /> : <Disc className="size-2.5" />}
+                      {i === 0 ? (
+                        <Quarter className={cn("size-2.5", STAGE_SWATCH[l.key])} />
+                      ) : i === 1 ? (
+                        <Half className={cn("h-[5px] w-2.5", STAGE_SWATCH[l.key])} />
+                      ) : (
+                        <Disc className={cn("size-2.5", STAGE_SWATCH[l.key])} />
+                      )}
                       <span className="shrink-0 font-bold text-ink">{l.name}</span>
                       {l.description}
                     </li>
@@ -189,7 +192,7 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
               items={e.learningMap.modules.map((m, i) => ({
                 open: i === 0,
                 meta: (
-                  <span className={cn("relative flex size-11 items-center justify-center rounded-full text-sm font-bold ring-4 ring-card", LEVEL_DISC[m.level])}>
+                  <span className={cn("relative flex size-11 items-center justify-center rounded-full text-sm font-bold ring-4 ring-card", STAGE_DISC[m.stage])}>
                     {String(i + 1).padStart(2, "0")}
                   </span>
                 ),
@@ -215,8 +218,8 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
             />
           </div>
 
-          {/* Seam 3 · colour extension: this sand strip grows into the next section */}
-          <div className="-mx-6 mt-14 flex flex-col gap-x-8 gap-y-2 rounded-t-3xl bg-sand px-6 pb-2 pt-7 md:mx-0 md:flex-row md:flex-wrap md:items-center md:px-10">
+          {/* The enquiry strip closes the learning map; the road-so-far arch rises below it */}
+          <div className="-mx-6 mt-14 flex flex-col gap-x-8 gap-y-2 bg-sand px-6 py-5 md:mx-0 md:flex-row md:flex-wrap md:items-center md:rounded-3xl md:px-10">
             <p className="font-bold text-ink">{e.learningMap.inquire}</p>
             <Link href={`/${locale}/consulting#contact`} className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-link">
               {e.learningMap.inquireCta}
@@ -231,10 +234,15 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
                       <ArrowUpRight className="size-4 shrink-0" aria-hidden="true" />
                       {external}
                     </a>
+                    {"note" in link && link.note && (
+                      <span className="ml-2 inline-block rounded-full bg-brand-yellow px-2.5 py-0.5 text-xs font-bold text-ink">{link.note}</span>
+                    )}
                   </li>
                 ))}
               </ul>
             </ReadMore>
+            {/* #farm-course: target of the 方案總表 「ESG 永續農創師」 button */}
+            <div id="farm-course" className="scroll-mt-32">
             <ReadMore label={e.learningMap.farmCourse.label}>
               <p className="font-bold text-ink">{e.learningMap.farmCourse.title}</p>
               <p>{e.learningMap.farmCourse.meta}</p>
@@ -249,39 +257,8 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
                 ))}
               </ul>
             </ReadMore>
+            </div>
           </div>
-        </Container>
-      </section>
-
-      {/* S4 ── Ongoing support: the dots say how far each one walks with you */}
-      <section id="services" className="bg-sand pb-32 pt-14 md:pb-44 md:pt-20">
-        <Container>
-          <SectionHeader kicker={kicker.services} title={e.servicesSection.title} description={e.servicesSection.description} />
-          <ul className="mt-10 grid gap-4 md:grid-cols-3">
-            {services.map((s, i) => {
-              const st = courseText(s, locale)
-              const type = s.type === "subscription" ? e.servicesSection.subscription : e.servicesSection.consulting
-              const step = SERVICE_STEPS[i % SERVICE_STEPS.length]
-              return (
-                <li key={s.slug}>
-                  <Link
-                    href={`/${locale}/events/${s.slug}`}
-                    className="group flex h-full flex-col rounded-2xl bg-card p-6 outline-none transition-transform hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-ring"
-                  >
-                    <Footprints count={step.count} className={step.tone} />
-                    {type !== st.title && <p className="mt-5 text-xs font-bold text-muted-foreground">{[type, st.duration].filter(Boolean).join("・")}</p>}
-                    <h3 className={cn("text-lg font-black leading-snug text-ink group-hover:text-primary", type !== st.title ? "mt-1" : "mt-5")}>{st.title}</h3>
-                    <p className="mt-2 flex-1 text-sm leading-[1.85] text-muted-foreground">{st.description}</p>
-                    <span className="mt-5 flex items-center justify-between border-t border-border pt-4">
-                      <span className="font-display text-lg font-bold text-ink">{s.price}</span>
-                      <ArrowRight className="size-4 text-primary" aria-hidden="true" />
-                      <span className="sr-only">{e.servicesSection.viewMore}</span>
-                    </span>
-                  </Link>
-                </li>
-              )
-            })}
-          </ul>
         </Container>
       </section>
 
@@ -349,7 +326,9 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
                       <span className="flex flex-1 flex-wrap items-baseline gap-x-4 gap-y-0.5">
                         <span className="font-bold group-hover:text-brand-yellow">{courseText(c, locale).title}</span>
                         <span className="text-sm text-white/65">
-                          {c.date?.replaceAll("-", ".")}・{e.history.ended}
+                          {c.date ? eventDate(c.date, locale) : null}
+                          {locale === "en" ? " · " : "・"}
+                          {e.history.ended}
                         </span>
                       </span>
                       <ArrowRight className="size-4 shrink-0 text-brand-yellow" aria-hidden="true" />
@@ -417,14 +396,24 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
           <SnapRail label={kicker.cases} prevLabel={e.cases.prev} nextLabel={e.cases.next} className="mt-10">
             {e.cases.items.map((c) => (
               // `relative` keeps the sr-only label inside the rail's scroll box (it is absolutely positioned)
-              <article key={c.title} className="relative h-full rounded-2xl bg-paper p-6 sm:p-7">
-                <h3 className="text-lg font-black leading-snug text-ink">{c.title}</h3>
-                <p className="mt-2 text-sm font-bold text-muted-foreground">
-                  <span className="sr-only">{e.cases.partnersLabel}{locale === "en" ? ": " : "："}</span>
-                  {c.partners}
-                </p>
-                {c.logos.length > 0 && (
-                  <ul className="mt-3 flex gap-2">
+              <article key={c.title} className="relative flex h-full flex-col overflow-hidden rounded-2xl bg-paper">
+                <Image
+                  src={`/cases/footprints/${c.photo}.webp`}
+                  alt={c.photoAlt}
+                  width={1200}
+                  height={900}
+                  sizes="(min-width: 1024px) 400px, 85vw"
+                  className="aspect-[4/3] w-full object-cover"
+                />
+                <div className="flex flex-1 flex-col p-6 sm:p-7">
+                  <h3 className="text-lg font-black leading-snug text-ink">{c.title}</h3>
+                  {c.partners && (
+                    <p className="mt-2 text-sm font-bold text-muted-foreground">
+                      <span className="sr-only">{e.cases.partnersLabel}{locale === "en" ? ": " : "："}</span>
+                      {c.partners}
+                    </p>
+                  )}
+                  <ul className="mt-3 flex flex-wrap gap-2">
                     {c.logos.map((id) => {
                       const client = getClient(id)
                       return client ? (
@@ -434,10 +423,10 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
                       ) : null
                     })}
                   </ul>
-                )}
-                <ReadMore label={e.cases.readStory} className="mt-1 [&>div]:text-ink/80">
-                  <p>{c.description}</p>
-                </ReadMore>
+                  <ReadMore label={e.cases.readStory} className="mt-1 [&>div]:text-ink/80">
+                    <p>{c.description}</p>
+                  </ReadMore>
+                </div>
               </article>
             ))}
           </SnapRail>

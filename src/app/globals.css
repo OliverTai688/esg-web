@@ -55,11 +55,11 @@
   --color-coesg: #23AC39;
   --color-coesg-strong: #1A7F2B;
 
-  /* Learning-map level colours (E02) */
-  --color-level-blue: #2F6FB3;
-  --color-level-green: #23843A;
-  --color-level-yellow: #B07A00;
-  --color-level-red: #C2391B;
+  /* Learning-map stage colours (rev2 #36): one CIS colour per stage.
+     探索 01–03 yellow (Pantone 7548C), 實作 04–07 orange (165C), 整合 08 dark grey (Cool Gray 11C) */
+  --color-level-explore: #F9A500;
+  --color-level-practice: #E8532A;
+  --color-level-integrate: #595959;
 
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
@@ -156,6 +156,21 @@
 /* ═══════════════════════════════════════════════════════════════════════
    Base Layer
    ═══════════════════════════════════════════════════════════════════════ */
+/* Noto Sans TC draws curly quotes and apostrophes (’ “ ”) full-width, which
+   leaves a visible gap in English ("partner’ s"). On English pages these few
+   characters come from the device's Latin system font instead; everything else
+   stays Noto Sans TC. */
+@font-face {
+  font-family: "Latin Punct";
+  src: local("Helvetica Neue"), local("HelveticaNeue"), local("Segoe UI"), local("Roboto"), local("Arial"), local("ArialMT");
+  unicode-range: U+2018-201F, U+2026;
+}
+/* Unlayered on purpose: it must beat the next/font class that sets this variable
+   on <html>. Family names are the ones next/font registers for Noto Sans TC. */
+html:lang(en) {
+  --font-body-family: "Latin Punct", "Noto Sans TC", "Noto Sans TC Fallback";
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

@@ -12,6 +12,10 @@ interface Testimonial {
   name: string
   title: string
   tag: string
+  /** Empty for a person without a brand: shown as a text card, not a petal. */
+  client?: string
+  outcomeLabel?: string
+  outcome?: string
 }
 
 interface Logo {
@@ -26,6 +30,10 @@ interface Logo {
 // clicking a petal opens the full feedback. Petals gather from the outside as
 // the section scrolls in (transition 6); at rest the flower is complete.
 // Each petal's pointed corners face the centre and the outside.
+// Logos sit on a white disc with padding of 18% a side: the logo's box is then
+// 64% of the disc, so even its corners stay well inside the circle (rev2 #23).
+// Feedback from a person without a brand (no `client`) is a text card below
+// the flower, with no logo drawn for it (rev2 #22).
 const PETALS = [
   { radius: "rounded-tr-[100%] rounded-bl-[100%] rounded-tl-none rounded-br-none", tone: "bg-brand-orange text-ink", gather: { "--gx": "-10%", "--gy": "-10%", "--gr": "-15deg" } },
   { radius: "rounded-tl-[100%] rounded-br-[100%] rounded-tr-none rounded-bl-none", tone: "bg-brand-yellow text-ink", gather: { "--gx": "10%", "--gy": "-10%", "--gr": "15deg" } },
@@ -45,10 +53,13 @@ export function TestimonialFlower({
   openLabel: string
   closeLabel: string
 }) {
+  const petals = items.map((item, i) => ({ item, logo: logos?.[i] ?? null })).filter((p) => p.item.client).slice(0, 4)
+  const textCards = items.filter((item) => !item.client)
   const [active, setActive] = React.useState(0)
   const [open, setOpen] = React.useState(false)
-  const current = items[active]
-  const currentLogo = logos?.[active]
+  const current = petals[active].item
+  const currentLogo = petals[active].logo
+  const colon = /[\u4e00-\u9fff]/.test(openLabel) ? "：" : ": "
 
   return (
     <div className="grid items-center gap-10 lg:grid-cols-[1fr_minmax(0,460px)]">
@@ -58,8 +69,8 @@ export function TestimonialFlower({
         <p className="mt-4 text-2xl font-black leading-[1.55] text-ink sm:text-[1.75rem]">{current.highlight}</p>
         <p className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
           <span className="font-bold text-ink">{current.name}</span>
-          <span className="text-muted-foreground">{current.title}</span>
-          <span className="rounded-full bg-sand px-2.5 py-0.5 text-xs font-bold text-ink/80">{current.tag}</span>
+          {current.title && <span className="text-muted-foreground">{current.title}</span>}
+          {current.tag && <span className="rounded-full bg-sand px-2.5 py-0.5 text-xs font-bold text-ink/80">{current.tag}</span>}
         </p>
         <button
           type="button"
@@ -73,7 +84,7 @@ export function TestimonialFlower({
 
       {/* The flower */}
       <ul className="relative order-1 mx-auto grid w-full max-w-[460px] grid-cols-2 gap-2 lg:order-2">
-        {items.slice(0, 4).map((item, i) => {
+        {petals.map(({ item, logo }, i) => {
           const petal = PETALS[i]
           return (
             <li key={item.name} className="scroll-gather" style={petal.gather as React.CSSProperties}>
@@ -85,7 +96,7 @@ export function TestimonialFlower({
                   setActive(i)
                   setOpen(true)
                 }}
-                aria-label={`${openLabel}${/[\u4e00-\u9fff]/.test(openLabel) ? "：" : ": "}${item.name}`}
+                aria-label={`${openLabel}${colon}${item.name}`}
                 aria-pressed={active === i}
                 className={cn(
                   "flex aspect-square w-full flex-col items-center justify-center gap-1.5 p-4 text-center transition-transform duration-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/60",
@@ -94,22 +105,44 @@ export function TestimonialFlower({
                   active === i ? "scale-100" : "scale-[0.94] hover:scale-100",
                 )}
               >
-                {logos?.[i] ? (
-                  <span className="relative block size-16 overflow-hidden rounded-full bg-white sm:size-20">
-                    <Image src={logos[i].src} alt="" fill sizes="80px" className="object-contain p-2.5" />
+                {logo ? (
+                  <span className="relative block size-20 overflow-hidden rounded-full bg-white sm:size-24">
+                    <Image src={logo.src} alt="" fill sizes="96px" className="object-contain p-[18%]" />
                   </span>
                 ) : (
                   <span aria-hidden="true" className="text-4xl font-black sm:text-5xl">
                     {item.name.slice(0, 1)}
                   </span>
                 )}
-                <span className="max-w-[9em] text-xs font-bold leading-snug sm:text-sm">{item.name}</span>
+                {/* The leaf is narrow away from its centre: long names (all the English ones)
+                    spill off it, and so does any name on a phone. There the logo stands
+                    alone; the button's aria-label and the quote card carry the name. */}
+                <span className={cn("max-w-[9em] text-xs font-bold leading-snug sm:text-sm", logo && (/[\u4e00-\u9fff]/.test(item.name) ? "hidden sm:block" : "hidden"))}>{item.name}</span>
               </button>
             </li>
           )
         })}
         <span aria-hidden="true" className="pointer-events-none absolute left-1/2 top-1/2 size-8 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-background bg-brand-orange" />
       </ul>
+
+      {textCards.map((item) => (
+        <figure key={item.name} className="order-3 rounded-3xl border border-border bg-card p-7 sm:p-9 lg:col-span-2">
+          <Quote className="size-8 text-brand-orange" aria-hidden="true" />
+          <blockquote className="mt-4 text-base leading-[1.9] text-ink/85 sm:text-lg">{item.quote}</blockquote>
+          <figcaption className="mt-6 border-t border-border pt-5">
+            <p className="font-bold text-ink">{item.name}</p>
+            {item.outcome && (
+              <p className="mt-2 text-sm leading-[1.85] text-muted-foreground">
+                <span className="font-bold text-ink">
+                  {item.outcomeLabel}
+                  {colon}
+                </span>
+                {item.outcome}
+              </p>
+            )}
+          </figcaption>
+        </figure>
+      ))}
 
       <Dialog.Root open={open} onOpenChange={setOpen}>
         <Dialog.Portal>
@@ -130,7 +163,7 @@ export function TestimonialFlower({
               )}
               <div>
                 <p className="font-bold text-ink">{current.name}</p>
-                <p className="text-sm text-muted-foreground">{current.title}</p>
+                {current.title && <p className="text-sm text-muted-foreground">{current.title}</p>}
               </div>
             </div>
             <Dialog.Close

@@ -1,4 +1,6 @@
+import { Fragment } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import type { Metadata } from "next"
 import { ArrowRight, ArrowUpRight } from "lucide-react"
 import { Container } from "@/components/core/Container"
@@ -10,8 +12,7 @@ import { StoryDialog } from "@/components/home/StoryDialog"
 import { TestimonialFlower } from "@/components/home/TestimonialFlower"
 import { CtaArcs } from "@/components/home/CtaArcs"
 import { ClientLogo } from "@/components/site/ClientLogo"
-import { ReadMore } from "@/components/ux/Fold"
-import { clients, clientLogo, clientName, getClient, type Client } from "@/data/clients"
+import { clientsIn, clientLogo, clientName, getClient, type ClientGroup } from "@/data/clients"
 import { getMessages } from "@/i18n/messages"
 import type { Locale } from "@/i18n/config"
 import { formatImpactMetric, cn } from "@/lib/utils"
@@ -24,28 +25,37 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return { title: { absolute: t.home.meta.title }, description: t.home.hero.subTitle, alternates: alternatesFor(locale) }
 }
 
-// Renders **bold** spans inside client-supplied story paragraphs.
+// _Italic_ spans (titles of films and books, R10) inside a story paragraph.
+function withItalics(text: string) {
+  return text.split(/(_[^_]+_)/g).map((part, i) => (part.length > 2 && part.startsWith("_") && part.endsWith("_") ? <em key={i}>{part.slice(1, -1)}</em> : part))
+}
+
+// Renders **bold** and _italic_ spans inside client-supplied story paragraphs.
 function withBold(text: string) {
   return text.split(/(\*\*[^*]+\*\*)/g).map((part, i) =>
     part.startsWith("**") ? (
       <strong key={i} className="font-bold text-ink">
-        {part.slice(2, -2)}
+        {withItalics(part.slice(2, -2))}
       </strong>
     ) : (
-      part
+      <Fragment key={i}>{withItalics(part)}</Fragment>
     ),
   )
 }
 
-// Grid cells of logos shown per partner group before "see all": three rows of
-// four. A wide wordmark takes two cells, so the number of logos varies.
-const LOGO_CELLS = 12
-
-function logosInView(logos: readonly Client[]) {
-  let cells = 0
-  const count = logos.findIndex((c) => (cells += c.wide ? 2 : 1) > LOGO_CELLS)
-  return count === -1 ? logos.length : count
+// Logo wall grids (rev2 #12): 20 clients and 10 partners. On wide screens the
+// two areas sit side by side at 2:1, both five rows deep.
+const LOGO_GRID: Record<ClientGroup, string> = {
+  client: "grid-cols-3 sm:grid-cols-4",
+  partner: "grid-cols-3 sm:grid-cols-5 lg:grid-cols-2",
+  ecosystem: "",
 }
+
+// The 學會 testimonial uses its vertical logo; the logo wall keeps the horizontal one (rev2 #13).
+const TESTIMONIAL_LOGO: Record<string, string> = { tlaa: "/clients/tlaa-vertical.webp" }
+
+// rev2 #24: where 立即購書 / Buy the book leads (same link for both languages).
+const BOOK_URL = "https://app.flashfalcon.info/esgevvon/shop/retail_1791864065_a47821e9"
 
 // Home page: a bridge being built, top to bottom (docs/redesign/home-v2/).
 // Shape roles — petal: value-driven partners (yellow), block: enterprises (grey),
@@ -60,18 +70,22 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const doors: Record<string, { href: string; surface: string; text: string; sub: string; cta: string }> = {
     brand: { href: `/${locale}/consulting#solutions`, surface: "bg-brand-yellow", text: "text-ink", sub: "text-ink/80", cta: "text-ink" },
     enterprise: { href: `/${locale}/sustainability#ecosystem`, surface: "bg-brand-grey", text: "text-white", sub: "text-white/90", cta: "text-white" },
-    learner: { href: `/${locale}/events#workshops`, surface: "bg-brand-orange", text: "text-ink", sub: "text-ink", cta: "text-ink" },
+    learner: { href: `/${locale}/consulting#solutions-self-learn`, surface: "bg-brand-orange", text: "text-ink", sub: "text-ink", cta: "text-ink" },
+    supplier: { href: `/${locale}/sustainability#services-supply-chain`, surface: "bg-ink", text: "text-white", sub: "text-white/85", cta: "text-white" },
   }
-  const doorOrder = ["brand", "learner", "enterprise"]
+  const doorOrder = ["brand", "learner", "enterprise", "supplier"]
   const audiences = doorOrder.map((k) => h.audiences.items.find((a) => a.key === k)).filter((a) => a !== undefined)
-  const partnerTone = ["bg-brand-yellow", "bg-brand-grey", "bg-brand-orange"]
   const english = locale === "en"
-  const logoGrid = "grid grid-flow-dense grid-cols-4 gap-2 md:grid-cols-2 lg:grid-cols-4"
-  // Each testimonial's logo, when the client has supplied the file
+  // Each testimonial's logo; entries without a client are text cards
   const testimonialLogos = h.trust.testimonials.map((item) => {
     const client = getClient(item.client)
-    return client ? { src: clientLogo(client.id), alt: clientName(client, english) } : null
+    return client ? { src: TESTIMONIAL_LOGO[client.id] ?? clientLogo(client.id), alt: clientName(client, english) } : null
   })
+  const situationHref: Record<string, string> = {
+    supplyChain: `/${locale}/sustainability#services-supply-chain`,
+    contact: `/${locale}/consulting#contact`,
+    solutions: `/${locale}/consulting#solutions`,
+  }
 
   return (
     <div className="overflow-x-clip">
@@ -85,7 +99,11 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               {h.hero.titleLead}
               <span className="text-primary">{h.hero.titleEmphasis}</span>
             </h1>
-            <p className="mt-6 max-w-xl text-lg font-bold leading-relaxed text-ink/85">{h.hero.subTitle}</p>
+            <p className="mt-6 max-w-xl text-lg font-bold leading-relaxed text-ink/85">
+              {h.hero.lead}
+              {english ? " " : ""}
+              {h.hero.subTitle}
+            </p>
             <p className="mt-4 max-w-xl text-base leading-[1.9] text-muted-foreground">{h.hero.description}</p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Button size="lg" asChild>
@@ -113,49 +131,33 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </Container>
       </section>
 
-      {/* S2 ── Partners: three groups of client logos, each card marked by a petal in its role colour */}
+      {/* S2 ── Logo wall: 服務客戶 and 合作夥伴 (rev2 #12) */}
       <section aria-labelledby="partners-heading" className="border-y border-border bg-card py-16 md:py-20">
         <Container>
           <h2 id="partners-heading" className="kicker-rule text-[13px] font-bold tracking-[0.12em] text-primary">
             {h.partners.label}
           </h2>
-          <ul className="mt-8 grid gap-4 md:grid-cols-3">
-            {h.partners.groups.map((g, i) => {
-              const logos = clients.filter((c) => c.group === g.key)
-              const shown = logosInView(logos)
-              const rest = logos.slice(shown)
+          <div className="mt-8 grid gap-4 lg:grid-cols-[2fr_1fr]">
+            {h.partners.groups.map((g) => {
+              const group = g.key as ClientGroup
+              const logos = clientsIn(group)
               return (
-                <li key={g.key} className="relative overflow-hidden rounded-2xl bg-paper p-6 pt-8">
-                  <span aria-hidden="true" className={cn("absolute -right-4 -top-4 size-16 rounded-tr-full rounded-bl-full opacity-90", partnerTone[i], i === 1 && "-scale-x-100")} />
-                  <p className="font-display text-xs font-bold text-muted-foreground">0{i + 1}</p>
-                  <h3 className="mt-1 text-lg font-black text-ink">{g.title}</h3>
-                  <ul className={cn("mt-4 border-t border-border pt-4", logoGrid)}>
-                    {logos.slice(0, shown).map((c) => (
+                <div key={g.key} className="rounded-2xl bg-paper p-6">
+                  <h3 className="flex items-baseline gap-2 text-lg font-black text-ink">
+                    {g.title}
+                    <span className="font-display text-sm font-bold text-muted-foreground tabular-nums">{logos.length}</span>
+                  </h3>
+                  <ul className={cn("mt-4 grid grid-flow-dense gap-2 border-t border-border pt-4", LOGO_GRID[group])}>
+                    {logos.map((c) => (
                       <li key={c.id} className={cn(c.wide && "col-span-2")}>
                         <ClientLogo client={c} english={english} className="h-16" />
                       </li>
                     ))}
                   </ul>
-                  {rest.length > 0 && (
-                    <ReadMore label={h.partners.showAll.replace("{n}", String(logos.length))} className="mt-2" contentClassName="mt-2">
-                      <ul className={logoGrid}>
-                        {rest.map((c) => (
-                          <li key={c.id} className={cn(c.wide && "col-span-2")}>
-                            <ClientLogo client={c} english={english} className="h-16" />
-                          </li>
-                        ))}
-                      </ul>
-                    </ReadMore>
-                  )}
-                  <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
-                    {h.partners.othersLabel}
-                    {english ? " " : "："}
-                    {g.others.join(english ? ", " : "、")}
-                  </p>
-                </li>
+                </div>
               )
             })}
-          </ul>
+          </div>
         </Container>
       </section>
 
@@ -164,11 +166,19 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       {/* S3 ── Problem: three questions and one answer close into a disc */}
       <section id="problem" className="pb-28 pt-20 md:pb-36 md:pt-28">
         <Container>
-          <SectionHeader kicker={h.problem.label} title={h.problem.title} description={h.problem.description} />
+          <SectionHeader kicker={h.problem.label} title={h.problem.title} />
           <div className="mt-12">
             <ProblemMosaic
-              painPoints={h.problem.painPoints}
-              solution={{ label: h.problem.solutionLabel, title: h.problem.solutionTitle, description: h.problem.solutionDescription, pillars: h.problem.solutionPillars }}
+              english={english}
+              situations={h.problem.situations.map((s) => ({ ...s, href: situationHref[s.link] }))}
+              solution={{
+                label: h.problem.solutionLabel,
+                title: h.problem.solutionTitle,
+                claim: h.problem.solutionClaim,
+                description: h.problem.solutionDescription,
+                tagline: h.problem.solutionTagline,
+                services: h.problem.services.map((sv) => ({ label: sv.label, href: `/${locale}/sustainability#${sv.anchor}` })),
+              }}
             />
           </div>
         </Container>
@@ -251,8 +261,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                     </div>
                   </div>
                   <div>
-                    <span className="rounded-full bg-yellow-soft px-3 py-1 text-xs font-bold text-ink">{card.tag}</span>
-                    <h3 className="mt-3 text-lg font-black text-ink">{card.title}</h3>
+                    <h3 className="text-lg font-black text-ink">{card.title}</h3>
                     <p className="mt-2 text-sm leading-[1.9] text-muted-foreground">{card.description}</p>
                   </div>
                 </li>
@@ -281,8 +290,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         <div aria-hidden="true" className="absolute inset-x-0 bottom-full h-[clamp(40px,7vw,110px)] rounded-t-[50%_100%] bg-sand" />
         <Container className="relative pt-4">
           <SectionHeader kicker={h.audiences.label} title={h.audiences.title} description={h.audiences.description} align="center" />
-          {/* One dome cut into three doors; on phones each door keeps its own arch */}
-          <ul className="mt-12 grid gap-4 md:grid-cols-3 md:gap-0 md:overflow-hidden md:rounded-b-3xl md:rounded-t-[50%_9rem]">
+          {/* One dome cut into four doors on wide screens; smaller screens give each door its own arch */}
+          <ul className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-0 lg:overflow-hidden lg:rounded-b-3xl lg:rounded-t-[50%_9rem]">
             {audiences.map((a, i) => {
               const d = doors[a.key]
               return (
@@ -290,8 +299,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                   <Link
                     href={d.href}
                     className={cn(
-                      "group flex h-full flex-col rounded-t-[50%_4.5rem] rounded-b-2xl px-7 pb-8 pt-16 transition-[filter] hover:brightness-[1.04] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-ink/40 md:rounded-none md:pb-10",
-                      i === 1 ? "md:pt-24" : "md:pt-32",
+                      "group flex h-full flex-col rounded-t-[50%_4.5rem] rounded-b-2xl px-7 pb-8 pt-16 transition-[filter] hover:brightness-[1.04] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-ink/40 lg:rounded-none lg:px-6 lg:pb-10",
+                      i === 1 || i === 2 ? "lg:pt-24" : "lg:pt-32",
                       d.surface,
                     )}
                   >
@@ -340,7 +349,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </section>
 
       {/* S7 ── Client feedback. Seam 6: petals gather into the flower as it scrolls in. */}
-      <section id="testimonials" className="py-20 md:py-28">
+      {/* Fixed anchor #testimonials: the navbar's 客戶回饋 / Testimonials item leads here (rev2 #22) */}
+      <section id="testimonials" className="scroll-mt-24 py-20 md:py-28">
         <Container>
           <SectionHeader kicker={h.trust.label} title={h.trust.title} description={h.trust.description} />
           <div className="mt-12">
@@ -358,6 +368,46 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         primary={{ label: h.cta.primaryLabel, href: `/${locale}/consulting#contact` }}
         secondary={{ label: h.cta.secondaryLabel, ...contactFor(locale, "follow") }}
       />
+
+      {/* S9 ── The book (rev2 #24) */}
+      <section id="book" aria-labelledby="book-heading" className="border-t border-border bg-card py-16 md:py-24">
+        <Container className="grid items-center gap-10 md:grid-cols-[minmax(0,15rem)_1fr] md:gap-14 lg:grid-cols-[minmax(0,17rem)_1fr]">
+          <Image
+            src="/books/sustainability-new-language.webp"
+            alt={h.book.coverAlt}
+            width={700}
+            height={1000}
+            sizes="(min-width: 768px) 272px, 60vw"
+            className="mx-auto h-auto w-3/5 max-w-[17rem] rounded-md shadow-[0_24px_48px_-24px_rgba(31,32,34,0.45)] md:w-full"
+          />
+          <div>
+            <h2 id="book-heading" className={cn("text-2xl font-black leading-snug text-ink sm:text-3xl", english && "italic")}>
+              {h.book.title}
+            </h2>
+            <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-sm text-muted-foreground">
+              {h.book.meta.map((m, i) => (
+                <li key={m} className="flex gap-3">
+                  {i > 0 && (
+                    <span aria-hidden="true" className="text-border">
+                      |
+                    </span>
+                  )}
+                  {m}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-6 text-lg font-bold leading-[1.7] text-ink sm:text-xl">{h.book.tagline}</p>
+            <p className="mt-4 max-w-2xl text-base leading-[1.9] text-muted-foreground">{h.book.description}</p>
+            <Button size="lg" asChild className="mt-8">
+              <a href={BOOK_URL} target="_blank" rel="noopener noreferrer">
+                {h.book.cta}
+                <ArrowUpRight aria-hidden="true" />
+                <span className="sr-only">{t.footer.newWindow}</span>
+              </a>
+            </Button>
+          </div>
+        </Container>
+      </section>
     </div>
   )
 }

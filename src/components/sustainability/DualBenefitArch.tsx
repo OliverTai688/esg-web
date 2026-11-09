@@ -1,28 +1,37 @@
 import { cn } from "@/lib/utils"
 
-// The dual-benefit theory as the reason an arch stands: two half-arches
-// (society & environment / economic value) lean on each other and meet at the
-// keystone. The halves draw in as the section scrolls into view; at rest the
-// arch is complete.
+// rev2 #29: the Dual-Impact Leverage Model as drawn in chapter 2 of the book:
+// environmental value + social value, two capsules side by side, whose lines
+// meet at the leverage point and run down to economic value. Built from text
+// and borders (not an image) so the labels translate (R31) and read aloud in
+// order. Sits on the dark #difference section.
 export function DualBenefitArch({
   labels,
   className,
 }: {
-  labels: { left: string; keystone: string; right: string }
+  labels: { left: string; right: string; pivot: string; result: string }
   className?: string
 }) {
+  const capsule = "flex min-h-14 items-center justify-center rounded-full px-3 py-2.5 text-center text-sm font-black leading-tight sm:text-base"
+  const line = "border-white/45"
   return (
     <figure className={cn("max-w-[460px]", className)}>
-      <svg viewBox="0 0 460 150" fill="none" className="block h-auto w-full" aria-hidden="true">
-        <path d="M14 138 C 14 70, 110 26, 208 22" stroke="#F9A500" strokeWidth="20" strokeLinecap="round" pathLength={1} className="scroll-draw" />
-        <path d="M446 138 C 446 70, 350 26, 252 22" stroke="#E8532A" strokeWidth="20" strokeLinecap="round" pathLength={1} className="scroll-draw" />
-        <rect x="216" y="6" width="28" height="32" fill="#FFFFFF" />
-      </svg>
-      <figcaption className="mt-2 grid grid-cols-[1fr_auto_1fr] items-start gap-2 text-xs font-bold text-white sm:text-sm">
-        <span>{labels.left}</span>
-        <span className="rounded bg-white px-2.5 py-0.5 text-ink">{labels.keystone}</span>
-        <span className="text-right">{labels.right}</span>
-      </figcaption>
+      <div className="grid grid-cols-[1fr_auto_1fr] items-center">
+        <p className={cn(capsule, "bg-[#8A8E97] text-ink")}>{labels.left}</p>
+        <p className="px-3 text-3xl font-black leading-none text-primary">+</p>
+        <p className={cn(capsule, "bg-brand-grey text-white ring-1 ring-white/25")}>{labels.right}</p>
+        {/* The two lines come down from the capsule centres and join */}
+        <span aria-hidden="true" className={cn("ml-[50%] h-7 border-b-2 border-l-2", line)} />
+        <span aria-hidden="true" className={cn("h-7 border-b-2", line)} />
+        <span aria-hidden="true" className={cn("mr-[50%] h-7 border-b-2 border-r-2", line)} />
+      </div>
+      {/* The leverage point where they meet, then down to economic value */}
+      <div className={cn("relative mx-auto h-11 w-0 border-l-2", line)}>
+        <span aria-hidden="true" className="absolute -left-[5px] -top-[7px] size-3 rounded-full bg-brand-yellow ring-4 ring-surface-dark" />
+        <p className="absolute left-3 top-1 whitespace-nowrap text-xs font-bold text-brand-yellow sm:text-sm">{labels.pivot}</p>
+        <span aria-hidden="true" className="absolute -bottom-px -left-[5px] size-3 rotate-45 border-b-2 border-r-2 border-white/45" />
+      </div>
+      <p className={cn(capsule, "mx-auto mt-1 min-h-16 w-3/5 bg-brand-orange text-lg text-white sm:text-xl")}>{labels.result}</p>
     </figure>
   )
 }

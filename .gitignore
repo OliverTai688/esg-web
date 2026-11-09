@@ -45,3 +45,6 @@ next-env.d.ts
 
 # Office lock files
 .~*
+
+# The env template is committed (forms, indexing)
+!.env.example

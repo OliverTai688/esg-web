@@ -3,6 +3,8 @@ const common = {
   nav: {
     sustainability: {
       label: "共好永續力",
+      // rev2 #22: extra dropdown entry leading to the home page's #testimonials
+      testimonials: { label: "客戶回饋", desc: "合作夥伴與學員的真實回饋" },
     },
     events: {
       label: "永續足跡",
@@ -43,14 +45,6 @@ const common = {
       { value: "50+", label: "合作品牌" },
     ],
   },
-  // The ESG共學坊 sub-brand band and its store link (site.storeUrl).
-  coesg: {
-    kicker: "ESG共學坊",
-    title: "逛逛 ESG共學坊商城",
-    body: "課程（CLASS）、商城（STORE）與講座（TALKS），都在 ESG共學坊。",
-    storeCta: "前往 ESG共學坊商城",
-    logos: { class: "ESG共學坊 CLASS", store: "ESG共學坊 STORE", talks: "ESG共學坊 TALKS" },
-  },
   footer: {
     brand: "共好",
     brandAccent: "玟化",
@@ -62,6 +56,9 @@ const common = {
     navTitle: "網站導覽",
     store: "ESG共學坊商城",
     tools: "線上工具",
+    // rev2 #7
+    terms: "使用者條款",
+    privacy: "隱私權政策",
     contactTitle: "聯絡我們",
     supportEmail: "客服信箱",
     company: {
@@ -90,15 +87,14 @@ const common = {
     org: "所屬單位",
     orgPlaceholder: "企業名稱或組織名稱",
     topic: "想聊的方向",
-    // Order matters: /consulting hands a topic over by index (consulting.chooser.options[].key → data-contact-topic).
-    topics: ["永續品牌顧問輔導", "永續白皮書", "課程／工作坊", "非營利合作", "其他"],
+    // rev2 #44: seven options. Order matters: /consulting hands a topic over by index
+    // (data-contact-topic), and /api/forms maps an English option to the Chinese one at the same index.
+    topics: ["還不確定，先聊聊", "永續白皮書", "永續課程", "企業與組織工作坊", "永續供應鏈輔導", "非營利合作", "其他"],
     message: "您的需求或訊息",
     messagePlaceholder: "請簡單描述您的合作需求或想聊的主題...",
     submit: "送出預約",
-    // Shown after the mail client is asked to open: the form itself sends nothing.
-    success: "已開啟您的郵件軟體，寄出後即完成。沒有跳出視窗？請改用官方 LINE，或直接寄信到 gho001@coesg.tw。",
-    mailNote: "按下送出後，會開啟您的郵件軟體並帶入內容，寄出即完成。",
-    mailSubject: "Coffee Chat 預約",
+    // rev2 #48: shown after /api/forms has emailed gho001@coesg.tw
+    success: "謝謝您，我們已收到您的訊息，會以 Email 回覆。",
     required: "必填",
   },
   common: {

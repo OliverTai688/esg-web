@@ -6,6 +6,7 @@ import { SectionHeader } from "@/components/site/SectionHeader"
 import { LineQr } from "@/components/site/LineQr"
 import { ChannelButton } from "@/components/site/ChannelButton"
 import { FoldList } from "@/components/ux/Fold"
+import { EmailSubscribe } from "@/components/forms/EmailSubscribe"
 import { getMessages } from "@/i18n/messages"
 import type { Locale } from "@/i18n/config"
 import { site } from "@/lib/site"
@@ -31,6 +32,7 @@ function RingStep({ step, total }: { step: number; total: number }) {
 // /join: one action — add the official LINE account (docs/redesign/pages-v2/join/).
 // The English page has no LINE (EN rule R17, #49): its one action is following
 // us on LinkedIn, with no QR code, LINE ID or "how to join" steps.
+// Both languages also offer an email subscription in the closing card (#50).
 export default async function JoinPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   const t = await getMessages(locale as Locale)
@@ -125,6 +127,10 @@ export default async function JoinPage({ params }: { params: Promise<{ locale: s
                 {j.hero.lineId} <span className="font-display tracking-wide text-ink">{site.line.id}</span>
               </p>
             )}
+            {/* rev2 #50: the second way to join, by email */}
+            <div className="mt-8 flex w-full justify-center border-t border-ink/10 pt-8">
+              <EmailSubscribe locale={locale} labels={j.subscribe} />
+            </div>
             <p className="mt-5 text-sm text-muted-foreground">
               {j.alt.title}
               <Link href={`/${locale}/events`} className="ml-2 inline-flex min-h-11 items-center gap-1.5 font-bold text-link">

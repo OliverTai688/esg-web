@@ -1,4 +1,15 @@
-export type CourseType = 'workshop' | 'training' | 'consulting' | 'subscription';
+import { solutionPrice } from './solutions';
+
+// The /events/<slug> inner pages (rev2 #51, EN #51). Of the seven old pages
+// three are sold (永續白皮書工作坊, 永續商創師, 永續白皮書) and one is a past
+// event kept as a record (問卷設計實作工作坊). The removed and renamed slugs
+// redirect in next.config.ts. Prices are not written here: they come from
+// src/data/solutions.ts, the site's single price list.
+//
+// - course:   a course with cohorts (下一梯次規劃中 until a date is set)
+// - advisory: a consulting service (顧問／工期 instead of 講師／時數, #51)
+// - record:   a past event in 我們走過的路; its text stays as it was
+export type CourseKind = 'course' | 'advisory' | 'record';
 
 // 規劃中: recurring course whose next date has not been announced yet.
 export type CourseStatus = '招生中' | '規劃中' | '可預約' | '開放中' | '已結束';
@@ -6,110 +17,124 @@ export type CourseStatus = '招生中' | '規劃中' | '可預約' | '開放中'
 interface CourseText {
   title: string;
   description: string;
+  /** More about the course under the facts (course direction, #51) */
+  body?: string[];
   duration?: string;
   location?: string;
   capacity?: string;
   highlights?: string[];
+  /** Overrides the status wording (e.g. 規劃中 for the merged 永續商創師) */
+  statusLabel?: string;
 }
 
 export interface Course extends CourseText {
   slug: string;
-  type: CourseType;
-  // Single (highest) list price per the client's pricing rule (C02)
-  price: string;
+  kind: CourseKind;
   status: CourseStatus;
-  instructor: string;
+  /** Item in solutions.ts that holds the price */
+  solutionId?: string;
+  /**
+   * The price in Chinese, read from solutions.ts. Kept for pages that list
+   * courses; inner pages call solutionPrice() for the page's language.
+   */
+  price?: string;
+  /** Consultant ids (src/data/team.ts): one instructor card each (#52) */
+  instructors: readonly string[];
   /** ISO date of the next or last session; omitted while the next run is being planned */
   date?: string;
-  en: CourseText & { instructor: string };
+  en: CourseText;
 }
 
-const founder = '吳玟樺（共好玟化創辦人）';
-const founderEn = 'Evvon Wu, founder of Gung-Ho Culture';
+const withPrice = (course: Omit<Course, 'price'>): Course => ({
+  ...course,
+  price: course.solutionId ? solutionPrice(course.solutionId, 'zh') : undefined,
+});
 
-/** Workshops and training courses (event-based) */
-export const workshops: Course[] = [
-  {
-    slug: 'sustainable-business-creator-basic',
-    title: '永續商創師初階',
-    type: 'training',
-    description:
+/** Every inner page, in the order of the 方案總表 (the record last) */
+export const courses: Course[] = [
+  withPrice({
+    // Was sustainable-brand-workshop (#51)
+    slug: 'whitepaper-workshop',
+    kind: 'course',
+    title: '永續白皮書工作坊',
+    description: '兩天實作，帶著自己組織的資料來，離開時帶走白皮書初稿與一頁式企業提案。',
+    solutionId: 'whitepaper-workshop',
+    status: '規劃中',
+    instructors: ['evvon-wu', 'sylvia-shih'],
+    duration: '2 天實體課（10:00–17:00）',
+    location: '台北市',
+    capacity: '每梯 25–30 人',
+    // 兩天的產出 (#51)
+    highlights: ['永續白皮書初稿', '一頁式企業提案', '提案發表與回饋'],
+    en: {
+      title: 'Sustainability White Paper Workshop',
+      description:
+        'Two days of hands-on work. Bring your organisation’s own data, and leave with a first draft of your white paper and a one-page proposal for companies. Taught in Mandarin.',
+      duration: '2 days, in person (10:00–17:00)',
+      location: 'Taipei',
+      capacity: '25–30 people per cohort',
+      highlights: [
+        'A first draft of your Sustainability White Paper',
+        'A one-page proposal for companies',
+        'A presentation with feedback',
+      ],
+    },
+  }),
+  withPrice({
+    // Merges sustainable-business-creator-basic and -advanced (#51): 規劃中, the
+    // course direction only; no price, days, places or certificate.
+    slug: 'sustainable-business-innovator',
+    kind: 'course',
+    title: '永續商創師',
+    status: '規劃中',
+    statusLabel: '規劃中',
+    description: '給品牌與中小企業經營者的永續課程。',
+    body: [
       '結合ESG與商業策略，幫助建立成為永續商創師的基礎能力。課程融合AI工具應用、品牌案例分析與實作演練。',
-    price: 'NT$25,000',
-    status: '規劃中',
-    instructor: founder,
-    duration: '3 天 / 18 小時',
+      '涵蓋實施策略、利害關係人溝通、影響力評估，打造完整的永續商業策略能力。',
+    ],
+    instructors: ['evvon-wu'],
     location: '台北市',
-    capacity: '20 人',
-    highlights: ['AI 工具應用', '品牌案例分析', '實作演練', '結業證書'],
+    highlights: ['AI 工具應用', '品牌案例分析', '實作演練', '策略實施', '利害關係人溝通', '影響力評估'],
     en: {
-      title: 'Sustainable Business Creator — Foundation',
-      description:
-        'Builds the core skills of a sustainable business creator by combining ESG with business strategy, AI tools, brand case analysis and hands-on practice.',
-      instructor: founderEn,
-      duration: '3 days / 18 hours',
+      title: 'Sustainable Business Innovator Programme',
+      statusLabel: 'In planning',
+      description: 'A sustainability course for brand owners and SME leaders. Taught in Mandarin.',
+      body: [
+        'Builds the core skills of a Sustainable Business Innovator by combining ESG with business strategy, AI tools, brand case analysis and hands-on practice.',
+        'Covers implementation strategy, stakeholder communication and impact assessment for a complete sustainable business strategy.',
+      ],
       location: 'Taipei',
-      capacity: '20 people',
-      highlights: ['AI tools', 'Brand case analysis', 'Hands-on practice', 'Certificate'],
+      highlights: ['AI tools', 'Brand case analysis', 'Hands-on practice', 'Implementation', 'Stakeholder communication', 'Impact assessment'],
     },
-  },
-  {
-    slug: 'sustainable-business-creator-advanced',
-    title: '永續商創師進階',
-    type: 'training',
-    description:
-      '進階培訓，涵蓋實施策略、利害關係人溝通、影響力評估，打造完整的永續商業策略能力。',
-    price: 'NT$22,000',
-    status: '規劃中',
-    instructor: founder,
-    duration: '2 天 / 12 小時',
-    location: '台北市',
-    capacity: '15 人',
-    highlights: ['策略實施', '利害關係人溝通', '影響力評估', '進階認證'],
+  }),
+  withPrice({
+    // An advisory service, not a course (#10, #51, #53)
+    slug: 'impact-whitepaper',
+    kind: 'advisory',
+    title: '永續白皮書',
+    description: '協助企業與組織透過精準的文字和視覺化圖表，整合 ESG 行動與成效，轉化為可對外溝通的永續白皮書。',
+    solutionId: 'whitepaper',
+    status: '可預約',
+    instructors: ['evvon-wu'],
+    duration: '6–12 週',
+    highlights: ['深度訪談', '數據整合', '視覺化報告', '品牌故事'],
     en: {
-      title: 'Sustainable Business Creator — Advanced',
+      title: 'Sustainability White Paper',
       description:
-        'Advanced training in implementation strategy, stakeholder communication and impact assessment for a complete sustainable business strategy.',
-      instructor: founderEn,
-      duration: '2 days / 12 hours',
-      location: 'Taipei',
-      capacity: '15 people',
-      highlights: ['Implementation', 'Stakeholder communication', 'Impact assessment', 'Advanced certificate'],
+        'We help you bring your ESG actions and results together in one Sustainability White Paper. Precise writing and clear charts make it ready to share outside your organisation.',
+      duration: '6–12 weeks',
+      highlights: ['In-depth interviews', 'Data integration', 'Visual report', 'Brand story'],
     },
-  },
-  {
-    slug: 'sustainable-brand-workshop',
-    title: '永續品牌初階工作坊',
-    type: 'workshop',
-    description:
-      '用2小時掌握打造永續品牌的第一步。互動式教學模式，建立永續品牌的基礎觀念與核心價值。',
-    price: 'NT$6,000',
-    status: '規劃中',
-    instructor: founder,
-    duration: '2 小時',
-    location: '線上',
-    capacity: '30 人',
-    highlights: ['互動式教學', '永續框架入門', '品牌連結點'],
-    en: {
-      title: 'Sustainable Brand Workshop — Foundation',
-      description:
-        'Take the first step towards a sustainable brand in two hours: an interactive session on the core concepts and values of sustainable branding.',
-      instructor: founderEn,
-      duration: '2 hours',
-      location: 'Online',
-      capacity: '30 people',
-      highlights: ['Interactive teaching', 'Sustainability frameworks', 'Brand touchpoints'],
-    },
-  },
-  {
+  }),
+  withPrice({
+    // A past event in 我們走過的路: the text stays as it was (#51)
     slug: 'survey-design-workshop',
+    kind: 'record',
     title: '問卷設計實作工作坊',
-    type: 'workshop',
-    description:
-      '2小時實作工作坊，運用4W框架和薩提爾冰山理論，學習設計有效的永續調查問卷。',
-    price: 'NT$1,600',
+    description: '2小時實作工作坊，運用4W框架和薩提爾冰山理論，學習設計有效的永續調查問卷。',
     status: '已結束',
-    instructor: founder,
+    instructors: ['evvon-wu'],
     duration: '2 小時',
     // Date from the original course page (docs/scraped/courses/10-workshop-2024-1222.md)
     date: '2024-12-22',
@@ -119,96 +144,35 @@ export const workshops: Course[] = [
       title: 'Survey Design Workshop',
       description:
         'A two-hour hands-on workshop using the 4W framework and the Satir iceberg model to design effective sustainability surveys.',
-      instructor: founderEn,
       duration: '2 hours',
       location: 'Online',
       highlights: ['4W framework', 'Satir iceberg model', 'Survey practice'],
     },
-  },
+  }),
 ];
 
-/** Consulting and subscription services (ongoing) */
-export const services: Course[] = [
-  {
-    slug: 'brand-positioning-consulting',
-    title: '永續品牌定位顧問（單次）',
-    type: 'consulting',
-    description: '一對一品牌定位顧問諮詢，協助釐清永續定位與 ESG 敘事架構。',
-    price: 'NT$6,000',
-    status: '可預約',
-    instructor: founder,
-    duration: '60 分鐘',
-    highlights: ['一對一諮詢', '品牌定位', 'ESG 敘事架構'],
-    en: {
-      title: 'Sustainable Brand Positioning (single session)',
-      description: 'One-to-one consulting to clarify your sustainability positioning and ESG narrative.',
-      instructor: founderEn,
-      duration: '60 minutes',
-      highlights: ['One-to-one', 'Brand positioning', 'ESG narrative'],
-    },
-  },
-  {
-    slug: 'impact-whitepaper',
-    title: '永續白皮書精華版',
-    type: 'consulting',
-    description:
-      '協助企業與組織透過精準的文字和視覺化圖表，整合ESG行動與成效，轉化為可對外溝通的簡報式永續報告。',
-    price: 'NT$100,000',
-    status: '可預約',
-    instructor: founder,
-    duration: '4–8 週',
-    highlights: ['深度訪談', '數據整合', '視覺化報告', '品牌故事'],
-    en: {
-      title: 'Sustainability White Paper — Essentials',
-      description:
-        'Turns your ESG actions and results into a presentation-style report for external communication, with precise writing and clear charts.',
-      instructor: founderEn,
-      duration: '4–8 weeks',
-      highlights: ['In-depth interviews', 'Data integration', 'Visual report', 'Brand story'],
-    },
-  },
-  {
-    slug: 'subscription-plan',
-    title: '訂閱方案',
-    type: 'subscription',
-    description:
-      '每週線上授課、影片回放、講師投影片、交流社群、課程優惠折扣，持續精進永續知識。',
-    price: 'NT$300/月',
-    status: '開放中',
-    instructor: founder,
-    highlights: ['每週線上授課', '影片回放', '交流社群', '課程折扣'],
-    en: {
-      title: 'Subscription',
-      description:
-        'Weekly online classes, recordings, speaker slides, a peer community and course discounts to keep your sustainability knowledge current.',
-      instructor: founderEn,
-      highlights: ['Weekly online classes', 'Recordings', 'Community', 'Course discounts'],
-    },
-  },
-];
+/** Courses with cohorts and past events (listed on /events) */
+export const workshops: Course[] = courses.filter((c) => c.kind !== 'advisory');
 
-/** All courses combined (excluding products) */
-const allCourses: Course[] = [...workshops, ...services];
+/** Advisory services */
+export const services: Course[] = courses.filter((c) => c.kind === 'advisory');
+
+/** The pages offered under 其他方案 (#51): the three that are sold, never the record */
+export const offeredCourses: Course[] = courses.filter((c) => c.kind !== 'record');
 
 /** Look up a single course by its URL slug */
 export function getCourseBySlug(slug: string): Course | undefined {
-  return allCourses.find((course) => course.slug === slug);
-}
-
-/** The /events chapter (section id) a course belongs to: where its detail page links back to */
-export function courseChapter(course: Course): 'upcoming' | 'services' | 'history' {
-  if (course.status === '已結束') return 'history';
-  return course.type === 'consulting' || course.type === 'subscription' ? 'services' : 'upcoming';
+  return courses.find((course) => course.slug === slug);
 }
 
 /** Localised text fields for a course */
-export function courseText(course: Course, locale: string): CourseText & { instructor: string } {
+export function courseText(course: Course, locale: string): CourseText {
   return locale === 'en' ? course.en : course;
 }
 
 export const courseStatusLabel: Record<CourseStatus, { zh: string; en: string }> = {
   招生中: { zh: '招生中', en: 'Open for enrolment' },
-  規劃中: { zh: '下一梯次規劃中', en: 'Next run in planning' },
+  規劃中: { zh: '下一梯次規劃中', en: 'Next cohort in planning' },
   可預約: { zh: '可預約', en: 'Available' },
   開放中: { zh: '開放中', en: 'Open' },
   已結束: { zh: '已結束', en: 'Ended' },

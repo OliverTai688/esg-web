@@ -34,6 +34,12 @@ export default async function LearningPage({ params }: { params: Promise<{ local
   const l = t.learning
   const posts = await getAllPosts()
   const label = (slug: string, fallback: string) => categoryLabel(slug, fallback, l)
+  // EN6: every article is in Chinese. The English page shows only each article's
+  // English title, marked [in Chinese], and links straight to the Chinese article.
+  const en = locale === "en"
+  const postHref = (slug: string) => (en ? `/zh/learning/${slug}` : `/${locale}/learning/${slug}`)
+  const postTitle = (p: { slug: string; title: string }) => (en ? (l.postTitles[p.slug] ?? p.title) : p.title)
+  const inChinese = en ? <span className="ml-1.5 whitespace-nowrap text-[13px] font-normal text-muted-foreground">{l.inChinese}</span> : null
   const summaries = posts.map((p) => ({ ...toSummary(p), category: label(p.categorySlug, p.category) }))
   // Feature the newest article rather than a platform announcement
   const featured = summaries.find((p) => p.categorySlug !== "announcements") ?? summaries[0]
@@ -49,7 +55,8 @@ export default async function LearningPage({ params }: { params: Promise<{ local
   const topics = learningSections.map((s) => {
     const list = getPostsByCategory(posts, s.slug)
     const copy = l.sections[s.id]
-    const href = `/${locale}/learning/category/${s.slug}`
+    // The English topic pages redirect to /en/learning, so English petals fall back to the in-page anchor
+    const href = en ? `#${s.id}` : `/${locale}/learning/category/${s.slug}`
     return {
       id: s.id,
       short: copy.short,
@@ -68,19 +75,25 @@ export default async function LearningPage({ params }: { params: Promise<{ local
             {list.slice(0, 3).map((p) => (
               <li key={p.slug}>
                 <Link
-                  href={`/${locale}/learning/${p.slug}`}
+                  href={postHref(p.slug)}
+                  hrefLang={en ? "zh-TW" : undefined}
                   className="group flex min-h-12 items-center justify-between gap-4 py-3 font-bold leading-[1.5] text-ink outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
-                  <span className="underline-offset-4 group-hover:underline">{p.title}</span>
+                  <span>
+                    <span className="underline-offset-4 group-hover:underline">{postTitle(p)}</span>
+                    {inChinese}
+                  </span>
                   <ArrowRight className="size-4 shrink-0 text-primary" aria-hidden="true" />
                 </Link>
               </li>
             ))}
           </ul>
-          <Link href={href} className="mt-3 inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-link">
-            {l.topics.viewTopic}
-            <ArrowRight className="size-4" aria-hidden="true" />
-          </Link>
+          {!en && (
+            <Link href={href} className="mt-3 inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-link">
+              {l.topics.viewTopic}
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+          )}
         </>
       ),
     }
@@ -141,19 +154,25 @@ export default async function LearningPage({ params }: { params: Promise<{ local
               <p className="kicker-rule text-[13px] font-bold tracking-[0.12em] text-brand-yellow">{l.featured.label}</p>
               <article className="mt-8 max-w-3xl rounded-tr-[clamp(4.5rem,16vw,9.5rem)] rounded-bl-[clamp(4.5rem,16vw,9.5rem)] bg-brand-yellow px-7 py-10 text-ink sm:px-12 sm:py-14">
                 <p className="w-fit rounded-full bg-ink px-3 py-1 text-xs font-bold text-white">{featured.category}</p>
-                <h2 className="mt-4 text-2xl font-black leading-[1.45] sm:text-[2rem]">{featured.title}</h2>
-                <p className="mt-4 text-base leading-[1.85]">{featured.excerpt}</p>
-                <p className="mt-4 flex flex-wrap gap-x-2 text-[13px] text-ink/80">
-                  <span>{featured.author}</span>
-                  <span aria-hidden="true">·</span>
-                  <time dateTime={featured.date}>{featured.date.replaceAll("-", ".")}</time>
-                  <span aria-hidden="true">·</span>
-                  <span>
-                    {featured.readingMinutes} {l.article.readingTime}
-                  </span>
-                </p>
+                <h2 className="mt-4 text-2xl font-black leading-[1.45] sm:text-[2rem]">{postTitle(featured)}</h2>
+                {en ? (
+                  <p className="mt-4 text-[13px] font-bold text-ink/80">{l.inChinese}</p>
+                ) : (
+                  <>
+                    <p className="mt-4 text-base leading-[1.85]">{featured.excerpt}</p>
+                    <p className="mt-4 flex flex-wrap gap-x-2 text-[13px] text-ink/80">
+                      <span>{featured.author}</span>
+                      <span aria-hidden="true">·</span>
+                      <time dateTime={featured.date}>{featured.date.replaceAll("-", ".")}</time>
+                      <span aria-hidden="true">·</span>
+                      <span>
+                        {featured.readingMinutes} {l.article.readingTime}
+                      </span>
+                    </p>
+                  </>
+                )}
                 <Button size="lg" asChild className="mt-7 w-full sm:w-auto">
-                  <Link href={`/${locale}/learning/${featured.slug}`}>
+                  <Link href={postHref(featured.slug)} hrefLang={en ? "zh-TW" : undefined}>
                     {l.featured.cta}
                     <ArrowRight />
                   </Link>
@@ -168,29 +187,51 @@ export default async function LearningPage({ params }: { params: Promise<{ local
       <section id="articles" className="bg-sand py-16 md:py-24">
         <Container>
           <div className="mb-8 flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
-            <SectionHeader kicker={l.articles.label} title={l.articles.title} size="md" />
-            <Link href={`/${locale}/insights`} className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-link">
-              {l.articles.toInsights}
-              <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
+            <SectionHeader kicker={l.articles.label} title={en ? l.articles.titleInChinese : l.articles.title} size="md" />
+            {!en && (
+              <Link href={`/${locale}/insights`} className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-link">
+                {l.articles.toInsights}
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
+            )}
           </div>
-          <PostFilter
-            posts={summaries}
-            categories={categories}
-            labels={{ all: l.articles.all, filter: l.articles.filterLabel, showAll: l.articles.showAll, minRead: l.minutes }}
-            locale={locale}
-          />
+          {en ? (
+            <ul className="grid gap-3 md:grid-cols-2">
+              {summaries.map((p) => (
+                <li key={p.slug}>
+                  <Link
+                    href={postHref(p.slug)}
+                    hrefLang="zh-TW"
+                    className="group flex h-full min-h-[64px] items-center justify-between gap-4 rounded-2xl bg-card px-5 py-4 font-bold leading-[1.5] text-ink outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    <span>
+                      <span className="underline-offset-4 group-hover:underline">{postTitle(p)}</span>
+                      {inChinese}
+                    </span>
+                    <ArrowRight className="size-4 shrink-0 text-primary" aria-hidden="true" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <PostFilter
+              posts={summaries}
+              categories={categories}
+              labels={{ all: l.articles.all, filter: l.articles.filterLabel, showAll: l.articles.showAll, minRead: l.minutes }}
+              locale={locale}
+            />
+          )}
         </Container>
       </section>
 
-      {/* The sub-brand's own block: ESG共學坊 logos and the store, in ESG共學坊 green */}
-      <CoesgBand labels={t.coesg} externalLabel={t.common.external} />
+      {/* The sub-brand's own block: store, subscription and online tools, in ESG共學坊 green */}
+      <CoesgBand labels={l.academy} externalLabel={t.common.external} />
 
       {/* S5 ── Closing band. Seam 4: its two arcs draw in over the flame. */}
       <CtaBand
         title={l.cta.title}
         description={l.cta.body}
-        primary={{ label: l.cta.primary, href: `/${locale}/events#workshops` }}
+        primary={{ label: l.cta.primary, href: `/${locale}/consulting#solutions-self-learn` }}
         secondary={{ label: l.cta.secondary, ...contactFor(locale, "ask") }}
       />
     </div>
