@@ -77,9 +77,14 @@
 - 第 7 項、第 47 項、第 50 項已在 WP-B／F 完成，見 acceptance.md。
 - 文章「訂閱 3 步驟」暫留 ESG共學坊 LINE：文章只用文字寫「加入ESG共學坊官方 LINE」，沒有連結，維持原樣；`site.academyLine` 已備好，新金流上線時連同文章一起處理。
 
-#### WP-B～WP-H 完成狀態（2026-11-09，未 commit）
+#### WP-B～WP-H 完成狀態（2026-11-09）
 
 WP-B、C、D、E、F、G 與 H 第二階段（EN6、EN7 與英文內頁）已完成，WP-I 中不依賴網域的部分（robots.txt、llms.txt、markdown 版、JSON-LD）也已完成。逐項驗收結果、驗收時修正的問題與待客戶回覆事項見 [acceptance.md](acceptance.md)。素材處理結果見 [assets-status.md](assets-status.md) 第四節；素材路徑約定見 [asset-paths.md](asset-paths.md)。
+
+#### 追加（2026-11-09）
+
+- 寄信改用 Gmail 應用程式密碼（D1），程式在 `src/lib/mail.ts`（nodemailer，smtp.gmail.com:465）。
+- 白皮書下載連結小後台：`/admin/whitepapers`，以 `ADMIN_PASSWORD` 登入，客戶可自行更換四本白皮書的雲端連結、或恢復預設；儲存後立即生效，不需重新部署。連結存在 Upstash Redis（Vercel Marketplace 免費方案，環境變數 `KV_REST_API_URL`、`KV_REST_API_TOKEN`），本機開發時存在 `.data/whitepaper-links.json`。訪客送出下載表單後才由伺服器回傳連結，連結不出現在頁面原始碼裡。
 
 ### WP-B 方案總表與品項重構
 
@@ -197,7 +202,7 @@ WP-B、C、D、E、F、G 與 H 第二階段（EN6、EN7 與英文內頁）已完
 
 | # | 事項 | 選項 | 建議 |
 |---|---|---|---|
-| D1 | 三個表單用什麼寄信（已決定：只寄信、不存試算表） | (a) 寄信服務 API（如 Resend）：在 coesg.tw 的 DNS 加 SPF／DKIM 驗證寄件網域，從 `noreply@coesg.tw` 寄到 gho001；(b) 用 gho001 信箱本身的 SMTP（需該信箱的應用程式密碼，存在 Vercel 環境變數） | (a)：不用保管信箱密碼，寄信紀錄可查，免費額度足夠。需要能改 coesg.tw DNS 的人加三筆記錄；DNS 還沒能改之前，可先用服務商提供的測試寄件網域在測試站驗證 |
+| D1 | 三個表單用什麼寄信 | **已決定（2026-11-09）：Gmail 應用程式密碼**。由 `GMAIL_USER`（如 gho001@coesg.tw）透過 smtp.gmail.com 寄到 gho001，`Reply-To` 為填表人 | 需向客戶取得寄件帳號的應用程式密碼：該帳號要開啟兩步驟驗證；若是 Google Workspace，管理員要允許應用程式密碼。設定在 Vercel 環境變數 `GMAIL_USER`、`GMAIL_APP_PASSWORD` |
 | D2 | 白皮書 PDF 下載檔放哪裡 | (a) 壓縮後放 `public/`（四本合計 ≤40 MB，進版控）；(b) 放 Vercel Blob 或客戶 Drive 公開連結 | (b) Drive 或 Blob：PDF 不進 git，也方便客戶日後換檔。不論哪種，壓縮版都要先給客戶確認 |
 | D3 | 白皮書案例內容的呈現 | (a) 四個獨立頁 `/events/impact-whitepaper/cases/<slug>`；(b) 內頁彈出視窗 | (a)：每則案例有自己的網址，可被搜尋與 AI 引用，也方便分享 |
 | D4 | 條款與隱私權政策條文 | 我方起草 → 客戶確認 | 寫明三個表單的資料只寄到公司信箱、網站不儲存 |

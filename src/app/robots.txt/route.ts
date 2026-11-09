@@ -12,6 +12,7 @@ export function GET() {
     "User-agent: *",
     "Content-Signal: ai-input=yes",
     "Allow: /",
+    "Disallow: /admin",
     ...(site.indexable ? ["", `Sitemap: ${site.url}/sitemap.xml`] : []),
     "",
   ]

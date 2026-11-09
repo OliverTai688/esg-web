@@ -12,6 +12,7 @@
 import zhCommon from "@/i18n/messages/zh/common"
 import enCommon from "@/i18n/messages/en/common"
 import { sendMail } from "@/lib/mail"
+import { getWhitepaperLink } from "@/lib/whitepaper-links"
 import { HONEYPOT_FIELD, checkForm, formFields, type FormKind, type SubmitError } from "@/components/forms/schema"
 
 const MAX_BODY_CHARS = 20_000
@@ -169,11 +170,19 @@ export async function POST(request: Request) {
     if (label === null) errors.topic = "option"
     else topic = label
   }
+  // Whitepaper: the paper must exist; its name and link come from the server
+  // (the link can be changed at /admin/whitepapers), never from the request.
+  const paper = kind === "whitepaper" ? await getWhitepaperLink(values.paperId) : undefined
+  if (kind === "whitepaper") {
+    if (!paper) errors.paperId = "option"
+    else values.paperTitle = paper.name
+  }
   const invalid = Object.keys(errors)
   if (invalid.length > 0) return fail("invalid", 400, invalid)
 
   const { subject, lines } = compose(kind, locale, values, topic)
+  if (paper) lines.splice(lines.findIndex((l) => l.startsWith("下載的白皮書")) + 1, 0, `提供的下載連結：${paper.url}`)
   const result = await sendMail({ subject, text: lines.join("\n"), replyTo: values.email })
   if (!result.ok) return fail(result.reason, result.reason === "not_configured" ? 503 : 502)
-  return Response.json({ ok: true })
+  return Response.json(paper ? { ok: true, downloadUrl: paper.url } : { ok: true })
 }

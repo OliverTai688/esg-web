@@ -21,8 +21,9 @@ export interface WhitepaperOption {
   id: string
   /** Client name shown in the choice, e.g. 大古鑄鐵 */
   title: string
-  /** Download URL of the web version */
-  url: string
+  /** Not used: the server returns the current link after the form is sent
+      (it can be changed at /admin/whitepapers). Kept optional for the prop contract. */
+  url?: string
 }
 
 export function WhitepaperDownload({ locale, papers }: { locale: string; papers: readonly WhitepaperOption[] }) {
@@ -30,7 +31,7 @@ export function WhitepaperDownload({ locale, papers }: { locale: string; papers:
   const t = copy.whitepaper
   const { state, submit, reset } = useFormPost("whitepaper", locale)
   const [paperId, setPaperId] = React.useState(papers[0]?.id ?? "")
-  const [ready, setReady] = React.useState<WhitepaperOption | null>(null)
+  const [ready, setReady] = React.useState<{ title: string; url: string } | null>(null)
   const linkRef = React.useRef<HTMLAnchorElement>(null)
   const errors = state.fields
 
@@ -44,8 +45,8 @@ export function WhitepaperDownload({ locale, papers }: { locale: string; papers:
     event.preventDefault()
     if (state.status === "sending") return
     const paper = papers.find((p) => p.id === paperId)
-    const ok = await submit(event.currentTarget, { paperTitle: paper?.title ?? "" })
-    if (ok && paper) setReady(paper)
+    const result = await submit(event.currentTarget, { paperTitle: paper?.title ?? "" })
+    if (result && paper && result.downloadUrl) setReady({ title: paper.title, url: result.downloadUrl })
   }
 
   const another = () => {

@@ -20,7 +20,7 @@ export function useFormPost(kind: FormKind, locale: string) {
   const [state, setState] = React.useState<FormState>(IDLE)
 
   const submit = React.useCallback(
-    async (form: HTMLFormElement, extra: Record<string, string> = {}) => {
+    async (form: HTMLFormElement, extra: Record<string, string> = {}): Promise<false | { ok: true; downloadUrl?: string }> => {
       const data = new FormData(form)
       const values: Record<string, string> = {}
       for (const [key, value] of data.entries()) if (typeof value === "string") values[key] = value.trim()
@@ -41,12 +41,13 @@ export function useFormPost(kind: FormKind, locale: string) {
           body: JSON.stringify({ ...values, [HONEYPOT_FIELD]: values[HONEYPOT_FIELD] ?? "", form: kind, locale }),
         })
         const result = (await response.json().catch(() => null)) as
-          | { ok: true }
+          | { ok: true; downloadUrl?: string }
           | { ok: false; error?: SubmitError; fields?: string[] }
           | null
         if (response.ok && result?.ok) {
           setState({ status: "success", fields: {} })
-          return true
+          // The whitepaper form gets its download link back here
+          return result
         }
         const serverFields: Record<string, FieldError> = {}
         if (result && !result.ok) for (const name of result.fields ?? []) serverFields[name] = "required"

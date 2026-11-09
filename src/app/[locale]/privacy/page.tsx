@@ -80,7 +80,7 @@ export default async function PrivacyPage({ params }: { params: Promise<{ locale
           <strong>本網站不儲存表單資料。</strong>
           本網站沒有會員系統或資料庫，也不把資料寫入試算表。你按下送出後，網站伺服器只在寄信的過程中處理你填寫的內容，把它以 Email 寄到本公司客服信箱 {mail}，寄出後網站不留存。
         </li>
-        <li>信件透過寄信服務商 Resend 傳送，服務商會依其政策保存寄送紀錄。</li>
+        <li>信件透過本公司的 Google Workspace（Gmail）帳號寄出，Google 會依其政策保存寄送紀錄。</li>
         <li>收到的信件存放在本公司客服信箱，只有負責回覆的同仁可以讀取。訂閱與白皮書下載的名單，由同仁從這些信件整理。</li>
         <li>我們不會出售、出租或交換你的個人資料。除法令要求（例如司法機關依法調取）外，不會提供給第三方。</li>
       </ul>
@@ -89,7 +89,7 @@ export default async function PrivacyPage({ params }: { params: Promise<{ locale
       <ul>
         <li>期間：自你送出表單起，到蒐集目的消失、你要求停止利用或刪除，或依法令須保存的期間屆滿為止。</li>
         <li>
-          地區：臺灣，以及本網站主機（Vercel Inc.）與寄信服務商（Resend）的主機所在地區。這些主機可能位於臺灣以外（例如美國），你的資料在寄送過程中會經過這些地區。
+          地區：臺灣，以及本網站主機（Vercel Inc.）與郵件服務（Google）的主機所在地區。這些主機可能位於臺灣以外（例如美國），你的資料在寄送過程中會經過這些地區。
         </li>
         <li>對象：本公司。</li>
         <li>方式：以 Email 回覆、聯繫你，或寄送你訂閱的消息。</li>

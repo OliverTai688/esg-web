@@ -179,5 +179,6 @@ export function getWhitepaperCase(slug: string) {
 
 /** The papers offered by the download form, in the page's language. */
 export function whitepaperDownloads(locale: string) {
-  return whitepaperCases.map((c) => ({ id: c.slug, title: locale === "en" ? c.name.en : c.name.zh, url: c.downloadUrl }))
+  // No URL here: the link is looked up on the server when the form is sent
+  return whitepaperCases.map((c) => ({ id: c.slug, title: locale === "en" ? c.name.en : c.name.zh }))
 }

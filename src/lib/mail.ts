@@ -1,22 +1,25 @@
 // Server-only mail sending for the site's three forms (rev2 WP-F, D1).
 //
 // Form submissions are only emailed to the customer-service mailbox; the site
-// stores nothing (decided 2026-11-09). Mail goes out through the Resend HTTP API
-// with fetch, so there is no SDK dependency.
+// stores nothing (decided 2026-11-09). Mail goes out through Gmail's SMTP server
+// with the sending account's app password (decided 2026-11-09, replacing Resend).
 //
 // Environment (see .env.example):
-//   RESEND_API_KEY   Resend API key. Required unless FORMS_DRY_RUN=true.
-//   MAIL_FROM        Sender, on a domain verified in Resend. Default below.
-//   MAIL_TO          Recipient. Default site.supportEmail (gho001@coesg.tw).
-//   FORMS_DRY_RUN    "true": do not call Resend; log the whole email to the
-//                    server console and report success. For local and test-site checks.
+//   GMAIL_USER          The Google account that sends, e.g. gho001@coesg.tw.
+//   GMAIL_APP_PASSWORD  A 16-character app password for that account (Google
+//                       Account → Security → 2-Step Verification → App passwords).
+//                       Required unless FORMS_DRY_RUN=true.
+//   MAIL_FROM_NAME      Display name of the sender. Default below.
+//   MAIL_TO             Recipient. Default site.supportEmail (gho001@coesg.tw).
+//   FORMS_DRY_RUN       "true": do not send; log the whole email to the server
+//                       console and report success. For local and test-site checks.
 //
-// Never import this file from a client component: it reads the API key.
+// Never import this file from a client component: it reads the app password.
+import nodemailer from "nodemailer"
 import { site } from "@/lib/site"
 
-const RESEND_ENDPOINT = "https://api.resend.com/emails"
-const DEFAULT_FROM = "CO-ESG 官網 <noreply@coesg.tw>"
-const SEND_TIMEOUT_MS = 10_000
+const DEFAULT_FROM_NAME = "共好玟化官網"
+const SEND_TIMEOUT_MS = 15_000
 
 export interface MailMessage {
   subject: string
@@ -36,24 +39,29 @@ function oneLine(value: string) {
 }
 
 export function mailConfig() {
+  const user = process.env.GMAIL_USER?.trim() || ""
   return {
     dryRun: process.env.FORMS_DRY_RUN === "true",
-    apiKey: process.env.RESEND_API_KEY?.trim() || "",
-    from: process.env.MAIL_FROM?.trim() || DEFAULT_FROM,
+    user,
+    // Google shows app passwords in groups of four; spaces are not part of it
+    password: (process.env.GMAIL_APP_PASSWORD || "").replace(/\s+/g, ""),
+    fromName: process.env.MAIL_FROM_NAME?.trim() || DEFAULT_FROM_NAME,
     to: process.env.MAIL_TO?.trim() || site.supportEmail,
   }
 }
 
 export async function sendMail(message: MailMessage): Promise<MailResult> {
-  const { dryRun, apiKey, from, to } = mailConfig()
+  const { dryRun, user, password, fromName, to } = mailConfig()
   const subject = oneLine(message.subject)
   const replyTo = message.replyTo ? oneLine(message.replyTo) : undefined
+  // Gmail only sends as the signed-in account (or its verified aliases)
+  const from = { name: fromName, address: user || site.supportEmail }
 
   if (dryRun) {
     console.info(
       [
         "[forms] FORMS_DRY_RUN=true: email not sent",
-        `From: ${from}`,
+        `From: ${from.name} <${from.address}>`,
         `To: ${to}`,
         `Reply-To: ${replyTo ?? "(none)"}`,
         `Subject: ${subject}`,
@@ -64,34 +72,27 @@ export async function sendMail(message: MailMessage): Promise<MailResult> {
     return { ok: true, dryRun: true }
   }
 
-  if (!apiKey) {
-    console.error("[forms] Mail is not configured: set RESEND_API_KEY, or FORMS_DRY_RUN=true for testing.")
+  if (!user || !password) {
+    console.error("[forms] Mail is not configured: set GMAIL_USER and GMAIL_APP_PASSWORD, or FORMS_DRY_RUN=true for testing.")
     return { ok: false, reason: "not_configured" }
   }
 
   try {
-    const response = await fetch(RESEND_ENDPOINT, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({
-        from,
-        to: [to],
-        subject,
-        text: message.text,
-        ...(replyTo ? { reply_to: replyTo } : {}),
-      }),
-      signal: AbortSignal.timeout(SEND_TIMEOUT_MS),
-      cache: "no-store",
+    const transport = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: { user, pass: password },
+      connectionTimeout: SEND_TIMEOUT_MS,
+      greetingTimeout: SEND_TIMEOUT_MS,
+      socketTimeout: SEND_TIMEOUT_MS,
     })
-    if (!response.ok) {
-      // Log Resend's error only; never the submitter's data.
-      const detail = await response.text().catch(() => "")
-      console.error(`[forms] Resend responded ${response.status}: ${detail.slice(0, 500)}`)
-      return { ok: false, reason: "send_failed" }
-    }
+    await transport.sendMail({ from, to, subject, text: message.text, ...(replyTo ? { replyTo } : {}) })
     return { ok: true, dryRun: false }
   } catch (error) {
-    console.error(`[forms] Resend request failed: ${error instanceof Error ? error.message : String(error)}`)
+    // Log the SMTP error only; never the submitter's data. A 535 here usually
+    // means a wrong app password, or 2-Step Verification is off on the account.
+    console.error(`[forms] Gmail SMTP failed: ${error instanceof Error ? error.message : String(error)}`)
     return { ok: false, reason: "send_failed" }
   }
 }
