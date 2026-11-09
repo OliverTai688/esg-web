@@ -88,7 +88,7 @@
 |---|---|---|---|
 | 1 | 測試站 noindex | ✅ | 每頁 `noindex, nofollow`；robots.txt 不列 sitemap。正式網域設 `SITE_INDEXABLE=true` 才開放 |
 | 2 | 條款與隱私權政策 | 🟡 | 頁面與頁尾連結完成，條文待客戶確認 |
-| 3 | 三個表單實際寄信 | ⏳ | 測試模式三個表單都在瀏覽器送出成功。寄信已改用 Gmail 應用程式密碼（D1，2026-11-09 決定）：需要客戶提供寄件帳號（如 gho001@coesg.tw）的應用程式密碼，設定 `GMAIL_USER`、`GMAIL_APP_PASSWORD` 後再實寄一次確認。**注意**：依 11/9 決定，資料只寄信、不存試算表，與客戶文件寫的不同，回覆客戶時要說明 |
+| 3 | 三個表單實際寄信 | 🟡 | 2026-11-09 在 Vercel 預覽網址實際送出聯絡表單，Gmail 寄出、收件匣已收到，Reply-To 為填表人。目前暫用網站公司的 Gmail（taioliver688@gmail.com）寄信、測試信寄到 `MAIL_TO`；上線前要換成客戶寄件帳號的應用程式密碼（`GMAIL_USER`、`GMAIL_APP_PASSWORD`），並把 Production 的 `MAIL_TO` 拿掉，讓信寄到 gho001@coesg.tw，再實寄一次確認。**注意**：依 11/9 決定，資料只寄信、不存試算表，與客戶文件寫的不同，回覆客戶時要說明 |
 | 4 | 白皮書壓縮版、預錄課新網址 | ⏳ | 四本網頁版 PDF 已產出（`assets-raw/rev2-202610/09-白皮書案例/網頁版（待客戶確認）/`），大古 9.5 MB、勤億 4.0 MB；帷可 13.3 MB、ModuLab 12.4 MB 無法只靠降圖片解析度壓到 10 MB 以下（文字已轉外框），需客戶決定。預錄課新網址待客戶提供 |
 | 5 | 每頁獨立 meta description、首頁標題 | ✅ | 各頁 description 各自不同；首頁 title 與 og:title 依第 1 項 |
 | 6 | 8 篇 AEO 文章 301 | ⏳ | 上線當天；文章內容待提供 |
