@@ -21,14 +21,18 @@ export function LocaleSwitcher({ locale }: { locale: Locale }) {
         <Link
           key={l}
           href={getRedirectedPathname(l)}
+          lang={l === "zh" ? "zh-Hant" : "en"}
+          hrefLang={l === "zh" ? "zh-Hant" : "en"}
+          aria-current={l === locale ? "true" : undefined}
           className={cn(
-            "px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full transition-all",
+            "px-3 py-1 text-xs font-bold rounded-full transition-all",
             l === locale
-              ? "bg-primary text-white shadow-sm"
+              ? "bg-brand-grey text-white shadow-sm"
               : "text-muted-foreground hover:text-foreground"
           )}
         >
-          {l === "zh" ? "中" : "EN"}
+          {/* Language names in their own language, no flags (EN rule R33) */}
+          {l === "zh" ? "中文" : "English"}
         </Link>
       ))}
     </div>

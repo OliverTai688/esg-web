@@ -1,25 +1,27 @@
-// S1 · Hero: flame petals fanned along a semicircle form the bridge, with the
-// full flame mark as its keystone (home-v2 decision S1-B, light version).
-// The two ends are labelled with who stands on each side of the bridge.
+// S1 · Hero: flame petals fanned along a semicircle form the bridge; the
+// flame mark sits inside the arch with clear space all round (rev2 #11: the
+// mark must not touch the petals, on desktop or mobile). The two ends are
+// labelled with who stands on each side of the bridge.
 
 const CX = 300
 const CY = 300
 const R = 228
-const COUNT = 12 // petals; the top position is left free for the flame
+const COUNT = 12 // petals, evenly spread over the half circle
 // Teardrop pointing "up" (−y) in local coordinates, like one flame stroke.
 const PETAL = "M0 0 C 15 -11, 19 -36, 0 -60 C -19 -36, -15 -11, 0 0 Z"
+// The mark (74.13 × 95.22) inside the arch. Its farthest corner is about 185
+// from the arch centre, so there are 40+ units of space to the petal bases at R.
+const MARK_W = 96
+const MARK_H = 123
+const MARK_Y = 122
 
 const petals = Array.from({ length: COUNT }, (_, i) => {
-  // Spread over 180°→0°, skipping a gap around 90° for the keystone.
-  const t = i / (COUNT - 1)
-  const deg = 180 - t * 180
-  const skew = deg > 90 ? -9 : 9
-  const theta = ((deg + (Math.abs(deg - 90) < 12 ? skew : 0)) * Math.PI) / 180
+  const theta = (Math.PI * (COUNT - 1 - i)) / (COUNT - 1) // 180° → 0°
   const x = CX + R * Math.cos(theta)
   const y = CY - R * Math.sin(theta)
   const rotate = 90 - (theta * 180) / Math.PI
-  // Yellow toward the partners' end, orange toward the enterprise end.
-  const fill = i < COUNT / 2 ? (i % 2 ? "#F25232" : "#FAB40A") : i % 2 ? "#FAB40A" : "#F25232"
+  // Alternating yellow and orange, mirrored so both ends match.
+  const fill = Math.min(i, COUNT - 1 - i) % 2 ? "#E8532A" : "#F9A500"
   return { x, y, rotate, fill, i }
 })
 
@@ -35,11 +37,11 @@ export function HeroPetalArc({ left, right, center }: { left: string; right: str
             <path d={PETAL} fill={p.fill} className="petal-pop" style={{ ["--i" as string]: p.i }} />
           </g>
         ))}
-        {/* Keystone: the full flame mark */}
-        <image href="/brand/gungho-mark.svg" x={CX - 34} y={CY - R - 52} width="68" height="88" className="petal-pop" style={{ ["--i" as string]: COUNT }} />
+        {/* The flame mark, centred in the arch */}
+        <image href="/brand/gungho-mark.svg" x={CX - MARK_W / 2} y={MARK_Y} width={MARK_W} height={MARK_H} className="petal-pop" style={{ ["--i" as string]: COUNT }} />
         {/* Piers */}
-        <circle cx="72" cy={CY + 8} r="9" fill="#FAB40A" />
-        <circle cx="528" cy={CY + 8} r="9" fill="#F25232" />
+        <circle cx="72" cy={CY + 8} r="9" fill="#F9A500" />
+        <circle cx="528" cy={CY + 8} r="9" fill="#E8532A" />
       </svg>
       <figcaption className="mt-3 grid grid-cols-[1fr_auto_1fr] items-start gap-3 text-xs font-bold text-ink/80 sm:text-sm">
         <span>{left}</span>

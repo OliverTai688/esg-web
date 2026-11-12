@@ -18,6 +18,8 @@ export interface Post {
   cover?: string
   published: boolean
   content: string // rendered HTML
+  /** The article body as written (Markdown, H2 headings intact), for /api/md/posts/[slug]. */
+  markdown: string
   /** The article's h2 headings, for the table of contents. Ids match the rendered HTML. */
   headings: PostHeading[]
   readingMinutes: number
@@ -75,6 +77,7 @@ export async function getAllPosts(): Promise<Post[]> {
       cover: data.cover,
       published: data.published,
       content: contentHtml,
+      markdown: content.trim(),
       headings,
       readingMinutes: estimateReadingMinutes(content),
     })

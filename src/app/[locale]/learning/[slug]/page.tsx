@@ -5,6 +5,7 @@ import { getMessages } from "@/i18n/messages"
 import { site } from "@/lib/site"
 import { i18n, type Locale } from "@/i18n/config"
 import { getAllPosts, getAllSlugs, getNextPost, getPostBySlug } from "@/lib/posts"
+import { alternatesFor } from "@/lib/seo"
 
 export async function generateStaticParams() {
   const slugs = await getAllSlugs()
@@ -18,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title: post.title,
     description: post.excerpt,
-    alternates: { canonical: `/${locale}/learning/${slug}` },
+    alternates: alternatesFor(locale, `/learning/${slug}`),
     openGraph: { type: "article", title: post.title, description: post.excerpt, publishedTime: post.date, authors: [post.author], images: [site.ogImage] },
   }
 }

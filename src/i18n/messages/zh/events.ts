@@ -6,12 +6,11 @@ import type { ChapterDef } from "@/lib/chapters"
 // in-page ChapterNav and each section's kicker (the page reads the label from here).
 // Every id must be a section id on the page (scripts/check-anchors.mjs).
 const chapters: readonly ChapterDef[] = [
-  { id: "upcoming", label: "下一梯次", desc: "三門課規劃中，開課先通知你", icon: "CalendarDays" },
-  { id: "workshops", label: "永續學習地圖", desc: "三個層次、八個主題，找你的起點", icon: "Map" },
-  { id: "services", label: "持續服務", desc: "顧問諮詢與訂閱方案", icon: "Repeat" },
+  { id: "upcoming", label: "下一梯次", desc: "永續白皮書工作坊規劃中，開課先通知你", icon: "CalendarDays" },
+  { id: "workshops", label: "永續學習地圖", desc: "企業與組織工作坊的八個可選主題", icon: "Map" },
   { id: "history", label: "我們走過的路", desc: "2022 成立至今，一年一年看", icon: "Footprints" },
   { id: "roadmap", label: "發展藍圖", desc: "近、中、遠程目標與永續承諾", icon: "Flag" },
-  { id: "cases", label: "合作案例", desc: "三個跨界合作的故事", icon: "Handshake" },
+  { id: "cases", label: "合作案例", desc: "四個跨界合作的故事", icon: "Handshake" },
 ]
 
 const events = {
@@ -26,7 +25,8 @@ const events = {
     title: "每一步，都是永續行動的真實足跡",
     description: "從ESG共學坊的跨產業連結到國際論壇，共好玟化持續舉辦高品質的永續活動，串連理念相符的夥伴。",
     primaryCta: "加入 LINE 收開課通知",
-    secondaryCta: "打開永續學習地圖",
+    // rev2 #35: goes to the consulting page's solutions table, 「自己學、自己寫」
+    secondaryCta: "看課程與方案",
     // Labels under the footprint trail: where it starts, and the step not taken yet
     trailStart: "2022",
     trailNext: "下一步",
@@ -36,16 +36,23 @@ const events = {
     description: "下一梯次課程正在規劃中。加入官方 LINE，開課時第一時間通知你。",
     notifyCta: "加入 LINE 搶先通知",
     viewDetails: "查看課程內容",
+    // rev2 #35: one card, no price; the course page is /events/whitepaper-workshop
+    course: {
+      title: "永續白皮書工作坊",
+      meta: "2 天實體・台北市",
+      language: "",
+      status: "下一梯次規劃中",
+    },
   },
   learningMap: {
     title: "找到最適合你的永續起點",
     levelsLine: "探索 → 實作 → 整合",
     introLabel: "關於學習地圖",
+    // rev2 #35: individuals cannot sign up for these topics on their own
     intro:
-      "無論你是剛接觸 ESG 的新手，還是已有基礎想深化實力的實踐者，都能從這裡找到最適合你的起點。每個主題模組獨立完整，可依需求單獨選修；完整走過全程，則能建立系統性的永續實戰能力。",
-    // The client names three levels: 探索 → 實作 → 整合. Which topics sit in which level
-    // is our reading of the topic content (E02); each module's `level` is the colour of
-    // the dot the client put in front of that topic and only colours its number.
+      "這八個主題是「企業與組織工作坊」的可選主題：企業與組織可依需求挑選、組合，作為內訓或工作坊，專案報價。",
+    // The client names three levels: 探索 → 實作 → 整合 (E02). Each topic's number is
+    // coloured by its stage (rev2 #36): 探索 yellow, 實作 orange, 整合 dark grey.
     levels: [
       { key: "explore", name: "探索", description: "主題一至三：建立共識、讀懂永續、說出影響力" },
       { key: "practice", name: "實作", description: "主題四至七：品牌策略、商業模式、碳管理、認證與市場對接" },
@@ -53,25 +60,26 @@ const events = {
     ],
     audienceLabel: "適合",
     modules: [
-      { stage: "explore", level: "blue", theme: "主題一", title: "永續共識與組織對話", subtitle: "跨部門永續共識營", description: "永續轉型從組織內部開始。這個工作坊幫助不同部門的夥伴建立共同語言，讓永續不再只是某個部門的任務。", audience: "剛起步的組織、想推動內部文化轉變的管理者、跨部門協作需求者" },
-      { stage: "explore", level: "green", theme: "主題二", title: "讀懂永續，掌握趨勢", subtitle: "永續知能與 ESG 管理基礎", description: "從氣候變遷到法規趨勢，了解 ESG 如何影響你的行業，找到屬於你的永續切入點與風險因應策略。", audience: "想建立永續基礎概念的各行業從業者、管理階層、業主" },
-      { stage: "explore", level: "green", theme: "主題三", title: "說出影響力", subtitle: "永續報告書與 SROI 衡量", description: "學會用國際通用語言（GRI、SROI）描述你的組織影響力，讓利害關係人看見你的價值，不只是說故事，而是有憑據的說。", audience: "想製作永續報告、影響力報告或提案書的人" },
-      { stage: "practice", level: "yellow", theme: "主題四", title: "永續品牌策略", subtitle: "品牌定位 × SDGs × 使用者設計", description: "把永續轉化為品牌競爭力。從市場定位到服務設計，學習如何讓你的品牌在永續浪潮中被看見、被選擇。", audience: "品牌經營者、行銷人員、想強化品牌差異化的業主" },
-      { stage: "practice", level: "yellow", theme: "主題五", title: "商業模式創新", subtitle: "循環經濟 × 服務化 × 永續變現", description: "不只做好事，也要做成好生意。這個模組帶你重新設計商業模式，從資源循環到服務創新，找到永續的獲利路徑。", audience: "創業者、想升級商業模式的經營者、產品開發人員" },
-      { stage: "practice", level: "red", theme: "主題六", title: "碳管理與環境韌性", subtitle: "碳盤查 × 減碳策略 × 氣候風險", description: "從盤查到行動，建立組織的碳管理能力，同時利用自然解方強化面對氣候衝擊的韌性。", audience: "有減碳目標或供應鏈壓力的組織、想進行碳足跡評估的業主" },
-      { stage: "practice", level: "red", theme: "主題七", title: "認證攻略與市場對接", subtitle: "永續認證 × 綠色供應鏈 × 企業合作提案", description: "了解各類永續認證的申請路徑，對接企業 ESG 採購需求，設計讓品牌進入供應鏈的合作提案。", audience: "想拓展 B2B 合作、進入綠色採購市場的業者" },
-      { stage: "integrate", level: "blue", theme: "主題八", title: "影響力整合與成果展現", subtitle: "數據蒐集 × 影響力報告 × 永續白皮書", description: "整合你在各主題的學習成果，透過問卷設計、數據分析與報告撰寫，完成屬於自己組織的永續影響力文件。", audience: "已有一定永續基礎、想產出具體成果的學習者" },
+      { stage: "explore", theme: "主題一", title: "永續共識與組織對話", subtitle: "跨部門永續共識營", description: "永續轉型從組織內部開始。這個工作坊幫助不同部門的夥伴建立共同語言，讓永續不再只是某個部門的任務。", audience: "剛起步的組織、想推動內部文化轉變的管理者、跨部門協作需求者" },
+      { stage: "explore", theme: "主題二", title: "讀懂永續，掌握趨勢", subtitle: "永續知能與 ESG 管理基礎", description: "從氣候變遷到法規趨勢，了解 ESG 如何影響你的行業，找到屬於你的永續切入點與風險因應策略。", audience: "想建立永續基礎概念的各行業從業者、管理階層、業主" },
+      { stage: "explore", theme: "主題三", title: "說出影響力", subtitle: "永續報告書與 SROI 衡量", description: "學會用國際通用語言（GRI、SROI）描述你的組織影響力，讓利害關係人看見你的價值，不只是說故事，而是有憑據的說。", audience: "想製作永續報告、影響力報告或提案書的人" },
+      { stage: "practice", theme: "主題四", title: "永續品牌策略", subtitle: "品牌定位 × SDGs × 使用者設計", description: "把永續轉化為品牌競爭力。從市場定位到服務設計，學習如何讓你的品牌在永續浪潮中被看見、被選擇。", audience: "品牌經營者、行銷人員、想強化品牌差異化的業主" },
+      { stage: "practice", theme: "主題五", title: "商業模式創新", subtitle: "循環經濟 × 服務化 × 永續變現", description: "不只做好事，也要做成好生意。這個模組帶你重新設計商業模式，從資源循環到服務創新，找到永續的獲利路徑。", audience: "創業者、想升級商業模式的經營者、產品開發人員" },
+      { stage: "practice", theme: "主題六", title: "碳管理與環境韌性", subtitle: "碳盤查 × 減碳策略 × 氣候風險", description: "從盤查到行動，建立組織的碳管理能力，同時利用自然解方強化面對氣候衝擊的韌性。", audience: "有減碳目標或供應鏈壓力的組織、想進行碳足跡評估的業主" },
+      { stage: "practice", theme: "主題七", title: "認證攻略與市場對接", subtitle: "永續認證 × 綠色供應鏈 × 企業合作提案", description: "了解各類永續認證的申請路徑，對接企業 ESG 採購需求，設計讓品牌進入供應鏈的合作提案。", audience: "想拓展 B2B 合作、進入綠色採購市場的業者" },
+      { stage: "integrate", theme: "主題八", title: "影響力整合與成果展現", subtitle: "數據蒐集 × 影響力報告 × 永續白皮書", description: "整合你在各主題的學習成果，透過問卷設計、數據分析與報告撰寫，完成屬於自己組織的永續影響力文件。", audience: "已有一定永續基礎、想產出具體成果的學習者" },
     ],
     externalTitle: "延伸課程",
+    // rev2 #35: the 2025 農創師 registration page is gone; the pre-recorded course keeps
+    // its current link until the client sends the new one.
     externalLinks: [
-      { label: "ESG 永續思維品牌與社會影響力策略班（預錄課程）", href: "https://shanyun.havppen.com/course/esg" },
-      { label: "ESG 永續農創師課程（2025 梯次報名頁）", href: "https://www.accupass.com/event/2507150923051155509773" },
+      { label: "ESG 永續思維品牌與社會影響力策略班（預錄課程）", href: "https://shanyun.havppen.com/course/esg", note: "線上課程更新中" },
     ],
     // 2026 run of the same course, from the client's syllabus document (public outline only).
     farmCourse: {
       label: "2026 農創師課程內容",
       title: "ESG 永續農創師培育課程｜2026 夏季梯次",
-      meta: "與台灣休閒農業學會合辦・7 堂・2026 年 7 月 7 日至 9 月 29 日，隔週二上課",
+      meta: "與臺灣休閒農業學會合辦・7 堂・2026 年 7 月 7 日至 9 月 29 日，隔週二上課",
       focus: "今年主軸是生物多樣性與生態友善；每堂產出一章「場域永續白皮書」，最後一堂向企業提案。",
       modules: [
         { name: "模組一｜永續知能與報告書", items: ["休閒農業與 ESG 永續管理", "永續報告書與影響力衡量"] },
@@ -81,14 +89,7 @@ const events = {
       ],
     },
     inquire: "想為團隊規劃主題組合？",
-    inquireCta: "洽詢客製課程",
-  },
-  servicesSection: {
-    title: "顧問諮詢與訂閱方案",
-    description: "不只是一次性活動——我們提供持續性的專業支援，陪伴你的永續旅程。",
-    consulting: "顧問服務",
-    subscription: "訂閱方案",
-    viewMore: "了解更多",
+    inquireCta: "洽詢企業與組織工作坊",
   },
   history: {
     title: "一步一步，走出來的路",
@@ -103,10 +104,10 @@ const events = {
         tagline: "走入社區，廣播種子",
         intro: "帶著創辦人十餘年社工與非營利管理的底蘊，我們以「走入社區、廣播種子」為起點，在資源有限的情況下，優先建立品牌知名度與社群基礎。",
         entries: [
-          { date: "2022.05", text: "共好玟化正式成立（資本額 5 萬元），以永續與 ESG 知識推動社會影響力。" },
+          { date: "2022.05", text: "共好玟化正式成立，以永續與 ESG 知識推動社會影響力。" },
           { date: "2023.05", text: "進駐三鶯、南港社區大學，開設公民週永續講座。" },
           { date: "2023.10", text: "完成首份永續白皮書——與齊禾設計合作，為勤億蛋品打造蛋殼紙托白皮書。" },
-          { date: "2023.11", text: "於萬華社區大學開設「ESG共學坊」實體社團；同月完成首次增資（5 萬 → 100 萬元）。" },
+          { date: "2023.11", text: "於臺北市萬華社區大學開設「ESG共學坊」實體社團；同月完成首次增資。" },
         ],
       },
       {
@@ -119,11 +120,11 @@ const events = {
           { date: "2024.06", text: "綠合農場課程，正式跨入農業永續服務；協助逾 30 位小農品牌培力，創造市集單日營業額逾 50 萬元。" },
           { date: "2024.11", text: "以策略總監身份，受 13+ 新創計畫邀請主持永續品牌發展工作坊；永續白皮書服務同步規模化。" },
           { date: "2025", text: "累計逾 100 場講座、30 場以上工作坊、培力逾 500 人，服務遍及全台 10 多個縣市，並涵蓋全台前三大觀光休閒農場。" },
-          { date: "2025 春夏", text: "與台灣休閒農業學會合作，推出全台首創「ESG 永續農創師」認證課程。" },
+          { date: "2025 春夏", text: "與臺灣休閒農業學會合作，推出全台首創「ESG 永續農創師」認證課程。" },
           { date: "2025.05", text: "協辦「強化公益影響力」講座；以永續顧問身份參展 Secutech 台北國際安全科技應用展。" },
-          { date: "2025.07", text: "完成第二次大幅增資（100 萬 → 400 萬元），為迄今最大規模。" },
+          { date: "2025.07", text: "完成第二次增資。" },
           { date: "2025.08", text: "首次受邀登上國際 SDGs 論壇（Global Youth Leadership Programme SDGs Forum 台北場）。", href: "https://www.youthsdgs.org/" },
-          { date: "2025.08–10", text: "受台北市政府邀請，擔任「台北友善店家」主題課程講師（初階、進階）。" },
+          { date: "2025.08–10", text: "受臺北市政府邀請，擔任「台北友善店家」主題課程講師（初階、進階）。" },
           { date: "2026.04", text: "以合辦夥伴身份投入「SDGs Impact Developers Conference」澎湖大會，與來自 30 國的青年行動者齊聚，正式以合辦角色站上國際舞台。", href: "https://www.youthsdgs.org/" },
           { date: "2026.05–06", text: "以合辦夥伴身份參與「UN-SDGs Impact Developers Conference」曼谷大會（5/29–6/1），於曼谷東南大學與聯合國亞太經社會（UN ESCAP）會議中心舉行；逾 140 位青年領袖、企業代表與國際專家、來自 30 多國的代表齊聚，共好玟化的國際影響力延伸至聯合國殿堂。", href: "https://www.youthsdgs.org/" },
         ],
@@ -189,52 +190,104 @@ const events = {
     readStory: "讀這個故事",
     prev: "上一則",
     next: "下一則",
-    // `logos` are ids in src/data/clients.ts for the partners whose logo file we have.
+    // rev2 #38 #39. `logos` are ids in src/data/clients.ts (both partners; GSA for case 4,
+    // which has no partner). `photo` is in public/cases/footprints/ (4:3).
     items: [
       {
         title: "永續商品走進企業採購清單",
-        partners: "星芽社會企業 × 思凡自然農場",
+        partners: "星芽社會企業 × 思凡自然農園",
         logos: ["jooin-now", "sifan-farm"],
-        description: "透過共好玟化ESG共學坊講師平台，促成星芽社會企業與思凡自然農場的合作連結，將兼具社會價值與品質的永續產品與禮品，連結企業禮贈品採購。",
+        photo: "jooin-sifan",
+        photoAlt: "星芽社會企業「十穀拾穀」新年禮盒，內含思凡自然農園的香爆薏仁",
+        description: "透過共好玟化ESG共學坊講師平台，促成星芽社會企業與思凡自然農園的合作連結，將兼具社會價值與品質的永續產品與禮品，連結企業禮贈品採購。",
       },
       {
         title: "機能襪與印花的故事",
         partners: "RAFAC 機能襪 × 處處花版",
-        logos: [] as string[],
+        logos: ["rafac", "showy-pattern"],
+        photo: "rafac-showy",
+        photoAlt: "RAFAC 機能襪與處處花版聯名的機能襪禮盒",
         description: "兩個有共同理念的品牌互相對話，RAFAC 機能襪的機能工藝，遇上處處花版的印花美學，透過共好玟化促成聯名商品合作，讓日常生活用品也能承載設計與自然的永續精神。",
       },
       {
         title: "一座小島，一場跨越國界的對話",
-        partners: "中華少年成長基金會 × 大慶旅遊",
-        logos: ["bliss-travel"],
-        description: "透過共好玟化ESG共學坊講師平台串聯，由中華少年成長基金會董事長主辦，偕同大慶旅遊合辦 2026 SDGs Impact Developers Conference – Penghu，將講師平台裡的連結，轉化為一場有國際迴響的行動。",
+        partners: "財團法人新北市中華少年成長文教基金會 × 大慶旅運社有限公司",
+        logos: ["youthbud", "bliss-travel"],
+        photo: "youthbud-bliss",
+        photoAlt: "2026 SDGs Impact Developers Conference 澎湖大會，30 國青年代表大合照",
+        description: "透過共好玟化ESG共學坊講師平台串聯，由財團法人新北市中華少年成長文教基金會董事長魏名聰主辦，偕同大慶旅運社有限公司合辦 2026 SDGs Impact Developers Conference – Penghu，將講師平台裡的連結，轉化為一場有國際迴響的行動。",
+      },
+      {
+        title: "讓台灣永續被國際看見",
+        // No partner organisation (rev2 #38): the card shows the GSA logo only.
+        partners: "",
+        logos: ["gsa"],
+        photo: "gsa-forum",
+        photoAlt: "2025 Global Youth Leadership Programme SDGs Bootcamp & Forum 台北場，講師們在論壇背板前合照",
+        description: "2025 年 Global Youth Leadership Programme SDGs Bootcamp & Forum（台北場）匯聚全球青年與社會創新者。共好玟化促成 3 位 ESG共學坊講師登上國際論壇舞台，將在地的永續行動與視角帶入跨國對話，讓台灣的永續實踐者有機會與來自世界各地的青年代表交流。",
       },
     ],
   },
   cta: {
     title: "下一個足跡，換你踏出",
-    description: "開課日期一公布，LINE 第一個通知你；團隊想一起學，直接談企業包班。",
+    description: "開課日期一公布，LINE 第一個通知你；團隊想一起學，直接談企業與組織工作坊。",
     primaryLabel: "加入 LINE 收開課通知",
-    secondaryLabel: "洽詢企業包班",
+    secondaryLabel: "洽詢企業與組織工作坊",
   },
+  // The /events/<slug> inner pages and the white paper case pages (rev2 #51–#53).
   detail: {
-    // Followed by the chapter the course belongs to, e.g. 返回「下一梯次」
+    // Followed by where the link goes: 返回 方案總表 (#51), or 返回 我們走過的路 for past events
     backTo: "返回",
+    backToSolutions: "方案總表",
     instructor: "講師",
     duration: "時數",
+    // An advisory service shows 顧問／工期 instead of 講師／時數 (#51)
+    advisor: "顧問",
+    timeline: "工期",
     date: "日期",
     location: "地點",
     capacity: "名額",
     price: "費用",
     highlights: "課程重點",
-    // LINE is the next step for every status; the wording follows the status
-    waitlist: "加 LINE 候補下一梯次",
-    enquire: "透過 LINE 洽詢",
+    services: "服務內容",
+    // Courses being planned: LINE first (#51); past events: course notices
+    waitlist: "加入 LINE 搶先通知",
     notify: "加入 LINE 收開課通知",
-    map: "看永續學習地圖",
-    consult: "預約 Coffee Chat",
+    // Advisory services go to the contact form, like the 方案總表 (#51)
+    consult: "預約諮詢",
     dateTbd: "下一梯次規劃中",
-    related: "其他課程",
+    related: "其他方案",
+    // Instructor cards (#52). Bios: the client's final text; other consultants
+    // show their organisation and expertise from team.ts.
+    instructorsTitle: "講師",
+    advisorsTitle: "顧問",
+    meetInstructor: "認識講師",
+    bios: {
+      "evvon-wu":
+        "共好玟化創辦人，15 年社工實務經驗，著有《永續新語言：從責任到共好的雙效益革命》。企業永續管理師、BSI 溫室氣體專業人員（ISO 14064／14067／14068）、PMP 國際專案管理師。",
+    } as Record<string, string>,
+    // White paper cases and download on /events/impact-whitepaper (#53)
+    cases: {
+      label: "白皮書案例",
+      title: "白皮書案例",
+      readCase: "看案例",
+      backToCases: "白皮書案例",
+      industry: "產業",
+      challenge: "挑戰",
+      approach: "我們怎麼做",
+      results: "成果",
+      furtherReading: "延伸閱讀",
+      others: "其他白皮書案例",
+      metaSuffix: "永續白皮書案例",
+    },
+    download: {
+      label: "白皮書下載",
+      title: "白皮書下載",
+      // Founder line beside the form (#53②), verbatim
+      founder:
+        "創辦人吳玟樺 Evvon Wu 著有《永續新語言：從責任到共好的雙效益革命》，以雙效益理論與 IOOI 方法論，讓永續不再只是應付報告及法規——企業／組織能真正走進永續，把永續變成商業競爭力。",
+      cta: "下載白皮書",
+    },
   },
 }
 

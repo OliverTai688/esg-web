@@ -1,13 +1,15 @@
 // Home page copy. Section order follows docs/redesign/03-decisions.md.
 const home = {
   meta: {
-    title: "共好玟化 CO-ESG | 永續品牌的專業橋樑",
+    title: "共好玟化 CO-ESG｜永續價值的專業橋樑",
   },
   hero: {
-    label: "永續品牌的專業橋樑",
+    label: "點亮你獨特的專業價值",
     title: "很多人正在做有意義的事，卻不知道怎麼讓市場看見",
     titleLead: "很多人正在做有意義的事，",
     titleEmphasis: "卻不知道怎麼讓市場看見",
+    // rev2 #21: `lead` opens the description, `subTitle` follows it (and is the meta description).
+    lead: "我們陪中小企業、品牌與非營利組織，回應客戶或贊助企業的 ESG 要求、寫出對外的永續白皮書。",
     subTitle: "致力於讓不同領域的永續價值能被企業理解、被市場看見。",
     description:
       "許多品牌、農業、社會企業、非營利組織，已具備扎實的永續理念並正在執行，但面對企業端，經常說不清楚自己能提供什麼。永續，就是與企業對話的共同語言。共好玟化想要成為那座橋樑，確保理念相符的夥伴能精準對接。",
@@ -19,46 +21,52 @@ const home = {
   },
   partners: {
     label: "合作過的夥伴與單位",
-    // Logos come from src/data/clients.ts by group `key`; `others` are partners
-    // named in the site copy whose logo file the client has not supplied yet (H01).
-    // {n} is the number of logos in the group.
-    showAll: "看全部 {n} 個",
-    othersLabel: "以及",
+    // rev2 #12: two areas; logos come from src/data/clients.ts by group `key`.
     groups: [
-      { key: "business", title: "品牌與企業", others: ["RAFAC 機能襪", "處處花版"] },
-      { key: "public", title: "公部門與學校", others: ["台北市政府", "台灣休閒農業學會", "萬華社區大學"] },
-      { key: "nonprofit", title: "非營利與國際", others: ["中華少年成長基金會", "台東康復之友", "UN-SDGs Impact Developers Conference", "Global Youth Leadership Programme"] },
+      { key: "client", title: "服務客戶" },
+      { key: "partner", title: "合作夥伴" },
     ],
   },
   problem: {
     label: "我們在解決什麼",
-    title: "從概念到行動，中間差了什麼？",
-    description: "共好玟化同時面對三個層次的問題，協助品牌主、產業與整體環境找到永續的共同語言。",
-    painPoints: [
+    title: "你現在卡在哪裡？",
+    // rev2 #14: three situation cards, titled in the visitor's own words.
+    // `link` picks the destination in page.tsx.
+    situations: [
       {
-        label: "對品牌主／消費者端",
-        title: "有好產品，卻不知如何被看見",
-        description:
-          "很多人有好的服務與產品，卻不知道企業地圖長什麼樣子、該從哪個切入點進入。我們協助你釐清定位、整理永續敘事，提升你在市場上的競爭力。",
+        title: "「大客戶丟了一份 ESG 問卷給我」",
+        description: "陪你看懂每一題在問什麼，把你已經在做的事對上題目；還沒做到的，誠實寫、排出補強順序。",
+        cta: "看永續供應鏈輔導",
+        link: "supplyChain",
       },
       {
-        label: "對產業端",
-        title: "供應鏈資訊不透明",
-        description:
-          "具備及符合 ESG 採購標準的廠商沒有適合的平台被看見，我們協助建立一個供應鏈與企業可以對接的溝通平台。",
+        title: "「想做永續，又怕要另外花一大筆錢」",
+        description: "先盤點你已經在做的事，再決定錢該花在哪裡。",
+        cta: "預約 15 分鐘 Coffee Chat",
+        link: "contact",
       },
       {
-        label: "對國際接軌",
-        title: "接軌國際趨勢",
+        title: "「我是小業者／小組織，想跟企業提案，或回報合作成果」",
         description:
-          "ISO、GRI、TCFD、生物多樣性、CBAM…這麼多國際標準，在公司資源有限下，共好玟化扮演知識轉譯與溝通的角色，協助企業與國際 ESG 接軌。",
+          "把你的產品或服務，翻成企業看得懂的永續語言，整理成一份能拿去提案的永續白皮書：可以自己學著寫，也可以請顧問陪你寫。",
+        cta: "看方案總表",
+        link: "solutions",
       },
     ],
     solutionLabel: "我們的答案",
-    solutionTitle: "成為永續生態圈的專業橋樑",
+    solutionTitle: "成為永續價值的專業橋樑",
+    // rev2 #15, word for word: sized between body text and the heading.
+    solutionClaim: "你原本的理念、每天在做的事，很多本來就對地球好、對人好——這就是永續。只是還沒被說清楚、被看見。",
     solutionDescription:
-      "共好玟化透過顧問輔導、永續白皮書服務、ESG共學坊與溝通平台，讓不同領域的永續價值能被企業理解、被市場看見、也能找到理念相符的合作夥伴。說清楚，才能被看見。",
-    solutionPillars: ["顧問輔導", "永續白皮書", "ESG共學坊", "溝通平台"],
+      "共好玟化透過永續白皮書、永續課程、企業與組織工作坊與永續供應鏈輔導，並以 ESG共學坊串連夥伴，讓不同領域的永續價值能被企業理解、被市場看見、也能找到理念相符的合作夥伴。",
+    solutionTagline: "說清楚，才能被看見。",
+    // rev2 #16: each service links to its tab on /sustainability (`anchor` is the tab's id).
+    services: [
+      { label: "永續白皮書", anchor: "services-whitepaper" },
+      { label: "永續課程", anchor: "services-course" },
+      { label: "企業與組織工作坊", anchor: "services-workshop" },
+      { label: "永續供應鏈輔導", anchor: "services-supply-chain" },
+    ],
   },
   story: {
     label: "品牌故事",
@@ -73,13 +81,13 @@ const home = {
       "從社工走向搭橋者，連結有資源卻缺策略的企業，與有專業卻缺連結的社會組織。",
       "永續要從內而外長出來，先把價值寫進治理、長成與人的信任，環境的努力才不會淪為一次性。",
       "相信人與人之間緊密的信任，是一切永續最深的根，也是社會韌性的起點。",
-      "永續不是「獲利」或「責任」的二選一，而是讓社會、環境與經濟一起加乘，這就是雙效益。",
+      "永續不是「獲利」或「責任」的二選一：同時創造環境與社會效益，經濟效益就會隨之而來，這就是雙效益。",
     ],
     readMore: "閱讀完整故事",
     readLess: "收合故事",
-    // Wrap a phrase in **double asterisks** to render it bold.
+    // Wrap a phrase in **double asterisks** to render it bold, _underscores_ for italics.
     fullStory: [
-      "創辦人吳玟樺 Evvon 在擔任社工期間，遇到了一位泰雅族的**林慶台牧師**，也就是電影**賽德克巴萊**的主角。",
+      "創辦人吳玟樺 Evvon 在擔任社工期間，遇到了一位泰雅族的**林慶台牧師**，也就是**電影《賽德克．巴萊》**的主角。",
       "林牧師給了 Evvon 一個泰雅族名字——Sayun，意思是「橋樑」。有資源的人與沒有資源的人之間，需要有一座溝通橋樑。",
       "這個名字，後來也成為共好玟化最核心的理念。",
       "從社工到創業，Evvon 一直在尋找自己與環境互動的方式。一個機構能影響的人有限，但如果能從一個機構的影響力擴散到整個產業，改變就有機會真正發生。",
@@ -92,26 +100,22 @@ const home = {
     moreLink: "認識共好玟化",
   },
   evidence: {
-    ringCaption: "每個數字\n都有一則故事",
     label: "永續行動證據",
     title: "可量化的影響力，真實的合作成果",
     description: "每一個數字，都對應一則可以說得出來的故事。",
     sourceNote: "數字來源：共好玟化專案紀錄，持續更新中。",
     cards: [
       {
-        tag: "營業額助益",
         title: "永續白皮書帶來的經濟資源",
         description:
-          "透過共好玟化協助撰寫永續白皮書，讓一家品牌設計公司在一年內獲得政府補助、天使投資與銀行貸款，累計近 1000 萬的經濟資源挹注。",
+          "透過共好玟化協助撰寫永續白皮書，讓一家科技公司在一年內獲得政府補助、天使投資與銀行貸款，累計近 1000 萬的經濟資源挹注。",
       },
       {
-        tag: "合作案例",
         title: "跨產業永續合作",
         description:
           "從國際論壇到企業採購清單、從跨國永續會議到聯名商品合作，共好玟化持續透過ESG共學坊講師平台促成跨產業合作。",
       },
       {
-        tag: "顧問導向",
         title: "站上國際舞台",
         description:
           "一份永續白皮書，讓用海廢做錶的品牌站上國際青年論壇的舞台。迄今已協助 8 個企業登上國際論壇，讓國際看見台灣的永續實踐者。",
@@ -122,14 +126,14 @@ const home = {
   audiences: {
     label: "我們服務誰",
     title: "你是哪一種夥伴？",
-    description: "共好玟化服務兩大群體：有長期經營理念的品牌主，以及想找到永續供應鏈的大企業；ESG共學坊則讓學習者與講師在同一個場域交流。",
+    description: "共好玟化服務三種對象：有長期經營理念的品牌主與非營利組織、被客戶要求回應 ESG 的中小供應商，以及想找到永續供應鏈的大企業；ESG共學坊則讓學習者與講師在同一個場域交流。",
     items: [
       {
         key: "brand",
-        title: "有長期經營理念的品牌主",
+        title: "有長期經營理念的品牌主與非營利組織",
         description:
-          "你已經在做永續，或你的事業本身就具備社會與環境價值。無論是農業、設計、身心靈、文化創意，我們協助你把這些價值整理清楚。",
-        cta: "看顧問與永續白皮書方案",
+          "你已經在做永續，或你的事業本身就具備社會與環境價值。無論是農業、設計、身心靈、文化創意或非營利組織，我們協助你把這些價值整理清楚。",
+        cta: "看永續白皮書方案",
       },
       {
         key: "enterprise",
@@ -143,7 +147,13 @@ const home = {
         title: "想學習永續的個人與團隊",
         description:
           "透過ESG共學坊，串聯不同領域的永續實踐者，讓講師、品牌與企業在同一個場域交流碰撞，延伸出新的合作與可能。",
-        cta: "打開永續學習地圖",
+        cta: "看課程與方案",
+      },
+      {
+        key: "supplier",
+        title: "被客戶要求回應 ESG 的中小供應商",
+        description: "大客戶丟來 ESG 問卷或永續要求，不知道從哪裡回答？我們陪你看懂題目，把已經在做的事對上去。",
+        cta: "看永續供應鏈輔導",
       },
     ],
     roadmapTitle: "接下來，我們要去哪裡",
@@ -160,13 +170,14 @@ const home = {
     description: "來自品牌主、社會企業與產業夥伴的真實合作回饋。點選夥伴的標誌，閱讀完整回饋。",
     openLabel: "閱讀回饋",
     closeLabel: "關閉",
-    // `client` is an id in src/data/clients.ts: the petal shows that logo. Leave it
-    // empty while the logo file is missing; the petal falls back to the first character.
+    // `client` is an id in src/data/clients.ts: the petal shows that logo (a petal
+    // falls back to the first character while the file is missing). An entry
+    // without `client` is a person, not a brand: it is shown as a text card (rev2 #22).
     testimonials: [
       {
         highlight: "ESG 本質仍然是以人為核心，共好玟化提供的價值非常契合。",
         quote: "從創辦者的角度切入，協助你想清楚自己在做的事與永續的關聯。幫企業做報告的同時，也喚醒人對永續的初衷。",
-        name: "思凡自然農場",
+        name: "思凡自然農園",
         client: "sifan-farm",
         title: "自然農園負責人",
         tag: "ESG 報告",
@@ -182,8 +193,8 @@ const home = {
       {
         highlight: "從零散被動的企業合作，轉變為更主動、有策略的窗口溝通。",
         quote: "如同名字一樣的『共好』夥伴，共好玟化是知識整合與轉譯的角色。",
-        name: "台灣休閒農場學會",
-        client: "",
+        name: "臺灣休閒農業學會",
+        client: "tlaa",
         title: "產業合作夥伴",
         tag: "供應鏈",
       },
@@ -195,6 +206,17 @@ const home = {
         title: "共同創辦人",
         tag: "顧問輔導",
       },
+      {
+        highlight: "終於搞懂我能創造什麼價值給企業、要用什麼語言跟他們說話。",
+        quote:
+          "我一直在想，永續、ESG，這些跟我到底有什麼連結？上課前，我覺得這是大企業在講的事，跟自己的業務沒有關聯。但透過課程把架構和脈絡整理清楚後，最大的收穫是終於搞懂我能創造什麼價值給企業、要用什麼語言跟他們說話。這件事，聽別人講一百次都不如自己來體會。",
+        name: "身心靈產業｜活動策劃者",
+        client: "",
+        title: "",
+        tag: "",
+        outcomeLabel: "合作成果",
+        outcome: "協助跨領域學員找到自身產業與永續的連結點，建立與企業溝通的語言與方向。",
+      },
     ],
   },
   cta: {
@@ -205,6 +227,16 @@ const home = {
     primaryLabel: "預約 15 分鐘 Coffee Chat",
     secondaryLabel: "先加入官方 LINE",
     steps: ["留下聯絡方式", "15 分鐘線上聊聊", "收到下一步建議"],
+  },
+  // rev2 #24: the book, after the closing call to action.
+  book: {
+    title: "《永續新語言：從責任到共好的雙效益革命》",
+    coverAlt: "《永續新語言：從責任到共好的雙效益革命》書封",
+    meta: ["作者：吳玟樺", "出版社：布克文化", "定價：380 元"],
+    tagline: "你做了很多永續的事，但這些努力，真的被看見了嗎？",
+    description:
+      "由吳玟樺以多年社工、企業顧問與社會創新的實戰經驗，帶你重新理解永續——從責任出發走向共好、從投入行動看見真正成果、從影響力衡量找到資源放大的方法，讓企業價值與社會價值不再二選一。",
+    cta: "立即購書",
   },
 }
 

@@ -20,25 +20,25 @@ export async function generateMetadata({
   const dict = await getMessages(typedLocale)
 
   const defaultTitle = dict.home.meta.title
+  // Brand suffix for page titles: "頁名 | 共好玟化 CO-ESG" / "Page | Gung-Ho Culture CO-ESG" (EN1)
+  const brand = typedLocale === "en" ? "Gung-Ho Culture CO-ESG" : "共好玟化 CO-ESG"
 
   return {
     metadataBase: new URL(site.url),
     title: {
-      template: "%s | 共好玟化 CO-ESG",
+      template: `%s | ${brand}`,
       default: defaultTitle,
     },
     description: dict.home.hero.subTitle,
     openGraph: {
-      siteName: "共好玟化 CO-ESG",
+      siteName: brand,
       locale: localeMap[typedLocale] ?? "zh_TW",
       type: "website",
       images: [site.ogImage],
     },
     twitter: { card: "summary_large_image", images: [site.ogImage.url] },
-    alternates: {
-      languages: { zh: "/zh", en: "/en" },
-    },
-    robots: { index: true, follow: true },
+    // noindex until the real domain launches (launch checklist 1)
+    robots: site.indexable ? { index: true, follow: true } : { index: false, follow: false },
   }
 }
 
@@ -95,11 +95,12 @@ export default async function LocaleLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              name: "共好玟化 CO-ESG",
+              // Launch checklist 11: the registered name, English name Gung-Ho Culture
+              name: site.legalName.zh,
               legalName: site.legalName.zh,
-              alternateName: site.legalName.en,
+              alternateName: ["Gung-Ho Culture", "共好玟化 CO-ESG"],
               url: site.url,
-              description: "永續品牌的專業橋樑",
+              description: "永續價值的專業橋樑",
               taxID: site.taxId,
               foundingDate: String(site.foundingYear),
               founder: { "@type": "Person", name: site.founder.zh },
@@ -111,7 +112,7 @@ export default async function LocaleLayout({
                 addressRegion: "臺北市",
                 addressCountry: "TW",
               },
-              sameAs: [site.line.url],
+              sameAs: [site.line.url, site.social.linkedin, site.social.facebook],
               contactPoint: {
                 "@type": "ContactPoint",
                 email: site.supportEmail,

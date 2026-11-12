@@ -3,6 +3,7 @@ const common = {
   nav: {
     sustainability: {
       label: "Sustainability",
+      testimonials: { label: "Testimonials", desc: "What our clients and learners say" },
     },
     events: {
       label: "Our Journey",
@@ -24,7 +25,7 @@ const common = {
   // Headline impact numbers — the only place these figures live (G06).
   impact: {
     metrics: [
-      { value: 10, prefix: "NT$", suffix: "M", label: "Funding Secured", note: "Government grants, angel investment and bank loans secured by a brand design firm within a year of completing its Sustainability White Paper" },
+      { value: 10, prefix: "NT$", suffix: "M", label: "Funding Secured", note: "Government grants, angel investment and bank loans secured by a technology company within a year of completing its Sustainability White Paper" },
       { value: 130, prefix: "", suffix: "+", label: "Cross-Sector Partnerships", note: "Partnerships brokered through our advisory work and the CO-ESG Academy speaker platform" },
       { value: 8, prefix: "", suffix: "+", label: "International Forums", note: "International forum stages our clients and partners have reached with our support" },
     ],
@@ -41,21 +42,20 @@ const common = {
       { value: "50+", label: "partner brands" },
     ],
   },
-  coesg: {
-    kicker: "CO-ESG Academy",
-    title: "Visit the CO-ESG Academy store",
-    body: "Classes, the store and talks are all at CO-ESG Academy.",
-    storeCta: "Go to the CO-ESG store",
-    logos: { class: "CO-ESG CLASS", store: "CO-ESG STORE", talks: "CO-ESG TALKS" },
-  },
   footer: {
     brand: "Gung-Ho ",
     brandAccent: "Culture",
-    tagline: "CO-ESG | The professional bridge for sustainable brands",
+    tagline: "CO-ESG | Bring your value to light.",
     copyright: "© 2026 Gung-Ho Culture CO-ESG. All Rights Reserved.",
-    lineCta: "Follow us on LINE",
+    lineCta: "Follow us on LinkedIn",
+    social: "Social media",
+    newWindow: " (opens in a new window)",
     navTitle: "Site Map",
-    store: "CO-ESG store",
+    store: "CO-ESG Store",
+    tools: "Online tools",
+    // rev2 #7 (EN2)
+    terms: "Terms of Use",
+    privacy: "Privacy Policy",
     contactTitle: "Contact Us",
     supportEmail: "Support email",
     company: {
@@ -83,16 +83,23 @@ const common = {
     emailPlaceholder: "example@email.com",
     org: "Organisation",
     orgPlaceholder: "Company or organisation name",
-    topic: "What would you like to discuss?",
-    // Order matters: /consulting hands a topic over by index (consulting.chooser.options[].key → data-contact-topic).
-    topics: ["Sustainable brand advisory", "Sustainability White Paper", "Courses / workshops", "Non-profit partnership", "Other"],
+    topic: "What would you like to talk about?",
+    // rev2 #44 (EN D): seven options, same order as the Chinese list. Order matters: /consulting
+    // hands a topic over by index (data-contact-topic), and /api/forms maps it to the Chinese option.
+    topics: [
+      "Not sure yet – let’s talk",
+      "Sustainability White Paper",
+      "Sustainability Courses",
+      "In-House Workshops for Organisations",
+      "Sustainable Supply Chain Advisory",
+      "Non-profit partnership",
+      "Other",
+    ],
     message: "Your needs or message",
     messagePlaceholder: "Briefly describe what you are looking for or what you would like to discuss...",
     submit: "Send request",
-    // Shown after the mail client is asked to open: the form itself sends nothing.
-    success: "Your email app should now be open — send the message to finish. Nothing opened? Use our official LINE or write to pt@coesg.tw.",
-    mailNote: "Clicking send will open your email client with your message pre-filled; simply send it to complete your request.",
-    mailSubject: "Coffee Chat booking",
+    // rev2 #48: shown after /api/forms has emailed gho001@coesg.tw
+    success: "Thank you. We have received your message and will reply by email.",
     required: "Required",
   },
   common: {
@@ -101,6 +108,7 @@ const common = {
     viewAll: "View all",
     backHome: "Back to home",
     external: "Opens in a new window",
+    externalParen: " (opens in a new window)",
     minRead: "min read",
     onThisPage: "On this page",
     comingSoon: "Coming soon",

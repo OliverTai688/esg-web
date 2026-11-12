@@ -1,122 +1,120 @@
 import type { ChapterDef } from "@/lib/chapters"
 
-// /consulting copy. Client text from docs/tasks/sitemap-rev1/C01–C04.
-// Prices show a single (highest) figure per C02; values await client confirmation.
-// Layout and wording decisions: docs/redesign/pages-v2/consulting/.
+// /consulting copy (rev2 EN #44–#47, the client's final English, verbatim).
+// Services, prices and buttons of Services & Pricing live in src/data/solutions.ts.
 // Every section's kicker (`label`) is also its chapter label below: keep them identical.
 // Page sections in page order: the single source for the navbar dropdown and the
 // in-page ChapterNav. Every id must be a section id on the page (scripts/check-anchors.mjs).
+// Page nav (EN #44): 01 Services & Pricing / 02 Our Work / 03 FAQ / 04 Contact
 const chapters: readonly ChapterDef[] = [
-  { id: "solutions", label: "Services", desc: "Pick a starting point, see the offer and price", icon: "Compass" },
-  { id: "ngo", label: "Non-Profit Partnerships", desc: "Two ways to work together, and four case studies", icon: "HeartHandshake" },
-  { id: "membership", label: "Membership", desc: "Free, monthly or project-based: three stages", icon: "Users" },
-  { id: "faq", label: "FAQ", desc: "Five things people ask before booking", icon: "HelpCircle" },
-  { id: "contact", label: "Contact", desc: "Book a Coffee Chat, or ask us on LINE", icon: "Mail" },
+  { id: "solutions", label: "Services & Pricing", desc: "Five groups of services, prices and next steps", icon: "Wallet" },
+  { id: "cases", label: "Our Work", desc: "Recent projects, in photos", icon: "Briefcase" },
+  { id: "faq", label: "FAQ", desc: "What people ask before booking", icon: "HelpCircle" },
+  { id: "contact", label: "Contact", desc: "Book a Coffee Chat, or email us", icon: "Mail" },
 ]
 
 const consulting = {
   chapters,
   meta: {
     title: "Work With Us",
-    description: "Book a 15-minute Coffee Chat. Corporate ESG solutions, non-profit partnerships, membership plans and FAQs.",
+    description:
+      "Book a 15-minute Coffee Chat. See prices for Sustainability White Papers, courses, in-house workshops and supply chain advisory, with recent projects and FAQs.",
   },
   label: "Work With Us",
   hero: {
     kicker: "Work With Us",
     title: "Book a 15-minute Coffee Chat",
     description:
-      "Let's talk about how to bring your expertise to light. Whether you are a brand owner, a supply-chain partner or part of the sustainability sector, we look forward to the conversation.",
-    primaryCta: "Book a consultation slot",
-    lineCta: "Ask us on LINE",
-    // The page's equation: petal + block = quarter-disc. Open in the hero, answered at the form.
-    equation: { petal: "Purpose-led brands", block: "Businesses seeking partners", result: "A 15-minute chat first" },
+      "Let’s talk about how to bring your value to light. Whether you are a brand owner, a supply-chain partner or part of the sustainability sector, we look forward to the conversation.",
+    primaryCta: "Book a 15-minute Coffee Chat",
+    lineCta: "Email us",
   },
-  // "Where do I start?": the tabs of the solutions section. `key` picks the offers
-  // shown in the panel (see page.tsx); the order matches contactForm.topics.
-  chooser: {
-    title: "Not sure where to start?",
-    options: [
-      { key: "brand", tab: "Brand positioning", label: "I want to articulate my brand's sustainability value" },
-      { key: "paper", tab: "A public document", label: "I need a sustainability document for external audiences" },
-      { key: "team", tab: "Team learning", label: "I want my team to learn about ESG" },
-      { key: "npo", tab: "Non-profit", label: "We are a non-profit organisation" },
-      { key: "small", tab: "Start small", label: "I would like to start small" },
-    ],
-  },
+  // Services & Pricing (EN #44). The items are in src/data/solutions.ts.
   solutions: {
-    label: "Services",
-    description: "From talks to training workshops, and from one-to-one advisory to Sustainability White Papers, choose the best way to begin your sustainability journey.",
-    priceNote: "Prices are indicative for individual services; final quotes depend on your needs and scale.",
-    cta: "Book a consultation",
-    items: [
-      { key: "consulting", title: "Sustainable Brand Advisory", price: "NT$6,000 / session", unit: "One-to-one", description: "One-to-one advisory to help your brand clarify its sustainability positioning, structure its ESG narrative and find the right entry point for conversations with business.", highlight: "Most popular" },
-      { key: "whitepaper", title: "Sustainability White Paper (Essentials)", price: "NT$100,000", unit: "4–8 weeks", description: "A Sustainability White Paper tailored to your brand, bringing together ESG data and storytelling into a powerful document for external communication and securing resources.", highlight: "" },
-      { key: "training", title: "Sustainable Business Innovator Training", price: "NT$25,000", unit: "Structured programme", description: "A structured training programme, from sustainability concepts to business practice, developing sustainable business talent with an ESG mindset.", highlight: "" },
-      { key: "workshop", title: "Sustainable Brand Foundations Workshop", price: "NT$6,000", unit: "Hands-on workshop", description: "A hands-on workshop that helps brand owners quickly grasp sustainability frameworks and find where their brand connects with ESG.", highlight: "" },
-    ],
+    label: "Services & Pricing",
+    title: "Services & Pricing",
+    // 開場說明 (EN #44)
+    description: "Choose how to start: join a free info session, learn to write your own Sustainability White Paper, or work with an advisor to produce one.",
+    popular: "Most popular",
+    columns: { item: "Service", description: "Description", price: "Price", action: "Next step" },
   },
-  ngo: {
-    label: "Non-Profit Partnerships",
-    title: "Partnering with Non-Profit Organisations",
-    description: "Gung-Ho Culture works hand in hand with non-profit organisations, using expert advisory and resource connections to help more businesses see their social impact.",
-    // One line for the chooser panel, and the link from there to this section
-    summary: "Two models, the Charity Partner Programme and Cross-Sector Communication, that turn social impact into sustainability language businesses can read.",
-    jump: "See the two models",
-    more: "Full description",
-    models: [
-      {
-        title: "Charity Partner Programme",
-        description: "Preferential partnership terms for non-profits, helping you organise your sustainability impact data and build a communication framework for engaging corporate CSR and ESG teams.",
-        features: ["Preferential partnership terms", "Sustainability impact data", "Connections with corporate ESG teams"],
-      },
-      {
-        title: "Cross-Sector Communication",
-        description: "Through the CO-ESG Academy platform and our industry network, we translate non-profits' social value into sustainability language that businesses understand, fostering long-term partnerships.",
-        features: ["CO-ESG Academy platform resources", "Sustainability language translation", "Long-term partnership building"],
-      },
+  // 02 Our Work (EN #46)
+  cases: {
+    label: "Our Work",
+    title: "Our Work",
+    filterLabel: "Filter by type of client",
+    filters: [
+      { key: "all", label: "All" },
+      { key: "business", label: "Business" },
+      { key: "care", label: "Healthcare and social welfare" },
+      { key: "local", label: "Agriculture and local communities" },
+      { key: "school", label: "Schools" },
+      { key: "global", label: "International and community" },
     ],
-    casesTitle: "Non-profit and charitable organisations we have worked with",
-    caseMore: "Read this case",
+    openCase: "Read this case",
+    close: "Close",
     quoteLabel: "In their words",
-    // Organisation and personal names stay in Chinese where no official English form has been supplied.
-    cases: [
+    // 16 tiles, verbatim (EN #46②); photos, order and which tiles open as in zh #46.
+    tiles: [
+      { photo: "01", category: "business", org: "True Roll", activity: "Writing a sustainability report in practice (Sep–Oct 2026, two sessions)", text: "We helped the True Roll team map their daily work against GRI cards, and rank priority actions by goals and cost. This prepares them for their next sustainability report.", alt: "True Roll team members sorting cards on a table" },
+      { photo: "02", category: "business", org: "silverlining", activity: "Outcome review workshop: corporate volunteers and older people in the community (Sep 2026)", text: "We helped the silverlining team describe the changes for corporate volunteers, older community members and community centres, across five dimensions: skills, attitudes, behaviour, feelings and circumstances.", alt: "The silverlining team discussing around a table with sticky notes" },
+      { photo: "03", category: "business", org: "Chuangmou Co., Ltd.", activity: "Teachers’ Day charity gift box: ESG business-matching course for micro and small businesses (Aug 2026, online)", text: "An online course with a dedicated learner workspace, helping small businesses describe their products as “outcomes” companies understand.", alt: "The learner workspace used in the online course" },
+      { photo: "04", category: "business", org: "Chinese Television System (CTS)", activity: "Corporate sustainability drivers course (Jun 2024)", text: "Starting from the ESG risks common in the media industry, we helped staff connect the company’s vision and core values with sustainability.", alt: "The trainer guiding CTS staff through a card exercise" },
+      { photo: "05", category: "care", org: "The Association for the Mentally Ill, Taitung", activity: "Sustainability workshops using the IOOI model (from Dec 2025)", text: "We used the IOOI model to break down four groups of activities and trace them back to one sustainability theme.", alt: "Members working in groups at a workshop in the association’s activity room", caseKey: "kangfu" },
+      { photo: "06", category: "care", org: "Ten-Chen General Hospital (Zhongli)", activity: "Staff sustainability alignment retreat (Oct 2025)", text: "Six management teams linked their daily work to the SDGs. They set measurable goals for the year ahead, such as cutting the hospital’s energy use by 10%.", alt: "Hospital managers working in groups with sticky notes", caseKey: "tiancheng" },
+      { photo: "07", category: "care", org: "The Garden of Mercy Foundation", activity: "Staff sustainability alignment retreat (Jan 2025)", text: "Staff retold 25 years of care work in the language of the SDGs, and wrote it up themselves as the foundation’s annual special issue.", alt: "A consultant teaching staff in the foundation’s meeting room", caseKey: "mercy" },
+      { photo: "08", category: "care", org: "Beunen Foundation", activity: "Leadership coaching and GROW alignment workshops (since 2023)", text: "We supported the foundation from leadership coaching and GROW alignment workshops to rebranding its Jinlun sheltered workshop.", alt: "Beunen Foundation staff presenting a workshop poster", caseKey: "beunen" },
+      { photo: "09", category: "local", org: "Hui Wei Leisure Agriculture Area", activity: "Alignment workshops (Sep–Oct 2026, five sessions)", text: "Over five workshops, we helped local partners map their resources, choose SDG targets and design an open day on 4 Oct. Visitors’ feedback cards became first-hand evidence of the results.", alt: "Local partners seated around tables during a workshop" },
+      { photo: "10", category: "local", org: "Taiwan Leisure Agriculture Association", activity: "Sustainable Agri-Innovator Programme (2026, completed in September)", text: "We took leisure farm owners through four stages: building knowledge, expressing their brand, connecting with markets, and measuring and acting. They turned their farms’ sustainability work into proposals companies understand.", alt: "The trainer presenting at the front of the programme classroom" },
+      { photo: "11", category: "local", org: "Taipei City Office of Commerce", activity: "Taipei Friendly Stores course (Aug 2025, introductory session)", text: "We introduced the basics of the SDGs and sustainable development, and helped shop owners find sustainability practices in their own business that they can talk about.", alt: "Evvon Wu presenting on stage" },
+      { photo: "12", category: "school", org: "Chihlee University of Technology", activity: "“Diverse Narratives” course (Oct 2026)", text: "Using the founder’s own education and career as an example, we talked about being measured against someone else’s yardstick. With anonymous live polls and group discussion, students learned to spot who is defining them, and to see their own stories in a new light.", alt: "Chihlee students in a group discussion in class" },
+      { photo: "13", category: "school", org: "Huatan Junior High School", activity: "Resilient campus: teacher alignment retreat and teacher–student workshops (May–Jun 2026)", text: "With a resilient campus as the theme, we first helped teachers set the school’s positioning and annual goals. We then took teachers and students out to study the campus’s water flows and carry out their own carbon inventory.", alt: "Huatan Junior High School teachers in a group photo at the retreat" },
+      { photo: "14", category: "global", org: "Global SDGs Alliance (GSA)", activity: "UN-SDGs Impact Developers Conference 2026 (Bangkok)", text: "Gung-Ho Culture took part in the conference. ModuLab, a Sustainability White Paper client, received the SDGs Impact Developers Award as an Impact Partner of the conference.", alt: "Group photo at the UN-SDGs Impact Developers Conference Demo Day" },
+      { photo: "15", category: "global", org: "Global SDGs Alliance (GSA)", activity: "Keynote at SDGs Impact Developers Conference – Penghu 2026 (Apr 2026, National Penghu University of Science and Technology)", text: "Evvon Wu was invited as a keynote speaker, and received a certificate of appreciation from GSA.", alt: "GSA’s certificate of recognition for Evvon Wu’s keynote" },
+      { photo: "16", category: "global", org: "Gung-Ho Culture × Duofu Care & Service", activity: "CO-ESG Academy speakers’ thank-you tea (7 Sep 2025)", text: "We brought CO-ESG Academy speakers together and put each speaker’s profile up on one wall. They learned about each other’s expertise and explored ways to work together.", alt: "CO-ESG Academy speakers holding signs in a group photo" },
+    ] as { photo: string; category: string; org: string; activity: string; text: string; alt: string; caseKey?: string }[],
+    // The four non-profit cases, opened from their tile (EN #46②, #47).
+    // Personal names stay as supplied until an English form is confirmed.
+    npo: [
       {
         key: "beunen",
-        name: "Beunen Foundation",
+        title: "Beunen Foundation",
+        caption: "Beunen Foundation",
         type: "Services for people with disabilities, older people and children",
         headline: "From leadership coaching to rebranding the Jinlun workshop",
-        alt: "Beunen Foundation staff around a table covered in sticky notes",
         points: [
           "Leadership coaching: a year of one-to-one sessions for the new chief executive, building trust and communication with her team.",
           "GROW alignment workshop: leaders from the head office and branch offices practised moving from goal and reality to options and a way forward.",
           "Social brand marketing: at the Jinlun workshop in Taitung, product scale-up, logo and packaging design, a refurbished space and a new shop create more jobs for local people with disabilities.",
-          "Process improvement: mind maps organise administrative processes and records, passing on senior staff's experience and preparing for government reviews.",
+          "Process improvement: mind maps organise administrative processes and records, passing on senior staff’s experience and preparing for government reviews.",
         ],
-        quote: "With the working methods Gung-Ho Culture taught us, our foundations are firmer, we have more room to meet the public sector's requirements, and both efficiency and service quality have improved greatly.",
-        quoteBy: "鍾榕榕, Chief Executive, Beunen Foundation",
+        quote: "With the working methods Gung-Ho Culture taught us, our foundations are firmer, we have more room to meet the public sector’s requirements, and both efficiency and service quality have improved greatly.",
+        // English name from EN section 五 F2
+        quoteBy: "Chung Jung-Jung, Chief Executive, Beunen Foundation",
       },
       {
         key: "mercy",
-        name: "The Garden of Mercy Foundation",
-        type: "Residential care for drug-exposed infants and children with special needs",
+        title: "The Garden of Mercy Foundation",
+        caption: "The Garden of Mercy Foundation",
+        // EN #46: case subtitle
+        type: "Residential care for children and young people with special needs",
         headline: "Retelling 25 years of care in the language of the SDGs",
-        alt: "A consultant teaching staff in a meeting room at The Garden of Mercy Foundation",
         points: [
           "A course series supported cross-department communication: staff mapped their daily care work to the SDGs and wrote their own public document.",
-          "In 2025 the foundation published its annual, \"Care that moves towards sustainability\", organised around SDGs 2, 3, 4, 10 and 17.",
+          "In 2025 the foundation published its annual, “Care that moves towards sustainability”, organised around SDGs 2, 3, 4, 10 and 17.",
           "Results are stated in figures: in 2024 the infant centre provided 3,147 person-days of care and arranged 125 outpatient visits.",
         ],
-        quote: "Sustainable development helps people in the helping professions move beyond simply \"doing good earnestly\" to \"knowing why we do it, and doing it with meaning and value\".",
+        quote: "Sustainable development helps people in the helping professions move beyond simply “doing good earnestly” to “knowing why we do it, and doing it with meaning and value”.",
         quoteBy: "Chief Executive, The Garden of Mercy Foundation (annual publication)",
       },
       {
         key: "kangfu",
-        name: "臺東縣康復之友協會",
+        title: "The Association for the Mentally Ill, Taitung",
+        caption: "The Association for the Mentally Ill, Taitung",
         type: "Social participation for people recovering from mental illness",
         headline: "Four activities, traced back to one sustainability theme",
-        alt: "A consultant leading a workshop in the association's activity room",
         points: [
-          "A two-day workshop used the IOOI chain to break down four cases: a djembe and dance troupe, handmade soap production, a soap charity sale and a second-hand charity sale.",
+          "A two-day workshop used the IOOI model to break down four cases: a djembe and dance troupe, handmade soap production, a soap charity sale and a second-hand charity sale.",
           "The four groups converged on two points: helping members step out into society (SDG 10.2) and helping the community understand the association (SDG 10.3).",
           "Work and activities are the means, not the goal; when talking to businesses, explain why these inputs are needed.",
         ],
@@ -125,76 +123,37 @@ const consulting = {
       },
       {
         key: "tiancheng",
-        name: "天成醫院",
+        // EN #47
+        title: "Ten-Chen General Hospital, Zhongli (Ten-Chen Medical Group)",
+        caption: "Ten-Chen General Hospital (Zhongli)",
         type: "Healthcare provider",
         headline: "Six teams of managers map daily work back to the SDGs",
-        alt: "Hospital staff and doctors working on a poster with sticky notes",
         points: [
+          "The course was held at Ten-Chen General Hospital in Zhongli, and staff from other hospitals in the Ten-Chen Medical Group also took part.",
           "In a sustainability workshop, six groups each set out a vision, stakeholders, the SDGs they map to and a one-year goal.",
           "Themes ranged from local hiring and employee well-being to energy saving, gender equality and teaching excellence.",
-          "Participants set measurable targets, such as cutting the hospital's energy use by 10% in a year and keeping the gender gap in entry-level pay below 3%.",
+          "Participants set measurable targets, such as cutting the hospital’s energy use by 10% in a year and keeping the gender gap in entry-level pay below 3%.",
         ],
         quote: "This course taught us to integrate: to put the sustainability practices scattered through our daily work in the right place, against the right goals.",
-        quoteBy: "Superintendent, 天成醫院",
+        quoteBy: "Superintendent, Ten-Chen General Hospital",
       },
     ],
-  },
-  membership: {
-    label: "Membership",
-    title: "Choose the partner plan that suits you",
-    // Shown in the chooser panel that leads here
-    description: "From joining our community for free to in-depth co-creation, choose according to where you are.",
-    jump: "See the three plans",
-    recommended: "Recommended",
-    audienceLabel: "Ideal for",
-    // {count} is replaced with the number of features
-    includes: "{count} things included",
-    tierCta: "Enquire via LINE",
-    tiers: [
-      {
-        title: "Essential Partner",
-        price: "Free",
-        tagline: "Get connected and start exploring sustainability",
-        features: ["Join our LINE sustainability community", "Weekly sustainability trends digest", "Priority notice of events and courses"],
-        audience: "Anyone ready to get started",
-        recommended: false,
-      },
-      {
-        title: "Advanced Partner",
-        price: "NT$300 / month",
-        tagline: "Keep learning and build sustainability capability in-house",
-        features: ["Monthly CO-ESG Academy sessions and recordings", "Speaker videos and downloadable materials", "Partner community", "Discounts on courses and workshops"],
-        audience: "Sustainability practitioners and small teams building their foundations",
-        recommended: true,
-      },
-      {
-        title: "Strategic Partner",
-        price: "Project-based quote",
-        tagline: "Co-create in depth and build sustainability into your business",
-        features: ["One-to-one advisory", "Sustainability White Paper strategy", "International alignment strategy", "Priority supply-chain connections"],
-        audience: "Companies needing a white paper or supply-chain advisory, on a project basis",
-        recommended: false,
-      },
-    ],
-    comingSoon: {
-      badge: "Coming soon",
-      title: "Gung-Ho Ecosystem Membership",
-      body: [
-        "More than learning about sustainability: join a verified sustainable supply chain, gain sustainability certification, get noticed by buyers and take on projects with partners.",
-        "We are preparing it now. Would you like to become a founding partner and secure early access and benefits?",
-      ],
-      cta: "Join the waiting list",
-    },
   },
   faq: {
     label: "FAQ",
     title: "Before you book, you may want to know",
     items: [
       { question: "What is a Coffee Chat?", answer: "A free 15-minute online consultation, as relaxed as chatting over coffee. We listen to where you are now and help you find the best next step. Whether you take it is entirely up to you." },
-      { question: "Who are Gung-Ho Culture's services for?", answer: "Our clients include agricultural brands, design firms, social enterprises, non-profits and large companies seeking sustainable supply chains. If you are doing meaningful work and want more people to see it, we would love to talk." },
-      { question: "How long does a Sustainability White Paper take?", answer: "Typically 4 to 8 weeks, depending on the size of the brand and the completeness of its data. The process includes in-depth interviews, data organisation and writing, ensuring the white paper genuinely reflects the brand's sustainability practice." },
+      { question: "Who are Gung-Ho Culture’s services for?", answer: "Our clients include agricultural brands, design firms, social enterprises, non-profits and large companies seeking sustainable supply chains. If you are doing meaningful work and want more people to see it, we would love to talk." },
+      // EN #44 new
+      { question: "What is ESG, and why are my customers asking me about it?", answer: "ESG stands for Environmental, Social and Governance. It is the shared language companies use to explain their sustainability performance. Listed companies in Taiwan must disclose sustainability information regularly, and they are starting to ask suppliers what they do in these three areas. That is why small and medium-sized businesses receive ESG questionnaires from customers. Many companies already do relevant work. They just have not yet put it in terms customers understand." },
+      // EN #44 new
+      { question: "How is a Sustainability White Paper different from a sustainability report?", answer: "A sustainability report is a formal, regular report that discloses a whole company’s sustainability performance under international standards such as GRI. Listed companies in Taiwan are required to publish one. A Sustainability White Paper focuses on your brand, product or service. It brings your values, practices, data and results together in one document for external communication, so customers, partners and funders can see your value. It is more flexible in length and format, and suits SMEs, brands and non-profits that do not yet need a sustainability report." },
+      // EN #10
+      { question: "How long does a Sustainability White Paper take?", answer: "Usually 6 to 12 weeks, depending on the size of your organisation and how complete your data is. This assumes the work follows the schedule agreed with your advisor, and that all the information we need has been provided. Along the way, we carry out in-depth interviews, organise your data and write the content. This makes sure the white paper truly reflects your sustainability practice." },
       { question: "How do we start working together?", answer: "The simplest way is to book a Coffee Chat so we can understand your needs. We will then provide tailored recommendations and a quote, and once confirmed, the project can begin." },
-      { question: "What does a CO-ESG Academy subscription include?", answer: "CO-ESG Academy is a cross-sector platform for sustainability learning and exchange. Subscribers can join regular workshops, talks and industry networking events, and gain access to members-only sustainability resources and connections." },
+      // EN #44
+      { question: "What does a CO-ESG Academy Subscription include?", answer: "CO-ESG Academy is a cross-sector platform for learning about sustainability and sharing ideas. Subscribers join weekly online classes, watch recordings, download speaker slides, join a peer community and get discounts on courses. You can subscribe at the CO-ESG Store." },
     ],
     more: "Have another question?",
     moreCta: "Email us",

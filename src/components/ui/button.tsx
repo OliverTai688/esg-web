@@ -5,11 +5,11 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:scale-[0.98]",
+  "inline-flex max-w-full items-center justify-center gap-2 whitespace-normal text-center leading-snug sm:whitespace-nowrap rounded-full text-sm font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:scale-[0.98]",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground shadow-sm hover:bg-[#A8321A] hover:shadow-md",
+        default: "bg-primary text-primary-foreground shadow-sm hover:brightness-95 hover:shadow-md",
         destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline: "border border-ink/20 bg-transparent text-foreground hover:border-ink/40 hover:bg-ink/[0.04]",
         // On dark surfaces
@@ -17,17 +17,22 @@ const buttonVariants = cva(
         outlineInverse: "border border-white/35 bg-transparent text-white hover:bg-white/10 hover:border-white/60",
         secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-ink/[0.05]",
-        link: "text-primary underline-offset-4 hover:underline",
-        accent: "bg-accent text-accent-foreground shadow-sm hover:bg-[#F0A800]",
+        link: "text-link",
+        accent: "bg-accent text-accent-foreground shadow-sm hover:brightness-95",
         line: "bg-[#06C755] text-[#073B1A] shadow-sm hover:brightness-105",
       },
       size: {
-        default: "h-11 px-6",
+        // min-height rather than height: on a phone a long label wraps instead of
+        // pushing the layout wider than the screen (EN R30, 19px button text)
+        default: "min-h-11 px-6 py-1.5",
         sm: "h-9 px-4 text-xs",
-        lg: "h-13 px-8 text-base",
+        lg: "min-h-13 px-6 py-2 text-base sm:px-8",
         icon: "h-11 w-11",
       },
     },
+    // White on CIS orange #E8532A is about 3.7:1, which passes only as large text:
+    // filled orange buttons always use bold 19px (rev2 #2③).
+    compoundVariants: [{ variant: "default", className: "text-[19px]" }],
     defaultVariants: {
       variant: "default",
       size: "default",

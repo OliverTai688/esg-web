@@ -32,10 +32,10 @@ export function HeroArch({ labels }: { labels: readonly string[] }) {
         {/* Bridge deck */}
         <line x1="8" x2="512" y1="294" y2="294" stroke="#1F2022" strokeOpacity=".18" strokeWidth="2" strokeDasharray="2 10" strokeLinecap="round" />
         {/* Piers */}
-        <rect x="10" y={CY + 3} width="60" height="20" fill="#4D515B" />
-        <rect x="450" y={CY + 3} width="60" height="20" fill="#4D515B" />
+        <rect x="10" y={CY + 3} width="60" height="20" fill="#595959" />
+        <rect x="450" y={CY + 3} width="60" height="20" fill="#595959" />
         {stones.map((s) => (
-          <path key={s.i} d={s.d} fill="#F25232" className="petal-pop" style={{ ["--i" as string]: s.i }} />
+          <path key={s.i} d={s.d} fill="#E8532A" className="petal-pop" style={{ ["--i" as string]: s.i }} />
         ))}
         {/* Keystone: the full flame mark */}
         <image href="/brand/gungho-mark.svg" x={CX - 31} y="14" width="62" height="80" className="petal-pop" style={{ ["--i" as string]: SLOTS }} />

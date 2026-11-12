@@ -1,19 +1,29 @@
 "use client"
 
 import * as React from "react"
+import { useParams } from "next/navigation"
 import { Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import type { Messages } from "@/i18n/messages"
+import { site } from "@/lib/site"
+import { formCopy } from "@/components/forms/messages"
+import { useFormPost } from "@/components/forms/useFormPost"
+import { FieldErrorText, FormStatusText, Honeypot, RequiredMark, controlClass, errorProps, fieldLabelClass } from "@/components/forms/parts"
 
-// No backend is in scope (decided 2026-10-06): the form composes an email in the
-// visitor's mail app, addressed to the support mailbox, with every field filled in.
+// rev2 #48: the form posts to /api/forms, which emails gho001@coesg.tw with
+// Reply-To set to the visitor; the site stores nothing. Success is shown in
+// place only after the email was sent; a failure shows a retryable error.
+// `to` is the address offered in error messages when sending fails.
 //
 // A link elsewhere on the page can hand over a topic: `<a href="#contact"
 // data-contact-topic="2">` selects the third topic on its way to the form.
 // Without JavaScript the link still scrolls here; the first topic stays selected.
-export function ContactForm({ labels, to }: { labels: Messages["contactForm"]; to: string }) {
-  const [sent, setSent] = React.useState(false)
+export function ContactForm({ labels, to = site.supportEmail, locale }: { labels: Messages["contactForm"]; to?: string; locale?: string }) {
+  const params = useParams<{ locale?: string }>()
+  const lang = locale ?? params?.locale ?? "zh"
+  const copy = formCopy(lang)
+  const { state, submit } = useFormPost("contact", lang)
   const [topic, setTopic] = React.useState(0)
   const topicCount = labels.topics.length
 
@@ -28,54 +38,58 @@ export function ContactForm({ labels, to }: { labels: Messages["contactForm"]; t
     return () => document.removeEventListener("click", onClick)
   }, [topicCount])
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    const get = (k: string) => String(data.get(k) ?? "").trim()
-    const body = [
-      `${labels.name}：${get("name")}`,
-      `${labels.email}：${get("email")}`,
-      `${labels.org}：${get("organization")}`,
-      `${labels.topic}：${get("topic")}`,
-      "",
-      get("message"),
-    ].join("\n")
-    const subject = `${labels.mailSubject}｜${get("name")}${get("organization") ? `（${get("organization")}）` : ""}`
-    window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-    setSent(true)
+    const form = event.currentTarget
+    if (state.status === "sending") return
+    if (!(await submit(form))) return
+    // Clear the text fields; the chosen topic stays (radios are controlled by state).
+    for (const element of Array.from(form.elements)) {
+      if ((element instanceof HTMLInputElement && element.type !== "radio") || element instanceof HTMLTextAreaElement) element.value = ""
+    }
   }
 
   const field = "space-y-2"
-  const label = "text-sm font-bold text-ink"
-  const required = (
-    <span className="text-primary" title={labels.required}>
-      *
-    </span>
-  )
+  const label = fieldLabelClass
+  const required = <RequiredMark label={labels.required} />
+  const errors = state.fields
 
   return (
-    <form onSubmit={onSubmit} className="space-y-5">
+    <form onSubmit={onSubmit} noValidate className="relative space-y-5">
+      <Honeypot />
       <div className="grid gap-5 sm:grid-cols-2">
         <div className={field}>
           <label className={label} htmlFor="cf-name">
             {labels.name} {required}
           </label>
-          <Input id="cf-name" name="name" autoComplete="name" placeholder={labels.namePlaceholder} required />
+          <Input id="cf-name" name="name" autoComplete="name" placeholder={labels.namePlaceholder} required maxLength={100} {...errorProps("cf-name", errors.name)} />
+          <FieldErrorText id="cf-name" error={errors.name} copy={copy} />
         </div>
         <div className={field}>
           <label className={label} htmlFor="cf-email">
             {labels.email} {required}
           </label>
-          <Input id="cf-email" name="email" type="email" autoComplete="email" placeholder={labels.emailPlaceholder} required />
+          <Input
+            id="cf-email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            placeholder={labels.emailPlaceholder}
+            required
+            maxLength={254}
+            {...errorProps("cf-email", errors.email)}
+          />
+          <FieldErrorText id="cf-email" error={errors.email} copy={copy} />
         </div>
       </div>
       <div className={field}>
         <label className={label} htmlFor="cf-org">
           {labels.org}
         </label>
-        <Input id="cf-org" name="organization" autoComplete="organization" placeholder={labels.orgPlaceholder} />
+        <Input id="cf-org" name="organization" autoComplete="organization" placeholder={labels.orgPlaceholder} maxLength={200} {...errorProps("cf-org", errors.organization)} />
+        <FieldErrorText id="cf-org" error={errors.organization} copy={copy} />
       </div>
-      <fieldset className={field}>
+      <fieldset className={field} aria-describedby={errors.topic ? "cf-topic-error" : undefined}>
         <legend className={`${label} mb-2`}>{labels.topic}</legend>
         <div className="flex flex-wrap gap-2">
           {labels.topics.map((name, i) => (
@@ -88,6 +102,7 @@ export function ContactForm({ labels, to }: { labels: Messages["contactForm"]; t
             </label>
           ))}
         </div>
+        <FieldErrorText id="cf-topic" error={errors.topic} copy={copy} />
       </fieldset>
       <div className={field}>
         <label className={label} htmlFor="cf-message">
@@ -97,17 +112,18 @@ export function ContactForm({ labels, to }: { labels: Messages["contactForm"]; t
           id="cf-message"
           name="message"
           rows={4}
+          maxLength={5000}
           placeholder={labels.messagePlaceholder}
-          className="flex w-full rounded-xl border border-input bg-card px-3.5 py-3 text-base shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring md:text-sm"
+          className={`${controlClass} py-3`}
+          {...errorProps("cf-message", errors.message)}
         />
+        <FieldErrorText id="cf-message" error={errors.message} copy={copy} />
       </div>
-      <Button type="submit" size="lg" className="w-full">
+      <Button type="submit" size="lg" className="w-full" aria-disabled={state.status === "sending"}>
         <Send />
         {labels.submit}
       </Button>
-      <p className="text-xs leading-relaxed text-muted-foreground" aria-live="polite">
-        {sent ? labels.success : labels.mailNote}
-      </p>
+      <FormStatusText state={state} copy={copy} email={to} success={labels.success} />
     </form>
   )
 }

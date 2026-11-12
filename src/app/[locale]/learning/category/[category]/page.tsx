@@ -10,7 +10,8 @@ import { getMessages } from "@/i18n/messages"
 import { i18n, type Locale } from "@/i18n/config"
 import { getAllPosts, getCategories, getPostsByCategory } from "@/lib/posts"
 import { learningBackHref, categoryLabel, learningSections, topicOf } from "@/lib/learning-sections"
-import { site } from "@/lib/site"
+import { contactFor } from "@/lib/site"
+import { alternatesFor } from "@/lib/seo"
 
 export async function generateStaticParams() {
   const cats = getCategories(await getAllPosts())
@@ -24,8 +25,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   if (!cat) return {}
   const topic = topicOf(cat.slug)
   return {
-    title: `${categoryLabel(cat.slug, cat.name, t.learning)}｜${t.learning.label}`,
+    title: `${categoryLabel(cat.slug, cat.name, t.learning)}${locale === "en" ? " | " : "｜"}${t.learning.label}`,
     description: topic ? t.learning.sections[topic].description : t.learning.description,
+    alternates: alternatesFor(locale, `/learning/category/${category}`),
   }
 }
 
@@ -121,7 +123,7 @@ export default async function LearningCategoryPage({ params }: { params: Promise
         title={l.cta.title}
         description={l.cta.body}
         primary={{ label: l.cta.primary, href: `/${locale}/events#workshops` }}
-        secondary={{ label: l.cta.secondary, href: site.line.url, external: true, line: true }}
+        secondary={{ label: l.cta.secondary, ...contactFor(locale, "ask") }}
       />
     </div>
   )

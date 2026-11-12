@@ -35,12 +35,12 @@ export function TestimonialWall({
             <button
               type="button"
               onClick={() => setOpen(i)}
-              aria-label={`${openLabel}：${item.name}`}
+              aria-label={`${openLabel}${/[\u4e00-\u9fff]/.test(openLabel) ? "：" : ": "}${item.name}`}
               className="flex h-full w-full flex-col items-center gap-4 rounded-2xl border border-border bg-card px-4 py-8 text-center transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_12px_32px_-16px_rgba(31,32,34,0.25)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <span
                 aria-hidden="true"
-                className="flex size-20 items-center justify-center rounded-full bg-orange-soft text-3xl font-black text-[#A8321A] ring-4 ring-paper transition-colors group-hover:bg-brand-orange group-hover:text-white"
+                className="flex size-20 items-center justify-center rounded-full bg-orange-soft text-3xl font-black text-primary ring-4 ring-paper transition-colors group-hover:bg-brand-orange group-hover:text-white"
               >
                 {item.name.slice(0, 1)}
               </span>
@@ -68,7 +68,7 @@ export function TestimonialWall({
                 <Dialog.Title className="mt-4 text-xl font-black leading-[1.5] text-ink sm:text-2xl">{current.highlight}</Dialog.Title>
                 <Dialog.Description className="mt-4 text-base leading-[1.9] text-ink/80">{current.quote}</Dialog.Description>
                 <div className="mt-8 flex items-center gap-4 border-t border-border pt-6">
-                  <span aria-hidden="true" className="flex size-12 items-center justify-center rounded-full bg-orange-soft text-xl font-black text-[#A8321A]">
+                  <span aria-hidden="true" className="flex size-12 items-center justify-center rounded-full bg-orange-soft text-xl font-black text-primary">
                     {current.name.slice(0, 1)}
                   </span>
                   <div>

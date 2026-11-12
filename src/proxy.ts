@@ -1,28 +1,36 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
-import { i18n } from "@/i18n/config"
+import { i18n, type Locale } from "@/i18n/config"
 
-function getLocale(request: NextRequest): string {
-  // Check Accept-Language header
-  const acceptLanguage = request.headers.get("accept-language")
-  if (acceptLanguage) {
-    const preferred = acceptLanguage.split(",")[0]?.split("-")[0]?.toLowerCase()
-    if (preferred && i18n.locales.includes(preferred as typeof i18n.locales[number])) {
-      return preferred
-    }
-  }
-  return i18n.defaultLocale
+// Remembers the visitor's language (EN rule R34). Set whenever a locale-prefixed
+// page is visited, so switching language with the switcher is remembered too.
+const LOCALE_COOKIE = "NEXT_LOCALE"
+const ONE_YEAR = 60 * 60 * 24 * 365
+
+function isLocale(value: string | undefined): value is Locale {
+  return !!value && i18n.locales.includes(value as Locale)
+}
+
+// No redirect by IP or browser language (EN rule R35): a remembered choice wins,
+// otherwise the default locale.
+function getLocale(request: NextRequest): Locale {
+  const remembered = request.cookies.get(LOCALE_COOKIE)?.value
+  return isLocale(remembered) ? remembered : i18n.defaultLocale
 }
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // Check if pathname already has a locale
-  const pathnameHasLocale = i18n.locales.some(
+  const pathLocale = i18n.locales.find(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   )
 
-  if (pathnameHasLocale) return
+  if (pathLocale) {
+    if (request.cookies.get(LOCALE_COOKIE)?.value === pathLocale) return
+    const response = NextResponse.next()
+    response.cookies.set(LOCALE_COOKIE, pathLocale, { path: "/", maxAge: ONE_YEAR, sameSite: "lax" })
+    return response
+  }
 
   // Skip internal paths
   if (
@@ -37,10 +45,10 @@ export function proxy(request: NextRequest) {
   // Redirect to locale-prefixed path
   const locale = getLocale(request)
   return NextResponse.redirect(
-    new URL(`/${locale}${pathname}`, request.url)
+    new URL(`/${locale}${pathname === "/" ? "" : pathname}`, request.url)
   )
 }
 
 export const config = {
-  matcher: ["/((?!_next|api|favicon.ico|.*\\..*).*)"],
+  matcher: ["/((?!_next|api|admin|favicon.ico|.*\\..*).*)"],
 }

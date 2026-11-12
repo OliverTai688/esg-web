@@ -52,7 +52,7 @@ export function ValuesArch({ items, label, className }: { items: readonly Value[
               style={{ left: `${(50 + 39.5 * Math.cos(angle)).toFixed(2)}%`, top: `${(94 - 78 * Math.sin(angle)).toFixed(2)}%` }}
               className={cn(
                 "absolute flex size-[clamp(3.5rem,17vw,5.5rem)] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-2xl px-1 text-center text-[13px] font-black leading-tight text-ink outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:text-base",
-                selected ? "bg-brand-orange" : "bg-card shadow-[inset_0_0_0_2px_#F25232] hover:bg-orange-soft",
+                selected ? "bg-brand-orange" : "bg-card shadow-[inset_0_0_0_2px_#E8532A] hover:bg-orange-soft",
               )}
             >
               {item.title}

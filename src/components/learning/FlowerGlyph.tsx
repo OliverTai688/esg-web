@@ -6,9 +6,9 @@ const PETAL = "M0-8A28.3 28.3 0 0 1 0-48 28.3 28.3 0 0 1 0-8Z"
 
 const TONES = {
   // rest petal, lit petal, centre
-  light: { rest: "#FAB40A", restOpacity: 0.4, lit: "#F25232", centre: "#4D515B" },
-  dark: { rest: "#FFFFFF", restOpacity: 0.22, lit: "#FAB40A", centre: "#FFFFFF" },
-  yellow: { rest: "#FFFFFF", restOpacity: 0.75, lit: "#F25232", centre: "#1F2022" },
+  light: { rest: "#F9A500", restOpacity: 0.4, lit: "#E8532A", centre: "#595959" },
+  dark: { rest: "#FFFFFF", restOpacity: 0.22, lit: "#F9A500", centre: "#FFFFFF" },
+  yellow: { rest: "#FFFFFF", restOpacity: 0.75, lit: "#E8532A", centre: "#1F2022" },
 } as const
 
 // The topic mark used across the knowledge pages: the six-petal topic flower

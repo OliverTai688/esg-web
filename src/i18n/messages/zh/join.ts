@@ -25,7 +25,7 @@ const join = {
       { title: "永續趨勢週報", description: "國內外 ESG 政策更新、產業動態與市場趨勢，每週精選推送。" },
       { title: "活動與課程優先通知", description: "ESG共學坊工作坊、國際論壇等活動搶先報名，把握每一次學習與交流的機會。" },
       { title: "跨產業合作機會", description: "與農業、設計、科技、社會企業等不同領域的永續實踐者交流，創造跨界合作的可能。" },
-      { title: "專屬資源與優惠", description: "會員專屬的永續白皮書摘要、顧問諮詢優惠與合作夥伴的獨家折扣。" },
+      { title: "合作夥伴優惠", description: "合作夥伴的獨家折扣。" },
     ],
   },
   steps: {
@@ -36,6 +36,15 @@ const join = {
       { title: "接收資訊", description: "開始接收永續趨勢、活動通知與合作機會等第一手訊息。" },
       { title: "參與互動", description: "報名活動、回覆訊息、加入討論，成為永續生態圈的一份子。" },
     ],
+  },
+  // rev2 #50: Email 訂閱, in the closing card under the LINE button. Sent by email
+  // to gho001@coesg.tw (same list as the whitepaper download, #53). The client
+  // gave no Chinese wording: label and note are our draft for confirmation.
+  subscribe: {
+    label: "你的 Email",
+    submit: "訂閱",
+    note: "我們會不定期寄送永續趨勢、課程與活動消息，你可以隨時來信取消訂閱。",
+    success: "謝謝你的訂閱！",
   },
   // The one secondary way out, under the closing LINE card
   alt: {

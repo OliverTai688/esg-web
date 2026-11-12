@@ -6,18 +6,19 @@ import { Button } from "@/components/ui/button"
 import { SectionHeader } from "@/components/site/SectionHeader"
 import { CtaBand } from "@/components/site/CtaBand"
 import { FoldList } from "@/components/ux/Fold"
-import { ArchSeam, Petal } from "@/components/geo/shapes"
+import { ArchSeam } from "@/components/geo/shapes"
 import { getMessages } from "@/i18n/messages"
 import type { Locale } from "@/i18n/config"
 import { getAllPosts, type Post } from "@/lib/posts"
 import { learningSections } from "@/lib/learning-sections"
 import { cn } from "@/lib/utils"
-import { site } from "@/lib/site"
+import { site, contactFor } from "@/lib/site"
+import { alternatesFor } from "@/lib/seo"
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   const t = await getMessages(locale as Locale)
-  return { title: t.learning.insights.meta.title, description: t.learning.insights.meta.description }
+  return { title: t.learning.insights.meta.title, description: t.learning.insights.meta.description, alternates: alternatesFor(locale, "/insights") }
 }
 
 // Rows under the lead story, and months drawn on the hero's timeline.
@@ -92,11 +93,6 @@ export default async function InsightsPage({ params }: { params: Promise<{ local
         </Container>
       </section>
 
-      {/* Seam 1 · shape relay: the newest petal drops onto the boundary */}
-      <div aria-hidden="true" className="pointer-events-none relative z-10 h-0">
-        <Petal className="absolute right-[10%] top-0 size-9 -translate-y-1/2 bg-brand-orange sm:size-14 lg:right-[18%]" />
-      </div>
-
       {/* N2 ── Latest: the lead story with a large date, then the next few */}
       {lead && (
         <section id="latest" className="bg-card py-16 md:py-24">
@@ -139,7 +135,7 @@ export default async function InsightsPage({ params }: { params: Promise<{ local
         <Container>
           <div className="mb-8 flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
             <SectionHeader kicker={n.archive.label} title={n.archive.title.replace("{n}", String(posts.length))} size="md" />
-            <a href="/feed.xml" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-primary underline-offset-4 hover:underline">
+            <a href="/feed.xml" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-link">
               <Rss className="size-4" aria-hidden="true" />
               {n.archive.rss}
             </a>
@@ -200,9 +196,9 @@ export default async function InsightsPage({ params }: { params: Promise<{ local
         title={n.mediaTitle}
         description={n.mediaBody}
         primary={{ label: n.mediaPrimary, href: `/${locale}/consulting#contact` }}
-        secondary={{ label: n.mediaSecondary, href: site.line.url, external: true, line: true }}
+        secondary={{ label: n.mediaSecondary, ...contactFor(locale, "ask") }}
         note={
-          <a href={`mailto:${site.supportEmail}`} className="inline-flex min-h-11 items-center font-bold text-primary underline-offset-4 hover:underline">
+          <a href={`mailto:${site.supportEmail}`} className="inline-flex min-h-11 items-center font-bold text-link">
             {site.supportEmail}
           </a>
         }

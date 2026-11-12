@@ -1,8 +1,9 @@
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowUpRight, MessageCircle } from "lucide-react"
+import { ArrowUpRight } from "lucide-react"
 import { Container } from "@/components/core/Container"
 import { site } from "@/lib/site"
+import { FacebookIcon, LineIcon, LinkedInIcon } from "@/components/site/SocialIcons"
 import type { Locale } from "@/i18n/config"
 import type { Messages } from "@/i18n/messages"
 
@@ -19,9 +20,17 @@ export function Footer({ locale, dict }: FooterProps) {
     { href: `/${locale}/sustainability`, label: nav.sustainability.label },
     { href: `/${locale}/events`, label: nav.events.label },
     { href: `/${locale}/learning`, label: nav.learning.label },
-    { href: `/${locale}/insights`, label: nav.learning.insights },
+    // /en/insights redirects to /en/learning (EN7), so English has no separate link
+    ...(locale === "en" ? [] : [{ href: `/${locale}/insights`, label: nav.learning.insights }]),
     { href: `/${locale}/consulting`, label: nav.consulting.label },
     { href: `/${locale}/join`, label: nav.join },
+  ]
+
+  // rev2 #5⑧: three icons on the Chinese site; the English site has no LINE (EN rule R17)
+  const socials = [
+    ...(locale === "en" ? [] : [{ label: "LINE", href: site.line.url, Icon: LineIcon }]),
+    { label: "LinkedIn", href: site.social.linkedin, Icon: LinkedInIcon },
+    { label: "Facebook", href: site.social.facebook, Icon: FacebookIcon },
   ]
 
   const linkClass = "text-white/85 underline-offset-4 transition-colors hover:text-brand-yellow hover:underline"
@@ -35,7 +44,7 @@ export function Footer({ locale, dict }: FooterProps) {
       </div>
       <Container>
         <div className="grid gap-12 md:grid-cols-[1.1fr_0.7fr_1.6fr]">
-          {/* Brand + LINE */}
+          {/* Brand + social icons */}
           <div className="flex flex-col items-start gap-5">
             <div className="flex flex-col gap-2">
               <Image
@@ -49,16 +58,21 @@ export function Footer({ locale, dict }: FooterProps) {
                 {footer.tagline}
               </span>
             </div>
-            {/* LINE brand green; dark label keeps the text at AA contrast */}
-            <a
-              href={site.line.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-11 items-center gap-2 rounded-full bg-[#06C755] px-5 text-sm font-bold text-[#073B1A] shadow-sm transition-all hover:brightness-105 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#06C755] focus-visible:ring-offset-2 focus-visible:ring-offset-surface-dark active:scale-[0.98]"
-            >
-              <MessageCircle size={18} strokeWidth={2.2} aria-hidden="true" />
-              {footer.lineCta}
-            </a>
+            <ul aria-label={footer.social} className="flex gap-3">
+              {socials.map(({ label, href, Icon }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${label}${footer.newWindow}`}
+                    className="flex size-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white hover:text-surface-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-yellow"
+                  >
+                    <Icon className="size-5" />
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Site navigation */}
@@ -80,6 +94,13 @@ export function Footer({ locale, dict }: FooterProps) {
                   <ArrowUpRight size={14} aria-hidden="true" />
                 </a>
               </li>
+              {/* rev2 #43: online tools, a footer text link only (not in the main menu) */}
+              <li>
+                <a href={site.toolsUrl} target="_blank" rel="noopener noreferrer" className={`${linkClass} inline-flex items-center gap-1`}>
+                  {footer.tools}
+                  <ArrowUpRight size={14} aria-hidden="true" />
+                </a>
+              </li>
             </ul>
           </nav>
 
@@ -91,8 +112,15 @@ export function Footer({ locale, dict }: FooterProps) {
             <dl className="grid grid-cols-[auto_1fr] gap-x-5 gap-y-2.5 text-sm">
               <dt className="text-white/60">{footer.company.name}</dt>
               <dd className="text-white/85">
-                {site.legalName.zh}
-                <span className="block text-xs text-white/60">{site.legalName.en}</span>
+                {/* EN2: the English footer shows only the English registered name */}
+                {lang === "en" ? (
+                  site.legalName.en
+                ) : (
+                  <>
+                    {site.legalName.zh}
+                    <span className="block text-xs text-white/60">{site.legalName.en}</span>
+                  </>
+                )}
               </dd>
 
               <dt className="text-white/60">{footer.company.taxId}</dt>
@@ -135,8 +163,21 @@ export function Footer({ locale, dict }: FooterProps) {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-white/15 pt-6 text-xs font-medium text-white/60">
-          {footer.copyright}
+        <div className="mt-12 flex flex-col gap-3 border-t border-white/15 pt-6 text-xs font-medium text-white/60 sm:flex-row sm:items-center sm:justify-between">
+          <span>{footer.copyright}</span>
+          {/* rev2 #7: terms and privacy (EN2) */}
+          <ul className="flex flex-wrap gap-x-5">
+            <li>
+              <Link href={`/${locale}/terms`} className={`${linkClass} inline-flex min-h-11 items-center`}>
+                {footer.terms}
+              </Link>
+            </li>
+            <li>
+              <Link href={`/${locale}/privacy`} className={`${linkClass} inline-flex min-h-11 items-center`}>
+                {footer.privacy}
+              </Link>
+            </li>
+          </ul>
         </div>
       </Container>
     </footer>

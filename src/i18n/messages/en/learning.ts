@@ -9,7 +9,7 @@ const chapters: readonly ChapterDef[] = [
   { id: "topics", label: "Six Topics", desc: "Pick a petal to see that topic's articles", icon: "Compass" },
   { id: "featured", label: "Featured", desc: "Not sure where to start? Read this one", icon: "Sparkles" },
   { id: "articles", label: "All Articles", desc: "Every article, filtered by topic", icon: "BookOpen" },
-  { id: "insights", label: "Latest Articles", desc: "All articles, newest first", icon: "Newspaper", route: "/insights" },
+  // No "Latest Articles" entry: /en/insights redirects to /en/learning (EN7)
 ]
 
 const learning = {
@@ -45,12 +45,35 @@ const learning = {
   articles: {
     label: "All Articles",
     title: "Filter by topic, or just keep reading",
+    // EN6: the article list's heading on the English site
+    titleInChinese: "More articles (in Chinese)",
     all: "All",
     filterLabel: "Filter by topic",
     // {n} is the number of articles in the current filter
     showAll: "Show all {n} articles",
     toInsights: "See the latest by date",
   },
+  // EN6: every article is in Chinese. The English site lists each one by its English
+  // title only (client copy), marked [in Chinese], linking to /zh/learning/<slug>.
+  inChinese: "[in Chinese]",
+  postTitles: {
+    "business-model-canvas-innovation": "A core strategy guide: using the Business Model Canvas for innovation and problem-solving",
+    "unilever-sustainability-strategy": "Scaling impact: Unilever’s sustainability success strategy",
+    "data-driven-sustainability-strategy": "Data-driven decisions: the first step towards delivering a sustainability strategy",
+    "market-data-sustainable-competitiveness": "Using market data to spot trends and make sustainable products more competitive",
+    "materiality-assessment-esg": "Focusing on material issues: the best choices with limited resources",
+    "sdgs-competitive-advantage": "Building a sustainable competitive advantage with the SDGs",
+    "sustainability-report-insights": "Reading sustainability reports for companies’ future commitments",
+    "public-good-corporate-win-win": "When charities and companies both win: creating social and economic value",
+    "sponsorship-to-partnership": "From sponsorship to partnership: a win-win strategy for companies and non-profits",
+    "dialogue-creates-value": "Creating value through dialogue: building bridges between business and society",
+    "empathy-in-survey-design": "Seeing it from their side: making surveys more effective",
+    "internal-external-sustainability-communication": "From internal practice to external communication: spreading the sustainability message",
+    "peng-hsin-hui-sustainability-revolution": "From my father’s plastic building materials to my own sustainability revolution: Peng Hsin-hui on succession and renewal",
+    "subscription-3-steps": "Subscribe in 3 steps",
+    "esg-practitioners-survey-2024": "ESG practitioners’ needs and challenges: 2024 survey results",
+    "carbon-footprint-to-handprint": "From carbon footprint to carbon handprint: shaping a more sustainable tomorrow",
+  } as Record<string, string>,
   // `short` is the name on the topic's petal; keep it to one or two short lines
   sections: {
     innovation: { title: "Innovation Strategy", short: "Innovation", description: "Explore innovative approaches to sustainability transformation, from business models to product design, and redefine your brand's sustainable competitiveness." },
@@ -60,11 +83,36 @@ const learning = {
     communication: { title: "Communication & Empathy", short: "Communication", description: "Develop the skills for cross-sector dialogue and learn to convey sustainability value in the language of different industries." },
     interviews: { title: "Interviews", short: "Interviews", description: "First-hand stories from sustainability practitioners: hear how pioneers in different fields turn ideas into action." },
   },
+  // rev2 #41 #42 #43: the CO-ESG Academy block at the bottom of /learning (src/components/site/CoesgBand.tsx).
+  // No LINE or LinkedIn button here (#41③).
+  academy: {
+    kicker: "CO-ESG Academy",
+    title: "Visit the CO-ESG Store",
+    intro: "Want a single course? Visit the CO-ESG Store. Want to keep learning every week? Subscribe to CO-ESG Academy for weekly online classes and recordings. Want to try it yourself first? Use our online tools.",
+    store: {
+      title: "CO-ESG Store",
+      // 待客戶確認 (D5, rev2 #41②): placeholder until the client sends the English
+      // for the confirmed Chinese wording.
+      body: "CO-ESG Academy courses are in the CO-ESG Store. Pick the one you need and buy it on its own. Taught in Mandarin.",
+      cta: "Go to the CO-ESG Store",
+      logo: "CO-ESG CLASS",
+    },
+    subscription: {
+      title: "CO-ESG Academy Subscription",
+      body: "Weekly online classes, recordings, speaker slides, a peer community and course discounts. Taught in Mandarin.",
+      cta: "Go to the CO-ESG Store",
+    },
+    tools: {
+      title: "Online tools",
+      body: "Try our self-service tools. In Chinese.",
+      cta: "Open the tools",
+    },
+  },
   cta: {
     title: "Finished reading? What next?",
-    body: "Want to apply these ideas in your own organisation? Find the right topic on the Learning Map, or follow us on LINE for new articles and course updates.",
-    primary: "Open the Sustainability Learning Map",
-    secondary: "Follow us on LINE",
+    body: "Want to apply these ideas in your own organisation? Find the right course in Services & Pricing, or email us with your questions.",
+    primary: "See courses and plans",
+    secondary: "Email us",
   },
   article: {
     by: "Author",
@@ -75,9 +123,9 @@ const learning = {
     next: "Next on this topic",
     nextOther: "Read next",
     endTitle: "Finished reading? What next?",
-    endBody: "Still exploring? Follow us on LINE for new articles. Have a specific question? Book a 15-minute Coffee Chat.",
+    endBody: "Still exploring? Follow us on LinkedIn for new articles. Have a specific question? Book a 15-minute Coffee Chat.",
     endPrimary: "Book a 15-minute Coffee Chat",
-    endSecondary: "Follow us on LINE",
+    endSecondary: "Follow us on LinkedIn",
   },
   insights: {
     meta: {
@@ -104,9 +152,9 @@ const learning = {
       title: "The same articles, arranged by topic",
     },
     mediaTitle: "Media and partnership enquiries",
-    mediaBody: "For interviews, talks and forum partnerships, fill in the contact form or message our official LINE account.",
+    mediaBody: "For interviews, talks and forum partnerships, fill in the contact form or email us.",
     mediaPrimary: "Send an enquiry",
-    mediaSecondary: "Follow us on LINE",
+    mediaSecondary: "Email us",
   },
 }
 

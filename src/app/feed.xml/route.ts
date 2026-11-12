@@ -24,7 +24,7 @@ export async function GET() {
   <channel>
     <title>共好玟化 CO-ESG</title>
     <link>${BASE_URL}</link>
-    <description>永續品牌的專業橋樑 — 最新文章與永續觀點</description>
+    <description>永續價值的專業橋樑 — 最新文章與永續觀點</description>
     <language>zh-TW</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <atom:link href="${BASE_URL}/feed.xml" rel="self" type="application/rss+xml"/>

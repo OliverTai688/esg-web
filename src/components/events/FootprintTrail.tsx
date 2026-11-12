@@ -4,10 +4,10 @@
 // Discs sit on the cubic M40 300 C 40 160, 220 70, 500 60 at t = 0, .25, .5, .75, 1.
 const DECK = "M40 300 C 40 160, 220 70, 500 60"
 const STEPS = [
-  { x: 40, y: 300, r: 10, fill: "#FAB40A" },
-  { x: 72.5, y: 205, r: 16, fill: "#F25232" },
-  { x: 165, y: 131, r: 24, fill: "#FAB40A" },
-  { x: 310, y: 82, r: 34, fill: "#F25232" },
+  { x: 40, y: 300, r: 10, fill: "#F9A500" },
+  { x: 72.5, y: 205, r: 16, fill: "#E8532A" },
+  { x: 165, y: 131, r: 24, fill: "#F9A500" },
+  { x: 310, y: 82, r: 34, fill: "#E8532A" },
 ]
 
 export function FootprintTrail({ start, next }: { start: string; next: string }) {

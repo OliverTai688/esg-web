@@ -45,3 +45,9 @@ next-env.d.ts
 
 # Office lock files
 .~*
+
+# The env template is committed (forms, indexing)
+!.env.example
+
+# Local storage for the admin page (whitepaper links) when no Redis is configured
+/.data/

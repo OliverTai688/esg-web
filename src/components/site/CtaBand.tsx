@@ -1,34 +1,40 @@
 import Link from "next/link"
-import { ArrowRight, MessageCircle } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { Container } from "@/components/core/Container"
 import { Button } from "@/components/ui/button"
-import { FlameMark } from "@/components/site/FlameMark"
+import { ChannelIcon } from "@/components/site/SocialIcons"
+import type { ContactChannel } from "@/lib/site"
+
+/** `channel` marks a contact button (LINE, LinkedIn or email; see `contactFor`). */
+type CtaAction = { label: string; href: string; external?: boolean; channel?: ContactChannel }
 
 interface CtaBandProps {
   kicker?: string
   title: string
   description?: string
-  primary: { label: string; href: string; external?: boolean; line?: boolean }
-  secondary?: { label: string; href: string; external?: boolean; line?: boolean }
+  primary: CtaAction
+  secondary?: CtaAction
   steps?: readonly string[]
   /** A small line under the buttons, e.g. a contact address. */
   note?: React.ReactNode
 }
 
-function Action({ action, variant }: { action: NonNullable<CtaBandProps["secondary"]>; variant: "default" | "outline" | "line" }) {
+function Action({ action, variant }: { action: CtaAction; variant: "default" | "outline" | "line" }) {
   const content = (
     <>
-      {action.line && <MessageCircle />}
+      {action.channel && <ChannelIcon channel={action.channel} />}
       {action.label}
-      {!action.line && variant === "default" && <ArrowRight />}
+      {!action.channel && variant === "default" && <ArrowRight />}
     </>
   )
   return (
-    <Button size="lg" variant={action.line && variant === "default" ? "line" : variant} asChild>
+    <Button size="lg" variant={action.channel === "line" && variant === "default" ? "line" : variant} className="h-auto min-h-13 whitespace-normal py-3 text-center" asChild>
       {action.external ? (
         <a href={action.href} target="_blank" rel="noopener noreferrer">
           {content}
         </a>
+      ) : action.href.startsWith("mailto:") ? (
+        <a href={action.href}>{content}</a>
       ) : (
         <Link href={action.href}>{content}</Link>
       )}
@@ -36,26 +42,25 @@ function Action({ action, variant }: { action: NonNullable<CtaBandProps["seconda
   )
 }
 
-// Closing call to action for every page except the home page. A small arch
-// closes over the flame: the same "bridge completed" ending as the home page's
-// CtaArcs, at a lower volume so the home page keeps the loudest version.
+// Closing call to action for every page except the home page. A small arch:
+// the same "bridge completed" ending as the home page's CtaArcs, at a lower
+// volume. The flame at its apex was removed in rev2 (#4).
 export function CtaBand({ kicker, title, description, primary, secondary, steps, note }: CtaBandProps) {
   return (
     <section className="relative overflow-hidden bg-paper py-16 md:py-24">
       <Container className="relative flex flex-col items-center text-center">
         <svg viewBox="0 0 240 96" className="h-auto w-44 sm:w-56" aria-hidden="true">
-          <path d="M10 96 C 10 44, 60 14, 104 12" fill="none" stroke="#FAB40A" strokeWidth="12" strokeLinecap="round" pathLength={1} className="scroll-draw" />
-          <path d="M230 96 C 230 44, 180 14, 136 12" fill="none" stroke="#F25232" strokeWidth="12" strokeLinecap="round" pathLength={1} className="scroll-draw" />
+          <path d="M10 96 C 10 44, 60 12, 120 12" fill="none" stroke="#F9A500" strokeWidth="12" strokeLinecap="round" pathLength={1} className="scroll-draw" />
+          <path d="M230 96 C 230 44, 180 12, 120 12" fill="none" stroke="#E8532A" strokeWidth="12" strokeLinecap="round" pathLength={1} className="scroll-draw" />
         </svg>
-        <FlameMark className="-mt-[5.25rem] w-8 sm:-mt-[6.5rem] sm:w-9" />
-        <div className="mt-10 max-w-2xl sm:mt-14">
+        <div className="mt-6 max-w-2xl sm:mt-8">
           {kicker && <p className="kicker-rule text-[13px] font-bold tracking-[0.12em] text-primary">{kicker}</p>}
           <h2 className="mt-3 text-[1.75rem] font-black leading-[1.3] text-ink sm:text-4xl">{title}</h2>
           {description && <p className="mt-4 text-base leading-[1.85] text-muted-foreground">{description}</p>}
         </div>
         <div className="mt-8 flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row">
           <Action action={primary} variant="default" />
-          {secondary && <Action action={secondary} variant={secondary.line ? "line" : "outline"} />}
+          {secondary && <Action action={secondary} variant={secondary.channel === "line" ? "line" : "outline"} />}
         </div>
         {note && <p className="mt-5 text-sm text-muted-foreground">{note}</p>}
         {steps && (

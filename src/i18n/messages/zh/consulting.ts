@@ -1,93 +1,92 @@
 import type { ChapterDef } from "@/lib/chapters"
 
-// /consulting copy. Client text from docs/tasks/sitemap-rev1/C01–C04.
-// Prices show a single (highest) figure per C02; values await client confirmation.
-// Layout and wording decisions: docs/redesign/pages-v2/consulting/.
+// /consulting copy (rev2 #44–#47; earlier text from docs/tasks/sitemap-rev1/C01–C04).
+// Services, prices and buttons of the 方案總表 live in src/data/solutions.ts.
 // Every section's kicker (`label`) is also its chapter label below: keep them identical.
 // Page sections in page order: the single source for the navbar dropdown and the
 // in-page ChapterNav. Every id must be a section id on the page (scripts/check-anchors.mjs).
+// Page nav (#44): 01 方案總表／02 合作案例／03 常見問題／04 聯絡表單
 const chapters: readonly ChapterDef[] = [
-  { id: "solutions", label: "服務項目", desc: "選一個起點，看對應的方案與價格", icon: "Compass" },
-  { id: "ngo", label: "非營利合作", desc: "兩種合作模式與四個合作案例", icon: "HeartHandshake" },
-  { id: "membership", label: "會員方案", desc: "免費、月費、專案，三個階段", icon: "Users" },
-  { id: "faq", label: "常見問題", desc: "預約前最常被問的五件事", icon: "HelpCircle" },
-  { id: "contact", label: "聯絡表單", desc: "預約諮詢，或用 LINE 直接問", icon: "Mail" },
+  { id: "solutions", label: "方案總表", desc: "五類方案、價格與下一步", icon: "Wallet" },
+  { id: "cases", label: "合作案例", desc: "近年合作案例照片牆", icon: "Briefcase" },
+  { id: "faq", label: "常見問題", desc: "預約前最常被問的問題", icon: "HelpCircle" },
+  { id: "contact", label: "聯絡表單", desc: "預約 Coffee Chat，或用 LINE 直接問", icon: "Mail" },
 ]
 
 const consulting = {
   chapters,
   meta: {
     title: "合作洽詢",
-    description: "預約 15 分鐘 Coffee Chat。企業 ESG 解決方案、非營利合作、會員方案與常見問題。",
+    description: "預約 15 分鐘 Coffee Chat。方案總表列出永續白皮書、課程、企業與組織工作坊、永續供應鏈輔導的價格，附近年合作案例與常見問題。",
   },
   label: "合作洽詢",
   hero: {
     kicker: "合作洽詢",
     title: "預約 15 分鐘 Coffee Chat",
     description:
-      "讓我們聊聊如何點亮你的專業價值。無論你是品牌主、供應鏈夥伴、還是永續產業的參與者，我們都期待與你對話。",
-    primaryCta: "預約諮詢時段",
+      "讓我們聊聊如何點亮你獨特的專業價值。無論你是品牌主、供應鏈夥伴、還是永續產業的參與者，我們都期待與你對話。",
+    primaryCta: "預約 15 分鐘 Coffee Chat",
     lineCta: "用 LINE 直接問",
-    // The page's equation: petal + block = quarter-disc. Open in the hero, answered at the form.
-    equation: { petal: "有理念的品牌", block: "找夥伴的企業", result: "先聊 15 分鐘" },
   },
-  // "Where do I start?": the tabs of the solutions section. `key` picks the offers
-  // shown in the panel (see page.tsx); the order matches contactForm.topics.
-  chooser: {
-    title: "不確定從哪裡開始？",
-    options: [
-      { key: "brand", tab: "品牌定位", label: "我想把品牌的永續價值說清楚" },
-      { key: "paper", tab: "對外文件", label: "我需要一份對外的永續文件" },
-      { key: "team", tab: "團隊學習", label: "我想讓團隊學會 ESG" },
-      { key: "npo", tab: "非營利組織", label: "我們是非營利組織" },
-      { key: "small", tab: "小額開始", label: "我想先小額開始" },
-    ],
-  },
+  // 方案總表 (#44). The items are in src/data/solutions.ts.
   solutions: {
-    label: "服務項目",
-    description: "從講座到培訓工作坊，從一對一顧問到永續白皮書撰寫，選擇最適合你的永續起步方式。",
-    priceNote: "價格為單項服務參考價，實際依需求與規模報價。",
-    cta: "預約諮詢",
-    items: [
-      { key: "consulting", title: "永續品牌顧問輔導", price: "NT$6,000 / 次", unit: "一對一", description: "一對一顧問服務，協助品牌釐清永續定位、整理 ESG 敘事架構，找到與企業對話的切入點。", highlight: "最受歡迎" },
-      { key: "whitepaper", title: "永續白皮書精華版", price: "NT$100,000", unit: "4–8 週", description: "為品牌量身打造的永續白皮書，整合 ESG 數據與故事，成為對外溝通、爭取資源的有力文件。", highlight: "" },
-      { key: "training", title: "永續商創師培訓", price: "NT$25,000", unit: "系統化培訓", description: "系統化培訓課程，從永續概念到商業實踐，培養具備 ESG 思維的永續商業人才。", highlight: "" },
-      { key: "workshop", title: "永續品牌初階工作坊", price: "NT$6,000", unit: "實戰工作坊", description: "實戰工作坊，帶領品牌主快速理解永續框架，找到自身品牌與 ESG 的連結點。", highlight: "" },
-    ],
+    label: "方案總表",
+    title: "方案總表",
+    // 開場說明 (#44)
+    description: "從免費說明會、自己學著寫，到顧問陪你完成永續白皮書，選擇最適合你的永續起步方式。",
+    popular: "最受歡迎",
+    // Column names for screen readers and the wide layout
+    columns: { item: "方案", description: "說明", price: "價格", action: "下一步" },
   },
-  ngo: {
-    label: "非營利合作",
-    title: "非營利組織合作模式",
-    description: "共好玟化與非營利組織攜手，透過專業顧問輔導與資源連結，讓社會影響力被更多企業看見。",
-    // One line for the chooser panel, and the link from there to this section
-    summary: "公益夥伴方案與跨界溝通兩種模式，把社會影響力整理成企業讀得懂的永續語言。",
-    jump: "看兩種合作模式",
-    more: "完整說明",
-    models: [
-      {
-        title: "公益夥伴方案",
-        description: "針對非營利組織提供優惠合作方案，協助整理永續影響力數據，建立與企業 CSR／ESG 部門對接的溝通架構。",
-        features: ["優惠合作方案", "永續影響力數據整理", "企業 ESG 部門對接"],
-      },
-      {
-        title: "跨界溝通",
-        description: "透過ESG共學坊平台與產業網絡，將非營利組織的社會價值轉譯為企業端可理解的永續語言，促成長期合作關係。",
-        features: ["ESG共學坊平台資源", "永續語言轉譯", "長期合作關係促成"],
-      },
+  // 02 合作案例 (#46): the 近年合作案例 photo wall
+  cases: {
+    label: "合作案例",
+    title: "近年合作案例",
+    filterLabel: "依客戶類型篩選",
+    filters: [
+      { key: "all", label: "全部" },
+      { key: "business", label: "企業" },
+      { key: "care", label: "醫療與社福" },
+      { key: "local", label: "農業與地方" },
+      { key: "school", label: "校園" },
+      { key: "global", label: "國際與社群" },
     ],
-    casesTitle: "合作過的非營利與公益機構",
-    caseMore: "看這個案例",
+    openCase: "看這個案例",
+    close: "關閉",
     quoteLabel: "對方怎麼說",
+    // 16 tiles, verbatim (#46⑤). `photo` is public/cases/wall/<photo>.webp (folder
+    // numbers 01–16); within a category, newest first. `caseKey` opens the
+    // non-profit's case in a dialog; the other tiles do not open.
+    tiles: [
+      { photo: "01", category: "business", org: "實心食品有限公司", activity: "實心蛋捲 ESG 永續報告書撰寫實務（2026 年 9–10 月，兩堂）", text: "陪實心團隊用 GRI 卡牌對照日常工作，再依目標與成本排出優先行動，為下一本永續報告書做準備。", alt: "實心團隊成員在桌上排列卡牌討論" },
+      { photo: "02", category: "business", org: "銀色連線股份有限公司", activity: "企業志工 × 社區長者 成果盤點工作坊（2026 年 9 月）", text: "陪銀色連線團隊把企業志工、社區長者、社區據點各自發生的改變，依能力、態度、行為、情感、情境五個面向寫清楚。", alt: "銀色連線團隊圍著桌子用便利貼討論" },
+      { photo: "03", category: "business", org: "創謀有限公司", activity: "教師節公益禮盒・小微企業 ESG 對接培力課程（2026 年 8 月，線上）", text: "線上課程，搭配專屬學員工作台，讓小業者把產品寫成企業聽得懂的『成果』。", alt: "線上課程的學員工作台畫面" },
+      { photo: "04", category: "business", org: "中華電視股份有限公司", activity: "企業永續驅動概念班（2024 年 6 月）", text: "從媒體業常見的 ESG 風險談起，帶員工把公司願景、核心價值和永續連在一起。", alt: "講師在華視課堂上帶學員排列卡片" },
+      { photo: "05", category: "care", org: "社團法人臺東縣康復之友協會", activity: "永續工作坊（IOOI 事件鏈，2025 年 12 月起）", text: "用 IOOI 事件鏈拆解四組活動，推回同一個永續主軸。", alt: "康復之友協會的工作坊，學員分組討論", caseKey: "kangfu" },
+      { photo: "06", category: "care", org: "南桃園天成醫療社團法人天晟醫院", activity: "員工永續共識營（2025 年 10 月）", text: "六組主管把日常工作對回 SDGs，訂出一年內可衡量的目標，例如院內能源消耗降低 10%。", alt: "天晟醫院主管分組在桌上用便利貼討論", caseKey: "tiancheng" },
+      { photo: "07", category: "care", org: "財團法人台北市愛慈社會福利基金會", activity: "員工永續共識營（2025 年 1 月）", text: "用 SDGs 重新說一次 25 年的照護工作，由同仁自己寫成年度專刊。", alt: "顧問在愛慈基金會會議室為同仁上課", caseKey: "mercy" },
+      { photo: "08", category: "care", org: "財團法人天主教白永恩神父社會福利基金會", activity: "領導者陪飛與 GROW 共識工作坊（2023 年起）", text: "從領導者陪飛、GROW 共識工作坊，到金崙小作所的品牌改造。", alt: "白永恩基金會同仁展示工作坊海報", caseKey: "beunen" },
+      { photo: "09", category: "local", org: "滬尾休閒農業區發展協會", activity: "滬尾休閒農業區共識工作坊（2026 年 9–10 月，共五場）", text: "五場工作坊陪農業區夥伴盤點在地資源、選出 SDGs 目標、設計 10/4 開門日；遊客留下的回饋卡，成了衡量成果的第一手資料。", alt: "滬尾農業區夥伴圍坐討論" },
+      { photo: "10", category: "local", org: "臺灣休閒農業學會", activity: "ESG 永續農創師培育課程（2026 年，9 月結業）", text: "陪休閒農場主走過知識建立、品牌表達、市場對接、衡量與實作四個階段，把農場的永續作為寫成企業看得懂的提案。", alt: "講師在農創師課堂前講解" },
+      { photo: "11", category: "local", org: "臺北市商業處", activity: "台北友善店家主題推展課程（2025 年 8 月，初階場）", text: "為台北友善店家講解 SDGs 與永續發展的基本概念，帶店家從自己的經營裡找出說得出口的永續作為。", alt: "吳玟樺在台上講解品牌概念" },
+      { photo: "12", category: "school", org: "致理科技大學", activity: "「多元敘事」課程（2026 年 10 月）", text: "以創辦人自己的求學與職涯為例，談『別人手上的那把尺』；穿插匿名即時投票與小組討論，帶學生辨識是誰在替自己下定義，重新理解自己的故事。", alt: "致理科技大學學生在課堂上分組討論" },
+      { photo: "13", category: "school", org: "彰化縣立花壇國民中學", activity: "韌性校園：教師共識營與師生工作坊（2026 年 5–6 月）", text: "以韌性校園為主軸，先在共識營陪老師訂出學校定位與年度目標，再帶師生實地踏查校園水文、親手做碳盤查。", alt: "花壇國中老師在共識營合照" },
+      { photo: "14", category: "global", org: "全球永續發展聯盟（GSA）", activity: "UN-SDGs Impact Developers Conference 2026（曼谷）", text: "共好玟化參與大會；永續白皮書客戶 ModuLab 以大會影響力夥伴（Impact Partner）身分，獲頒 SDGs Impact Developers Award。", alt: "UN-SDGs Impact Developers Conference Demo Day 大合照" },
+      { photo: "15", category: "global", org: "全球永續發展聯盟（GSA）", activity: "SDGs Impact Developers Conference – Penghu 2026 專題演講（2026 年 4 月，國立澎湖科技大學）", text: "吳玟樺受邀擔任大會專題講者，GSA 頒發感謝狀。", alt: "GSA 頒給吳玟樺的專題演講感謝狀" },
+      { photo: "16", category: "global", org: "共好玟化 × 多扶事業", activity: "ESG共學坊講師感恩茶會（2025 年 9 月 7 日）", text: "邀請ESG共學坊講師齊聚，把每位講師的介紹貼成一面牆，彼此認識專長、交流合作的可能。", alt: "ESG共學坊講師舉牌合照" },
+    ] as { photo: string; category: string; org: string; activity: string; text: string; alt: string; caseKey?: string }[],
+    // The four non-profit cases, opened from their tile (#46②). Text is the case
+    // content the page already had; names are the registered names (section 三).
     // Summarised from the client's own files (docs/tasks/sitemap-rev1/assets-status.md):
     // 白永恩 = published interview, 愛慈 = the foundation's SDG annual, 康復之友 = workshop
-    // result posters, 天成 = workshop feedback notes. `key` is the photo in public/cases/npo/.
-    cases: [
+    // result posters, 天晟 = workshop feedback notes.
+    npo: [
       {
         key: "beunen",
-        name: "白永恩神父社會福利基金會",
+        title: "財團法人天主教白永恩神父社會福利基金會",
+        caption: "白永恩神父社會福利基金會",
         type: "身心障礙、社區長者與兒童發展服務",
         headline: "從領導者陪飛，到金崙小作所的品牌改造",
-        alt: "白永恩基金會同仁圍著貼滿便利貼的桌面討論",
         points: [
           "領導者陪飛：為新任執行長安排為期一年的一對一教練晤談，建立與團隊的信任與溝通。",
           "GROW 共識工作坊：總會與分辦公室的領導團隊，一起練習從目標、現況、選項走到行動方案。",
@@ -99,10 +98,11 @@ const consulting = {
       },
       {
         key: "mercy",
-        name: "愛慈社會福利基金會",
-        type: "毒害寶寶與特殊需求兒少安置",
+        title: "財團法人台北市愛慈社會福利基金會",
+        caption: "愛慈社會福利基金會",
+        // #46: 副標改「特殊需求兒少安置」
+        type: "特殊需求兒少安置",
         headline: "用 SDGs 重新說一次 25 年的照護工作",
-        alt: "顧問在愛慈社會福利基金會會議室為同仁上課",
         points: [
           "透過系列課程協助跨部門溝通，由同仁把日常照護工作對應到 SDGs，寫成自己的對外文件。",
           "2025 年出版年度專刊〈走向永續的照護行動〉，以 SDG 2、3、4、10、17 五個目標整理服務成果。",
@@ -113,10 +113,10 @@ const consulting = {
       },
       {
         key: "kangfu",
-        name: "臺東縣康復之友協會",
+        title: "社團法人臺東縣康復之友協會",
+        caption: "臺東縣康復之友協會",
         type: "精神康復者社會參與",
         headline: "四組活動，推回同一個永續主軸",
-        alt: "顧問在康復之友協會的活動空間帶領工作坊",
         points: [
           "兩天工作坊，用 IOOI 事件鏈拆解四個案例：非洲鼓團與舞團、手工皂製作、手工皂義賣、社辦二手義賣。",
           "四組的選擇匯聚成兩個共識：讓服務對象走出去（SDG 10.2）、讓社群正確理解協會（SDG 10.3）。",
@@ -127,66 +127,21 @@ const consulting = {
       },
       {
         key: "tiancheng",
-        name: "天成醫院",
+        // #47: 標題、照片說明、補一句、引言出處（「晟」不是「成」）
+        title: "天晟醫院（天成醫療體系）",
+        caption: "天晟醫院",
         type: "醫療機構",
         headline: "六組主管，把日常工作對回 SDGs",
-        alt: "天成醫院同仁與醫師圍著海報用便利貼討論",
         points: [
+          "課程於中壢天晟醫院舉辦，天成醫療體系其他院區同仁也一同參與。",
           "永續工作坊中，六個小組各自提出願景、利害關係人、對應的 SDGs 與一年後的目標。",
           "主題涵蓋在地化經營、幸福企業、節能減碳、性別平權與教學卓越。",
           "學員訂出可衡量的目標，例如一年內降低院內能源消耗 10%、基層起薪的性別差距低於 3%。",
         ],
         quote: "這次課程讓我們學會『整合』——把日常工作中分散的永續實踐，放到正確的位置、對應正確的目標。",
-        quoteBy: "天成醫院院長",
+        quoteBy: "天晟醫院院長",
       },
     ],
-  },
-  membership: {
-    label: "會員方案",
-    title: "選擇適合你的共好夥伴方案",
-    // Shown in the chooser panel that leads here
-    description: "從免費加入社群，到深度共創，依你的階段選擇。",
-    jump: "看三個方案",
-    recommended: "推薦",
-    audienceLabel: "適合",
-    // {count} is replaced with the number of features
-    includes: "內含 {count} 項",
-    tierCta: "透過 LINE 洽詢",
-    tiers: [
-      {
-        title: "基礎夥伴",
-        price: "免費",
-        tagline: "先連上，開始接觸永續",
-        features: ["加入 LINE 永續社群", "永續趨勢週報", "活動與課程優先通知"],
-        audience: "任何想開始的個人",
-        recommended: false,
-      },
-      {
-        title: "進階夥伴",
-        price: "NT$300／月",
-        tagline: "持續學，把永續變成內部能力",
-        features: ["ESG共學坊每月課程與回放", "講師影片與教材下載", "夥伴交流社群", "課程與工作坊優惠"],
-        audience: "永續實務工作者、想打底的小團隊",
-        recommended: true,
-      },
-      {
-        title: "策略夥伴",
-        price: "專案報價",
-        tagline: "深度共創，把永續做進你的商業",
-        features: ["一對一顧問諮詢", "永續白皮書策略服務", "國際接軌策略", "供應鏈對接優先"],
-        audience: "要做白皮書／供應鏈輔導的企業，專案制",
-        recommended: false,
-      },
-    ],
-    comingSoon: {
-      badge: "即將推出",
-      title: "共好生態圈會員",
-      body: [
-        "不只是學永續，而是進入一條被驗證的永續供應鏈——取得永續認證、被買方看見、與夥伴共同接案。",
-        "我們正在籌備中。想成為創始夥伴、搶先取得名額與優惠嗎？",
-      ],
-      cta: "加入候補",
-    },
   },
   faq: {
     label: "常見問題",
@@ -194,9 +149,15 @@ const consulting = {
     items: [
       { question: "什麼是 Coffee Chat？", answer: "15 分鐘免費線上諮詢，就像喝杯咖啡聊聊天。我們聽你的現況，幫你找最適合的下一步——要不要走，由你決定。" },
       { question: "誰適合使用共好玟化的服務？", answer: "我們的客戶涵蓋農業品牌、設計公司、社會企業、非營利組織，以及想尋找永續供應鏈的大型企業。只要你正在做有意義的事，希望被更多人看見，我們都歡迎你來聊聊。" },
-      { question: "永續白皮書需要多長時間完成？", answer: "依品牌規模與資料完整度，通常需要 4 至 8 週。過程中我們會進行深度訪談、資料整理與內容撰寫，確保白皮書真實反映品牌的永續實踐。" },
+      // #44 new
+      { question: "ESG 是什麼？為什麼客戶開始問我？", answer: "ESG 是環境（Environmental）、社會（Social）、公司治理（Governance）的縮寫，是企業說明自己永續表現的共同語言。上市櫃公司要定期揭露永續資訊，也開始要求供應商說明在這三方面做了什麼，所以中小企業會收到客戶的 ESG 問卷或詢問。很多企業其實早就在做相關的事，只是還沒整理成客戶看得懂的說法。" },
+      // #44 new
+      { question: "永續白皮書和永續報告書有什麼不同？", answer: "永續報告書是依 GRI 等國際準則、定期揭露整個企業永續績效的正式報告，上市櫃公司依規定要編製。永續白皮書則聚焦在你的品牌、產品或服務，把理念、做法、數據與成果整理成一份對外溝通的文件，讓客戶、合作夥伴與資源方看懂你的價值；篇幅與格式較彈性，適合還不需要編製報告書的中小企業、品牌與非營利組織。" },
+      // #10
+      { question: "永續白皮書需要多長時間完成？", answer: "依品牌規模與資料完整度，通常需要 6 至 12 週。此工期以依照顧問排定的時程進行、且所需資料均已繳齊為前提；過程中我們會進行深度訪談、資料整理與內容撰寫，確保白皮書真實反映品牌的永續實踐。" },
       { question: "如何開始合作？", answer: "最簡單的方式是預約一場 Coffee Chat，讓我們了解你的需求。之後我們會提供客製化的合作建議與報價，確認後即可啟動專案。" },
-      { question: "ESG共學坊訂閱包含什麼？", answer: "ESG共學坊是跨產業的永續學習與交流平台，訂閱會員可參加定期舉辦的工作坊、講座與產業交流活動，並獲得會員專屬的永續資源與人脈網絡。" },
+      // #44 ①
+      { question: "ESG共學坊訂閱包含什麼？", answer: "ESG共學坊是跨產業的永續學習與交流平台。訂閱後每週有線上授課，並可看影片回放、下載講師投影片、加入交流社群，報名課程享優惠。訂閱請到永續商城。" },
     ],
     more: "還有其他問題？",
     moreCta: "寫信給我們",

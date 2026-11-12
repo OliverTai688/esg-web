@@ -3,6 +3,8 @@ const common = {
   nav: {
     sustainability: {
       label: "共好永續力",
+      // rev2 #22: extra dropdown entry leading to the home page's #testimonials
+      testimonials: { label: "客戶回饋", desc: "合作夥伴與學員的真實回饋" },
     },
     events: {
       label: "永續足跡",
@@ -24,7 +26,7 @@ const common = {
   // Headline impact numbers — the only place these figures live (G06).
   impact: {
     metrics: [
-      { value: 1000, prefix: "", suffix: "萬", label: "資源挹注", note: "一家品牌設計公司在永續白皮書完成後一年內取得的政府補助、天使投資與銀行貸款" },
+      { value: 1000, prefix: "", suffix: "萬", label: "資源挹注", note: "一家科技公司在永續白皮書完成後一年內取得的政府補助、天使投資與銀行貸款" },
       { value: 130, prefix: "", suffix: "+", label: "跨產業合作", note: "透過顧問輔導與ESG共學坊講師平台促成的合作" },
       { value: 8, prefix: "", suffix: "+", label: "國際論壇", note: "協助企業與夥伴登上的國際論壇舞台" },
     ],
@@ -43,22 +45,20 @@ const common = {
       { value: "50+", label: "合作品牌" },
     ],
   },
-  // The ESG共學坊 sub-brand band and its store link (site.storeUrl).
-  coesg: {
-    kicker: "ESG共學坊",
-    title: "逛逛 ESG共學坊商城",
-    body: "課程（CLASS）、商城（STORE）與講座（TALKS），都在 ESG共學坊。",
-    storeCta: "前往 ESG共學坊商城",
-    logos: { class: "ESG共學坊 CLASS", store: "ESG共學坊 STORE", talks: "ESG共學坊 TALKS" },
-  },
   footer: {
     brand: "共好",
     brandAccent: "玟化",
-    tagline: "CO-ESG ｜ 永續品牌的專業橋樑",
+    tagline: "CO-ESG｜點亮你獨特的專業價值",
     copyright: "© 2026 共好玟化 CO-ESG. All Rights Reserved.",
     lineCta: "加入官方 LINE",
+    social: "社群媒體",
+    newWindow: "（另開新視窗）",
     navTitle: "網站導覽",
     store: "ESG共學坊商城",
+    tools: "線上工具",
+    // rev2 #7
+    terms: "使用者條款",
+    privacy: "隱私權政策",
     contactTitle: "聯絡我們",
     supportEmail: "客服信箱",
     company: {
@@ -87,15 +87,14 @@ const common = {
     org: "所屬單位",
     orgPlaceholder: "企業名稱或組織名稱",
     topic: "想聊的方向",
-    // Order matters: /consulting hands a topic over by index (consulting.chooser.options[].key → data-contact-topic).
-    topics: ["永續品牌顧問輔導", "永續白皮書", "課程／工作坊", "非營利合作", "其他"],
+    // rev2 #44: seven options. Order matters: /consulting hands a topic over by index
+    // (data-contact-topic), and /api/forms maps an English option to the Chinese one at the same index.
+    topics: ["還不確定，先聊聊", "永續白皮書", "永續課程", "企業與組織工作坊", "永續供應鏈輔導", "非營利合作", "其他"],
     message: "您的需求或訊息",
     messagePlaceholder: "請簡單描述您的合作需求或想聊的主題...",
     submit: "送出預約",
-    // Shown after the mail client is asked to open: the form itself sends nothing.
-    success: "已開啟您的郵件軟體，寄出後即完成。沒有跳出視窗？請改用官方 LINE，或直接寄信到 pt@coesg.tw。",
-    mailNote: "按下送出後，會開啟您的郵件軟體並帶入內容，寄出即完成。",
-    mailSubject: "Coffee Chat 預約",
+    // rev2 #48: shown after /api/forms has emailed gho001@coesg.tw
+    success: "謝謝您，我們已收到您的訊息，會以 Email 回覆。",
     required: "必填",
   },
   common: {
@@ -104,6 +103,8 @@ const common = {
     viewAll: "查看全部",
     backHome: "返回首頁",
     external: "另開新視窗",
+    // Appended to a link name for screen readers; zh uses full-width brackets, en half-width (EN4)
+    externalParen: "（另開新視窗）",
     minRead: "分鐘閱讀",
     onThisPage: "本頁內容",
     comingSoon: "即將推出",
