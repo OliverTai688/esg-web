@@ -28,8 +28,6 @@ const consulting = {
       "Let’s talk about how to bring your value to light. Whether you are a brand owner, a supply-chain partner or part of the sustainability sector, we look forward to the conversation.",
     primaryCta: "Book a 15-minute Coffee Chat",
     lineCta: "Email us",
-    // The page's equation (a labelled diagram, kept by #4): open in the hero.
-    equation: { petal: "Purpose-led brands", block: "Businesses seeking partners", result: "A 15-minute chat first" },
   },
   // Services & Pricing (EN #44). The items are in src/data/solutions.ts.
   solutions: {

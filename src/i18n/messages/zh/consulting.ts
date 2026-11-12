@@ -27,8 +27,6 @@ const consulting = {
       "讓我們聊聊如何點亮你獨特的專業價值。無論你是品牌主、供應鏈夥伴、還是永續產業的參與者，我們都期待與你對話。",
     primaryCta: "預約 15 分鐘 Coffee Chat",
     lineCta: "用 LINE 直接問",
-    // The page's equation (a labelled diagram, kept by #4): open in the hero.
-    equation: { petal: "有理念的品牌", block: "找夥伴的企業", result: "先聊 15 分鐘" },
   },
   // 方案總表 (#44). The items are in src/data/solutions.ts.
   solutions: {

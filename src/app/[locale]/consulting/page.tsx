@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import { SectionHeader } from "@/components/site/SectionHeader"
 import { ChapterNav } from "@/components/site/ChapterNav"
 import { ContactForm } from "@/components/site/ContactForm"
-import { Equation } from "@/components/consulting/Equation"
 import { SolutionsTable } from "@/components/consulting/SolutionsTable"
 import { CaseWall } from "@/components/consulting/CaseWall"
 import { FoldList } from "@/components/ux/Fold"
@@ -33,10 +32,10 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
 
   return (
     <div className="overflow-x-clip">
-      {/* S1 ── Hero: the labelled equation (kept by #4) */}
+      {/* S1 ── Hero. Text only: the petal + block = quarter equation was removed (2026-11-12). */}
       <section>
-        <Container className="grid items-center gap-12 pb-16 pt-14 md:pt-20 lg:grid-cols-[1.1fr_1fr] lg:pb-24">
-          <div>
+        <Container className="pb-16 pt-14 md:pt-20 lg:pb-24">
+          <div className="max-w-3xl">
             <p className="kicker-rule text-[13px] font-bold tracking-[0.12em] text-primary">{c.hero.kicker}</p>
             <h1 className="mt-5 text-[2.25rem] font-black leading-[1.25] text-ink sm:text-5xl">{c.hero.title}</h1>
             <p className="mt-6 max-w-xl text-base leading-[1.9] text-muted-foreground sm:text-lg">{c.hero.description}</p>
@@ -52,7 +51,6 @@ export default async function ConsultingPage({ params }: { params: Promise<{ loc
               </ChannelButton>
             </div>
           </div>
-          <Equation labels={c.hero.equation} />
         </Container>
       </section>
 
